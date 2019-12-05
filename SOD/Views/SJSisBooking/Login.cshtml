@@ -1,0 +1,358 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*<link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />*@
+    <meta name="viewport" content="width=device-width" />
+    <title>SOD-SJSC | Login</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/sanitize.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link href="../css/Login.css" rel="stylesheet" />
+    <script src="../js/angular/SjSisBooking.js"></script>
+    <style>
+        .errorText {
+            color: red;
+        }
+
+        .successText {
+            color: green;
+        }
+    </style>
+</head>
+
+
+<body ng-app="SjSisBooking" ng-controller="ctrlSjSisBooking" style="background:url('../img/banner_login.jpg'); background-size:cover; background-repeat:no-repeat;">
+    <div class="container">
+        <div class="latest_logo_part">
+            <div style="text-align:left; margin-top:10px;"><img src="../img/final_logo_white.png" /></div>
+        </div>
+        <div class="col-lg-7 col-md-7 col-sm-4 "></div>
+        <div class="col-lg-5 col-md-5 col-sm-8  ">
+            <div class="welcm_portal_part">
+                <div class="welcmtxt">
+                    Welcome to <br />Spicejet SOD-SJSC Portal
+                </div>
+                <div style="padding-top:10px;">
+                    <p>You will need to provide your Login credentials to access the SOD-SJSC portal.</p>
+                    <p>
+                        This portal facilitates an employee of Spicejet Verticals/SJSC to make SOD (Staff on Duty) travel requests along with the hotel bookings.
+                        Portal also helps to maintain the history for the past travel, approvals and rejections from their respective HOD's.
+                    </p>
+                </div>
+            </div>
+            <div class="loginbox">
+                <form name="signUpForm" novalidate>
+                    <div class=" row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                            <span class="singtext">Sign in </span>
+                            <!--<img src="https://s4.postimg.org/64q1bgunx/logo_3.png" alt="Logo" class="logo">-->
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-6  ">
+                            <!--<span class="singtext">Sign in </span>-->
+                        </div>
+                    </div>
+                    <div class=" row loginbox_content ">
+                        <div class="form-group" ng-class="{ 'has-error' : signUpForm.userId.$invalid && SignUpsubmitted }">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                                <input class="form-control" type="text" name="userId" placeholder="Registered Email ID" autocomplete="off" ng-model="user.UserId" required max="75">
+                            </div>
+                            <p ng-show="signUpForm.userId.$invalid && SignUpsubmitted" class="help-block">This field is required.</p>
+                        </div>
+                        <br>
+                        <div class="form-group" ng-class="{ 'has-error' : signUpForm.password.$invalid && SignUpsubmitted }">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-lock"></span>
+                                </span>
+                                <input class="form-control" type="password" name="password" placeholder="Password" autocomplete="off" ng-model="user.Pwd" required max="15" />
+                            </div>
+                            <p ng-show="signUpForm.password.$invalid && SignUpsubmitted" class="help-block">This field is required.</p>
+                        </div>
+                        <p ng-if="invalidCredentials" style="color:red">{{ErrorText}}</p>
+                    </div>
+                    <div class="row ">
+                        <div class="col-lg-8 col-md-8  col-sm-8 col-xs-7 forgotpassword ">
+                            <div><a href="#" data-toggle="modal" data-target="#forgotPasswordModal" data-backdrop="static" data-keyboard="false"> Forgot Password?</a></div>
+                            <div><a href="#" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">Create new account</a></div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4  col-xs-5 ">
+                            @*<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Submit</button>*@
+                            <input type="Submit" value="Submit" ng-click="SignUp(user)" class="btn btn-danger" />
+                            @*<a>click here</a>*@
+                            <!--  <a href="addtask.php" class=" btn btn-default submit-btn">Submit <span class="glyphicon glyphicon-log-in"></span>  --></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="loader" hidden>
+        <center>
+            <img class="loading-image" src="../images/loading.gif" alt="loading..">
+        </center>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="resetValidateUSerIdForm()">&times;</button>
+                    <h4 class="modal-title" style="color:#d9534f;font-size:25px;">Registration Form</h4>
+                </div>
+                <form name="RegForm" novalidate>
+                    <div class="modal-body">
+                        <div style="line-height:35px;">
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : RegForm.verticals.$invalid && submitted  }">
+                                            SJSC Vertical Code/ID
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+                                                <select class="form-control" ng-model="reg.SJSCVerticalID" name="verticals" ng-change="reg.EmpCode=''" required>
+                                                    <option value="" hidden>-- Please select --</option>
+                                                    <option value="{{x.VerticalID}}" ng-repeat="x in VList">{{x.VerticalName}}</option>
+                                                </select>
+                                            </div>
+                                            <p ng-show="RegForm.verticals.$invalid && submitted " class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : RegForm.EmpCode.$invalid && specificVerical && submitted  }">
+                                            Employee Code/ID
+                                            <div class="input-group" ng-change="reg.EmpCode=''">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <input ng-if="((reg.SJSCVerticalID != '5')&&(reg.SJSCVerticalID != '6'))" type="text" name="EmpCode" class="form-control" placeholder="Please fill employee id" autocomplete="off" ng-model="reg.EmpCode" maxlength="10" required />
+                                                <input ng-if="((reg.SJSCVerticalID == '5')||(reg.SJSCVerticalID == '6'))" class="form-control" placeholder="Please fill employee id" ng-disabled="(reg.SJSCVerticalID == '5')||(reg.SJSCVerticalID == '6')" ng-model="reg.EmpCode"/>
+                                            </div>
+                                            <p ng-show="RegForm.EmpCode.$error.required && specificVerical  && submitted" class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : RegForm.fName.$invalid && submitted  }">
+                                            First Name
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <span style="display: flex;">
+                                                    <select class="form-control" ng-model="reg.Title" name="title" ng-init="reg.Title= 'Mr'" style="width:36%" required>
+                                                        <option value="Mr">Mr</option>
+                                                        <option value="Ms">Ms</option>
+                                                    </select>
+                                                    <input style="padding-left: 5px;" type="text" class="form-control" name="fName" autocomplete="off" placeholder="Please fill First Name" ng-model="reg.FirstName" required />
+                                                </span>
+
+                                            </div>
+                                            <p ng-show="RegForm.fName.$invalid && submitted " class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : RegForm.lName.$invalid && submitted  }">
+                                            Last Name
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <input type="text" class="form-control" name="lName" placeholder="Please fill Last Name" autocomplete="off" ng-model="reg.LastName" required />
+                                            </div>
+                                            <p ng-show="RegForm.lName.$invalid && submitted " class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : RegForm.designation.$invalid && submitted  }">
+                                            Designation
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+                                                <input type="text" class="form-control" name="designation" autocomplete="off" placeholder="Please fill Designation" ng-model="reg.Designation" required />
+                                            </div>
+                                            <p ng-show="RegForm.designation.$invalid && submitted " class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{'has-error' : RegForm.Deprt.$invalid && submitted}">
+                                            Department
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-certificate"></i></span>
+                                                <input type="text" class="form-control" name="Deprt" autocomplete="off" placeholder="Please fill Department" ng-model="reg.Department" required />
+                                            </div>
+                                            <p ng-show="RegForm.Deprt.$invalid && submitted " class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : (RegForm.email.$invalid  || RegForm.email.$error.pattern )&& submitted }">
+                                            Email
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                                <input type="text" class="form-control" name="email" autocomplete="off" placeholder="Please enter Email-Id" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*&#64;[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" ng-model="reg.EmailID" required />
+                                            </div>
+                                            <p ng-if="RegForm.email.$error.pattern && submitted" class="help-block">Please enter valid Email id</p>
+                                            <p ng-if="RegForm.email.$error.required && submitted" class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : (RegForm.phNo.$invalid ||RegForm.phNo.$error.pattern) && submitted }">
+                                            Mobile No.
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                                <input type="text" class="form-control" name="phNo" maxlength="10" autocomplete="off" placeholder="Please fill Mobile No." onkeydown="validateNumber(event);" ng-pattern="/^[7-9][0-9]{9}$/" ng-model="reg.MobileNo" required />
+                                            </div>
+                                            <p ng-if="RegForm.phNo.$error.pattern && submitted" class="help-block">Please enter valid number!</p>
+                                            <p ng-if="RegForm.phNo.$error.required && submitted" class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : RegForm.HName.$invalid && submitted  }">
+                                            HOD Name
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <span style="display: flex;">
+                                                    <select class="form-control" ng-model="reg.HodTitle" name="HodTitle" ng-init="reg.HodTitle= 'Mr'" style="width:36%" required>
+                                                        <option value="Mr">Mr</option>
+                                                        <option value="Ms">Ms</option>
+                                                    </select>
+                                                    <input style="padding-left:5px" type="text" class="form-control" name="HName" autocomplete="off" placeholder="Please fill Hod Name" ng-model="reg.HodName" required />
+                                                </span>
+                                            </div>
+                                            <p ng-show="RegForm.HName.$invalid && submitted " class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{'has-error' : (RegForm.Hemail.$invalid  || RegForm.Hemail.$error.pattern )&& submitted }">
+                                            HOD Email
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                                <input type="text" class="form-control" name="Hemail" autocomplete="off" placeholder="Please fill Hod Email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*&#64;[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" ng-model="reg.HodEmailID" required />
+                                            </div>
+                                            <p ng-if="RegForm.Hemail.$error.pattern && submitted" class="help-block">Please enter valid Hod Email id</p>
+                                            <p ng-if="RegForm.Hemail.$error.required && submitted" class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : RegForm.password.$invalid && submitted }">
+                                            Password
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                <input type="password" class="form-control" name="password" autocomplete="off" placeholder="Please fill the Password" ng-model="reg.Pwd" required />
+                                            </div>
+                                            <p ng-show="RegForm.password.$invalid && submitted" class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' :( RegForm.confPassword.$invalid || (reg.Pwd != reg.ConfirmPwd) ) && submitted}">
+                                            Confirm Password
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                <input type="password" class="form-control" name="confPassword" ng-model="reg.ConfirmPwd" autocomplete="off" placeholder="Please re-enter your Password." required password-verify="{{reg.Pwd}}" />
+                                            </div>
+                                            <p ng-if="submitted && (reg.Pwd != reg.ConfirmPwd) && !RegForm.confPassword.$error.required" class="help-block">Password not Match</p>
+                                            <p ng-if="RegForm.confPassword.$error.required && submitted" class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : (RegForm.HODphNo.$invalid ||RegForm.HODphNo.$error.pattern) && submitted }">
+                                            HOD Mobile No.
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                                <input type="text" class="form-control" name="HODphNo" maxlength="10" autocomplete="off" placeholder="Please fill Mobile No." onkeydown="validateNumber(event);" ng-pattern="/^[7-9][0-9]{9}$/" ng-model="reg.HODMobileNo" required />
+                                            </div>
+                                            <p ng-if="RegForm.HODphNo.$error.pattern && submitted" class="help-block">Please enter valid number!</p>
+                                            <p ng-if="RegForm.HODphNo.$error.required && submitted" class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" href="#" class="btn btn-danger " ng-click="register(reg)"><i class="glyphicon glyphicon-log-in"></i> Submit</button>
+                                @*<input type="submit" class="btn btn-danger" value="Submit" />*@
+                                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                            </div>
+
+                            </div>
+                        </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="forgotPasswordModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="resetValidateUSerIdForm()">&times;</button>
+                    <h4 class="modal-title" style="color:#d9534f;font-size:20px;">Verify Your Registered Email ID</h4>
+                </div>
+                <form name="validateUSerIdForm" novalidate>
+                    <div class="modal-body">
+                        <div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{ 'has-error' : (validateUSerIdForm.email.$invalid  || validateUSerIdForm.email.$error.pattern )&& submitted }">
+                                            Email Id
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                                <input type="text" class="form-control" name="email" autocomplete="off" placeholder="Please enter email-id" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*&#64;[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" ng-model="User.EmailID" required />
+                                            </div>
+                                            <p ng-if="validateUSerIdForm.email.$error.pattern && submitted" class="help-block">Please enter valid Email id</p>
+                                            <p ng-if="validateUSerIdForm.email.$error.required && submitted" class="help-block">This field is required.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p ng-class="successColor ? 'successText' : 'errorText'">{{forgotPasswordResponseText}}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" href="#" class="btn btn-danger " ng-click="validateUserId(User)" ng-disabled="successColor"><i class="glyphicon glyphicon-log-in"></i> Submit</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

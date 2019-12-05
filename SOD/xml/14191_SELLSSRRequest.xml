@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>YO4Cej30ERg=|bBNF9HLuoju6PFMHTtTpMSceM+Ppma/BFud255CUOcoSkX1pl39Ev38EbGsocIlIgWCaQKTymcZ4KbZsC5lyO6w2zFr3V0ffXMeyoaPQ/8stb5sOITc49NeXCYsL0LvVlzlWSCh6niw=</Signature>
+  <SellRequestData>
+    <SellBy>SSR</SellBy>
+    <SellSSR>
+      <SSRRequest>
+        <SegmentSSRRequests>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber> 158</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2017-09-14T18:30:00</STD>
+            <DepartureStation>BOM</DepartureStation>
+            <ArrivalStation>DEL</ArrivalStation>
+            <PaxSSRs>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>SS</ActionStatusCode>
+                <ArrivalStation>DEL</ArrivalStation>
+                <DepartureStation>BOM</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>VGML</SSRCode>
+                <SSRNumber>0</SSRNumber>
+                <SSRValue>0</SSRValue>
+              </PaxSSR>
+            </PaxSSRs>
+          </SegmentSSRRequest>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber>  11</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2017-09-17T07:50:00</STD>
+            <DepartureStation>DEL</DepartureStation>
+            <ArrivalStation>DXB</ArrivalStation>
+            <PaxSSRs>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>SS</ActionStatusCode>
+                <ArrivalStation>DXB</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>VGBF</SSRCode>
+                <SSRNumber>0</SSRNumber>
+                <SSRValue>0</SSRValue>
+              </PaxSSR>
+            </PaxSSRs>
+          </SegmentSSRRequest>
+        </SegmentSSRRequests>
+        <CurrencyCode>INR</CurrencyCode>
+        <CancelFirstSSR>false</CancelFirstSSR>
+        <SSRFeeForceWaiveOnSell>false</SSRFeeForceWaiveOnSell>
+      </SSRRequest>
+    </SellSSR>
+  </SellRequestData>
+</SellRequest>

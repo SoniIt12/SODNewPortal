@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>V0XAaieiwhc=|/AfS/2eND6BXUT/qILsTf6/b6HQIjKZAXXJ3IcDZzLfgYkxDEHr206q6kMJpSfo9ogJlAEVsBgxVnmUh3Gr4Muw+A+47Su2Aa45SEMD2sFyfRsbDU4FyU3i7U23E0h2l0amfjw9/Y/w=</Signature>
+  <SellRequestData>
+    <SellBy>SSR</SellBy>
+    <SellSSR>
+      <SSRRequest>
+        <SegmentSSRRequests>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber>2327</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2019-07-26T18:15:00</STD>
+            <DepartureStation>DEL</DepartureStation>
+            <ArrivalStation>DED</ArrivalStation>
+            <PaxSSRs>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>LL</ActionStatusCode>
+                <ArrivalStation>DED</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>VGSW</SSRCode>
+                <SSRNumber>0</SSRNumber>
+                <SSRValue>0</SSRValue>
+              </PaxSSR>
+            </PaxSSRs>
+          </SegmentSSRRequest>
+        </SegmentSSRRequests>
+        <CurrencyCode>INR</CurrencyCode>
+        <CancelFirstSSR>false</CancelFirstSSR>
+        <SSRFeeForceWaiveOnSell>false</SSRFeeForceWaiveOnSell>
+      </SSRRequest>
+    </SellSSR>
+  </SellRequestData>
+</SellRequest>

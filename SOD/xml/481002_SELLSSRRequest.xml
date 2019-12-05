@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>BBSMVkqusYA=|JAOPHwOnVU6SUeteMfCBi05nerIS6/5zg9Bv/VZUV9pe7Amam9r1X8cYsMCdfjWXXyH+G8AH+XhyUFh0Wr0ieHQomp7magwd5pioZVCSzVWftHTJ+G6f2sy3V/6DwVTds3QCsJtmw8M=</Signature>
+  <SellRequestData>
+    <SellBy>SSR</SellBy>
+    <SellSSR>
+      <SSRRequest>
+        <SegmentSSRRequests>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber>8171</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2019-09-18T11:30:00</STD>
+            <DepartureStation>DEL</DepartureStation>
+            <ArrivalStation>GOI</ArrivalStation>
+            <PaxSSRs />
+          </SegmentSSRRequest>
+        </SegmentSSRRequests>
+        <CurrencyCode>INR</CurrencyCode>
+        <CancelFirstSSR>false</CancelFirstSSR>
+        <SSRFeeForceWaiveOnSell>false</SSRFeeForceWaiveOnSell>
+      </SSRRequest>
+    </SellSSR>
+  </SellRequestData>
+</SellRequest>

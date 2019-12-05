@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>Gu4eMqBDJ/w=|OQXfS1xOyTcouC88RGfFhLJIZWgDe2Vquw/nZsP5F3w3ONXLrtW7xyoQdsGzYV2mKmDt10frD9Z1qLh0FNVqUGp7igFAh5O8KhcXntrBC861rIvXxbio2OMpohNJsUiQYYNzbq6STqQ=</Signature>
+  <SellRequestData>
+    <SellBy>SSR</SellBy>
+    <SellSSR>
+      <SSRRequest>
+        <SegmentSSRRequests>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber> 107</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2019-07-12T06:05:00</STD>
+            <DepartureStation>DEL</DepartureStation>
+            <ArrivalStation>MAA</ArrivalStation>
+            <PaxSSRs>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>LL</ActionStatusCode>
+                <ArrivalStation>MAA</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>VGML</SSRCode>
+                <SSRNumber>0</SSRNumber>
+                <SSRValue>0</SSRValue>
+              </PaxSSR>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>LL</ActionStatusCode>
+                <ArrivalStation>MAA</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>BVG</SSRCode>
+                <SSRNumber>0</SSRNumber>
+                <SSRValue>0</SSRValue>
+              </PaxSSR>
+            </PaxSSRs>
+          </SegmentSSRRequest>
+        </SegmentSSRRequests>
+        <CurrencyCode>INR</CurrencyCode>
+        <CancelFirstSSR>false</CancelFirstSSR>
+        <SSRFeeForceWaiveOnSell>false</SSRFeeForceWaiveOnSell>
+      </SSRRequest>
+    </SellSSR>
+  </SellRequestData>
+</SellRequest>

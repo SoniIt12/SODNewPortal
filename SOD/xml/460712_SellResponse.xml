@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BookingUpdateResponseData>
+    <ExtensionData />
+    <Success>
+      <ExtensionData />
+      <RecordLocator />
+      <PNRAmount>
+        <ExtensionData />
+        <BalanceDue>819.00000</BalanceDue>
+        <AuthorizedBalanceDue>819.00000</AuthorizedBalanceDue>
+        <SegmentCount>3</SegmentCount>
+        <PassiveSegmentCount>0</PassiveSegmentCount>
+        <TotalCost>819.00000</TotalCost>
+        <PointsBalanceDue>0</PointsBalanceDue>
+        <TotalPointCost>0</TotalPointCost>
+        <AlternateCurrencyCode />
+        <AlternateCurrencyBalanceDue>0</AlternateCurrencyBalanceDue>
+      </PNRAmount>
+    </Success>
+  </BookingUpdateResponseData>
+</SellResponse>

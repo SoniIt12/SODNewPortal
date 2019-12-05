@@ -1,0 +1,684 @@
+﻿
+@{
+    ViewBag.Title = "OAT | Travel Desk";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<script src="../js/angular/angular.min.js"></script>
+<link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+<link href="../css/finalsodstyle.css" rel="stylesheet" />
+<script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+<link href="../css/bootstrap.min.css" rel="stylesheet" />
+<script src="../js/angular/sanitize.js"></script>
+<script src="../js/ajax-js-lib/googleapis-ajax-jquery1.8.3.min.js"></script>
+<script src="../New_Calender/src/calender_jquery.daterange.js"></script>
+<link href="../New_Calender/calender.css" rel="stylesheet" />
+<script src="../Dropdownmenu/jquery-1.9.1.js"></script>
+<script src="../Dropdownmenu/jquery-ui.js"></script>
+<link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+<link href="../css/timepicker.css" rel="stylesheet" />
+
+
+@*<script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>*@
+
+<style type="text/css">
+ .modal.modal-wide .modal-dialog {   width: 72%;    }
+ .modal-wide .modal-body { overflow-y: auto;   }
+    /* irrelevant styling */
+    .modal-dialog {   left: 5px;   }
+        .modal-dialog div {   text-align: center;   }
+    /*.modal-dialog div  p { max-width: 400px;margin: 20px auto;}*/
+    .modal-body table tr th {  text-align: Center;  padding: 10px;    }
+    ul > li, a {  cursor: pointer;   }
+    img {   cursor: pointer;   }
+   .popuphdtxt {  font-size: 18px;  font-family: Swis721 Cn BT,Sans-Serif;  padding-bottom: 1px;  padding-top: 1px;  }
+   .flighdtl {  width: 100%;     border: 1px solid #c2c2c2;   }
+   .popheadcolor {  background-color: #EE1D23;  color: #fff;  font-family: Swis721 Cn BT,Sans-Serif;}
+   .button {
+    background-color: #f44336; border: none; color: white; padding: 6px 28px; text-align: center; text-decoration: none;
+    display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;}
+   .button2 {border-radius: 4px;}
+    #tbldetail th { font-size:12px;    }
+
+    .green{color:green;}
+</style>
+
+<script>
+    var app = angular.module('OatTravelDetails', ['ui.bootstrap', 'ngSanitize']);
+
+    app.filter('startFrom', function () {
+        return function (input, start) {
+            if (input) {
+                start = +start; //parse to int
+                return input.slice(start);
+            }
+            return [];
+        }
+    });
+
+    //New Line Filter
+    app.filter('nlfilter', function () {
+        return function (text) {
+            text = String(text).trim();
+            return (text.length > 0 ? '<p>' + text.replace(/[\r\n]+/g, '</p><p>') + '</p>' : null);
+        }
+    });
+
+    
+    app.controller("OatTravel", function ($scope, $http, $timeout) {
+        function loaddata() {
+            $http({
+                method: "GET",
+                url: "../OAT/GetApprovedRequests?EmpId=0"
+            }).then(function mySucces(response) {
+                $scope.trlist = response.data.approvedList;//fill oat approval details data
+                $scope.currentPage = 1; //current page
+                $scope.entryLimit = 10; //max no of items to display in a page
+                $scope.filteredItems = $scope.trlist.length; //Initially for no filter  
+                $scope.totalItems = $scope.trlist.length;
+
+            }, function myError(response) {
+                $scope.myWelcome = response.statusText;
+            });
+        }
+
+            $scope.setPage = function (pageNo) {
+                $scope.currentPage = pageNo;
+            };
+
+            $scope.filter = function () {
+                $timeout(function () {
+                    $scope.filteredItems = $scope.filtered.length;
+                }, 1);
+            };
+
+
+            //Convert date script date formt for display
+            $scope.ToJavaScriptDate = function (value) {
+                var pattern = /Date\(([^)]+)\)/;
+                var results = pattern.exec(value);
+                var dt = new Date(parseFloat(results[1]));
+                return (dt.getDate()) + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+            };
+
+            //view modal data travel request id link click
+            $scope.viewOATAppList = function (TRId) {
+                $http({
+                    method: "GET",
+                    url: "../OAT/GetDetailsOATList?TrId=" + TRId
+                }).then(function mySucces(response) {
+                    $scope.trdlist = response.data.flightList;
+                    $scope.plists = response.data.pasgList;
+                    $scope.alists = response.data.pnrList;
+                    $scope.masterList = response.data.masterList;
+
+                    $scope.trn = TRId;
+                    debugger;
+                    if ($scope.masterList[0].ITHResponseStatus == null || $scope.masterList[0].ITHResponseStatus == "") {
+                        $('#btnRequestToITH').show();
+                        $('#ResponseTextApproval').hide();
+                    } else {
+                        $('#btnRequestToITH').hide();
+                        $('#ResponseTextApproval').show();
+                    }
+                }, function myError(response) {
+                    alert(response);
+                });
+            };
+
+        //view ith status modal popup data
+            $scope.viewITHStatus = function (TRId) {
+                $http({
+                    method: "GET",
+                    url: "../OAT/viewITHStatusList?TrId=" + TRId
+                }).then(function mySucces(response) {
+                    $scope.ithList = response.data.ithList;
+                    $scope.mlist = response.data.masterList;
+                    $scope.trn = TRId;
+                }, function myError(response) {
+                    alert(response);
+                });
+            };
+
+
+            //send mail to hod for financial approval
+            $scope.sendmailtoHOD = function (TRId) {
+
+                var arrList= new Array();
+                for (var i = 0; i < $scope.ithList.length; i++) {
+                    var object = new Object();
+                    //object.Id = $scope.ithList[i].Id;
+                    object.TravelRequestId = $scope.ithList[i].TravelRequestId;
+                    var jsDate = JavaScriptDate($scope.ithList[i].ResponseDate);
+                    object.ResponseDate = jsDate;
+                    object.OriginPlace = $scope.ithList[i].OriginPlace;
+                    object.DestinationPlace = $scope.ithList[i].DestinationPlace;
+                    var dt = JavaScriptDate($scope.ithList[i].TravelDate);
+                    object.TravelDate = dt;
+                    object.FlightNo = $scope.ithList[i].FlightNo;
+                    object.FlightName = $scope.ithList[i].FlightName;
+                    object.DepartureTime = $scope.ithList[i].DepartureTime;
+                    object.ArrivalTime = $scope.ithList[i].ArrivalTime;
+                    object.Amount = $scope.ithList[i].Amount;
+                    object.FlightType = $scope.ithList[i].FlightType;
+                    arrList.push(object);
+                }
+
+                var jsonlist = JSON.stringify({ ithlist: arrList });
+                $.ajax({
+                    url: '../mailITH/sendmailtoHOD',
+                    type: "POST",
+                    processData: false,
+                    data: jsonlist,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        if (response != "" || response != null) {
+                            alert('Email notification has been sent successfully.');
+                            $('#btnRequestToHOD').hide();
+                            $('#ResponseHODApproval').show();
+                        }
+                        else {
+                            alert('Error: Invalid request processing...');
+                        }
+                    }
+                });
+            };
+        
+            // send request to travel house
+            $scope.sendITHRequest = function (reqID) {
+
+                if ($('#txtcode').val() == '' || $('#txtcode').val() == null ||
+                $('#txthphone').val() == '' || $('#txthphone').val() == null ||
+                $('#txthemail').val() == '' || $('#txthemail').val() == null) {
+                    alert('Enter ITH details.');
+                    return;
+                }
+
+                var hlists = new Array();
+                var obj = new Object();
+                var name = $('#ddlITH :selected').text();
+
+                for (var i = 0; i < $scope.trdlist.length; i++) {
+                    obj.TravelRequestId = reqID.split('-')[1];
+                    obj.IthName = name;
+                    obj.Phone = $('#txthphone').val();
+                    obj.PrimaryEmail = $('#txthemail').val();
+                    obj.SecondaryEmail = $('#txtotheremail').val();
+                    obj.IthCode = $('#txtcode').val();
+                    obj.Status = "0";
+                    //obj.Source = $scope.trdlist[i].OriginPlace;
+                    //obj.Destination = $scope.trdlist[i].DestinationPlace;
+                    hlists.push(obj);
+                }
+
+                var jsonlist = JSON.stringify({ hlist: hlists });
+                $.ajax({
+                    url: '../OAT/SendRequestToITH',
+                    type: "POST",
+                    processData: false,
+                    data: jsonlist,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        if (response != "" || response != null) {
+                            alert('Email notification has been sent successfully.');
+                            $('#btnRequestToITH').hide();
+                            $('#ResponseTextApproval').show();
+                        }
+                        else {
+                            alert('Error: Invalid request processing...');
+                        }
+                    }
+                });
+            };
+
+
+            //send mail to ith for itinerary
+            $scope.sendmailforItinerary = function (TRId) {
+                $.ajax({
+                    url: '../OAT/SendMailforItinerary',
+                    type: "POST",
+                    processData: false,
+                    data: JSON.stringify({ travelRequestId: TRId }),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        if (response != "" || response != null) {
+                            alert('Email notification has been sent successfully.');
+                            $('#btnItinerary').hide();
+                            $('#ITHItinerarySpan').show();
+                        }
+                        else {
+                            alert('Error: Invalid request processing...');
+                        }
+                    }
+                });
+
+            };
+
+            $scope.uploadPdf = function (TRId) {
+
+                if ($('input[name="radio"]:checked').val() == 'rdoapprove') {
+                    if ($("#txtremarks1").val().length >= 1 && $("#txtremarks2").val().length >= 1
+                        && $("#txtremarks3").val().length >= 1) {
+                        function isValidDate(sText) {
+                            var reDate = /^((0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)?[0-9]{2})*$/;
+                            return reDate.test(sText);
+                        }
+
+                        if (isValidDate($("#txtremarks3").val())) {
+                            //var ulists= new Array();
+                            //var obj = new Object();
+                            //obj.travelRequestId = TRId;
+                            //obj.pnr = $("#txtremarks1").val().toString();
+                            //obj.FlightInfo=$("#txtremarks2").val().toString();
+                            //obj.travelDate = $("#txtremarks3").val().toString();
+                            //obj.remarks = $("#txtremarks5").val().toString();
+                            //obj.status= "Close"
+                            //ulists.push(obj);
+                            //debugger;
+                            var ulists = TRId + "|" + $("#txtremarks1").val().toString() + "|" + $("#txtremarks2").val().toString() + "|" +
+                              $("#txtremarks3").val().toString() + "|" + $("#txtremarks5").val().toString() + "|" + "Close";
+
+                        } else {
+                            alert("Invalid date format!");
+                            return;
+                        }
+                    } else {
+                        alert("Enter all the details!");
+                        return;
+                    }
+                    
+                }
+                else {
+                    var ulists = TRId + "|" + "" + "|" + "" + "|" +
+                       "" + "|" + $("#txtremarks6").val() + "|" + "Rejected";
+                }
+               
+                
+                // Checking whether FormData is available in browser
+                if (window.FormData !== undefined) {
+
+                    var fileUpload = $("#FileUpload1").get(0);
+                    var files = fileUpload.files;
+
+                    // Create FormData object
+                    var fileData = new FormData();
+
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append(files[i].name, files[i]);
+                    }
+                    debugger;
+                    $.ajax({
+                        url: '../Oat/UploadFiles?ulist='+ ulists,
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: fileData,
+                        
+                        success: function (result) {
+                            //alert(result);
+                            alert("Upload data saved successfully.");
+                            location.reload();
+                        },
+                        error: function (err) {
+                            // alert(err.statusText);
+                            alert("Upload data saved successfully.");
+                        }
+                    });
+                } else {
+                    alert("FormData is not supported.");
+                }
+            }
+                   
+        loaddata();
+        ITHdatafill();
+    });
+
+
+    function Approve_Reject() {
+
+        if ($('input[name="radio"]:checked').val() == 'rdoapprove') {
+
+            $("#tblbookinginfo").prop("hidden", false);
+            $("#rejecttable").prop("hidden", true);
+           
+        }
+        else if ($('input[name="radio"]:checked').val() == 'rdoreject') {
+
+            $("#tblbookinginfo").prop("hidden", true);
+            $("#rejecttable").prop("hidden", false);
+        }
+    }
+
+    //fill ITH names in dropdown list from database
+    function ITHdatafill() {
+        var ddlITH = $("#ddlITH");
+        ddlITH.empty().append('<option selected="selected" value="0" disabled = "disabled">Loading.....</option>');
+        $.ajax({
+            type: "POST",
+            url: "../OAT/ITHListData",
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                ddlITH.empty().append('<option selected="selected" value="0">Please select</option>');
+                $.each(response, function () {
+                    ddlITH.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    };
+
+
+    //convert MM/dd/yyyy
+    function ConvertMMddyyyy(dval) {
+        var mval = (dval.split('/')[1] + '/' + dval.split('/')[0] + '/' + dval.split('/')[2]);
+        return mval;
+    }
+    
+    function JavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return (dt.getMonth() + 1) + "/" + (dt.getDate()) + "/" + dt.getFullYear();
+    };
+
+    //fill ITH information of by name on dropdown value change
+    function ithfilldropdown() {
+        var name = $('#ddlITH :selected').text();
+        $.ajax({
+            type: "POST",
+            url: "../OAT/ithfilldropdown?name=" + name,
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                //$scope.hoteldetailsfill = response.data["hoteldetails"];
+                $('#txtcode').val(response.ithList[0].IthCode);
+                $('#txthname').val(response.ithList[0].IthName);
+                $('#txthphone').val(response.ithList[0].Phone);
+                $('#txthemail').val(response.ithList[0].PrimaryEmail);
+                $('#txtotheremail').val(response.ithList[0].SecondaryEmail);
+            }
+        });
+    }
+</script>
+
+
+<div ng-app="OatTravelDetails" ng-controller="OatTravel" ng-cloak>
+    <div class="container" style="width:100%;margin-top:-40px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div style="text-align:center; font-size:16px;margin-top:5px; "> View OAT Requests </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6" >
+                <div class="searchDvv">
+                   Search: <input type="text" ng-model="search" ng-change="filter()" placeholder="Filter">                    
+                </div>
+            </div>
+            @*<div class="col-md-4">
+                <div style="text-align:left;" class="searchDvPagesize_right">
+                    Department  :
+                    <select ng-model="searchDept" ng-options="item.dept_name for item in deptlist" style="width:200px;" ng-change="filterdept()">
+                        <option value="">-- All --</option>
+                    </select>
+                </div>
+            </div>*@
+
+            <div class="col-md-6">
+                <div style="text-align:left;" class="searchDvPagesize_right">
+                    Page Size :
+                    <select ng-model="entryLimit">
+                        @*<option>5</option>*@
+                        <option>10</option>
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" ng-show="filteredItems > 0">
+                <div style="overflow:auto">
+                    <table class="table table-striped table-bordered" style="width:100%;" id="tbldetail">
+                        <tr class="popheadcolor">
+                            <th>S.No.</th>
+                            <th>
+                                Travel Req. Id
+                            </th>
+                            <th>
+                                RequestDate
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Emp Code
+                            </th>
+                            <th>
+                                Department
+                            </th>
+                            <th>
+                                Purpose
+                            </th>
+                            <th>
+                                ITH Response Status
+                            </th>
+                            <th>
+                                Financial Approval Status
+                            </th>                            
+                            @*<th>
+                                Download Itinerary
+                            </th>*@
+                        </tr>
+
+                        <tr ng-repeat="list in filtered = (trlist | filter: search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                            <td>{{$index+1}}</td>
+                            <td><a data-toggle=modal href="#viewdetailModal" class="csod" ng-click="viewOATAppList(list.TravelRequestCode)">{{list.TravelRequestCode}}</a></td>
+
+                            <td>{{ToJavaScriptDate(list.RequestDate)}}</td>
+                            <td>{{list.RequestedEmpName}}</td>
+                            <td>{{list.RequestedEmpCode}}</td>
+                            <td>{{list.RequestedEmpDept}}</td>
+                            <td>{{list.ReasonForTravel}}</td>
+                            <td><a data-toggle=modal href="#viewdetailModalITH" class="csod" ng-click="viewITHStatus(list.TravelRequestCode)">{{list.ITHResponseStatus}}</a></td>
+                            <td>{{list.FinancialApproval}}</td>
+                            @*<td ng-class="{'green': list.BookingStatus === 'Close ✔'}">{{list.BookingStatus}}</td>*@
+                            @*<td></td>*@
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="notFoundDiv" ng-show="(trlist).length==0"><h4>&emsp;No Records Found</h4></div>
+
+            <!--Pagination-->
+            <div class="col-md-12" ng-show="filteredItems > 0" style="z-index:0;margin-top:-28px;">
+                <div pagination total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--------------------View Detail Model popup------------------------------------->
+    <div id="viewdetailModal" class="modal modal-wide fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                    <h4 class="modal-title"><span class="viewlistcs">OAT Travel Request Details (ID: {{trn}})</span></h4>
+                </div>
+                <div class="modal-body">
+                    @*
+                        <tr>
+                            <td>Upload Itinerary (Pdf) :</td>
+                            <td colspan="2">
+                                <input type="file" id="FileUpload1" />
+                                <a href="#" download id="download" >Download Itinerary</a>
+                            </td>
+                        </tr>
+                        
+                    <input type="button" id="btnUpload" value="SUBMIT" ng-click="uploadPdf(trn);" />*@
+                    
+                    <table class="flighdtl" id="tblExistingITH">
+                        <tr>
+                            <td>ITH Name  :</td>
+                            <td>
+                                <input type="text" hidden="hidden" class="inputremark" ng-model="txthname" id="txthname" maxlength="200" required />
+                                <select class="inputremark" id="ddlITH" style="text-align:left;" onchange="ithfilldropdown();"></select>
+                            </td>
+                            <td>ITH Code  :</td>
+                            <td>
+                                <input type="text" class="inputremark" style="text-align:left;" ng-model="txtcode" id="txtcode" maxlength="200" required />
+                            </td>
+                        </tr>
+                        <tr>                           
+                            <td>ITH Phone  :</td>
+                            <td>
+                                <input type="text" class="inputremark" style="text-align:left;" ng-model="txthphone" id="txthphone" maxlength="200" required />
+                            </td>
+                            <td>Primary Email Id  :</td>
+                            <td>
+                                <input type="text" class="inputremark" style="text-align:left;" ng-model="txthemail" id="txthemail" maxlength="200" required />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Other Email Id's  :</td>
+                            <td>
+                                <input type="text" class="inputremark" style="text-align:left;" ng-model="txtotheremail" id="txtotheremail" maxlength="200" required />
+                            </td>
+                            <td colspan="2">
+                                <input type="submit" id="btnRequestToITH" value="Send Request to ITH" ng-click="sendITHRequest(trn);" class='btn btn-warning btn-sm' />
+                                <span id="ResponseTextApproval" hidden="hidden">Request Successfully Sent to ITH.</span>
+                            </td>
+                        </tr>
+                       
+                    </table>    
+
+                        <h4 class="popuphdtxt">Flight Information</h4>
+                        <table id="tblbookinginfo" class="flighdtl">
+                            <tr class="popheadcolor">
+                                <th>SNo. </th>
+                                <th>Origin Place</th>
+                                <th>Destination Place</th>
+                                <th>Travel Date</th>
+                                <th>Flight Info</th>
+                                <th>Flight No.</th>
+
+                            </tr>
+                            <tr ng-repeat="dlist in trdlist">
+                                <td>{{$index+1}}</td>
+                                <td>{{dlist.OriginPlace}}</td>
+                                <td>{{dlist.DestinationPlace}}</td>
+                                <td>{{ToJavaScriptDate(dlist.DepartureDate)}}</td>
+                                <td>{{dlist.DepFlightInfo}}</td>
+                                <td>{{dlist.DepFlightNumber}}</td>
+
+                            </tr>
+                        </table>
+
+                        <h4 class="popuphdtxt" id="passH">Passenger(s) Information</h4>
+                        <table id="tblbookinginfo" class="flighdtl">
+                            <tr class="popheadcolor">
+                                <th>SNo. </th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Gender</th>
+                            </tr>
+                            <tr ng-repeat="dlist in plists">
+                                <td>{{$index+1}}</td>
+                                <td>{{dlist.FirstName}}</td>
+                                <td>{{dlist.LastName}}</td>
+                                <td>{{dlist.Gender}}</td>
+                            </tr>
+                        </table>
+</div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <!-----------------------Detail model popup ITH Response------------------------>
+    <div id="viewdetailModalITH" class="modal modal-wide fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                    <h4 class="modal-title"><span class="viewlistcs">ITH Response (ID: {{trn}})</span></h4>
+                </div>
+                <div class="modal-body">
+                    <table class="flighdtl" id="tblviewITH" ng-if="ithList.length > 0">
+                        <tr class="popheadcolor">
+                            <th>Source</th>
+                            <th>Destination</th>
+                            <th>Travel Date</th>
+                            <th>Flight No</th>
+                            <th>Flight Name</th>
+                            <th>Departure Time</th>
+                            <th>Arrival Time</th>
+                            <th>Amount</th>
+                            <th>Flight Type</th>
+                            <th>HOD Approval</th>
+
+                        </tr>
+                        <tr ng-repeat-start="flist in ithList">
+                            <td>{{flist.OriginPlace}}</td>
+                            <td>{{flist.DestinationPlace}}</td>
+                            <td>{{ToJavaScriptDate(flist.TravelDate)}}</td>
+                            <td>{{flist.FlightNo}}</td>
+                            <td>{{flist.FlightName}}</td>
+                            <td>{{flist.DepartureTime}}</td>
+                            <td>{{flist.ArrivalTime}}</td>
+                            <td>{{flist.Amount}}</td>
+                            <td>{{flist.FlightType}}</td>
+                            <td>{{flist.HodApproval=='Approved'?'Approved ✔':''}}</td>
+                        </tr>
+                        <tr ng-if="($index+1) % 3 === 0" ng-repeat-end>
+                            <td colspan="10"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">Send Mail to HOD for financial approval:</td>
+                            <td colspan="5">
+                                <button ng-if="mlist[0].FinancialApproval=='' || mlist[0].FinancialApproval==null" type="button" id="btnRequestToHOD" class="btn btn-warning btn-sm" ng-click="sendmailtoHOD(trn)">Send Mail to HOD</button>
+                                <span id="ResponseHODApproval" hidden="hidden">Mail has been sent to HOD.</span>
+                                <span id="ResponseTxtHOD" ng-if="mlist[0].FinancialApproval=='Pending' || mlist[0].FinancialApproval=='Approved'">Mail has been sent to HOD.</span>
+                            </td>
+                        </tr>
+                        <tr ng-if="mlist[0].FinancialApproval=='Approved'">
+                            <td colspan="5">Send Mail to ITH for Itinerary of Approved request:</td>
+                            <td colspan="5">
+                                <button type="button" id="btnItinerary" class="btn btn-warning btn-sm" ng-click="sendmailforItinerary(trn)" ng-if="mlist[0].ITHResponseStatus!='Itinerary Pending' || mlist[0].ITHResponseStatu!='Itinerary Received'">Request to ITH for Itinerary</button>
+                                <span id="ITHItinerarySpan" hidden="hidden">Mail has been sent to ITH for Itinerary.</span>
+                                <span id="ITHItineraryTxtSpan" ng-if="mlist[0].ITHResponseStatus=='Itinerary Pending' || mlist[0].ITHResponseStatus=='Itinerary Received'">Mail has been sent to HOD.</span>
+                            </td>
+                        </tr>
+                    </table>
+
+</div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!----/modal-->
+
+</div>

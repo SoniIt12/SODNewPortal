@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PriceItineraryRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>yZeOJg+lO28=|bk3EvuNmsYZzr4qWKuvW8mXFPHCUDbFARC3d2Hk/eDXzmpHMEh3uFCtJlainwoUwiisHnuPIs52Yt/qcxbAdyBkoQU7zJBhrS9ybk0DrLxYfZvEL/2DUIyNUMmQlDIDYb49FQf0tTrg=</Signature>
+  <ItineraryPriceRequest>
+    <PriceItineraryBy>JourneyBySellKey</PriceItineraryBy>
+    <SellByKeyRequest>
+      <ActionStatusCode>SS</ActionStatusCode>
+      <JourneySellKeys>
+        <SellKeyList />
+      </JourneySellKeys>
+      <PaxPriceType>
+        <PaxPriceType>
+          <PaxType>ADT</PaxType>
+          <PaxDiscountCode />
+        </PaxPriceType>
+      </PaxPriceType>
+      <CurrencyCode>INR</CurrencyCode>
+      <PaxCount>1</PaxCount>
+      <LoyaltyFilter>MonetaryOnly</LoyaltyFilter>
+      <IsAllotmentMarketFare>false</IsAllotmentMarketFare>
+      <PreventOverLap>false</PreventOverLap>
+    </SellByKeyRequest>
+  </ItineraryPriceRequest>
+</PriceItineraryRequest>

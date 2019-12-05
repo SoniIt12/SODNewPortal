@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>x7LoN5BG8lg=|Tp5h+WgDemJYTLJnMoi+HogJA3UwP91uqOlaSivpIa+vX688Q11QYlFiBDASAc93mRwX0xdMsYsehc/VGi0NpPkhBX4dd3hFd5lD+ZiwOJZUu7uNFfUpW1BOXUJB/kJwdIp2nPDRuDk=</Signature>
+  <SellRequestData>
+    <SellBy>JourneyBySellKey</SellBy>
+    <SellJourneyByKeyRequest>
+      <SellJourneyByKeyRequestData>
+        <ActionStatusCode>LL</ActionStatusCode>
+        <JourneySellKeys>
+          <SellKeyList>
+            <JourneySellKey>SG~8473~ ~~DEL~08/24/2019 05:40~STV~08/24/2019 07:30~~^SG~2789~ ~~STV~08/24/2019 16:00~GOI~08/24/2019 17:45~~</JourneySellKey>
+            <FareSellKey>0~Z~ ~SG~ZSOD~9922~~0~6~~X^0~Z~ ~SG~ZSOD~9922~~0~6~~X</FareSellKey>
+            <StandbyPriorityCode>NR</StandbyPriorityCode>
+          </SellKeyList>
+        </JourneySellKeys>
+        <PaxPriceType>
+          <PaxPriceType>
+            <PaxType>ADT</PaxType>
+            <PaxDiscountCode />
+          </PaxPriceType>
+        </PaxPriceType>
+        <CurrencyCode>INR</CurrencyCode>
+        <SourcePOS>
+          <State>New</State>
+          <DomainCode>WWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </SourcePOS>
+        <PaxCount>1</PaxCount>
+        <LoyaltyFilter>MonetaryOnly</LoyaltyFilter>
+        <IsAllotmentMarketFare>false</IsAllotmentMarketFare>
+        <PreventOverLap>false</PreventOverLap>
+      </SellJourneyByKeyRequestData>
+    </SellJourneyByKeyRequest>
+  </SellRequestData>
+</SellRequest>

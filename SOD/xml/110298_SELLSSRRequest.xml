@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>nB438jAy8GI=|wy45bVAOp8WHkRt2+p3yYhUvRMMNkG6t61oHw27uVcwMup3UILRWj9XbXpJiC+fO359afFZloY1wvnZoASJ/Bh7RrbgbTwDarwV9TE4ZHhOKwwgd7WoGf5xBEm5bJv7HYTKJ2yWwFs8=</Signature>
+  <SellRequestData>
+    <SellBy>SSR</SellBy>
+    <SellSSR>
+      <SSRRequest>
+        <SegmentSSRRequests>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber> 169</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2018-04-19T15:50:00</STD>
+            <DepartureStation>GAU</DepartureStation>
+            <ArrivalStation>DEL</ArrivalStation>
+            <PaxSSRs />
+          </SegmentSSRRequest>
+        </SegmentSSRRequests>
+        <CurrencyCode>INR</CurrencyCode>
+        <CancelFirstSSR>false</CancelFirstSSR>
+        <SSRFeeForceWaiveOnSell>false</SSRFeeForceWaiveOnSell>
+      </SSRRequest>
+    </SellSSR>
+  </SellRequestData>
+</SellRequest>

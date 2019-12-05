@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>HwGzRStSyiQ=|lxx+/weYs9mVPvVzneOvOtEnkdkkKccwYh919l+NaL8bczLOgIsrTQjkQuObaqxX605Ojv3jC9vr6asVp7zGfz8RcreQJqPVHuUKjNHfjXWpsLRb4wv2RRA0MrMsII0jotoyAJVQSqY=</Signature>
+  <SellRequestData>
+    <SellBy>JourneyBySellKey</SellBy>
+    <SellJourneyByKeyRequest>
+      <SellJourneyByKeyRequestData>
+        <ActionStatusCode>LL</ActionStatusCode>
+        <JourneySellKeys>
+          <SellKeyList>
+            <JourneySellKey>SG~ 161~ ~~DEL~01/01/2019 15:50~BOM~01/01/2019 18:10~~</JourneySellKey>
+            <FareSellKey>0~Z~ ~SG~ZSOD~9922~~0~6~~X</FareSellKey>
+            <StandbyPriorityCode>NR</StandbyPriorityCode>
+          </SellKeyList>
+        </JourneySellKeys>
+        <PaxPriceType>
+          <PaxPriceType>
+            <PaxType>ADT</PaxType>
+            <PaxDiscountCode />
+          </PaxPriceType>
+        </PaxPriceType>
+        <CurrencyCode>INR</CurrencyCode>
+        <SourcePOS>
+          <State>New</State>
+          <AgentCode>SDFINANCED</AgentCode>
+          <OrganizationCode>SDFINANCED</OrganizationCode>
+          <DomainCode>WWWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </SourcePOS>
+        <PaxCount>1</PaxCount>
+        <LoyaltyFilter>MonetaryOnly</LoyaltyFilter>
+        <IsAllotmentMarketFare>false</IsAllotmentMarketFare>
+        <PreventOverLap>false</PreventOverLap>
+      </SellJourneyByKeyRequestData>
+    </SellJourneyByKeyRequest>
+  </SellRequestData>
+</SellRequest>

@@ -1,0 +1,159 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Hotel Response</title>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <script src="../js/timerpickerJS.js"></script>
+    <link href="../css/timepicker.css" rel="stylesheet" />
+
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <style type="text/css">
+        .succesmsg {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+    $(document).ready(function () {
+
+        $('.timepicker').wickedpicker({
+            twentyFour: false, title:
+                   'Select Time', showSeconds: false
+        });
+
+    });
+    </script>
+    <script>
+        function onloadMethod() {
+            var confirmNo= "@Request.QueryString["confirmNo"]";
+            $("#ConfirmnumberSpan").text(confirmNo);
+        }
+
+
+    // save confirmation number
+    function clickButton() {
+        var checkin = document.getElementById("txtCheckin").value;
+        var checkout = document.getElementById("txtCheckout").value;
+
+        if (checkin.length > 1 && checkout.length > 1) {
+            var result = confirm("Are you sure to update Check-in & Check-out time ?");
+            if (result) {
+                var stringQ = "@Request.QueryString["str"]";
+                var types = "@Request.QueryString["type"]";
+                var clubid = "@Request.QueryString["trid"]";
+                var hotel = "@Request.QueryString["hotelname"]";
+
+
+                $.ajax({
+                    url: "../mailHotel/UpdateCheckinCheckout?str=" + clubid + "&type=" + types + "&checkin=" + checkin + "&checkout=" + checkout + "&hotelname=" + hotel,
+                    type: "POST",
+                    processData: false,
+                    data: {},
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        if (response != null || response != '') {
+                            $("#resultmsg").show();
+                            $("#ResponseTimeDiv").hide();
+                        }
+                    },
+                    error: function (er) {
+                        $("#resultmsg").show();
+                        $("#ResponseTimeDiv").hide();
+                    }
+                });
+            }
+        }
+        else {
+            alert("Enter both the values.");
+            return;
+        }
+    };
+
+        $(document).keypress(function (e) {
+            var key = e.which;
+            if (key == 13)  // the enter key code
+            {
+                clickButton();
+            }
+        });
+</script>
+
+</head>
+<body onload="onloadMethod();" >
+    <div>
+        <div class="bookingheadr">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"><div class="logoheader"><img src="../img/logo_spicejet.png" /> </div></div>
+                    <div class="col-md-4"><div class="txtSODNSOD">HOTEL RESPONSE</div></div>
+                    <div class="col-md-5"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div style="padding-top:10%" id="ResponseTimeDiv">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12"><div class="succesmsg">Please enter the details against Confirmation No: <span id="ConfirmnumberSpan" style="font-weight:bold;"></span></div></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="succesmsg" id="dvMsg">
+                                    Check-in Time: &nbsp;&nbsp;<input id="txtCheckin" type="text" class="timepicker" /><br /><br />
+                                    Check-out Time: <input id="txtCheckout" type="text" class="timepicker" /><br /><br />
+                                    <button id="btnSubmit" onclick="clickButton();">SUBMIT</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultmsg" hidden="hidden" style="padding-top:10%;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="succesmsg">
+                            <span style="font-weight:bold;">Thankyou!</span> <br />
+                            Response has been successfully sent to the Spicejet Travel Desk.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!------Div Loader------------------------------------------------------>
+            <div class="loader">
+                <center>
+                    <img class="loading-image" src="../images/loading.gif" alt="loading..">
+                </center>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="padding-top:100px; padding-bottom:20px; text-align:center">
+                        @*<input type="button" id="fltreplan" value="Re-Plan" style="width:150px; height:35px; background-color:#b33; border:0px;color:#fff; font-size:16px;" />*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="padding-top:70px;"></div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+    </div>
+</body>
+</html>

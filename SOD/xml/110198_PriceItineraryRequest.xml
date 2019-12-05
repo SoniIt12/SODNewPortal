@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PriceItineraryRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>V5/T7XYLeog=|EIy1xp1dmzDPohynmNMbA2I7nTnL2A0jG0cvbohiRy+I/6DVrm3m/by3+/pZx9ptyOcJ63BmEnVETsFB0gCAtclXVb7PzX5l/aXsyrWOJzBiQkW1AHHwM4WCKgz9wYzbT5HM+VGnYO8=</Signature>
+  <ItineraryPriceRequest>
+    <PriceItineraryBy>JourneyBySellKey</PriceItineraryBy>
+    <SellByKeyRequest>
+      <ActionStatusCode>LL</ActionStatusCode>
+      <JourneySellKeys>
+        <SellKeyList>
+          <JourneySellKey>SG~2624~ ~~JAI~02/20/2018 11:15~DEL~02/20/2018 12:30~^SG~ 253~ ~~DEL~02/20/2018 18:20~CCU~02/20/2018 20:30~</JourneySellKey>
+          <FareSellKey>0~Z~~ZSOD~9922~~6~X^0~Z~~ZSOD~9922~~6~X</FareSellKey>
+        </SellKeyList>
+      </JourneySellKeys>
+      <PaxPriceType>
+        <PaxPriceType>
+          <PaxType>ADT</PaxType>
+          <PaxDiscountCode />
+        </PaxPriceType>
+      </PaxPriceType>
+      <CurrencyCode>INR</CurrencyCode>
+      <PaxCount>1</PaxCount>
+      <LoyaltyFilter>MonetaryOnly</LoyaltyFilter>
+      <IsAllotmentMarketFare>false</IsAllotmentMarketFare>
+      <PreventOverLap>false</PreventOverLap>
+    </SellByKeyRequest>
+  </ItineraryPriceRequest>
+</PriceItineraryRequest>

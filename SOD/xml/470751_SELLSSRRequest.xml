@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>1NvDT6waogc=|vSbrSOmsPOWK6LvItHq4oo8k6ZMLx94JZU8ykIssNi9S3Ub/mbo9Qk6wxde/9Zx2AXsmhncU8hC4dGej1eInidzW6j+sqk6I9dj4ep63RCwPMtphR8xnwDvO1XGSphG0Oysy9rdN8VY=</Signature>
+  <SellRequestData>
+    <SellBy>SSR</SellBy>
+    <SellSSR>
+      <SSRRequest>
+        <SegmentSSRRequests>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber>2327</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2019-07-12T18:15:00</STD>
+            <DepartureStation>DEL</DepartureStation>
+            <ArrivalStation>DED</ArrivalStation>
+            <PaxSSRs>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>LL</ActionStatusCode>
+                <ArrivalStation>DED</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>VGSW</SSRCode>
+                <SSRNumber>0</SSRNumber>
+                <SSRValue>0</SSRValue>
+              </PaxSSR>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>LL</ActionStatusCode>
+                <ArrivalStation>DED</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>1</PassengerNumber>
+                <SSRCode>VGSW</SSRCode>
+                <SSRNumber>1</SSRNumber>
+                <SSRValue>1</SSRValue>
+              </PaxSSR>
+            </PaxSSRs>
+          </SegmentSSRRequest>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber>2328</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2019-07-13T19:30:00</STD>
+            <DepartureStation>DED</DepartureStation>
+            <ArrivalStation>DEL</ArrivalStation>
+            <PaxSSRs>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>LL</ActionStatusCode>
+                <ArrivalStation>DEL</ArrivalStation>
+                <DepartureStation>DED</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>NVSW</SSRCode>
+                <SSRNumber>0</SSRNumber>
+                <SSRValue>0</SSRValue>
+              </PaxSSR>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>LL</ActionStatusCode>
+                <ArrivalStation>DEL</ArrivalStation>
+                <DepartureStation>DED</DepartureStation>
+                <PassengerNumber>1</PassengerNumber>
+                <SSRCode>NVSW</SSRCode>
+                <SSRNumber>1</SSRNumber>
+                <SSRValue>1</SSRValue>
+              </PaxSSR>
+            </PaxSSRs>
+          </SegmentSSRRequest>
+        </SegmentSSRRequests>
+        <CurrencyCode>INR</CurrencyCode>
+        <CancelFirstSSR>false</CancelFirstSSR>
+        <SSRFeeForceWaiveOnSell>false</SSRFeeForceWaiveOnSell>
+      </SSRRequest>
+    </SellSSR>
+  </SellRequestData>
+</SellRequest>

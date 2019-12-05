@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AddPaymentToBookingRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>4PTF1hYlqL4=|Pdm3Lcofm5oCraq7TeOYRhq/IWe6BQ7AC8QRX1AlxwEA0Kru7ljDFpUJscSbSQ2NkXHUqTqeiwx/IGRLjd+gmN6jHPUhnfxDW1OD5qBIbtbKacaX6TO6H5clOz4oNPBI3P0rwc/imt4=</Signature>
+  <addPaymentToBookingReqData>
+    <MessageState>New</MessageState>
+    <WaiveFee>false</WaiveFee>
+    <ReferenceType>Default</ReferenceType>
+    <PaymentMethodType>AgencyAccount</PaymentMethodType>
+    <PaymentMethodCode>AG</PaymentMethodCode>
+    <QuotedCurrencyCode>INR</QuotedCurrencyCode>
+    <QuotedAmount>526.00000</QuotedAmount>
+    <Status>New</Status>
+    <AccountNumberID>0</AccountNumberID>
+    <AccountNumber>SDFINANCED</AccountNumber>
+    <Expiration>0001-01-01T00:00:00</Expiration>
+    <ParentPaymentID>0</ParentPaymentID>
+    <Installments>0</Installments>
+    <Deposit>false</Deposit>
+  </addPaymentToBookingReqData>
+</AddPaymentToBookingRequest>

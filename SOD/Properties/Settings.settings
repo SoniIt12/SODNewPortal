@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SOD.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SOD_SpiceDynamicSector_DynamicSectors" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://172.30.47.15/SpicejetDynamicSectors/DynamicSectors.svc</Value>
+    </Setting>
+    <Setting Name="SOD_FlightLoadCapacity_FlightLoadCapacity" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://172.30.47.13/SpiceJetFlightLoadAPI/FlightLoadCapacity.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

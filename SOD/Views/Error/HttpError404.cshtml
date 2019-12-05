@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Error:404";
+    Layout = null;
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <title>@ViewBag.Title</title>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <style type="text/css">
+        .succesmsg {
+            text-align: center;
+            font-size: 25px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+<body>
+    <div>
+        <div class="bookingheadr">
+            <div class="headerimg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3"><div class="logoheader"><img src="../img/logo_spicejet.png" /></div> </div>
+                        <div class="col-md-9"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--------------------------------------------Content---------------->
+        <div class="container">
+            <div style="padding-top:10%;text-align:center;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <h2 class="text-danger">Sorry ! 404 : Page not found.</h2>
+                            <h3>@TempData["ErrorMessage"]</h3>
+                            <div style="margin-top:30px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------------------------------Footer---------------->
+        <div style="padding-top:70px;"></div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+        <!-- ------------------------------------------END Footer---------------->
+    </div>
+</body>
+</html>

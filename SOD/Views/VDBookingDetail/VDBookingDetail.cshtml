@@ -1,0 +1,1445 @@
+﻿@{
+    ViewBag.Title = "Emp Booking Detail";
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml";
+
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @*<link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />*@
+    <title>Sod | Book Flight</title>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/sanitize.js"></script>
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <!--Mobile View Menu-->
+    <script src="../New_Calender/src/calender_jquery.daterange.js"></script>
+    <link href="../New_Calender/calender.css" rel="stylesheet" />
+    <script src="../Dropdownmenu/jquery-1.9.1.js"></script>
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/jsvalidation.js"></script>
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <link href="../3D_button/3dbtn.css" rel="stylesheet" />
+    <script src="../js/timerpickerJS.js"></script>
+    <link href="../css/timepicker.css" rel="stylesheet" />
+    <link href="../css/radiobtn.css" rel="stylesheet" />
+    <link href="../css/responsive.css" rel="stylesheet" />
+    <script src="../js/select2/select2.min.js"></script>
+    <link href="../css/select2/select2.min.css" rel="stylesheet" />
+    <script src="../js/angular/VendorApprovalJS.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.timepicker').wickedpicker({
+                twentyFour: false, title:
+                    'Select Time', showSeconds: false
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.loader').hide();
+            hideshowDiv();
+            $("#dvHotel").hide();
+            Sod_NonSodHideshow();
+            hideshow_ddlBookingFor();
+            bindFlightDetail();
+            HideShowCab_Pick_Drop();
+            HideShowHotel_Booking();
+           
+            if (@Session["usertype"] == 1) {
+                $("#lnkapprover").show();
+            }
+            else{
+                $("#lnkapprover").hide();
+            }
+            $('.timepicker').wickedpicker({twentyFour: false, title:
+                   'Select our Time', showSeconds: false});
+        });
+    </script>
+    <script type="text/javascript">
+        function transferurl() {
+            window.location = "Approver.html";
+        }
+        //Validate EmpId and Phno
+        //Sod/Non-Sod Hide Show Panel
+        function Sod_NonSodHideshow()
+        {
+            if(@ViewBag.SodBookingType==1)
+            {
+                $("#SOD").show();
+                $("#NSOD").hide();
+                $("#NSODhotel").show();
+                $("#Span_BookingType").html("SOD");
+            }
+            else
+            {
+                $("#NSOD").show();
+                $("#SOD").hide();
+                $("#NSODhotel").hide();
+                $("#Span_BookingType").html("NON-SOD Vendor Booking");
+                $(".NStru_warning-label").hide();
+
+                bindPassengerRow();
+            }
+        }
+        //Hide show for :"StandBy/Confirm"
+        function hideshow_ddlBookingFor()
+        {
+            if (@ViewBag.SodBookingType == 2)
+            {
+                if('@ViewBag.BookingFor'=='Confirm')
+                {
+                    $('#ddlbookingFor_nonsod').text('Confirm');
+                    $('#span_cxo').show();
+                    $('#chkmtr').attr('checked', false);
+                }
+                else
+                {
+                    $("#span_cxo_chkbox").hide();
+                    $('#span_cxo').hide();
+                    $('#chkmtr').attr('checked',false);
+                    $('#ddlbookingFor_nonsod').text('Standby');
+                }
+            }
+            if('@ViewBag.BookingFor'=='Confirm'){
+                $('#ddlbookingFor').text('Confirm');
+                $('#sod-dv-MustTravel').show();
+            }
+            else{
+                $('#ddlbookingFor').text('Standby');
+                $('#sod-dv-MustTravel').hide();
+            }
+        }
+        //Hide show Must Travel
+        function hideshowMustTravel()
+        {
+            if ($("#chkmtr").prop("checked") == true) {
+                $("#span_cxo_chkbox").show();
+                $("#txtMustTravel").show();
+            }
+            else {
+                $("#span_cxo_chkbox").hide();
+                $("#txtMustTravel").hide();
+            }
+            //if ($("#chkmtrsod").prop("checked") == true)
+            //    $("#span_cxo_chkbox").show();
+            //else
+            //    $("#span_cxo_chkbox").hide();
+
+        }
+        //Hide show Must Cab
+        function hideshowCab()
+        {
+            if($("#chkboxCab").prop("checked")==true)
+            {
+                $.getJSON("../EmployeeBookingDetail/ValidateCabRequest",
+               function(json) {
+                   if(json>0)
+                   {
+                       $("#dvcab").show();
+                       var totalRowCount = 0;
+                       var rowCount = 0;
+                       var table = document.getElementById("tblflightInfo");
+                       var rows = table.getElementsByTagName("tr")
+                       for (var i = 0; i < rows.length; i++) {
+                           totalRowCount++;
+                           if (rows[i].getElementsByTagName("td").length > 0) {
+                               rowCount++;
+                           }
+                       }
+                       if (rowCount > 2)
+                       {
+                           $("#dvpickup1").show();
+                           $("#dvpickup2").show();
+                       }
+                       else
+                       {
+                           if (rowCount = 1) $("#dvpickup1").show();
+                           $("#dvpickup2").hide();
+                       }
+                   }
+                   else
+                   {
+                       $("#dvcab").hide();
+                       alert('Warning :Cab can be pre-booked till 6:00 hours prior to the flight departure.');
+                       $("#chkboxCab").attr('checked', false);
+                       return false;
+                   }
+               });
+            }
+            else
+            {
+                $("#dvcab").hide();
+            }
+        }
+        //Hide Show Hotels
+        function hideshowHotel()
+        {
+            if($("#chkboxHotel").prop("checked")==true)
+            {
+                if(@ViewBag.TravelRequestTypeId == 3){
+                    $("#divaddcontainers").show();
+                    $("#addContainers").show();
+                    $("#city_input").hide();
+                    $("#city_select").show();
+                }else{
+                    $("#divaddcontainers").hide();
+                    $("#city_input").show();
+                    $("#city_select").hide();
+                }
+                $.getJSON("../EmployeeBookingDetail/ValidateHotelRequest",
+               function(json) {
+                   if(json>0)
+                   {
+                       $("#dvHotel").show();
+                       var appenddata1 = "";
+                       var dropdown = SelectedCity;
+                       for (var i = 0; i < dropdown.length; i++) {
+                           appenddata1 += "<option value = '" + dropdown[i] + "'>" + dropdown[i] + "</option>";
+                       }
+                       $("#textboxcity1").html(appenddata1);
+                       var totalRowCount = 0;
+                       var rowCount = 0;
+                       var table = document.getElementById("tblflightInfo");
+                       var rows = table.getElementsByTagName("tr")
+                       for (var i = 0; i < rows.length; i++) {
+                           totalRowCount++;
+                           if (rows[i].getElementsByTagName("td").length > 0) {
+                               rowCount++;
+                           }
+                       }
+                   }
+                   else
+                   {
+                       $("#dvHotel").hide();
+                       alert('Warning :Hotels can be pre-booked till 24:00 hours prior to the flight departure.');
+                       $("#chkboxHotel").attr('checked', false);
+                       return false;
+                   }
+               });
+            }
+            else
+            {
+                $("#dvHotel").hide();
+                $("#divaddcontainers").hide();
+                $("#addContainers").hide();
+            }
+        }
+
+        function setCheckInDateCal()
+        {
+            $("#txtCheckInDate").datepicker({
+                numberOfMonths: 2,
+                minDate: new Date(travelDate),
+                size: 1,
+                defaultDate: new Date(),
+                maxDate: "+10M +00D",
+                dateFormat: "dd/mm/yy"
+            });
+        }
+        function setCheckOutDateCal()
+        {
+            $("#txtCheckOutDate").datepicker({
+                numberOfMonths: 2,
+                minDate: new Date(travelDate),
+                size: 1,
+                defaultDate: new Date(),
+                maxDate: "+10M +00D",
+                dateFormat: "dd/mm/yy"
+            });
+        }
+        //Get check box checked status
+        function countChecked() {
+            var n = $( "input:checked").length;
+            return n;
+        };
+        //Hide show Div
+        function hideshowDiv() {
+            $("#SOD").show();
+            $("#NSOD").hide();
+            $('#divcxoList').hide();
+            $("#span_cxo_chkbox").hide();
+            $('#sod-dv-MustTravel').hide();
+            $('#txtMustTravel').hide();
+        }
+        Date.prototype.addDays = function(days) {
+            this.setDate(this.getDate() + parseInt(days));
+            return this;
+        };
+        var SelectedCity = new Array();
+        var lengthofdropdown  = new Array();
+        //Call Employee Detail Controller
+        var lstTravelDate = new Array();
+        var lstArrivalTime = new Array();
+        var lstDepartureTime = new Array();
+        function bindFlightDetail() {
+            $.getJSON("../EmployeeBookingDetail/GetFlightBookingInfo",
+                function(json) {
+                    var  tr;
+                    var trmeal;
+                    if(@ViewBag.SodBookingType==1){
+                        if(@ViewBag.bevDepRight!=-0)
+                        {
+                            tr= "<tr style='background-color:#f5f5f5;'><th>Sector</th><th>Travel Date</th><th>Flight No.</th><th>Departure Time</th><th>Arrival Time</th><th>Flight Type</th><th>Meals</th><th>Beverages</th></tr>";
+                        }
+                        else
+                        {
+                            tr= "<tr style='background-color:#f5f5f5;'><th>Sector</th><th>Travel Date</th><th>Flight No.</th><th>Departure Time</th><th>Arrival Time</th><th>Flight Type</th><th>Meals</th></tr>";
+                            $("#mealmsgsod").show();
+                        }
+                    }
+                    else
+                    {
+                        tr= "<tr style='background-color:#f5f5f5;'><th>Sector</th><th>Travel Date</th><th>Flight No.</th><th>Departure Time</th><th>Arrival Time</th><th>Flight Type</th></tr>";
+                        trmeal=$("<tr style='font-weight:bold;background-color:#f5f5f5' />") ;
+                        trmeal.append("<td>Passenger No.</td>");
+                        $("#mealmsgsod").hide();
+                    }
+                    $('#tblflightInfo').append(tr);
+                    tr="";
+                    //setting the travelDate for the first travel date
+                    travelDate = json[0].TravelDate;
+                    var trdate= new Date(travelDate);
+                    var dateFormat = GetDateFormat(trdate);
+                    $("[id$=txtCheckInDate]").val(dateFormat);
+                    var nextdate= new Date();
+                    var nextdateFormat= GetDateFormat(trdate.addDays(1));
+                    $("[id$=txtCheckOutDate]").val(dateFormat);
+                    setCheckInDateCal();
+                    setCheckOutDateCal();
+                    //Append each row to html table
+                    for (var i = 0; i < json.length; i++) {
+                        SelectedCity.push(json[i].Sector.split('-')[1]);
+                        lstTravelDate.push(json[i].TravelDate);
+                        lstArrivalTime.push(json[i].ArrivalTime);
+                        lstDepartureTime.push(json[i].DepartureTime);
+                        lengthofdropdown.push(json[i]);
+                        tr = $('<tr/>');
+                        tr.append("<td>" + json[i].Sector + "</td>");
+                        tr.append("<td>" + json[i].TravelDate + "</td>");
+                        tr.append("<td>" + json[i].FlightNo + "</td>");
+                        tr.append("<td>" + json[i].DepartureTime + "</td>");
+                        tr.append("<td>" + json[i].ArrivalTime + "</td>");
+                        tr.append("<td>  <input type='hidden' id='hdnFlightTypes' value='" + json[i].FlightTypes + "'/>" + json[i].FlightName + "</td>");
+                        if(@ViewBag.SodBookingType==1)
+                        {
+                            if(@ViewBag.bevDepRight!=0)
+                            {
+                                if(json[i].FlightName=='Q400')
+                                    tr.append("<td>" +"<select class='empbookingmeal'><option>Not Required</option><option>VGSW</option><option>NVSW</option><option>MNCH</option>"+"</td>" + "<td>" +"<select class='empbookingmeal'><option>Not Required</option><option>BVG</option></select>"+"</td>");
+                                else
+                                    tr.append("<td>" +"<select class='empbookingmeal'><option>Not Required</option><option>VGML</option><option>NVML</option><option>VGSW</option><option>NVSW</option><option>MNCH</option></select>"+"</td>" + "<td>" +"<select class='empbookingmeal'><option>Not Required</option><option>BVG</option></select>"+"</td>");
+                            }
+                            else
+                                tr.append("<td>" +"<select class='empbookingmeal'><option>Not Required</option><option>VGML</option><option>NVML</option></select>"+"</td>");
+                        }
+                        else
+                        {
+                            trmeal.append("<td>"+ json[i].Sector+"</td>");
+                        }
+
+                        $('#tblflightInfo').append(tr);
+                    }
+
+                    if(@ViewBag.SodBookingType==2)
+                    {
+                        $('#tblMeals').append(trmeal);
+                        for (var i = 1; i <= @ViewBag.Passengers; i++) {
+                            trmeal=$('<tr/>') ;
+                            trmeal.append("<td>"+ i +"</td>");
+                            for(var j=1;j<=json.length;j++)
+                            {
+                                trmeal.append("<td>" +"<select class='empbookingmeal form-control'><option Value='Not Required'>Select Meals</option><option>VGML</option><option>NVML</option></select>"+"</td>");
+                            }
+                            $('#tblMeals').append(trmeal);
+                        }
+                    }
+                });
+        }
+
+        function GetDateFormat(date) {
+            var month = (date.getMonth() + 1).toString();
+            month = month.length > 1 ? month : '0' + month;
+            var day = date.getDate().toString();
+            day = day.length > 1 ? day : '0' + day;
+            return day + '/' + month + '/' + date.getFullYear();
+        }
+
+        //convert MM/dd/yyyy
+        function ConvertMMddyyyy(dval) {
+            var mval = (dval.split('/')[1] + '/' + dval.split('/')[0] + '/' + dval.split('/')[2]);
+            return mval;
+        }
+
+        //Hide/Show Cab Facility block
+        function HideShowCab_Pick_Drop()
+        {
+            $("#dvcab").hide();
+        }
+
+        //Hide/Show hotel facility block
+        function HideShowHotel_Booking()
+        {
+            $("#dvHotel").hide();
+        }
+        //bind no of passenger row
+        function bindPassengerRow()
+        {
+            if (@ViewBag.Passengers > 1) {
+                var table = $("#dvpassenger div").eq(0).clone(true);
+                $("#dvpassenger div").remove();
+                for (var i = 1; i <= @ViewBag.Passengers; i++) {
+                    $("#dvpassenger").append(table);
+                    table = $("#dvpassenger div").eq(0).clone(true);
+                }
+            }
+        }
+
+        //Convert Time into 24 hrs format
+        function ConvertTime(time) {
+            var hrs = time.split(':')[0].trim();
+            var minutesPm = time.split(':')[1].trim();
+            var minutes = minutesPm.split(' ')[0].trim();
+            var AMPM = minutesPm.split(' ')[1].trim();
+            if (AMPM == "PM") {
+                if (hrs != '12')
+                    hrs = hrs * 1 + 12;
+            }
+            else if (AMPM == "AM" && hrs == '12')
+                hrs -= 12;
+            else
+                hrs = hrs;
+            return hrs + ":" + minutes;
+        }
+
+        ////function to validate meals 28 Feb 2019
+        function ValidateMeal() {
+            var status = false;
+            $.each($('select.empbookingmeal'), function (i, v) {
+                if ($('select.empbookingmeal').eq(i).children('option:selected').text() != "Not Required") {
+                    status = true;
+                }
+                if (status)
+                    return false;
+            });
+            return status;
+        }
+
+        var travelDate;
+        //Booking List :Travel Passenger Details
+        function postsodFlightLst() {
+            var sodFlightList = new Array();
+            var counter = 0;
+            $('#tblflightInfo tr').each(function () {
+                if(counter>=1)
+                {
+                    var objfd = new Object();
+                    var sector = $(this).find('td:eq(0)').text().split('-');
+                    objfd.OriginPlace = sector[0];
+                    objfd.DestinationPlace = sector[1];
+                    objfd.TravelDate = $(this).find('td:eq(1)').text();
+                    objfd.FlightNo = $(this).find('td:eq(2)').text();
+                    objfd.DepartureTime = $(this).find('td:eq(3)').text();
+                    objfd.ArrivalTime = $(this).find('td:eq(4)').text();
+                    objfd.FlightName = $(this).find('td:eq(5)').text();
+                    objfd.FlightTypes = $(this).find('input:hidden').eq(0).val();
+                    objfd.Meals = $(this).find('td:eq(6) select').val();
+                    objfd.Beverages = $(this).find('td:eq(7) select').val();
+                    sodFlightList.push(objfd);
+                }
+                counter++;
+            });
+            return sodFlightList;
+        }
+
+        //hotel information submit
+        function  postsodhotelmasterlst(prm)
+        {
+            var hotelDetailsList = new Array();
+            var objhd = new Object();
+            objhd.TravelRequestTypeId = @ViewBag.TravelRequestTypeId;
+            objhd.HotelReferenceID = "";
+            objhd.City ="NA";
+            objhd.EmployeeCode = $('#empCode').html().trim();
+            objhd.CheckInDate = "01/01/1900";
+            objhd.CheckOutDate = "01/01/1900";
+            objhd.CheckinTime= "00:00";
+            objhd.CheckoutTime= "00:00";
+            objhd.NoOfGuest = "1";  
+            objhd.EntryDate = new Date();
+            objhd.HotelCode = "NA";
+            objhd.HotelName = "NA";
+            objhd.HotelAddress = "NA";
+            objhd.HotelPhoneNo = "NA";
+            objhd.IsAllocated = "0";
+            objhd.Remarks_Status = "NA";
+            objhd.PrimaryEmail = "NA";
+            objhd.SecondaryEmail = "NA";
+            objhd.AirportTransport = false;
+            objhd.IsCabRequiredAsPerETA = false;
+            objhd.CabPickupTime ="00:00";
+            objhd.HotelRequestId =1;
+            hotelDetailsList.push(objhd);
+            return hotelDetailsList;
+        }
+
+        //Cab Master List
+        function  postsodcabmasterlst(prm)
+        {
+            var cabDetailsList = new Array();
+            var objcd = new Object();
+            if(prm==1)
+            {
+                objcd.TravelRequestTypeId = @ViewBag.TravelRequestTypeId;
+                objcd.OneWay_From = "NA";
+                objcd.OneWay_From_Time = "NA";
+                objcd.OneWay_To = "NA";
+                objcd.OneWay_To_Time = "00 : 00 AM";
+                objcd.Return_From = "NA";
+                objcd.Return_From_Time = "00 : 00 AM";
+                objcd.Return_To = "NA";
+                objcd.Return_To_Time = "00 : 00 AM";
+                objcd.Entry_Date = new Date();
+                objcd.IsAllocated = "0";
+                objcd.Remarks_Status = "NA";
+                cabDetailsList.push(objcd);
+                return cabDetailsList;
+            }
+            else
+            {
+                objcd.TravelRequestTypeId = @ViewBag.TravelRequestTypeId;
+                objcd.OneWay_From = "NA";
+                objcd.OneWay_From_Time ="NA";
+                objcd.OneWay_To = "NA";
+                objcd.OneWay_To_Time = "00 : 00 AM";
+                objcd.Return_From = "NA";
+                objcd.Return_From_Time = "00: 00 AM";
+                objcd.Return_To = "NA"; 
+                objcd.Return_To_Time = "00 : 00 AM";
+                objcd.Entry_Date = new Date();
+                objcd.IsAllocated = "0";
+                objcd.Remarks_Status = "NA";
+                cabDetailsList.push(objcd);
+                return cabDetailsList;
+            }
+        }
+
+        //Post Passenger List
+        function postpassengerLst() {
+            var passengerLst = new Array();
+            $('#dvpassenger .row').each(function() {
+                var objpl = new Object();
+                objpl.Title = $(this).find("select")[0].value;
+                objpl.TravelerFirstName = $(this).find("input")[0].value;
+                objpl.TravelerLastName = $(this).find("input")[1].value;
+                if(objpl.Title=="Mr")
+                    objpl.TravelerGender = 'M';
+                else
+                    objpl.TravelerGender = 'F';
+                passengerLst.push(objpl);
+            });
+            return passengerLst;
+        }
+
+        //Post Passenger Meals List
+        function postpassengerMealLst(){
+            var i=0;
+            var passengerMealLst = new Array();
+            $("#tblMeals").find("tr:first td").each(function () {
+                if(i>0)
+                {
+                    var counter=0;
+                    $("#tblMeals tr").each(function(){
+                        if(counter>0)
+                        {
+                            var objml = new Object();
+                            objml.TravelRequestId = 0;
+                            objml.Sector =  $("#tblMeals").find("tr:first td:eq('"+i+"')").text();
+                            objml.MealType = $(this).find("td:eq('"+i+"') select").val();
+                            objml.PassengerId = counter;
+                            passengerMealLst.push(objml);
+                        }
+                        counter++;
+                    });
+                }
+                i++;
+            });
+            return passengerMealLst;
+        }
+
+        //Replan
+        $(function() {
+            $('#fltreplan').click(function() {
+                var url = '@Url.Action("SearchFlight", "User")';
+                window.location.href = url;
+            });
+        });
+        var reg = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        //Validate Email
+        function validateEmailId(email) {
+            if(email.value.length>0)
+            {
+                //var reg =/^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                if (!reg.test(email.value)){
+                    alert('Please provide a valid email address.');
+                    email.focus();
+                    return false;
+                }
+            }
+        };
+
+        function validateNumber(evt) {
+            var e = evt || window.event;
+            var key = e.keyCode || e.which;
+
+            if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
+                // numbers
+                key >= 48 && key <= 57 ||
+                // Numeric keypad
+                key >= 96 && key <= 105 ||
+                // Backspace and Tab and Enter
+                key == 8 || key == 9 || key == 13 ||
+                // Home and End
+                key == 35 || key == 36 ||
+                // left and right arrows
+                key == 37 || key == 39 ||
+                // Del and Ins
+                key == 46 || key == 45) {
+                // input is VALID
+            }
+            else {
+                // input is INVALID
+                e.returnValue = false;
+                if (e.preventDefault) e.preventDefault();
+            }
+        }
+        function validatePhoneNumber(evt) {
+            var e = evt || window.event;
+            var key = e.keyCode || e.which;
+
+            if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
+                // numbers
+                key >= 48 && key <= 57 ||
+                // Numeric keypad
+                key >= 96 && key <= 105 ||
+                // Backspace and Tab and Enter
+                key == 8 || key == 9 || key == 13 ||
+                // Home and End
+                key == 35 || key == 36 ||
+                // left and right arrows
+                key == 37 || key == 39 ||
+                // Del and Ins
+                key == 46 || key == 45 ||
+                //comma
+                key == 188) {
+                // input is VALID
+            }
+            else {
+                // input is INVALID
+                e.returnValue = false;
+                if (e.preventDefault) e.preventDefault();
+            }
+        }
+
+      
+    </script>
+    <script>
+    //Hide show Div
+    function hideshowDiv() {
+        $("#SOD").show();
+        $("#NSOD").hide();
+        $('#divcxoList').hide();
+        $("#span_cxo_chkbox").hide();
+        $('#sod-dv-MustTravel').hide();
+        $('#txtMustTravel').hide();
+    }
+    Date.prototype.addDays = function(days) {
+        this.setDate(this.getDate() + parseInt(days));
+        return this;
+        };
+        var SelectedCity = new Array();
+        var lengthofdropdown  = new Array();
+    //Call Employee Detail Controller
+
+        var lstTravelDate = new Array();
+        var lstArrivalTime = new Array();
+        var lstDepartureTime = new Array();
+       function bindFlightDetail() {
+        $.getJSON("../VDBookingDetail/GetFlightBookingInfo",
+            function(json) {
+                var  tr;
+                var trmeal;
+                if(@ViewBag.SodBookingType==1){
+                    if(@ViewBag.bevDepRight!=-0)
+                    {
+                        tr= "<tr style='background-color:#f5f5f5;'><th>Sector</th><th>Travel Date</th><th>Flight No.</th><th>Departure Time</th><th>Arrival Time</th><th>Flight Type</th><th>Meals</th><th>Beverages</th></tr>";
+                    }
+                    else
+                    {
+                        tr= "<tr style='background-color:#f5f5f5;'><th>Sector</th><th>Travel Date</th><th>Flight No.</th><th>Departure Time</th><th>Arrival Time</th><th>Flight Type</th><th>Meals</th></tr>";
+                        $("#mealmsgsod").show();
+                    }
+                }
+                else
+                {
+                    tr= "<tr style='background-color:#f5f5f5;'><th>Sector</th><th>Travel Date</th><th>Flight No.</th><th>Departure Time</th><th>Arrival Time</th><th>Flight Type</th></tr>";
+                    trmeal=$("<tr style='font-weight:bold;background-color:#f5f5f5;' />") ;
+                    trmeal.append("<td>Passenger No.</td>");
+                    $("#mealmsgsod").hide();
+                }
+                $('#tblflightInfo').append(tr);
+                tr="";
+                //setting the travelDate for the first travel date
+                travelDate = json[0].TravelDate;
+
+                var trdate= new Date(travelDate);
+                var dateFormat = GetDateFormat(trdate);
+                $("[id$=txtCheckInDate]").val(dateFormat);
+
+                var nextdate= new Date();
+                var nextdateFormat= GetDateFormat(trdate.addDays(1));
+                //$("[id$=txtCheckOutDate]").val(nextdateFormat);
+                $("[id$=txtCheckOutDate]").val(dateFormat);
+
+                setCheckInDateCal();
+                setCheckOutDateCal();
+                //Append each row to html table
+                for (var i = 0; i < json.length; i++) {
+                    SelectedCity.push(json[i].Sector.split('-')[1]);
+                    lstTravelDate.push(json[i].TravelDate);
+                    lstArrivalTime.push(json[i].ArrivalTime);
+                    lstDepartureTime.push(json[i].DepartureTime);
+                    lengthofdropdown.push(json[i]);
+                    tr = $('<tr/>');
+                    tr.append("<td>" + json[i].Sector + "</td>");
+                    tr.append("<td>" + json[i].TravelDate + "</td>");
+                    tr.append("<td>" + json[i].FlightNo + "</td>");
+                    tr.append("<td>" + json[i].DepartureTime + "</td>");
+                    tr.append("<td>" + json[i].ArrivalTime + "</td>");
+                    tr.append("<td>  <input type='hidden' id='hdnFlightTypes' value='" + json[i].FlightTypes + "'/>" + json[i].FlightName + "</td>");
+                    if(@ViewBag.SodBookingType==1)
+                    {
+                        if(@ViewBag.bevDepRight!=0)
+                        {
+                            if(json[i].FlightName=='Q400')
+                                tr.append("<td>" +"<select class='empbookingmeal'><option>Not Required</option><option>VGSW</option><option>NVSW</option><option>MNCH</option>"+"</td>" + "<td>" +"<select class='empbookingmeal'><option>Not Required</option><option>BVG</option></select>"+"</td>");
+                            else
+                                tr.append("<td>" +"<select class='empbookingmeal'><option>Not Required</option><option>VGML</option><option>NVML</option><option>VGSW</option><option>NVSW</option><option>MNCH</option></select>"+"</td>" + "<td>" +"<select class='empbookingmeal'><option>Not Required</option><option>BVG</option></select>"+"</td>");
+                        }
+                        else
+                            tr.append("<td>" +"<select class='empbookingmeal'><option>Not Required</option><option>VGML</option><option>NVML</option></select>"+"</td>");
+                    }
+                    else
+                    {
+                        trmeal.append("<td>"+ json[i].Sector+"</td>");
+                    }
+
+                    $('#tblflightInfo').append(tr);
+                }
+                if(@ViewBag.SodBookingType==2)
+                {
+                    $('#tblMeals').append(trmeal);
+                    for (var i = 1; i <= @ViewBag.Passengers; i++) {
+                        trmeal=$('<tr/>') ;
+                        trmeal.append("<td>"+ i +"</td>");
+                        for(var j=1;j<=json.length;j++)
+                        {
+                            trmeal.append("<td>" +"<select class='empbookingmeal form-control'><option Value='Not Required'>Select Meals</option><option>VGML</option><option>NVML</option></select>"+"</td>");
+                        }
+                        $('#tblMeals').append(trmeal);
+                    }
+                }
+            });
+    }
+        function GetDateFormat(date) {
+            var month = (date.getMonth() + 1).toString();
+            month = month.length > 1 ? month : '0' + month;
+            var day = date.getDate().toString();
+            day = day.length > 1 ? day : '0' + day;
+            return day + '/' + month + '/' + date.getFullYear();
+        }
+
+      //convert MM/dd/yyyy
+      function ConvertMMddyyyy(dval) {
+            var mval = (dval.split('/')[1] + '/' + dval.split('/')[0] + '/' + dval.split('/')[2]);
+            return mval;
+        }
+
+    //bind no of passenger row
+    function bindPassengerRow()
+    {
+        if (@ViewBag.Passengers > 1) {
+            var table = $("#dvpassenger div").eq(0).clone(true);
+            $("#dvpassenger div").remove();
+            for (var i = 1; i <= @ViewBag.Passengers; i++) {
+                $("#dvpassenger").append(table);
+                table = $("#dvpassenger div").eq(0).clone(true);
+            }
+        }
+        }
+        //Convert Time into 24 hrs format
+        function ConvertTime(time) {
+            var hrs = time.split(':')[0].trim();
+            var minutesPm = time.split(':')[1].trim();
+            var minutes = minutesPm.split(' ')[0].trim();
+            var AMPM = minutesPm.split(' ')[1].trim();
+            if (AMPM == "PM") {
+                if (hrs != '12')
+                    hrs = hrs * 1 + 12;
+            }
+            else if (AMPM == "AM" && hrs == '12')
+                hrs -= 12;
+            else
+                hrs = hrs;
+
+            return hrs + ":" + minutes;
+        }
+ //Flight submit info
+    $(function () {
+        $("#fltsubmit").click(function () {
+            //----Validations----------------------------------------------------
+            var flag = 0;
+            if (@ViewBag.SodBookingType === 2) {
+                if ($("#txtreasontravel_nonsod").val() == "") {
+                    alert('Please enter reason for travelling.');
+                    $("#txtreasontravel_nonsod").focus();
+                    flag = 1;
+                    return false;
+                }
+            if ($("#chkmtr").prop("checked") == true) {
+                if ($("#txtMustTravel").val() == "") {
+                    alert('Please enter must travel reason.');
+                    $("#txtMustTravel").focus();
+                    flag = 1;
+                    return false;
+                }
+            }
+            //--for check passenger
+            var flagrow = 0;
+            if (flagrow == 1) return false;
+            if ($("#txtaddressLn1_nonsod").val() == "") {
+                alert('Please enter address.');
+                $("#txtaddressLn1_nonsod").focus();
+                flag = 1;
+                return false;
+            }
+            if ($("#txtCity_nonsod").val() == "") {
+                alert('Please enter city.');
+                $("#txtCity_nonsod").focus();
+                flag = 1;
+                return false;
+            }
+            var counter = 0;
+            var mealerror = false;
+            $("#tblMeals tbody tr ").each(function () {
+                if (counter > 0) {
+                    var text = $(this).closest('tr').find('td')[0].innerText;
+                    for (var i = 0; i < ($(this).find('td').length) - 1; i++) {
+                        var mealType = $(this).closest('tr').find("select option:selected")[i].innerText;
+                    }
+                    if (mealType == "Select Meals") {
+                        mealerror = true;
+                    }
+                }
+                counter++;
+            });
+            //--For Amount Paid by Traveller
+            if ($("#ddlAmountPaidByCust").val() == "--Select--") {
+                alert('Please select payment option ? \nYes--> Amount will be paid by Traveller. \nNo-->Amount will be paid by Company agency.');
+                $("#ddlAmountPaidByCust").focus();
+                flag = 1;
+                return false;
+            }
+           }
+            if (!ValidateMeal())
+            {
+                mealerror = true;
+                //var confirmationMsg =" Are you sure to confirm your booking without meal.if yes, Please click on 'OK' to submit your request.";
+            }
+
+           if(flag==1)return false;
+            //--------End of Validations-----------------------------------------
+            if (mealerror) {
+                var confirmationMsg = " Are you sure to confirm your booking without meal.if yes, Please click on 'OK' to submit your request.";
+            }
+            else {
+                var confirmationMsg = "Please click on 'OK' to submit your request";
+                }
+            var result = confirm(confirmationMsg);
+            if (result)
+            {
+                var sodbookingLst = new Array();
+                var sodflightLst = new Array();
+                var passengerLst = new Array();
+                var passengerMealLst = new Array();
+                    sodbookingLst=postnonsodbookingLst();
+                    sodflightLst = postsodFlightLst();
+                    passengerLst = postpassengerLst();
+                    passengerMealLst=postpassengerMealLst();
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '../VDBookingDetail/SubmitBookingInfo',
+                    data: JSON.stringify({sodRequestsList: sodbookingLst, sodflightList: sodflightLst, passengerList : passengerLst, passengerMealsList : passengerMealLst,  hotelDetailList:"NA"}),
+                    beforeSend: function(){
+                        $('.loader').show()
+                    },
+                    complete: function(){
+                        $('.loader').hide();
+                    },
+                    success: function (response) {
+                        $('.loader').hide();
+                        var url = '@Url.Action("BookingResponse", "VDBookingDetail")';
+                        window.location.href = url;
+                    },
+                    error: function (response) {
+                        $('.loader').hide();
+                        alert(response);
+                    }
+                });
+            }
+        });
+    });
+
+    function ValidateMeal() {
+            var status = false;
+            $.each($('select.empbookingmeal'), function (i, v) {
+                if ($('select.empbookingmeal').eq(i).children('option:selected').text() != "Not Required") {
+                    status = true;
+                }
+                if (status)
+                    return false;
+            });
+            return status;
+        }
+
+    var travelDate;
+    //Booking List :Travel Passenger Details
+    function postsodFlightLst() {
+        var sodFlightList = new Array();
+        var counter = 0;
+        $('#tblflightInfo tr').each(function () {
+            if(counter>=1)
+            {
+                var objfd = new Object();
+                var sector = $(this).find('td:eq(0)').text().split('-');
+                objfd.OriginPlace = sector[0];
+                objfd.DestinationPlace = sector[1];
+                objfd.TravelDate = $(this).find('td:eq(1)').text();
+                objfd.FlightNo = $(this).find('td:eq(2)').text();
+                objfd.DepartureTime = $(this).find('td:eq(3)').text();
+                objfd.ArrivalTime = $(this).find('td:eq(4)').text();
+                objfd.FlightName = $(this).find('td:eq(5)').text();
+                objfd.FlightTypes = $(this).find('input:hidden').eq(0).val();
+                objfd.Meals = $(this).find('td:eq(6) select').val();
+                objfd.Beverages = $(this).find('td:eq(7) select').val();
+                sodFlightList.push(objfd);
+            }
+            counter++;
+        });
+        return sodFlightList;
+    }
+    
+        //Post Non Sod info
+    function postnonsodbookingLst() 
+    {
+        var nonSodBookingList = new Array();
+        var objRm = new Object();
+        objRm.TravelRequestTypeId = @ViewBag.TravelRequestTypeId;
+        objRm.SodBookingTypeId = '2';
+        objRm.BookingFor = $('#ddlbookingFor_nonsod').text();
+        objRm.ReasonForTravel = $('#txtreasontravel_nonsod').val();
+        objRm.Meals ="NA";
+        objRm.EmailId = $('#txtUserEmailID').val();
+        objRm.Phno = $('#txtPhno_NonSod').val();
+        objRm.Passengers=@ViewBag.Passengers;
+        objRm.PassEmailId = $('#txtUserEmailID').val();
+        objRm.PassAddressLine1=$('#txtaddressLn1_nonsod').val();
+        objRm.PassAddressLine2=$('#txtaddressLn2_nonsod').val();
+        objRm.PassCity=$('#txtCity_nonsod').val();
+        objRm.PassCountry=$('#ddlcountry_nonSod').val();
+        var arr = @Html.Raw(Json.Encode(@ViewBag.CXOList));
+        objRm.CLevelApprover1= arr[0];
+        objRm.CLevelApprover2 = arr[1];
+
+        if($('#chkmtr').prop("checked") == true)
+        {
+            objRm.IsMandatoryTravel=1;
+            objRm.ReasonForMandatoryTravel= $('#txtMustTravel').val();
+        }
+        else
+        {
+            objRm.IsMandatoryTravel=0;
+        }
+        if($("#ddlAmountPaidByCust").val()=="YES"){ objRm.IsAmountPaidByTraveller=1;}
+        else{ objRm.IsAmountPaidByTraveller=0;}
+        nonSodBookingList.push(objRm);
+        return nonSodBookingList;
+    }
+
+    //Post Passenger List
+   function postpassengerLst() {
+            var passengerLst = new Array();
+            var length = $('#dvpassenger .data').length;
+            for (var i = 0; i < length; i++) {
+                var objpl = new Object();
+                objpl.Title = $("#txtTitle" + i).text();
+                objpl.TravelerFirstName = $('#txtFName' + i).text();
+                objpl.TravelerLastName = $('#txtLName' + i).text();
+                if ($('#txtTitle' + i).text() == "Mrs.") {
+                    objpl.TravelerGender = "F"
+                }
+                else {
+                    objpl.TravelerGender="M"
+                }
+                    passengerLst.push(objpl);
+            }
+            return passengerLst;
+            }
+
+    //Post Passenger Meals List
+    function postpassengerMealLst(){
+        var i=0;
+        var passengerMealLst = new Array();
+        $("#tblMeals").find("tr:first td").each(function () {
+            if(i>0)
+            {
+                var counter=0;
+                $("#tblMeals tr").each(function(){
+                    if(counter>0)
+                    {
+                        var objml = new Object();
+                        objml.TravelRequestId = 0;
+                        objml.Sector =  $("#tblMeals").find("tr:first td:eq('"+i+"')").text();
+                        objml.MealType = $(this).find("td:eq('"+i+"') select").val();
+                        objml.PassengerId = counter;
+                        passengerMealLst.push(objml);
+                    }
+                    counter++;
+                });
+            }
+            i++;
+        });
+        return passengerMealLst;
+    }
+  
+    //Replan
+    $(function() {
+        $('#fltreplan').click(function() {
+            var url = '@Url.Action("searchFlight", "nsvdflightbooking")';
+            window.location.href = url;
+        });
+    });
+        var reg = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+   
+    //Validate Email
+    function validateEmailId(email) {
+        if(email.value.length>0)
+        {
+            //var reg =/^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (!reg.test(email.value)){
+                alert('Please provide a valid email address.');
+                email.focus();
+                return false;
+            }
+        }
+    };
+    function validateNumber(evt) {
+            var e = evt || window.event;
+            var key = e.keyCode || e.which;
+
+            if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
+                // numbers
+                key >= 48 && key <= 57 ||
+                // Numeric keypad
+                key >= 96 && key <= 105 ||
+                // Backspace and Tab and Enter
+                key == 8 || key == 9 || key == 13 ||
+                // Home and End
+                key == 35 || key == 36 ||
+                // left and right arrows
+                key == 37 || key == 39 ||
+                // Del and Ins
+                key == 46 || key == 45) {
+                // input is VALID
+            }
+            else {
+                // input is INVALID
+                e.returnValue = false;
+                if (e.preventDefault) e.preventDefault();
+            }
+        }
+    </script>
+    <style>
+        .astrik {
+            color: #EE1D23;
+            padding-left: 2px;
+        }
+
+        #tblflightInfo td select {
+            border-radius: 0;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+            color: #666;
+            font-size: 12px;
+            height: 25px;
+            padding: 1px 3px 4px 8px;
+            text-indent: 0px;
+            border: solid 1px #e0e0e0;
+        }
+
+        .tblcabInfo td input {
+            border-radius: 0;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+            color: #666;
+            font-size: 12px;
+            height: 25px;
+            padding: 1px 3px 4px 8px;
+            text-indent: 0px;
+            border: solid 1px #e0e0e0;
+        }
+
+        .flighdtl {
+            width: 100%;
+            border: 1px solid #b33;
+        }
+
+            .flighdtl td {
+                border: 1px solid #b33;
+                height: 35px;
+                padding-left: 10px;
+            }
+
+                .flighdtl td a {
+                    color: #FF3B00;
+                }
+
+        .pickupcss table td {
+            border: solid 1px #b33;
+            padding-left: 10px;
+        }
+
+        .loationheading {
+            text-align: center;
+            font-family: Arial;
+            font-size: 16px;
+            padding-top: 25px;
+        }
+
+        .fieldheading {
+            text-align: center;
+            font-family: Arial;
+            font-size: 14px;
+        }
+
+        .warning-label {
+            font-size: 12px;
+            font-weight: normal;
+            padding-left: 10px;
+            color: red;
+        }
+    </style>
+    <style>
+    </style>
+
+</head>
+<body>
+    <div ng-app="VendorApprovalApp" ng-controller="VendorApprovalCtrl" ng-init="paginit('')" ng-cloak>
+        <!--------------------------------------------Content---------------->
+        <div class="container">
+            <div class="NStru_bookingtype_panle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="NStru_bookingtype_header_bg">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="empdtlstxt">Booking Type : </span><span class="fontsize16" id="Span_BookingType"></span>
+                                    <span id="empCode" style="display:none"> @ViewBag.EmpCode </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="SOD" class="NStru_empdetailssdv">
+                    <div id="addContainers"></div>
+                    <div hidden="hidden" style="text-align:left; margin-top:10px;" id="divaddcontainers">
+                        <input type="button" id="addButtonnew" value="" name="add"
+                               style="background: url('../img/button.png') no-repeat; height:34px; width:34px;border:0px;" />
+                        <input type="button" id="removeButton" value="" name="remove"
+                               style="background: url('../img/remove.png') no-repeat; height:34px; width:34px;border:0px;" />
+                    </div>
+                </div>
+                <!--------------------------------------------END Content----------->
+                <!--------------------------------------------NON SOD Content---------------->
+                <div id="NSOD" class="empdetailssdv">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div style="padding: 8px 15px 5px 15px;">
+                                    <div class="col-md-2"><span>Booking for :</span> <span style="font-weight:bold; margin-left:10px;" id="ddlbookingFor_nonsod"></span></div>
+
+                                    <div class="col-md-2">
+                                        <div class="mob_topmargin5">Reason for Travel<span class="astrik">*</span></div>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="empbookingfor"><input class="form-control input-sm" maxlength="100" id="txtreasontravel_nonsod" /></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="padding: 8px 15px 5px 15px;">
+                                <div class="col-md-4">
+                                    <span id="span_cxo">
+                                        <span> Please check if Must Travel</span><span class="margintopleft_checkbx"><input type="checkbox" name="chkMustTravel" value="Must Travel" id="chkmtr" onchange="hideshowMustTravel(this);" /></span>
+                                        <span class="astrik">*</span>
+                                    </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="empbookingfor">
+                                        <div style="margin-top:5px;" id="span_cxo_chkbox" class="nameinpcntrol">
+                                            <input class="form-control input-sm" type="text" id="txtMustTravel" maxlength="100"  placeholder="Please write must travel reason" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bgcolorheading_nsod">
+                        <div class="psngdtl_subheading">
+                            <span>Passengers Details </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="Mob_grid_scrollWidth" style="padding:5px; line-height:35px; margin:15px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);">
+                                    <table id="dvpassenger" class="flighdtl table table table-bordered">
+                                        <tr style="background-color:#f5f5f5;">
+                                            <th>S.No</th>
+                                            <th>Title</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                        </tr>
+                                        <tr class="data" ng-repeat="list in getPassenger">
+                                            <td>{{$index + 1}}</td>
+                                            <td id="txtTitle{{$index}}" ng-if="list.Gender=='F'">Ms</td>
+                                            <td id="txtTitle{{$index}}" ng-if="list.Gender=='M'">Mr</td>
+                                            <td id="txtFName{{$index}}">{{list.FirstName}}</td>
+                                            <td id="txtLName{{$index}}">{{list.LastName}}</td>
+                                            <td class="ng-hide" id="txtGender{{$index}}">{{list.Gender}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="padding:0px 15px;line-height:30px">
+                                <div class="col-md-6">
+                                    <div>Email ID</div>
+                                    <div><input type="text" class="form-control input-sm" id="txtUserEmailID" value={{getPassenger[0].EmailId}} ></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>Mobile No.</div>
+                                    <div><input type="text" id="txtPhno_NonSod" class="form-control input-sm" value={{getPassenger[0].MobileNo}}></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="padding:0px 15px;line-height:35px">
+                                <div class="col-md-6">
+                                    <div>Address <span class="astrik">*</span></div>
+                                    <div>
+                                        <input type="text" id="txtaddressLn1_nonsod" maxlength="50" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>Address line 2</div>
+                                    <div><input type="text" id="txtaddressLn2_nonsod" maxlength="50" class="form-control input-sm" /></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div style="padding:0px 15px;line-height:35px">
+                                <div class="col-md-6">
+                                    <div>City<span class="astrik">*</span></div>
+                                    <div><input type="text" id="txtCity_nonsod" maxlength="20" class="form-control input-sm" /></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <span>Country</span>@*<span class="astrik">*</span>*@
+                                    </div>
+                                    <div><select class="form-control input-sm" id="ddlcountry_nonSod"><option>India</option></select></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bgcolorheading_nsod">
+                        <div class="psngdtl_subheading">
+                            <span>Meals Option</span><span class="warning-label">(# Meals/Sandwich can be pre-booked till 6:00 hours prior to the flight departure.)</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <div style="padding:15px;">
+                                <div class="col-md-12">
+                                    <div class="Mob_grid_scrollWidth"></div>
+                                    <table class="Mbxcs_new tabel table table-bordered" style="width:100%; " id="tblMeals"></table>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="row" style="margin-top:5px;padding-bottom:8px; font-weight:bold;">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="paddingtop05">Is Amount paid by the Passenger :</div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div><select id="ddlAmountPaidByCust" class="form-control input-sm"><option>--Select--</option><option>YES</option><option>NO</option></select></div>
+                                </div>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+                <!--------------------------------------------NON SOD Content---------------->
+            </div>
+            <div class="row" style="margin:0px;" id="NSODhotel">
+                <div class="col-md-12 NStru_hotelsDetails_panel" style="padding: 0;margin-top:10px;">
+                    <div class="bg" style="margin-bottom:0;padding:8px;">
+                        <div class="chiller_cb mob_hotlcheck">
+                            <label for="chkboxHotel" class="col-md-2 ishotelreq"> IS HOTEL REQUIRED </label>
+                            <input type="checkbox" id="chkboxHotel" value="Hotel" text="Hotel" onchange="hideshowHotel(this);" />
+                            <span></span>
+                            <div class="col-md-10" style="font-size:12px;font-weight:normal;padding-left:10px;color:red;">
+                                (#Hotel can be pre-booked till 24:00 hours prior to the flight departure.)
+                            </div>
+                        </div>
+                    </div>
+                    <div style="border-top:solid 1px #b33; height:auto; padding:10px;" id="dvHotel">
+                        <div class="row">
+                            <div class="col-md-12" id="dvPlaceToVisit">
+                                <div class="pickupcss">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div><span>City Code</span></div>
+                                            <div id="city_input"><input id="txtCity" readonly type="text" class="form-control input-sm" value="@ViewBag.Destination"></div>
+                                            <div id="city_select"><select id="textboxcity1" class="form-control input-sm " onchange="filterCityInDropdown(1);" value="@ViewBag.Destination" style="width:100%"></select></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div><span>Check-In Date</span></div>
+                                            <div class="paddingbottom05"> <input id="txtCheckInDate" type="text" placeholder="dd/mm/yyyy" class="form-control input-sm" /><i class="img_i_indt" onclick="document.getElementById('txtCheckInDate').focus();"></i></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div><span>Check-Out Date</span></div>
+                                            <div class="paddingbottom05"> <input id="txtCheckOutDate" type="text" placeholder="dd/mm/yyyy " class="form-control input-sm" /><i class="img_i_odt" onclick="document.getElementById('txtCheckOutDate').focus();"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div><span>Check-In Time</span></div>
+                                            <div class="pa"><input id="txtCheckinTime" type="text" class="timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%;" /></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div><span>Check-Out Time</span></div>
+                                            <div> <input id="txtCheckoutTime" type="text" class="timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%;" /></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div><span>Airport Transport Required</span></div>
+                                            <div>
+                                                <select id="airtransport" class='form-control input-sm' onchange="toggleAirTransport();"><option>No</option><option>Yes</option></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px;padding-bottom:10px; ">
+                                        <div class="col-md-4" id="CabRequiredDiv" style="display:none">
+                                            <div>
+                                                <span>Require Cab as per ETA? </span>&nbsp;&nbsp;
+                                                <input type="radio" name="radio" value="cabyes" id="cabyes" checked="checked" onchange="changeCabResponse();" /><span>Yes</span>
+                                                <input type="radio" name="radio" value="cabno" id="cabno" onchange="changeCabResponse();" /><span>No</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" id="cabTimingSpan" style="display:none">
+                                            <div>
+                                                <span>If No, suggest Cab pickup timing: </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" id="cabTimingText" style="display:none">
+                                            <div>
+                                                <input id="txtCabPickupTime" type="text" class="timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="addContainers"></div>
+                    <div style="text-align:left; padding:10px;padding-top:0px; display:none" id="divaddcontainers">
+                        <input type="button" id="addButtonnew" value="" name="add"
+                               style="background: url('../img/button.png') no-repeat; height:34px; width:34px;border:0px;" />
+                        <input type="button" id="removeButton" value="" name="remove"
+                               style="background: url('../img/remove.png') no-repeat; height:34px; width:34px;border:0px;" />
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0px;">
+                <div class="col-md-12 NStru_flightDetails_panel">
+                    <div class="row">
+                        <div class="col-md-12 NStru_flgheadingDV">
+                            <div class="row">
+                                <div class="col-md-2 col-xs-6"><div style="text-align:left;">Flight Details</div></div>
+                                <div class="col-md-10 col-xs-6"><div style="text-align:left;" class="warning_Aligntxt" id="mealmsgsod "><span class="NStru_warning-label">(# Meals/Sandwich can be pre-booked till 6:00 hours prior to the flight departure.)</span></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="NStru_flightInfo">
+                                <table class="table table-bordered flighdtl" id="tblflightInfo"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn3d_Align"><input type="button" id="fltsubmit" value="Submit" class="btn btn-danger mob_submit" /> <input type="button" id="fltreplan" class="btn btn-danger mob_replan" value="Re-Plan" /></div>
+                </div>
+            </div>
+        </div>
+        <!------Div Loader------------------------------------------------------>
+        <div class="mob_NStru_mainDv">
+            <div class="mob_NStru_left_part"></div>
+            <div class="mob_NStru_right_part"></div>
+        </div>
+        <!--------------------------------------------Footer---------------->
+        <div id="footaar">
+            <div>
+                <div class="SOD_Footer">
+                    <div class="SOD_Footer_inner"></div>
+                </div>
+            </div>
+        </div>
+        <!-- ------------------------------------------END Footer---------------->
+    </div>
+
+    <div class="loader">
+        <center>
+            <img class="loading-image1" src="../images/loading1.gif" alt="loading..">
+        </center>
+    </div>
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                document.getElementById("fltreplan").click(5000);
+            };
+        </script>
+    }
+</body>
+</html>

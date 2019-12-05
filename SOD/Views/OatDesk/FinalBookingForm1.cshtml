@@ -1,0 +1,302 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ITH Response Form</title>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <link href="../css/glyphicon.css" rel="stylesheet" />
+    <script src="../js/angular/finalBookingForm.js"></script>
+    <style type="text/css">
+        .succesmsg {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tableMargin table td, th {
+            /*padding: 0.5%;*/
+            padding: 4px 4px;
+        }
+
+        .uploadbtnStyle {
+            background-color: #f99f24;
+            color: white;
+            border-radius: 7px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        /*.custom-file-upload {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+            background-color: #8484df;
+        }*/
+
+        .personal_new_stru {
+            padding: 4%;
+        }
+
+        .oatOption {
+            background-color: lightseagreen;
+        }
+
+        .userOption {
+            background-color: lightyellow;
+        }
+
+        .warning {
+            background-color: orange;
+        }
+
+        .succesmsg {
+            text-align: center;
+            font-size: 25px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+
+        @@media (max-width: 767.98px) {
+            .tableMargin table {
+                width: 100%;
+                line-height: 16px;
+                font-size: 10px;
+            }
+
+            .tbleFlow {
+                overflow-x: scroll;
+            }
+
+            .headerbooking {
+                padding-left: 30%;
+                padding-top: 50px;
+            }
+
+            .txtSODNSOD {
+                padding-left: 30%;
+                padding-top: 50px;
+                font-size: 13Px;
+            }
+
+            .Stru_radio_margin label {
+                font-size: 10px;
+                margin-left: 2px;
+            }
+        }
+    </style>
+</head>
+<body ng-app="OatViewDetails" ng-controller="IthRensonse" class="ng-cloak">
+    <div>
+        <div class="bookingheadr">
+            <div class="container">
+                <div class="MHeader_main">
+                    <div class="row">
+                        <div class="col-md-2 col-xs-6">
+                            <a id="logomain">
+                                <img src="../img/logo_spicejet.png" />
+                            </a>
+                        </div>
+                        <div class="col-md-10 col-xs-6 ">
+                            <div class="SodHeadingTxt">
+                                <span>OAT BOOKING SYSTEM</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                @if ((string)TempData["Status"] == " ")
+                {
+                    <div ng-if="StartPage">
+                        <div style="border:solid 1px #e4e4e4;" class="Stru_radio_margin tableMargin" ng-if="!successResponse">
+                            <div class="content_header_txt">
+                                <div>Booking Request Id - {{oatReqId}} </div>
+                            </div>                           
+                            <div style="padding:2%;">
+                                <div class="row" ng-if="arrSecDetail.length != 0">
+                                    <div class="col-12">
+                                        <div class="psngInfo-title">
+                                            Passenger Information(s)
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                @if ((string)TempData["Type"] != "SI")
+                                {
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="psngInfo-title" style="font-weight: normal;">
+                                            Please update PNR related detail-
+                                        </div>
+                                    </div>
+                                    <div class="col-12 tbleFlow" ng-if="arrSecDetail.length != 0">
+                                        <table cellpadding="10" class="table-bordered table-striped " style="width:100%;font-size:12px;">
+                                            <thead style="background-color: #cd050b;color: white;">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    @*<th>Emp Code</th>*@
+                                                    <th>Passenger Name</th>
+                                                    <th>Contact No.</th>
+                                                    <th>Email Id</th>
+                                                    <th>Sector</th>
+                                                    <th>Airline Name</th>
+                                                    <th>Flight No.</th>
+                                                    <th>Departure Date</th>
+                                                    <th>Departure Time</th>
+                                                    <th>Amount</th>
+                                                    <th>PNR</th>
+                                                    <th style="width:15%;">Upload Ticket</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="plst in arrSecDetail">
+                                                    <td>{{$index + 1}}</td>
+                                                    @*<td>{{plst.Empcode}}</td>*@
+                                                    <td>{{plst.EmpName}} </td>
+                                                    <td>{{plst.PhoneNo}}</td>
+                                                    <td>{{plst.Emaild}}</td>
+                                                    <td>{{plst.OriginPlace}} - {{plst.DestinationPlace}}</td>
+                                                    <td>{{plst.AirCraftName}}</td>
+                                                    <td>{{plst.FlightNumber}}</td>
+                                                    <td>{{getangularDate(plst.DepartureDate)|  date : "dd/MM/y"}}</td>
+                                                    <td>{{plst.DepartureTime}}</td>
+                                                    <td>{{plst.Amount}} <i class="fa fa-rupee" style="font-size:24px"></i></td>
+                                                    <td><input type="text" placeholder="Upload PNR" class="form-control input-sm" ng-model="plst.PNR" required /></td>
+                                                    <td class="optfileuplod">
+                                                        <input type="file" accept="image/*,.pdf" ng-change="getFileName({{$index}});" ng-model="plst.ITHUploadRefFiles" id="file-upload{{$index}}" @*name='upload_cont_img'*@ style="display:none" />
+                                                        <label for="file-upload{{$index}}" class="uploadbtnStyle uplfileOpt">
+                                                            Upload <i class="glyphicon glyphicon-upload"></i>
+                                                        </label>
+                                                        <p style="line-height: 25px; font-size: 11Px; color:forestgreen;text-align: center;" id="fileName_{{$parent.$index}}{{$index}}"></p>
+                                                        <p style="line-height: 18px; font-size: 12Px; color:red;text-align: center;" id="fileSize_{{$parent.$index}}{{$index}}"></p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div class="row margin-tops4">
+                                            <div class="col-md-12">
+                                                <div class="col-md-3">Please write your Comment,If any</div>
+                                                <div class="col-md-8"> <input type="text" placeholder="Please Write your Comment, if any" id="IthComment" class="form-control input-sm" ng-model="IthComment" /></div>
+                                            </div>
+                                            <div class="col-12 text-center"><button type="button" class="btn-danger margin-tops4 input-sm" id="sendItenaryBtn" ng-click="SendItenaryToTravelDesk(arrSecDetail);"> Submit </button></div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="arrSecDetail.length == 0">
+                                        <h3 class="text-center">{{flightStatus}}</h3>
+                                    </div>
+                                </div>
+                                }
+                                else
+                                {
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="psngInfo-title" style="font-weight: normal;">
+                                            Please Check PNR related detail and download itenary-
+                                        </div>
+                                    </div>
+                                    <div class="col-12 tbleFlow">
+                                        <table cellpadding="10" class="table-bordered table-striped " style="width:100%">
+                                            <thead style="background-color: #cd050b;color: white;">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    @*<th>Emp Code</th>*@
+                                                    <th>Passenger Name</th>
+                                                    <th>Contact No.</th>
+                                                    <th>Email Id</th>
+                                                    <th>Sector</th>
+                                                    <th>Airline Name</th>
+                                                    <th>Flight No.</th>
+                                                    <th>Departure Date</th>
+                                                    <th>Departure Time</th>
+                                                    <th>Amount</th>
+                                                    <th>PNR</th>
+                                                    <th>Download Itenary</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="plst in arrSecDetail">
+                                                    <td>{{$index + 1}}</td>
+                                                    @*<td>{{plst.Empcode}}</td>*@
+                                                    <td>{{plst.EmpName}} </td>
+                                                    <td>{{plst.PhoneNo}}</td>
+                                                    <td>{{plst.Emaild}}</td>
+                                                    <td>{{plst.OriginPlace}} - {{plst.DestinationPlace}}</td>
+                                                    <td>{{plst.AirCraftName}}</td>
+                                                    <td>{{plst.FlightNumber}}</td>
+                                                    <td>{{getangularDate(plst.DepartureDate)|  date : "dd/MM/y"}}</td>
+                                                    <td>{{plst.DepartureTime}}</td>
+                                                    <td>{{plst.Amount}} <i class="fa fa-rupee" style="font-size:24px"></i></td>
+                                                    <td>{{plst.PNR}}</td>
+
+                                                    <td><div ng-if="plst.filePath"><a href={{plst.filePath}} download={{plst.filePath}} target="_blank"> Download Itenary</a></div></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <div style="padding-top:10%" ng-if="successResponse">
+                            <div class="personal_new_stru Stru_radio_margin tableMargin">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12"><div class="succesmsg"> Thank You !</div></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12"><div class="succesmsg">{{SuccessMsg}}<span><img src="../img/right.jpg" height="25" width="25" title="Status" style=" width: auto;" /></span></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div style="padding-top:10%">
+                        <div class="personal_new_stru Stru_radio_margin tableMargin">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12"><div class="succesmsg"> Thank You !</div></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12"><div class="succesmsg"> @Html.Raw(@TempData["Status"].ToString())</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- --------------------Loader--------------------------------------------------->
+    <div class="loader">
+        <center>
+            <span class="loading-image" id="loaderMsg" style="font-weight:bold;font-size:22px;color:#ff0000;"></span>
+            <img class="loading-image" src="../images/loading.gif" alt="loading.."><br />
+        </center>
+    </div>
+    <!-- --------------------End of Loader----------------------------------------->
+</body>
+</html>

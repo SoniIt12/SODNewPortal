@@ -1,0 +1,128 @@
+﻿
+
+.control {
+  display: inline-block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.control__indicator {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background: #c2c2c2;
+}
+.control--radio .control__indicator {
+  border-radius: 50%;
+}
+.control:hover input ~ .control__indicator,
+.control input:focus ~ .control__indicator {
+  background: #ccc;
+}
+.control input:checked ~ .control__indicator {
+  background: #EE1D23;
+}
+.control:hover input:not([disabled]):checked ~ .control__indicator,
+.control input:checked:focus ~ .control__indicator {
+  background: #EE1D23;
+}
+.control input:disabled ~ .control__indicator {
+  background: #e6e6e6;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.control__indicator:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+.control input:checked ~ .control__indicator:after {
+  display: block;
+}
+.control--checkbox .control__indicator:after {
+  left: 8px;
+  top: 4px;
+  width: 3px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.control--checkbox input:disabled ~ .control__indicator:after {
+  border-color: #7b7b7b;
+}
+.control--radio .control__indicator:after {
+  left: 7px;
+  top: 7px;
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background: #fff;
+}
+.control--radio input:disabled ~ .control__indicator:after {
+  background: #7b7b7b;
+}
+
+.bktype_mob_nd_left { margin-left:-75px;}
+.bookingtype{height:40px; width:100%; margin-top:0px; margin-bottom:0px; width: 90%; display:table;   border-radius:4px; } /*edited by manoj*/
+.bookingtype td { font-size:18px; padding-left:10px;}
+
+@media (min-width: 768px) {
+    .bookingtype{height:40px; max-width:85%; border-radius:4px; display:table; } /*edited by manoj*/
+   
+    
+}
+
+@media (min-width: 992px) {
+    .bookingtype{height:40px; min-width:58%;   border-radius:4px; } /*edited by manoj*/
+}
+@media screen and (max-width: 670px) {.bookingtype td { font-size:13px;}
+}
+
+
+
+/*-------------------- 23 nov 2017---------*/
+
+.bookingtypetxt{color:#EE1D23; font-size:16px; margin-top:10px; margin-bottom:5px; }
+
+/*--------------------End 23 nov 2017---------*/
+
+
+
+@media only screen and (max-width: 640px) {
+     .bktype_mob_nd_left { margin-left:-5px;}
+    bookingtypetxt {
+        font-size: 9px;
+        margin-top: 5px;
+    }
+    .bookingtype {
+    height: 33px;
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom: 0px;
+    width: 90%;
+    display: table;
+    border-radius: 4px;
+}
+  .radiosod_align {
+    position: relative;
+    top: -3px;
+  }
+  .bookingtypetxt {
+    color: #EE1D23;
+    font-size: 9px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+ }
+
+

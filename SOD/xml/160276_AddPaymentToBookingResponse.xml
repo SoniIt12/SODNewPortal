@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AddPaymentToBookingResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BookingPaymentResponse>
+    <ExtensionData />
+    <OtherServiceInfoList />
+    <ValidationPayment>
+      <ExtensionData />
+      <Payment>
+        <ExtensionData />
+        <State>Clean</State>
+        <ReferenceType>Default</ReferenceType>
+        <ReferenceID>0</ReferenceID>
+        <PaymentMethodType>AgencyAccount</PaymentMethodType>
+        <PaymentMethodCode>AG</PaymentMethodCode>
+        <CurrencyCode>INR</CurrencyCode>
+        <PaymentAmount>446.00000</PaymentAmount>
+        <CollectedCurrencyCode>INR</CollectedCurrencyCode>
+        <CollectedAmount>446.00000</CollectedAmount>
+        <QuotedCurrencyCode>INR</QuotedCurrencyCode>
+        <QuotedAmount>446.00000</QuotedAmount>
+        <Status>Pending</Status>
+        <AccountNumber>SDFINANCED</AccountNumber>
+        <AccountNumberID>0</AccountNumberID>
+        <Expiration>9999-12-31T00:00:00Z</Expiration>
+        <AuthorizationCode />
+        <AuthorizationStatus>Pending</AuthorizationStatus>
+        <ParentPaymentID>0</ParentPaymentID>
+        <Transferred>false</Transferred>
+        <ReconcilliationID>0</ReconcilliationID>
+        <FundedDate>1800-01-01T00:00:00Z</FundedDate>
+        <Installments>0</Installments>
+        <PaymentText />
+        <ChannelType>API</ChannelType>
+        <PaymentNumber>1</PaymentNumber>
+        <AccountName />
+        <SourcePointOfSale>
+          <ExtensionData />
+          <State>New</State>
+          <AgentCode>SDFINANCED</AgentCode>
+          <OrganizationCode>SDFINANCED</OrganizationCode>
+          <DomainCode>WWWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </SourcePointOfSale>
+        <PointOfSale>
+          <ExtensionData />
+          <State>Clean</State>
+          <AgentCode>nonspicdes</AgentCode>
+          <OrganizationCode>NONSPICDES</OrganizationCode>
+          <DomainCode>WWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </PointOfSale>
+        <PaymentID>0</PaymentID>
+        <Deposit>false</Deposit>
+        <AccountID>0</AccountID>
+        <Password />
+        <AccountTransactionCode />
+        <VoucherID>0</VoucherID>
+        <VoucherTransactionID>0</VoucherTransactionID>
+        <OverrideVoucherRestrictions>false</OverrideVoucherRestrictions>
+        <OverrideAmount>false</OverrideAmount>
+        <RecordLocator />
+        <PaymentAddedToState>true</PaymentAddedToState>
+        <DCC>
+          <ExtensionData />
+          <DCCRateID>00000000-0000-0000-0000-000000000000</DCCRateID>
+          <DCCStatus>DCCNotOffered</DCCStatus>
+          <ValidationDCCApplicable>false</ValidationDCCApplicable>
+          <ValidationDCCRateValue>0</ValidationDCCRateValue>
+          <ValidationDCCCurrency />
+          <ValidationDCCAmount>0</ValidationDCCAmount>
+          <ValidationDCCPutInState />
+        </DCC>
+        <ThreeDSecure>
+          <ExtensionData />
+          <BrowserUserAgent />
+          <BrowserAccept />
+          <RemoteIpAddress />
+          <TermUrl />
+          <ProxyVia />
+          <ValidationTDSApplicable>false</ValidationTDSApplicable>
+          <ValidationTDSPaReq />
+          <ValidationTDSAcsUrl />
+          <ValidationTDSPaRes />
+          <ValidationTDSSuccessful>false</ValidationTDSSuccessful>
+          <ValidationTDSAuthResult />
+          <ValidationTDSCavv />
+          <ValidationTDSCavvAlgorithm />
+          <ValidationTDSEci />
+          <ValidationTDSXid />
+        </ThreeDSecure>
+        <PaymentFields />
+        <PaymentAddresses />
+        <CreatedDate>9999-12-31T00:00:00Z</CreatedDate>
+        <CreatedAgentID>0</CreatedAgentID>
+        <ModifiedDate>9999-12-31T00:00:00Z</ModifiedDate>
+        <ModifiedAgentID>0</ModifiedAgentID>
+        <BinRange>0</BinRange>
+        <ApprovalDate>9999-12-31T00:00:00Z</ApprovalDate>
+      </Payment>
+      <PaymentValidationErrors />
+    </ValidationPayment>
+  </BookingPaymentResponse>
+</AddPaymentToBookingResponse>

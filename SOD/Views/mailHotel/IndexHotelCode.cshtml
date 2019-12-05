@@ -1,0 +1,362 @@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Hotel Confirmation No.</title>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <style type="text/css">
+        .succesmsg {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+
+    // save confirmation number
+    function clickButton() {
+        var confirmNo = document.getElementById("txtCode").value;
+
+        if (confirmNo.length > 1) {
+           // var stringQ = "@Request.QueryString["str"]";
+
+        var types = "@ViewBag.type";
+            var hotel = "@ViewBag.hotelname";
+            var clubid = "@ViewBag.clubid";
+
+            var result = confirm("Are you sure to send confirmation number to Spicejet Travel Desk?");
+            if (result) {
+
+                $.ajax({
+                    url: "../mailHotel/Index?str=" + clubid + "&type=" + types + "&confirmNo=" + confirmNo + "&hotelname=" + hotel,
+                    type: "POST",
+                    processData: false,
+                    data: {},
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    beforeSend: function () {
+                        $('.loader').show();
+                    },
+                    complete: function () {
+                        $('.loader').hide();
+                    },
+                    success: function (response) {
+                        if (response != null || response != '') {
+                            window.location.href = "../mailHotel/hotelconfirmationresponse";
+                        }
+                    },
+                    error: function (er) {
+                        window.location.href = "../mailHotel/hotelconfirmationresponse";
+                    }
+                });
+            }
+        }
+        else {
+            alert("Enter Confirmation No.");
+            return;
+        }
+    };
+
+        function clickButtonRejection() {
+
+
+        var types = "@ViewBag.type";
+            var hotel = "@ViewBag.hotelname";
+            var clubid = "@ViewBag.clubid";
+
+                $.ajax({
+                    url: "../mailHotel/Index?str=" + clubid + "&type=" + types + "&confirmNo=" + "" + "&hotelname=" + hotel,
+                    type: "POST",
+                    processData: false,
+                    data: {},
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        if (response != null || response != '') {
+                            //window.location.href = "../mailHotel/hotelconfirmationresponse";
+                        }
+                    },
+                    error: function (er) {
+                       // window.location.href = "../mailHotel/hotelconfirmationresponse";
+                    }
+                });
+        };
+
+    // find if the TravelRequestId already exists in the table or not
+    function checkExistingNo() {
+        var trid = "@ViewBag.trid";
+        var types = "@ViewBag.type";
+        var hotelname = "@ViewBag.hotelname";
+        var TravelID = trid + "|" + types + "|" + hotelname;
+
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: '../mailHotel/FindExistingTrId',
+            data: JSON.stringify({ TravelRequestId: TravelID }),
+
+            success: function (response) {
+                if (response == "AlreadyRejected") {
+                    $("#existingConfirmationNo").hide();
+                    $("#newConfirmationNo").hide();
+                    $("#resultmsg").hide();
+                    $("#alreadyApprovedMsg").hide();
+                    $("#rejectionMsg").hide();
+                    $("#alreadyRejectedMsg").show();
+                }
+                else if (response == "NotExists") {
+                    if (types == 'r' || types == 'n' || types == 'c') {
+                        $("#existingConfirmationNo").hide();
+                        $("#rejectionMsg").show();
+                        $("#resultmsg").hide();
+                        $("#alreadyApprovedMsg").hide();
+                        $("#newConfirmationNo").hide();
+                        $("#alreadyRejectedMsg").hide();
+                        clickButtonRejection();
+                    }
+                    else {
+                        $("#existingConfirmationNo").hide();
+                        $("#newConfirmationNo").show();
+                        $("#resultmsg").hide();
+                        $("#alreadyApprovedMsg").hide();
+                        $("#rejectionMsg").hide();
+                        $("#alreadyRejectedMsg").hide();
+                    }
+                }
+                else if (response == "AlreadyApproved") {
+                    $("#existingConfirmationNo").hide();
+                    $("#newConfirmationNo").hide();
+                    $("#resultmsg").hide();
+                    $("#alreadyApprovedMsg").show();
+                    $("#rejectionMsg").hide();
+                    $("#alreadyRejectedMsg").hide();
+                }
+                else {
+                    $("#ConfirmnumberSpan").text(response);
+                    $("#existingConfirmationNo").show();
+                    $("#newConfirmationNo").hide();
+                    $("#resultmsg").hide();
+                    $("#alreadyApprovedMsg").hide();
+                    $("#rejectionMsg").hide();
+                    $("#alreadyRejectedMsg").hide();
+                }
+            },
+            error: function (response) {
+                alert(response);
+            }
+        });
+
+    };
+
+    // hide/show div on checkbox click
+    function hideshowdiv() {
+        if ($("#chkbox").prop("checked") == true) {
+
+            $("#txtbuttondiv").show();
+        } else {
+            $("#txtbuttondiv").hide();
+        }
+    }
+
+    //update existing confirmation no.
+    function clickExisButton() {
+        var newconfirmNo = document.getElementById("txtCode2").value;    
+        
+        var types = "@ViewBag.type";          
+        var trid = "@ViewBag.clubid";
+        var oldconfirmNo = document.getElementById("ConfirmnumberSpan").innerText;
+        var TravelID = trid + "|" + types + "|" + newconfirmNo + "|" + oldconfirmNo;
+
+        if (newconfirmNo.length > 1) {
+            var result = confirm("Are you sure to update the Confirmation number ?");
+            if (result) {
+
+                //call function to update confirmation no for given trid.
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '../mailHotel/UpdateExistingCNo',
+                    data: JSON.stringify({ TravelRequestId: TravelID }),
+                    beforeSend: function () {
+                        $('.loader').show();
+                    },
+                    complete: function () {
+                        $('.loader').hide();
+                    },
+                    success: function (response) {
+                        if (response == "Updated") {
+                            //alert("The confirmation no. has been successfully updated.")
+                            $("#UpdatenumberSpan").text(newconfirmNo);
+                            $("#resultmsg").show();
+                            $("#existingConfirmationNo").hide();
+                            $("#newConfirmationNo").hide();
+                        }
+                        else {
+                            alert("Error occured. Please try again.")
+                        }
+                    },
+                    error: function (response) {
+                        alert(response);
+                    }
+                });
+            }
+
+        } else {
+            alert("Enter Confirmation No.");
+            return;
+        }
+    }
+
+        function clickenter(e) {
+            var key = e.which;
+            if (key == 13)  // the enter key code
+            {
+                clickButton();
+            }
+        };
+        function clickenter2(e) {
+            var key = e.which;
+            if (key == 13)  // the enter key code
+            {
+                clickExisButton();
+            }
+        };
+
+    </script>
+
+</head>
+<body onload="checkExistingNo();">
+    <div>
+        <div class="bookingheadr">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"><div class="logoheader"><img src="../img/logo_spicejet.png" /> </div></div>
+                    <div class="col-md-4"><div class="txtSODNSOD">HOTEL BOOKING SYSTEM</div></div>
+                    <div class="col-md-5"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div style="padding-top:10%;display:none" id="newConfirmationNo">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12"><div class="succesmsg">Please enter Hotel Confirmation Number: </div></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="succesmsg" id="dvMsg">
+                                    <input id="txtCode" type="text" onkeypress="clickenter(event);" />
+                                    <button id="btnSubmit" onclick="clickButton();" name="submitcode">SUBMIT</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top:10%;display:none" id="existingConfirmationNo">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="succesmsg">
+                                    Existing Hotel Confirmation No. is- <span id="ConfirmnumberSpan" style="font-weight:bold;"></span> <br />
+                                    Do you want to modify the existing Confirmation No.?  Yes : <input style="zoom:1.5;" type="checkbox" id="chkbox" value="cnfrm" onchange="hideshowdiv();" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" id="txtbuttondiv" hidden="hidden">
+                            <div class="col-md-12">
+                                <div class="succesmsg" id="dvMsg2">
+                                    Please enter New Confirmation No.
+                                    <input id="txtCode2" type="text" onkeypress="clickenter2(event);" />
+                                    <button id="btnSubmit2" onclick="clickExisButton();" name="submitcode2">UPDATE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="resultmsg" hidden="hidden" style="padding-top:10%;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="succesmsg">
+                            Updated Hotel Confirmation No. is- <span id="UpdatenumberSpan" style="font-weight:bold;"></span> <br />
+                            Request has been successfully sent to the Spicejet Travel Desk.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="alreadyApprovedMsg" hidden="hidden" style="padding-top:10%;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="succesmsg">
+                            Request cannot be Rejected. It has been already approved.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="rejectionMsg" hidden="hidden" style="padding-top:10%;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="succesmsg">
+                            Request has been rejected successfully.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="alreadyRejectedMsg" hidden="hidden" style="padding-top:10%;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="succesmsg">
+                            Request cannot be Approved. It has been already rejected.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!------Div Loader------------------------------------------------------>
+            @*<div class="loader" style="background-color:transparent;">
+                    <center>
+                        <img class="loading-image" src="../images/loading.gif" alt="loading..">
+                    </center>
+                </div>*@
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="padding-top:100px; padding-bottom:20px; text-align:center">
+                        @*<input type="button" id="fltreplan" value="Re-Plan" style="width:150px; height:35px; background-color:#b33; border:0px;color:#fff; font-size:16px;" />*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="padding-top:70px;"></div>
+
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+    </div>
+    <div class="loader">
+        <center>
+            <img class="loading-image" src="../images/loading.gif" alt="loading..">
+        </center>
+    </div>
+</body>
+</html>

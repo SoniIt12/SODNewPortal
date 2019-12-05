@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BookingUpdateResponseData>
+    <ExtensionData />
+    <Warning>
+      <ExtensionData />
+      <WarningText>sell warning</WarningText>
+    </Warning>
+    <OtherServiceInformations>
+      <OtherServiceInformation>
+        <ExtensionData />
+        <Text>Seat assignment is required before SSR [MNCH] can be sold.</Text>
+        <OsiSeverity>Warning</OsiSeverity>
+        <OSITypeCode>FailedSeatSSRValidation</OSITypeCode>
+        <SubType />
+      </OtherServiceInformation>
+    </OtherServiceInformations>
+  </BookingUpdateResponseData>
+</SellResponse>

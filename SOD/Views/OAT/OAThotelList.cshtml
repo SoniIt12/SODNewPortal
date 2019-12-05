@@ -1,0 +1,733 @@
+﻿@{
+    //Layout = null;
+    ViewBag.Title = "OAT Booking Hotel List";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<html>
+<head>
+
+    <title></title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    @*<link href="../css/SODstyle.css" rel="stylesheet" />*@
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="../js/angular/bulkhotel.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <script src="../js/angular/sanitize.js"></script>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#MyModal").modal();
+        });
+    </script>
+
+
+
+    <script type="text/javascript">
+        //Contractual/Non-contractual hotel radio button change sod
+        function Exis_NewChange() {
+            if ($('input[name="radioHotel"]:checked').val() == 'rdoExisting') {
+                $("#txthname").prop("hidden", true);
+                $("#ddlCustomers").prop("hidden", false);
+                $("#nonContrPrice").prop("hidden", true);
+                $("#approvalRowDiv").prop("hidden", true);
+                $("#requestToHotelDivRow").prop("hidden", false);
+                $("#nonContrInclusionHead").prop("hidden", true);
+                $("#nonContrInclusions1").prop("hidden", true);
+                $("#nonContrInclusions2").prop("hidden", true);
+                $("#nonContrInclusions3").prop("hidden", true);
+                $("#txtcode").prop("readonly", true);
+                $("#txthemail").prop("readonly", true);
+                $("#mealdiv").prop("hidden", false);
+                $("#nonContrCurrencyType").prop("hidden", true);
+                $("#nonContrPriceInternational").prop("hidden", true);
+            }
+            else if ($('input[name="radioHotel"]:checked').val() == 'rdoNew') {
+                $("#txthname").prop("hidden", false);
+                $("#ddlCustomers").prop("hidden", true);
+                $("#nonContrPrice").prop("hidden", false);
+                $("#requestToHotelDivRow").prop("hidden", true);
+                $("#txtprice").val('');
+                $("#nonContrInclusionHead").prop("hidden", false);
+                $("#nonContrInclusions1").prop("hidden", false);
+                $("#nonContrInclusions2").prop("hidden", false);
+                $("#nonContrInclusions3").prop("hidden", false);
+                $("#txtcode").prop("readonly", false);
+                $("#txthemail").prop("readonly", false);
+                $("#mealdiv").prop("hidden", true);
+                $("#nonContrCurrencyType").prop("hidden", false);
+                $("#nonContrPriceInternational").prop("hidden", true);
+            }
+        }
+        function toggleStatus() {
+            var priceval = $("#txtprice").val();
+            if (priceval > 7000) {
+                $("#approvalRowDiv").prop("hidden", false);
+                $("#tdapprover2").prop("hidden", false);
+                $("#chkapprover1").prop("hidden", false);
+            } else {
+                $("#approvalRowDiv").prop("hidden", false);
+                $("#tdapprover2").prop("hidden", true);
+                $("#chkapprover1").prop("hidden", true);
+            }
+        }
+        function ShowCurrency() {
+            if ($('input[name="typeHotel"]:checked').val() == 'InternationalCurr') {
+                $("#nonContrPriceInternational").prop("hidden", false);
+                $("#nonContrPrice").prop("hidden", true);
+                $("#approvalRowDiv").prop("hidden", false);
+                $("#tdapprover2").prop("hidden", false);
+                $("#chkapprover1").prop("hidden", false);
+            } else {
+                $("#nonContrPriceInternational").prop("hidden", true);
+                $("#nonContrPrice").prop("hidden", false);
+                $("#approvalRowDiv").prop("hidden", false);
+                $("#tdapprover2").prop("hidden", true);
+                $("#chkapprover1").prop("hidden", true);
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        .modal.modal-wide .modal-dialog {
+            width: 72%;
+        }
+
+        .modal-wide .modal-body {
+            overflow-y: auto;
+        }
+        /* irrelevant styling */
+        .modal-dialog {
+            left: 5px;
+        }
+
+            .modal-dialog div {
+                text-align: center;
+            }
+        /*.modal-dialog div  p { max-width: 400px;margin: 20px auto;}*/
+        .modal-body table tr th {
+            text-align: Center;
+            padding: 10px;
+        }
+
+        ul > li, a {
+            cursor: pointer;
+        }
+
+        img {
+            cursor: pointer;
+        }
+
+        .popuphdtxt {
+            font-size: 18px;
+            font-family: Swis721 Cn BT,Sans-Serif;
+            padding-bottom: 1px;
+            padding-top: 1px;
+        }
+
+        .flighdtl {
+            width: 100%;
+            border: 1px solid #c2c2c2;
+        }
+
+        .popheadcolor {
+            background-color: #EE1D23;
+            color: #fff;
+            font-family: Swis721 Cn BT,Sans-Serif;
+        }
+
+        .inputremark {
+            width: 99%;
+            height: 30px;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .dtall_bulk {
+            font-size: 12px;
+        }
+
+        .viewlistcs {
+            color: #fff
+        }
+    </style>
+
+    <style>
+        .ui-menu-item {
+            width: 25% !important;
+            float: left;
+        }
+
+        .submitbtn {
+            background-color: #EE1D23;
+            color: #fff;
+        }
+
+        .srtarrowdouble a {
+            color: #428bca;
+            cursor: pointer;
+        }
+        /*ul > li, a {cursor: pointer;}*/
+        .ui-widget-content {
+            width: 18%;
+            font-size: 14px;
+            border: 1px solid #aaaaaa;
+            color: #222222;
+        }
+
+        .searchtxt {
+            margin-top: 10px;
+            float: right;
+        }
+
+        .searchDvPagesize_right {
+            float: left;
+            margin-top: 3px;
+        }
+    </style>
+
+    <style type="text/css">
+        /*.modal.modal-wide .modal-dialog {
+            width: 80%;
+        }*/
+
+        .modal-wide .modal-body {
+            overflow-y: auto;
+        }
+        /* irrelevant styling */
+        .modal-dialog {
+            left: 5px;
+        }
+
+            .modal-dialog div {
+                text-align: center;
+            }
+        /*.modal-dialog div  p { max-width: 400px;margin: 20px auto;}*/
+        .modal-body table tr th {
+            text-align: Center;
+            padding: 10px;
+        }
+
+        ul > li, a {
+            cursor: pointer;
+        }
+
+            /*a {
+            color: #222222;
+        }*/
+
+            a:hover {
+                color: #4800ff;
+            }
+
+        img {
+            cursor: pointer;
+        }
+
+        .popuphdtxt {
+            font-size: 18px;
+            font-family: Swis721 Cn BT,Sans-Serif;
+            padding-bottom: 1px;
+            padding-top: 1px;
+        }
+
+        .flighdtl {
+            width: 100%;
+            border: 1px solid #c2c2c2;
+        }
+
+        .popheadcolor {
+            background-color: #EE1D23;
+            color: #fff;
+            font-family: Swis721 Cn BT,Sans-Serif;
+        }
+
+        .modal-header {
+            min-height: 16.43px;
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+            background-color: #EE1D23;
+        }
+
+        input[type=radio], input[type=checkbox] {
+            height: 15px !important;
+        }
+
+        .Bulk_Booking .table-striped > tbody > tr:nth-child(odd) > th {
+            border: solid 1px #c2c2c2;
+            font-size: 9px;
+        }
+
+        .flighdtl_Bk_request {
+            width: 100%;
+        }
+
+            .flighdtl_Bk_request td {
+                border: solid 1px #c2c2c2;
+            }
+
+        .flighdtl_Bk_request2 {
+            width: 100%;
+        }
+
+            .flighdtl_Bk_request2 td {
+                border: solid 1px #c2c2c2;
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+        .flight_left_space {
+            margin-left: 0px;
+        }
+
+        .Bulkbooing input {
+            width: 95%;
+            height: 35px;
+        }
+
+        .Bulkbooing select {
+            width: 95%;
+            height: 35px;
+        }
+
+        .radio_space {
+            padding-left: 5px;
+        }
+
+        .tabletxtleft td {
+            text-align: left;
+            padding-left: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div ng-app="appblk" ng-controller="bulkappCtrl" ng-cloak>
+        <div>
+            <div class="admin_content_txtheading">OAT Hotel Alignment</div>
+        </div>
+        <section class="content">
+            <div class="Alladmin_content_box">
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="search-title-master">Search :</div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="master-search-control-gap">
+                            <input type="text" ng-model="search" ng-change="filter();" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12" ng-show="filteredItems > 0">
+                    <table class="table table-striped table-bordered" style="width:100%;" ng-show="applist.length">
+                        <tr class="popheadcolor">
+                            <th class="srtarrowdouble" width="7%">S.No. &nbsp;<a ng-click="sort_by('ID');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                            <th class="srtarrowdouble" width="10%">Req.Id &nbsp;<a ng-click="sort_by('TRId');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                            <th class="srtarrowdouble" width="11%">Req. Date &nbsp;<a ng-click="sort_by('TransactionDate');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                            <th class="srtarrowdouble" width="11%">App. Date &nbsp;<a ng-click="sort_by('CreatedDate');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                            <th class="srtarrowdouble" width="33%">File Name &nbsp;<a ng-click="sort_by('FileName');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                            <th class="srtarrowdouble" width="19%">Created By &nbsp;<a ng-click="sort_by('CreatedByName');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                            <th class="srtarrowdouble" width="20%">Emp ID &nbsp;</th>
+                            @*<th class="srtarrowdouble" width="20%">Traveldesk Status &nbsp;</th>*@
+                        </tr>
+                        <tr ng-repeat="list in filtered =(applist | filter: search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                            <td>{{$index+1}}</td>
+                            <td>{{list.TRId}}</td>
+                            <td>{{ToJavaScriptDateTime(list.TransactionDate)}}</td>
+                            <td>{{ToJavaScriptDateTime(list.CreatedDate)}}</td>
+                            <td><a data-toggle="modal" href="#viewdetailModal" class="csod" ng-click="viewPopupList(list.TRId)"> {{list.FileName}}</a></td>
+                            <td>{{list.CreatedByName}}</td>
+                            <td>{{list.CreatedById}}</td>
+
+                        </tr>
+                    </table>
+                </div>
+                <!--If No Record Found-->
+                <div class="col-md-12" ng-show="filteredItems == 0">
+                    <div class="col-md-12">
+                        <h4>No Record found</h4>
+                    </div>
+                </div>
+
+                <!--Pagination-->
+                <div class="col-md-12" ng-show="filteredItems > 0">
+                    <div pagination total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+                </div>
+
+            </div>
+        </section>
+        <!--------------------------------------------Content---------------->
+        <div class="container">
+
+
+
+            <!--------------------View Detail Model popup for hotel list------------------------------------->
+            <div id="viewdetailModal" class="modal modal-wide fade">
+                <div class="modal-dialog" style="width:98%;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeRefresh();">x</button>
+                            <h4 class="modal-title"><span class="viewlistcs">SOD Hotel Clubbing & Alignment (OAT Hotel Booking Request Id- {{trn}})</span></h4>
+                            <input type="hidden" id="hdTrid" value="{{trn}}" />
+                        </div>
+                        <div class="modal-body">
+                            <div class="dtall_bulk Bulk_Booking" ng-if="trdlist.length != 0 ">
+                                <table id="tblbookinginfo" style="font-size: 11px;" class="flighdtl_Bk_request flight_left_space table table-striped" dnd-list dnd-drop="callback({targetList: trdlist, targetIndex: index})">
+                                    <tr class="popheadcolor">
+                                        <th>S No. </th>
+                                        <th>Emp Code &nbsp;<a ng-click="sort_by('EmpCode');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Sharing Id</th>
+                                        <th>Gender &nbsp;<a ng-click="sort_by('Title');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Emp Name  &nbsp;<a ng-click="sort_by('FirstName');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Designation &nbsp;<a ng-click="sort_by('Designation');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Travel Date &nbsp;<a ng-click="sort_by('TravelDate');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Sector &nbsp;<a ng-click="sort_by('Sector');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Flight No.</th>
+                                        <th>PNR</th>
+                                        @*<th>Booking Type</th>
+                    <th>Hotel Required</th>*@
+                                        <th>Hotel Name &nbsp;<a ng-click="sort_by('HotelName');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Hotel City &nbsp;<a ng-click="sort_by('HotelCity');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Check-In Date &nbsp;<a ng-click="sort_by('CheckInDate');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Check-Out Date</th>
+                                        <th>Checkin Time</th>
+                                        @*<th>Checkout time</th>*@
+                                        <th>Airport Trans.</th>
+                                        <th>Hotel Status</th>
+                                        <th>Conf. No.</th>
+                                        <th ng-if="NoncontractualButton">Financial Approval Status</th>
+                                        <th> <input type="checkbox" id="chkheader" data-ng-model="selectedAll" ng-click="checkAll();" /> Action</th>
+                                    </tr>
+
+                                    <tr ng-repeat="dlist in trdlist | orderBy : predicate : reverse " dnd-draggable="null" dnd-callback="onDrop(trdlist, $index, targetList, targetIndex)">
+                                        <td>{{$index+1}}<input type="hidden" id="hdnBrId" value="{{dlist.BReqId}}"></td>
+                                        <td>{{dlist.EmpCode}}</td>
+                                        <td>
+                                            <select ng-if="dlist.HotelName==''" id="shareIdDrop">
+                                                <option ng-repeat="x in trdCountList">{{x}}</option>
+                                            </select>
+                                            <span ng-if="dlist.HotelName!=''">{{dlist.sharingId}}</span>
+                                        </td>
+                                        <td>{{dlist.Title=='Mr'? 'Male':'Female'}} </td>
+                                        <td> {{dlist.FirstName}}  {{dlist.LastName}}</td>
+                                        <td>{{dlist.Designation}}</td>
+                                        <td>{{dlist.TravelDate}}</td>
+                                        <td>{{dlist.Sector}}</td>
+                                        <td>{{dlist.FlightNo}}</td>
+                                        <td>{{dlist.PNR}}<span id='spnr'></span></td>
+                                        @*<td>{{dlist.BookingType}}</td>
+                    <td>{{dlist.IsHotelRequired==true?'Yes':'No'}}</td>*@
+                                        <td>{{dlist.HotelName}}</td>
+                                        <td>{{dlist.HotelCity}}</td>
+                                        <td>{{ToJavaScriptDate(dlist.CheckInDate)}}</td>
+                                        <td>{{ToJavaScriptDate(dlist.CheckOutDate)}}</td>
+                                        <td>{{dlist.CheckinTime}}</td>
+                                        @*<td>{{dlist.CheckoutTime}}</td>*@
+                                        <td>{{dlist.AirportTransport==true?'Yes':'No'}}</td>
+                                        <td>
+                                            {{dlist.HotelStatus.replace('by Hotel', '').replace('from Hotel', '')}}
+                                            <input ng-if="(dlist.HotelStatus !='') && (dlist.HotelStatus =='Pending from Hotel')" type="submit" id="btnRequestHotelResend" style="max-width:200px" value="Resend Mail" ng-click="ResendRequestToHotel(trn, dlist.clubId, dlist.HotelName, dlist.PrimaryEmail,dlist.SecondaryEmail ,dlist.HotelCity);" class='btn btn-warning btn-sm' ng-disabled="dlist.IsBookingcancelled" />
+                                        </td>
+
+                                        <td>
+                                            {{dlist.HotelConfirmationNo}}
+                                            <br />
+                                            <button type="button" id="btnsubmit" class="btn btn-warning btn-sm" ng-if="(dlist.HotelConfirmationNo!='') && (dlist.IsAllocated=='0')" ng-click="apphotelinfo(dlist.EmpCode,trn)">Send Mail</button>
+                                            <div ng-if="dlist.IsAllocated=='1'" id="ResponseMail" class="tooltip1">
+                                                &nbsp;<img src="../img/right.jpg" height="15" width="15" title="Mail sent to user" />
+                                                <a ng-click="AppHotelRequestResendMail(dlist.EmpCode,trn)" href="#">Mail sent</a>
+                                            </div>
+                                            <div hidden="hidden" id="ResponseMailText" class="tooltip1">&nbsp;<img id="imageText" hidden="hidden" src="../img/right.jpg" height="15" width="15" title="Mail sent to user" /><span id="spantext" hidden="hidden">Mail sent</span></div>
+                                        </td>
+                                        <td ng-if="NoncontractualButton">
+                                            <a ng-if="dlist.HodApprovalStatus=='0'" data-toggle=modal href="#viewdetailModalHODStatus" class="csod" ng-click="viewdetailHODApproval(trn, dlist.BReqId)">Pending</a>
+                                            <a ng-if="dlist.HodApprovalStatus=='1'" data-toggle=modal href="#viewdetailModalHODStatus" class="csod" ng-click="viewdetailHODApproval(trn, dlist.BReqId)">Approved</a>
+                                            <a ng-if="dlist.HodApprovalStatus=='2'" data-toggle=modal href="#viewdetailModalHODStatus" class="csod" ng-click="viewdetailHODApproval(trn, dlist.BReqId)">Rejected</a>
+                                        </td>
+                                        @*<td ng-if="dlist.PNR !=ERR001"><input type="checkbox" ng-model="dlist.Selected" ng-checked="selectedAll"  ng-hide="true"/></td>*@
+                                        <td style="border-right:solid 1px #c2c2c2"><input ng-if="(dlist.HotelName=='')" id="chkVal_{{$index+1}}" type="checkbox" ng-model="dlist.Selected" ng-checked="selectedAll" ng-click="validateSector($index+1);" /><div class="tooltip1" ng-if="dlist.IsBookingcancelled"><img style='margin-bottom:4px;margin-left:4px;' src='../img/rejected.png' height="15" width="15" /><span class="tooltiptext">This Booking is Cancelled</span></div></td>
+
+                                    </tr>
+                                </table>
+                                <div class="row" style="margin:2px" ng-if="NoncontractualButton">
+                                    <button type="button" class="btn btn-warning pull-right" style="margin:4px" ng-click="ResendApproverRequest(trn)">Resend Mail to Financial Approver</button>
+                                    <button type="button" class="btn btn-info pull-right" style="margin:4px" ng-click="RequestToHotlAfterApproval(trn)">Send Mail to Non-Contractual Hotel </button>
+                                </div>
+
+
+                                <div style="padding-bottom:10px; background-color:#efefef; padding-top:10px; padding-left:10px;">
+                                    <table id="tbltitleHotel">
+                                        <tr id="trsodtypeHotel">
+                                            <td><input type="radio" style="height:17px; width:17px;" name="radioHotel" value="rdoExisting" checked="checked" id="rdoExisting" onchange="Exis_NewChange();" /></td>
+                                            <td class="bookingtypetxt radio_space">Contractual</td>
+                                            <td><input type="radio" name="radioHotel" style="height:17px; width:17px;margin-left:10px;" value="rdoNew" id="rdoNew" onchange="Exis_NewChange();" /></td>
+                                            <td class="bookingtypetxt radio_space">Non-Contractual</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div>
+                                    <table class="flighdtl_Bk_request2 Bulkbooing" id="tblExistinghotel">
+                                        <tr class="tabletxtleft">
+                                            <td style="width:20%;">Hotel Name  :</td>
+                                            <td colspan="2">
+                                                <input type="text" hidden="hidden" ng-model="txthname" id="txthname" maxlength="200" required />
+                                                <select id="ddlCustomers" onchange="hotelfilldropdown();"></select>
+                                            </td>
+                                            <td>Hotel Code  :</td>
+                                            <td colspan="2"><input type="text" style="text-align:left;" ng-model="txtcode" id="txtcode" maxlength="200" required /></td>
+                                        </tr>
+                                        <tr class="tabletxtleft">
+                                            <td>Hotel Address  :</td>
+                                            <td colspan="2">
+                                                <input type="text" style="text-align:left;" ng-model="txthaddress" id="txthaddress" maxlength="200" required />
+                                            </td>
+
+                                            <td>Hotel Phone  :</td>
+                                            <td colspan="2">
+                                                <input type="text" style="text-align:left;" ng-model="txthphone" id="txthphone" onkeydown="validatePhoneNumber(event);" maxlength="200" required />
+                                            </td>
+                                        </tr>
+                                        <tr class="tabletxtleft">
+                                            <td>Primary Email Id  :</td>
+                                            <td colspan="2">
+                                                <input type="text" style="text-align:left;" ng-model="txthemail" id="txthemail" maxlength="200" required />
+                                            </td>
+
+                                            <td>Other Email Id's  :</td>
+                                            <td colspan="2">
+                                                <input type="text" style="text-align:left;" ng-model="txtotheremail" id="txtotheremail" maxlength="200" required />
+                                            </td>
+                                        </tr>
+                                        <tr id="mealdiv" class="tabletxtleft">
+                                            <td>Price  :</td>
+                                            <td colspan="4" align="left">
+                                                <div id="mealpricediv1" hidden="hidden">
+                                                    Meal Type: <input type="radio" name="radiomeal" value="meal1" checked="checked" id="rdomeal1" style="width:15px" /><span id="mealtype"></span>&nbsp;( <span id="txthCurrency1"></span> )&nbsp;&nbsp;
+                                                    Single Price: <span id="singlemealprice"></span>&nbsp;&nbsp;&nbsp;
+                                                    Double Price: <span id="doublemealprice"></span><br />
+                                                </div>
+                                                <div id="mealpricediv2" hidden="hidden">
+                                                    Meal Type: <input type="radio" name="radiomeal" value="meal2" id="rdomeal2" style="width:15px" /><span id="mealtype2"></span>&nbsp;( <span id="txthCurrency2"></span> )&nbsp;&nbsp;
+                                                    Single Price: <span id="singlemealprice2"></span>&nbsp;&nbsp;&nbsp;
+                                                    Double Price: <span id="doublemealprice2"></span><br />
+                                                </div>
+                                                <div id="mealpricediv3" hidden="hidden">
+                                                    Meal Type: <input type="radio" name="radiomeal" value="meal3" id="rdomeal3" style="width:15px" /><span id="mealtype3"></span>&nbsp;( <span id="txthCurrency3"></span> )&nbsp;&nbsp;
+                                                    Single Price: <span id="singlemealprice3"></span>&nbsp;&nbsp;&nbsp;
+                                                    Double Price: <span id="doublemealprice3"></span><br />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tabletxtleft">
+                                            <td colspan="1">Request Submitted by  :</td>
+                                            <td colspan="4">
+                                                <input type="text" style="text-align:left;width:98.5%" ng-model="txtrqstSubm" id="txtrqstSubm" maxlength="200" required />
+                                            </td>
+                                        </tr>
+                                        <tr id="nonContrCurrencyType" hidden="hidden">
+                                            <td colspan="1">Currency Type  :</td>
+                                            <td colspan="4" style="text-align:left ;padding-left:10px">
+                                                <input type="radio" style="height:17px; width:17px;" name="typeHotel" id="DomesticCurr" value="DomesticCurr" checked="checked" onchange="ShowCurrency();" />
+                                                <label for="DomesticCurr">Domestic</label>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <input type="radio" style="height:17px; width:17px;margin-left:10px;" name="typeHotel" id="InternationalCurr" value="InternationalCurr" onchange="ShowCurrency();" />
+                                                <label for="InternationalCurr">International</label>
+                                            </td>
+                                        </tr>
+
+                                        <tr id="nonContrInclusionHead" hidden="hidden">
+                                            <td colspan="6"><b>Hotel Inclusions</b></td>
+                                        </tr>
+                                        <tr id="nonContrInclusions1" hidden="hidden">
+                                            <td colspan="1">Accommodation:</td>
+                                            <td colspan="2">
+                                                <input type="text" class="inputremark" ng-model="txtaccomodation" id="txtaccomodation" required />
+                                            </td>
+                                            <td colspan="1">Food:</td>
+                                            <td colspan="2">
+                                                <input type="text" class="inputremark" ng-model="txtfood" id="txtfood" />
+                                            </td>
+                                        </tr>
+                                        <tr id="nonContrInclusions2" hidden="hidden">
+                                            <td colspan="1">Airport Transfers:</td>
+                                            <td colspan="2">
+                                                <input type="text" class="inputremark" ng-model="txtairporttransfer" id="txtairporttransfer" required />
+                                            </td>
+                                            <td colspan="1">Room Service:</td>
+                                            <td colspan="2">
+                                                <input type="text" class="inputremark" ng-model="txtroom" id="txtroom" />
+                                            </td>
+                                        </tr>
+                                        <tr id="nonContrInclusions3" hidden="hidden">
+                                            <td colspan="1">Buffet Time:</td>
+                                            <td colspan="2">
+                                                <input type="text" class="inputremark" ng-model="txtbuffet" id="txtbuffet" required />
+                                            </td>
+                                            <td colspan="1">Laundry:</td>
+                                            <td colspan="2">
+                                                <input type="text" class="inputremark" ng-model="txtlaundry" id="txtlaundry" />
+                                            </td>
+                                        </tr>
+                                        <tr id="nonContrPrice" hidden="hidden">
+                                            <td colspan="1">Price Per Night :</td>
+                                            <td colspan="2">
+                                                <input type="text" class="inputremark" ng-model="txtprice" id="txtprice" maxlength="200" onkeyup="toggleStatus()" onkeyup="toggleStatusEx()" onkeydown="validateNumber(event);" required />
+                                            </td>
+                                            <td colspan="1">
+                                                Is Tax Included? <input type="checkbox" id="chktax" />
+                                            </td>
+                                            <td colspan="2">
+                                                <span style="color:darkblue">*For Price > Rs. 7000, financial approval is required.</span>
+                                            </td>
+                                        </tr>
+                                        <tr id="nonContrPriceInternational" hidden="hidden">
+                                            <td colspan="1">Price Per Night  :</td>
+                                            <td colspan="1">
+                                                <input type="text" class="inputremark" ng-model="txtprice" id="txtprice" maxlength="6" onkeydown="validateNumber(event);" required />
+                                            </td>
+                                            <td colspan="1">
+                                                Is Tax Included? <input type="checkbox" id="chktax" />
+                                            </td>
+                                            <td colspan="1">
+                                                Select currency
+                                            </td>
+                                            <td colspan="1">
+                                                <select class="form-control select4" id="selecttxtCurrency1" name="CurrList" style="margin: 10px;">
+                                                    <option value="Null" hidden>- Please select Currency -</option>
+                                                    <option value="{{x.CurrencyCode}}" ng-repeat="x in CurrencyList">{{x.CurrencyName}}-{{x.CurrencyCode}}</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+
+                                        <tr id="approvalRowDiv" hidden="hidden">
+                                            <td colspan="1">Approval Required from  :</td>
+                                            <td id="tdapprover1"><span id="SpanApprover1"></span>&nbsp;<input type="checkbox" id="chkapprover1" style="width:15px" checked /><br /> <span id="EmailApprover1"></span> </td>
+                                            <td id="tdapprover2"><span id="SpanApprover2"></span>&nbsp;<input type="checkbox" id="chkapprover2" style="width:15px" checked /><br /> <span id="EmailApprover2"></span> </td>
+                                            @*<td id="tdapprover3"><span id="SpanApprover3"></span>&nbsp;<input type="checkbox" id="chkapprover3" /><br /> <span id="EmailApprover3"></span> </td>*@
+                                            <td colspan="2">
+                                                <button type="button" id="btnFinancialApproval" class="btn btn-warning btn-sm" ng-click="sendFinancialApprovalRequest()">
+                                                    Send Approval Request
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="tabletxtleft" id="requestToHotelDivRow">
+                                            <td colspan="1">Approval Remarks  :</td>
+                                            <td colspan="2">
+                                                <input type="text" style="text-align:left;" ng-model="txtremarks" id="txtremarks" maxlength="200" required />
+                                            </td>
+                                            <td colspan="1">Send Request  :</td>
+                                            <td colspan="2">
+                                                <input type="submit" id="btnRequestHotel" style="max-width:200px" value="Send Request to Hotel" ng-click="sendhotelRequestSelective(trn);" class='btn btn-warning btn-sm' />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12" ng-if="trdlist.length == 0" style="margin:50px;">
+                                <div class="col-md-12">
+                                    <div><span style="text-align:center; font-size:14px;margin-top:100px;color:#ff0000">Sorry ! All record are cancelled. </span></div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="modal-footer">
+                            @*<input type="submit" id="btnRequestHotel" value="Send Request to Hotel" ng-click="sendhotelRequestSelective(trn);" class='btn btn-warning btn-sm' />*@
+                            <button type="button" data-dismiss="modal" ng-click="closeRefresh()"> Close </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            <div id="viewdetailModalHODStatus" class="modal modal-wide fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                            <h4 class="modal-title"><span class="viewlistcs">HOD Approval Status (ID-{{approvalinfo[0].TravelRequestId}})</span></h4>
+                        </div>
+                        <div class="modal-body">
+                            <table id="tblhodappovalinfo" class="flighdtl" ng-repeat="blist in approvalinfo">
+                                <tr class="popheadcolor">
+                                    <th>Approver 1</th>
+                                    <th>Approval Date </th>
+                                    <th>Approval status </th>
+                                </tr>
+                                <tr style="text-align:left;padding:2px;">
+                                    <td>{{blist.ApproverNameLevel1}}</td>
+                                    <td>{{ToJavaScriptDate(blist.ApprovalDateLevel1)=="31-Dec-1899"? "" : ToJavaScriptDate(blist.ApprovalDateLevel1)}}</td>
+                                    <td>
+                                        <span ng-if="blist.ApprovalStatusLevel1=='0'">Pending</span>
+                                        <span ng-if="blist.ApprovalStatusLevel1=='1'">Approved</span>
+                                        <span ng-if="blist.ApprovalStatusLevel1=='2'">Rejected</span>
+                                    </td>
+
+                                </tr>
+                                <tr ng-if="blist.ApproverNameLevel2 !=null" class="popheadcolor">
+                                    <th>Approver 2</th>
+                                    <th>Approval Date </th>
+                                    <th>Approval status </th>
+                                </tr>
+                                <tr ng-if="blist.ApproverNameLevel2 !=null" style="text-align:left;padding:2px;">
+                                    <td>{{blist.ApproverNameLevel2}}</td>
+                                    <td>{{ToJavaScriptDate(blist.ApprovalDateLevel2)=="31-Dec-1899"? "" : ToJavaScriptDate(blist.ApprovalDateLevel2)}}</td>
+                                    <td>
+                                        <span ng-if="blist.ApprovalStatusLevel2=='0'">Pending</span>
+                                        <span ng-if="blist.ApprovalStatusLevel2=='1'">Approved</span>
+                                        <span ng-if="blist.ApprovalStatusLevel2=='2'">Rejected</span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            <!-- --------------------Begining of Loader------------------------------------->
+            <div class="loader">
+                <center>
+                    <span class="loading-image" id="loaderMsg" style="font-weight:bold;font-size:22px;color:#ff0000;"></span>
+                    <img class="loading-image" src="../images/loading.gif" alt="loading..."><br />
+                </center>
+            </div>
+            <!-- --------------------End of Loader-------------------------------------------->
+            <!--------------------------------------------Footer------------------------------>
+            <div style="padding-top:70px;"></div>
+            <footer class="essfooter">
+                <div class="container"></div>
+            </footer>
+            <!-- ------------------------------------------END Footer------------------------->
+        </div>
+    </div>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.close();
+        };
+        </script>
+    }
+</body>
+</html>

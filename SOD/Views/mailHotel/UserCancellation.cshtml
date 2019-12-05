@@ -1,0 +1,137 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>User Response</title>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <script src="../js/timerpickerJS.js"></script>
+    <link href="../css/timepicker.css" rel="stylesheet" />
+
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <style type="text/css">
+        .succesmsg {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+   
+    <script>
+
+        function onloadMethod() {
+            var result = confirm("Are you sure to Cancel the hotel request?");
+            if (result) {
+                var travelRequest = "@Request.QueryString["trid"]";
+                var hotelId = "";
+                if (travelRequest.endsWith("sms")) {
+                    travelRequestId = travelRequest.split(',')[0];
+                    var hotelId = travelRequest.split(',')[1];
+                } else {
+                    travelRequestId = "@Request.QueryString["trid"]";
+                    hotelId = "@Request.QueryString["hid"]";
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "../mailHotel/hotelCancellationRequest?travelRqstId=" + travelRequestId + "|" + hotelId + "|SOD",
+                    data: {},
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response == 'Failed') {
+                            $('#resultmsg').hide();
+                            $("#ExistingMsg").show();
+                            $("#denied").hide();
+                        } else {
+                            $('#resultmsg').show();
+                            $("#ExistingMsg").hide();
+                            $("#denied").hide();
+                        }
+                    }
+                });
+            } else {
+                $("#denied").show();
+                $('#resultmsg').hide();
+                $("#ExistingMsg").hide();
+            }
+        };
+    </script>
+
+</head>
+<body onload="onloadMethod();">
+    <div>
+        <div class="bookingheadr">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"><div class="logoheader"><img src="../img/logo_spicejet.png" /> </div></div>
+                    <div class="col-md-4"><div class="txtSODNSOD">USER CANCELLATION</div></div>
+                    <div class="col-md-5"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container">          
+            <div hidden id="denied" style="padding-top:10%;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="succesmsg">
+                            <span style="font-weight:bold;">Request denied!</span> <br />                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div hidden id="resultmsg" style="padding-top:10%;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="succesmsg">
+                            <span style="font-weight:bold;">Thankyou!</span> <br />
+                            Cancellation Request has been successfully sent to Travel Desk.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="ExistingMsg" hidden="hidden" style="padding-top:10%;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="succesmsg">
+                            <span style="font-weight:bold;">Thankyou!</span> <br />
+                            Cancellation not possible.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!------Div Loader------------------------------------------------------>
+            <div class="loader">
+                <center>
+                    <img class="loading-image" src="../images/loading.gif" alt="loading..">
+                </center>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="padding-top:100px; padding-bottom:20px; text-align:center">
+                        @*<input type="button" id="fltreplan" value="Re-Plan" style="width:150px; height:35px; background-color:#b33; border:0px;color:#fff; font-size:16px;" />*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="padding-top:70px;"></div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Admin | Sink Data emdmapi";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<script src="../js/emdm-api-sink.js"></script>
+<script src="../Scripts/jquery-1.10.2.min.js"></script>
+<link href="../css/progress.css" rel="stylesheet" />
+<link href="../Assest/css/AdminNew.css" rel="stylesheet" />
+
+<script>
+    $(document).ready(function () {
+        $("#loaderMsg")[0].innerHTML = "Processing : Trying to Connect to emdm sap api.";
+        $('.loader').hide();
+        $('.spinner').hide();
+    });
+
+</script>
+ 
+<div>
+    <div class="admin_content_txtheading"> Sync Data with SAP emdm API</div>
+</div>
+<section class="content" ng-app="cxodeptMapping" ng-controller="deptMapping">
+   
+        <div class="row">
+            <div class="col-md-2">
+
+            </div>
+            <div class="col-md-8">
+                <div class="bulklistadmin_searchbox" style="text-align:center; padding-top:25px;">
+                    <div class="sync-emdm-title"><b> Click Here To Sync Data with SAP emdm API</b></div>
+                    <div>
+                        <input id="btnSave" type="button" value="Sync Data with emdm API " onclick="sinkData();" class="btn btn-danger" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+   
+    <div class="row">
+        <div class="col-md-12" style="padding-left:50px">
+            <div class="spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="loader">
+    <center>
+        <span class="loading-image" id="loaderMsg" style="font-weight:bold;font-size:22px;color:#ff0000;"></span>
+        <img class="loading-image" src="../images/loading.gif" alt="loading.."><br />
+    </center>
+</div>
+

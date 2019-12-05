@@ -1,0 +1,284 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>IndexITHResponse</title>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../Dropdownmenu/jquery-1.9.1.js"></script>
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    <script src="../js/timerpickerJS.js"></script>
+    <link href="../css/timepicker.css" rel="stylesheet" />
+    <style type="text/css">
+        .succesmsg {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+   <script>
+    function loadData() {
+        debugger;
+        var stringQ = "@Request.QueryString["trid"]";
+           var travelReqID = "OAT-" + stringQ;
+
+           $.ajax({
+               contentType: 'application/json; charset=utf-8',
+               dataType: 'json',
+               type: 'POST',
+               url: '../mailITH/GetDetailsOATList_forITH',
+               data: JSON.stringify({ trid: travelReqID }),
+
+               success: function (response) {
+                   debugger;
+                   if (response.masterList[0].ITHResponseStatus == "Response Received") {
+                       $("#dynamicContainers").hide();
+                       $("#MsgDisplayDiv").show();
+                   } else {
+
+                       $("#dynamicContainers").show();
+                       $("#MsgDisplayDiv").hide();
+                       //create dynamic tables for flights
+                       for (var counter = 0; counter < response.flightList.length; counter++) {
+
+                           var newTextBoxDiv = $(document.createElement('div'))
+                                .attr("id", 'TextBoxDiv' + counter);
+                           newTextBoxDiv.after().html('<br><div ">' +
+                               '<table id="header"' + counter + ' >' +
+                               '<tr>' +
+                               '<th>Source</th><th>Destination</th><th>Travel Date</th>' +
+                               '</tr>' +
+                               '<tr>' +
+                               '<td>' +
+                               '<input type="text" name="textsource' + counter + '" id="source' + counter + '" value="' + response.flightList[counter].OriginPlace + '" ></td>' +
+                               '<td>' +
+                               '<input type="text" name="textdest' + counter + '" id="dest' + counter + '" value="' + response.flightList[counter].DestinationPlace + '" ></td>' +
+                               '<td>' +
+                               '<input type="text" name="texttrvdt' + counter + '" id="traveldt' + counter + '" value="' + ToJavaScriptDate(response.flightList[counter].DepartureDate) + '" ></td>' +
+                               '</tr>' +
+                               '</table>' +
+
+                               '<table id="tableith"' + counter + ' class="flighdtl">' +
+                               '<tr>' +
+                               '<th>SNo. </th><th>Flight No</th>' +
+                               '<th>Flight Name</th><th>Departure Time</th><th>Arrival Time</th><th>Amount (in Rs.)</th>' +
+                               '<th>Flight Type</th>' +
+                                '</tr>' +
+
+                               '<tr>' +
+                               '<td><span id="sno' + counter + '">' + 1 + '.</span></td>' +
+                               '<td>' +
+                               '<input type="text" name="textbox' + counter + '" id="flightno' + counter + '" value="' + response.flightList[counter].DepFlightNumber + '" ></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxname' + counter + '" id="flightname' + counter + '" value="' + response.flightList[counter].DepFlightInfo + '" ></td>' +
+                               '<td>' +
+                               '<input type="text" id="deptime' + counter + '" class="timepicker"></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxarr' + counter + '" id="arrivaltime' + counter + '" value="" class="timepicker"></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxamt' + counter + '" id="amount' + counter + '" value="" ></td>' +
+                               '<td>' +
+                               '<select name="drop"' + counter + ' class="fh_inputtxt" id="dropdownType' + counter + '" ><option>Direct</option><option>Connected</option></select>' + '</td>' +
+
+                               '</tr>' +
+                               '<tr>' +
+                               '<td><span id="sno2' + counter + '">' + 2 + '.</span></td>' +
+                               '<td>' +
+                               '<input type="text" name="textbox2' + counter + '" id="flightno2' + counter + '" value="" ></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxname2' + counter + '" id="flightname2' + counter + '" value="" ></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxdep2' + counter + '" id="deptime2' + counter + '" value="" class="timepicker"></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxarr2' + counter + '" id="arrivaltime2' + counter + '" value="" class="timepicker"></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxamt2' + counter + '" id="amount2' + counter + '" value="" ></td>' +
+                               '<td>' +
+                               '<select name="drop2"' + counter + ' class="fh_inputtxt" id="dropdownType2' + counter + '" ><option>Direct</option><option>Connected</option></select>' + '</td>' +
+
+                               '</tr>' +
+                               '<tr>' +
+                               '<td><span id="sno3' + counter + '">' + 3 + '.</span></td>' +
+                               '<td>' +
+                               '<input type="text" name="textbox3' + counter + '" id="flightno3' + counter + '" value="" ></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxname3' + counter + '" id="flightname3' + counter + '" value="" ></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxdep3' + counter + '" id="deptime3' + counter + '" value="" class="timepicker"></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxarr3' + counter + '" id="arrivaltime3' + counter + '" value="" class="timepicker"></td>' +
+                               '<td>' +
+                               '<input type="text" name="textboxamt3' + counter + '" id="amount3' + counter + '" value="" ></td>' +
+                               '<td>' +
+                               '<select name="drop3"' + counter + ' id="dropdownType3' + counter + '" class="fh_inputtxt" ><option>Direct</option><option>Connected</option></select>' + '</td>' +
+
+                               '</tr>' +
+                               '</table>' +
+                               '</div>'
+                              );
+
+                           newTextBoxDiv.appendTo("#addContainers");
+
+                           $('.timepicker').wickedpicker({
+                               twentyFour: false, title:
+                                      'Select Time', showSeconds: false
+                           });
+                       };
+                   }
+                   
+               },
+               error: function (response) {
+                   alert(response);
+               }
+           });
+    };
+
+       //convert MM/dd/yyyy
+       function ConvertMMddyyyy(dval) {
+           var mval = (dval.split('/')[1] + '/' + dval.split('/')[0] + '/' + dval.split('/')[2]);
+           return mval;
+       }
+
+       //Convert date script date formt for display
+       function ToJavaScriptDate (value) {
+           var pattern = /Date\(([^)]+)\)/;
+           var results = pattern.exec(value);
+           var dt = new Date(parseFloat(results[1]));
+           return (dt.getDate()) +"/" + (dt.getMonth() + 1) + "/"  + dt.getFullYear();
+       };
+
+
+       //save data
+       function saveDataButton() {
+           var trid = "@Request.QueryString["trid"]";
+           var ithList = new Array();
+           
+           //loop ith push data from dynamic tables
+           var counter = 0;
+           debugger;
+           $('#addContainers div').each(function () {
+               $('#TextBoxDiv' + counter).each(function () {
+                   var obj1 = new Object();
+                   var obj2 = new Object();
+                   var obj3 = new Object();
+                   obj1.TravelRequestId = trid;
+                   obj1.OriginPlace = $('#source' + counter).val();
+                   obj1.DestinationPlace = $('#dest' + counter).val();
+                   obj1.TravelDate = ConvertMMddyyyy($('#traveldt' + counter).val());
+                   obj1.FlightNo = $('#flightno' + counter).val();
+                   obj1.FlightName = $('#flightname' + counter).val();
+                   obj1.DepartureTime = $('#deptime' + counter).val();
+                   obj1.ArrivalTime = $('#arrivaltime' + counter).val();
+                   obj1.Amount = $('#amount' + counter).val();
+                   obj1.FlightType = $("#dropdownType" + counter + " :selected").text();
+                   ithList.push(obj1);
+
+                   obj2.TravelRequestId = trid;
+                   obj2.OriginPlace = $('#source' + counter).val();
+                   obj2.DestinationPlace = $('#dest' + counter).val();
+                   obj2.TravelDate = ConvertMMddyyyy($('#traveldt' + counter).val());
+                   obj2.FlightNo = $('#flightno2' + counter).val();
+                   obj2.FlightName = $('#flightname2' + counter).val();
+                   obj2.DepartureTime = $('#deptime2' + counter).val();
+                   obj2.ArrivalTime = $('#arrivaltime2' + counter).val();
+                   obj2.Amount = $('#amount2' + counter).val();
+                   obj2.FlightType = $("#dropdownType2" + counter + " :selected").text();
+                   ithList.push(obj2);
+
+                   obj3.TravelRequestId = trid;
+                   obj3.OriginPlace = $('#source' + counter).val();
+                   obj3.DestinationPlace = $('#dest' + counter).val();
+                   obj3.TravelDate = ConvertMMddyyyy($('#traveldt' + counter).val());
+                   obj3.FlightNo = $('#flightno3' + counter).val();
+                   obj3.FlightName = $('#flightname3' + counter).val();
+                   obj3.DepartureTime = $('#deptime3' + counter).val();
+                   obj3.ArrivalTime = $('#arrivaltime3' + counter).val();
+                   obj3.Amount = $('#amount3' + counter).val();
+                   obj3.FlightType = $("#dropdownType3" + counter + " :selected").text();
+                   ithList.push(obj3);
+
+               });
+               counter++;
+           });
+           
+            $.ajax({
+                url: "../mailITH/Index",
+                type: "POST",
+                processData: false,
+                data: JSON.stringify({ ithList: ithList }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    if (response != null || response != '') {
+                        window.location.href = "../mailITH/Response";
+                    }
+                },
+                error: function (er) {
+                    alert('Error in sending request to Traveldesk. Please try again later.');
+                }
+            });        
+    
+       };
+
+   </script>
+    <script>
+    $(document).ready(function () {
+
+        $('.timepicker').wickedpicker({
+            twentyFour: false, title:
+                   'Select Time', showSeconds: false
+        });
+
+    });
+    </script>
+</head>
+<body onload="loadData();">
+    <div>
+        <div class="bookingheadr">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"><div class="logoheader"><img src="../img/logo_spicejet.png" /> </div></div>
+                    <div class="col-md-4"><div class="txtSODNSOD">ITH DESK</div></div>
+                    <div class="col-md-5"></div>
+                </div>
+            </div>
+        </div>
+        <br />
+        
+        <div class="container"> 
+            <div id="MsgDisplayDiv" hidden="hidden">
+                <div class="succesmsg" id="dvMsg">
+                    Flight details have already been submitted.
+                </div>
+            </div>  
+            <div id="dynamicContainers">
+                <div id="addContainers"></div>
+
+                <div class="row" id="txtbuttondiv">
+                    <div class="col-md-12">
+                        <div class="succesmsg" id="dvMsg2">
+                            <button id="btnSubmit" onclick="saveDataButton();">SUBMIT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>           
+        </div>
+        <div style="padding-top:70px;">
+        </div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+    </div>
+</body>
+</html>

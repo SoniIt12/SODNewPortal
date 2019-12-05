@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GetAvailabilityRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>oTSYvtG/fKo=|NxCiegX5jkwT8RBm3JPO/B14BhNnZIM1s1p7EtMRBZr384ezYulp9a8yCLQ9FEuMgFwzei/J+FTzDqc450/TNUqEFXKK7aJgKwPV7swMRyk9efN8Md8Qy3Aw18UAhhq4ucs2bH2AoJk=</Signature>
+  <TripAvailabilityRequest>
+    <AvailabilityRequests>
+      <AvailabilityRequest>
+        <DepartureStation>DEL</DepartureStation>
+        <ArrivalStation>GAU</ArrivalStation>
+        <BeginDate>2018-08-28T00:00:00</BeginDate>
+        <EndDate>2018-08-28T00:00:00</EndDate>
+        <FlightNumber> 152</FlightNumber>
+        <FlightType>Direct</FlightType>
+        <PaxCount>1</PaxCount>
+        <Dow>Daily</Dow>
+        <CurrencyCode>INR</CurrencyCode>
+        <AvailabilityType>Standby</AvailabilityType>
+        <MaximumConnectingFlights>5</MaximumConnectingFlights>
+        <AvailabilityFilter>ExcludeUnavailable</AvailabilityFilter>
+        <FareClassControl>LowestFareClass</FareClassControl>
+        <MinimumFarePrice>0</MinimumFarePrice>
+        <MaximumFarePrice>0</MaximumFarePrice>
+        <SSRCollectionsMode>None</SSRCollectionsMode>
+        <InboundOutbound>None</InboundOutbound>
+        <NightsStay>0</NightsStay>
+        <IncludeAllotments>false</IncludeAllotments>
+        <FareTypes>
+          <string>Z</string>
+        </FareTypes>
+        <PaxPriceTypes>
+          <PaxPriceType>
+            <PaxType>ADT</PaxType>
+            <PaxDiscountCode />
+          </PaxPriceType>
+        </PaxPriceTypes>
+        <IncludeTaxesAndFees>false</IncludeTaxesAndFees>
+        <FareRuleFilter>Default</FareRuleFilter>
+        <LoyaltyFilter>MonetaryOnly</LoyaltyFilter>
+      </AvailabilityRequest>
+    </AvailabilityRequests>
+    <LoyaltyFilter>MonetaryOnly</LoyaltyFilter>
+    <LowFareMode>false</LowFareMode>
+  </TripAvailabilityRequest>
+</GetAvailabilityRequest>

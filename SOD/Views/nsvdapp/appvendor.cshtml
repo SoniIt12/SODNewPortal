@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <title>NONSOD | HOD Response</title>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <style type="text/css">
+        .succesmsg {
+            font-size: 18px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.loader').delay(3000).hide(0);
+        });
+        function emailNotification() {
+            $.ajax({
+                url: "../nsvd/sendEmailNotification",
+                success: function (result) {
+                }
+            });
+        }
+    </script>
+</head>
+<body onload="emailNotification();">
+    <div ng-app="VendorApp" ng-controller="Appctrl" ng-init="paginit('')" ng-cloak>
+        <div>
+            <div class="bookingheadr">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2"><div class="logoheader"><img src="../img/logo_spicejet.png" /> </div></div>
+                        <div class="col-md-4"><div class="txtSODNSOD">NONSOD VENDOR BOOKING SYSTEM</div></div>
+                        <div class="col-md-5"></div>
+                    </div>
+                </div>
+            </div>
+            <!--------------------------------------------Content---------------->
+            <div class="container">
+                <div style="padding-top:10%">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="succesmsg" id="dvMsg" style="display: flex; align-items: center; justify-content: center;">
+                                    @Html.Raw(@TempData["jsonmsg"].ToString())
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------Div Loader------------------------------------------------------>
+                <div class="loader">
+                    <center>
+                        <img class="loading-image" src="../images/loading.gif" alt="loading..">
+                    </center>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="padding-top:100px; padding-bottom:20px; text-align:center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--------------------------------------------Footer---------------->
+            <div style="padding-top:70px;"></div>
+            <footer class="essfooter">
+                <div class="container"></div>
+            </footer>
+            <!-- ------------------------------------------END Footer---------------->
+        </div>
+        </div>
+</body>
+</html>

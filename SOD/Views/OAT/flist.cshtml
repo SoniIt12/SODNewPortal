@@ -1,0 +1,756 @@
+﻿
+@{
+    ViewBag.Title = "OAT | Travel Desk";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<html>
+<head>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+    <script src="~/js/angular/OAtTravelDesk.js"></script>
+    @*<link href="../css/MenuHeader.css" rel="stylesheet" />*@
+    <link href="~/Assest/css/AdminNew.css" rel="stylesheet" />
+
+
+    <style>
+        .odd {
+            background-color: white;
+        }
+
+        .even {
+            background-color: gray;
+        }
+
+        .pointerCursor {
+            cursor: pointer;
+        }
+
+        .auto-index td:first-child:before {
+            counter-increment: Serial; /* Increment the Serial counter */
+            content: "#" counter(Serial); /* Display the counter */
+        }
+
+        body {
+            counter-reset: Serial; /* Set the Serial counter to 0 */
+        }
+    </style>
+    <script>
+        $(function () {
+            $(".expand").on("click", function () {
+                // $(this).next().slideToggle(200);
+                $expand = $(this).find(">:first-child");
+
+                if ($expand.text() == "+") {
+                    $expand.text("-");
+                } else {
+                    $expand.text("+");
+                }
+            });
+        });
+    </script>
+
+</head>
+
+<!--------------------------------------------Content---------------->
+<body>
+    <div ng-app="OatViewDetails" ng-controller="OatTravelDesk" class="ng-cloak">
+        <div>
+            <div class="admin_content_txtheading">OAT View Details</div>
+        </div>
+        <div class="content">
+
+            <div class="oat-search-box">
+                <div class="row">
+                    <div class="col-md-6" style="display:flex;">
+                        <span>Search :</span><span><input type="text" ng-model="search" ng-change="filter();" class="form-control" style="margin-left:20px;"></span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="txtfiltered">Filtered {{ filtered.length }} of {{ totalItems}} Total Records</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="soddiv" class="margintop_dv">
+                <div class="row">
+                    <div class="col-md-12" ng-show="filteredItems > 0">
+                        <div class="req-sev-provider-btn">
+                            <a id="btnHotelRequest" data-toggle="modal" class="btn btn-warning btn-sm" ng-click="GetIthNameList();" style="background-color: #EE1D23; border-color: #EE1D23;">
+                                Request to Service Provider
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ng-show="filteredItems > 0">
+                            <div class="mob-width-scroll">
+                                <table class="table-striped table-bordered" id="tbldetail">
+                                    <tr id="tb-header-space">
+                                        <th>S No.</th>
+                                        <th>
+                                            Req.ID &nbsp;<a ng-click="sort_by('TravelRequestId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Request Date &nbsp;<a ng-click="sort_by('BookingRequestDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Booking For &nbsp;<a ng-click="sort_by('BookingFor');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>Name</th>
+                                        <th>
+                                            Department &nbsp;<a ng-click="sort_by('RequestedEmpDept');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Designation &nbsp;<a ng-click="sort_by('RequestedEmpDesignation');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Travel Date &nbsp;<a ng-click="sort_by('TravelDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Sector &nbsp;<a ng-click="sort_by('Sector');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Response Status &nbsp;<a ng-click="sort_by('BookingStatus');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>Cancellation Status</th>
+                                        <th>Financial Approval Status </th>
+                                        <th>Action<input type="checkbox" id="chkheader" data-ng-model="selectedAll" ng-click="checkAll();" /></th>
+                                    </tr>
+                                    @*</lata>*@
+                                    <tbody ng-repeat="list in filtered = (OatMasterList | filter: search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                        <tr id="tb-header-space">
+                                            <td>{{$index+1}}</td>
+                                            <td><a data-toggle="modal" href="#viewdetailModal" class="csod" ng-click="viewdetail(list.OATRequestID)">{{list.OATRequestCode}}</a></td>
+                                            <td>{{getangularDate(list.RequestDate)|  date : "dd/MM/y"}}</td>
+                                            <td>{{list.BookingFor}}</td>
+                                            <td>{{list.RequestedEmpName}}</td>
+                                            <td>{{list.RequestedEmpDept}}</td>
+                                            <td>{{list.RequestedEmpDesignation}}</td>
+                                            <td>{{getangularDate(list.TravelDate)|  date : "dd/MM/y"}}</td>
+                                            <td>{{list.Sector}}</td>
+                                            <td>
+                                                <div ng-if="list.BookingStatus== NULL"></div>
+                                                <div ng-if="list.BookingStatus=='1'">
+                                                    <span><a data-toggle=modal href="#viewdetailModalIthStatus" class="csod" ng-click="ViewIthDetail(list.OATRequestID)">Get Ticket By Service Providor</a>&nbsp;<img src="../img/right.jpg" height="15" width="15" style="cursor:default" /></span>
+                                                </div>
+                                                <div ng-if="list.OATDeskApproval== 2 && (list.UserApproval==0 ||list.UserApproval==null) ">
+                                                    <span><a data-toggle=modal href="#viewdetailModalIthStatus" class="csod" ng-click="ViewIthDetail(list.OATRequestID)">Revert by OAT Desk</a>&nbsp;<img src="../img/right.jpg" height="15" width="15" style="cursor:default" /></span>
+                                                </div>
+                                                <div ng-if="list.IsSendRequestToITh==1 && list.BookingStatus != 1 && (list.IsITHSentResponse==0 || list.IsITHSentResponse== null) && list.OATDeskApproval!= 2  ">
+                                                    <span><a data-toggle=modal href="#viewdetailModalIthStatus" class="csod" ng-click="ViewIthDetail(list.OATRequestID)">Pending from Service Providor</a> &nbsp;<img src="../img/pendingflickering.gif" height="20" width="20" style="border-radius:50px ;cursor:default" /></span>
+                                                </div>
+                                                <div ng-if="list.IsITHSentResponse==1 && (list.UserApproval==0 ||list.UserApproval==null) ">
+                                                    <span><a data-toggle=modal href="#viewdetailModalIthStatus" class="csod" ng-click="ViewIthDetail(list.OATRequestID)">Responded by Service Providor</a> &nbsp;<img src="../img/pendingflickering.gif" height="20" width="20" style="border-radius:50px ;cursor:default" /></span>
+                                                </div>
+                                                <div ng-if="list.UserApproval==1&& ((list.HodApproval==0 ||list.HodApproval==null)&& list.BookingStatus != 1)">
+                                                    <span><a data-toggle=modal href="#viewdetailModalIthStatus" class="csod" ng-click="ViewIthDetail(list.OATRequestID)">Approved by User</a></span>
+                                                    <div>&nbsp;<img src="../img/pendingflickering.gif" height="20" width="20" style="border-radius:50px ;cursor:default" /></div>
+                                                </div>
+                                                <div ng-if="list.UserApproval==2&& ((list.HodApproval==0 ||list.HodApproval==null)&& list.BookingStatus != 1)">
+                                                    <span><a data-toggle=modal href="#viewdetailModalIthStatus" class="csod" ng-click="ViewIthDetail(list.OATRequestID)" style="color:red">Rejected by User</a> &nbsp;<img src='../img/rejected.png' height="15" width="15" style="border-radius:50px ;cursor:default" /></span>
+
+                                                </div>
+                                                <div ng-if="list.HodApproval==1 && (list.BookingStatus==0 ||list.BookingStatus==null)">
+                                                    <span><a data-toggle=modal href="#viewdetailModalIthStatus" class="csod" ng-click="ViewIthDetail(list.OATRequestID)">Approved by HOD</a> &nbsp;<img src="../img/pendingflickering.gif" height="20" width="20" style="border-radius:50px ;cursor:default" /></span>
+                                                </div>
+                                                <div ng-if="list.HodApproval==2 && (list.BookingStatus==0 ||list.BookingStatus==null)">
+                                                    <span><a data-toggle=modal href="#viewdetailModalIthStatus" class="csod" ng-click="ViewIthDetail(list.OATRequestID)" style="color:red">Rejected by HOD</a> &nbsp;<img src="../img/rejected.png" height="15" width="15" style="border-radius:50px ;cursor:default" /></span>
+                                                </div>
+                                                <div ng-if="list.IsITHSentResponse==2">
+                                                    <span><a data-toggle=modal href="#viewdetailModalIthStatus" class="csod" ng-click="ViewIthDetail(list.OATRequestID)" style="color:red">Rejected By Service Providor</a>&nbsp;<img src='../img/rejected.png' height="15" width="15" style="border-radius:50px ;cursor:default" /></span>
+                                                </div>
+                                            <td>
+                                                {{list.Partailcancellation}}
+                                                @*<span ng-if="list.CancellationStatus == 1">{{list.CancellationStatus == 1 ? "Cancelled" : ""}} {{list.cancelBy}} &nbsp; <img src='../img/rejected.png' height="15" width="15" style="border-radius:50px ;cursor:default" /></span>
+                                                    <a data-toggle=modal href="#viewdetailModalHotel" class="csod" ng-click="viewdetailHotel(list.TravelRequestId, list.HotelRequestId)">{{list.HotelStatus=="Approved by Hotel" ? "Confirmed by Hotel" : list.HotelStatus}}</a><br />
+                                                    <a href="#" style="color:red;" ng-if="list.HotelStatus=='' && list.CancellationStatus==''" id="btnCancelRqstHotelApp" class="csod" ng-click="hotelCancellationUser(list.TravelRequestId, list.HotelRequestId)">
+                                                        Cancel Request
+                                                    </a>*@
+                                            </td>
+                                            <td>
+                                                <span ng-if="list.ApprovalStatus == -1"></span>@*<div class="tooltip1" >&nbsp;<img src="../img/right.jpg" height="15" width="15" title="Approved by OatDesk" /><span class="tooltiptext">Approved by OatDesk</span></div>*@
+                                                <span ng-if="list.ApprovalStatus == 0"><a data-toggle=modal href="#viewFinancialApprovalModal" class="csod" ng-click="viewFinancialHotel(list.OATRequestID)">{{list.HotelStatus=="Approved by Hotel" ? "Confirmed by Hotel" : list.HotelStatus}}</a><br /> Pending</span>
+                                                <span ng-if="list.ApprovalStatus == 1"> Approved</span>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" ng-model="list.Selected" ng-change="getListToSendReqToITH(list)" ng-checked="selectedAll" ng-if="(list.IsSendRequestToITh!=1 || list.IsITHSentResponse ==2) && list.Partailcancellation !='Cancelled'" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <div class="col-md-12" ng-show="filteredItems==0">
+                            <div class="col-md-12">
+                                <div><span style="text-align:center; font-size:14px;margin-top:100px;color:#ff0000">Sorry ! No record found. </span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!--Pagination-->
+                    <div class="col-md-12" ng-show="filteredItems > 0" style="z-index:0; margin-bottom:30px;">
+                        <div pagination previous-text="Back" next-text="next" total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" items-per-page="entryLimit" rotate="false"></div>
+                    </div>
+                </div>
+            </div>
+            <!-------View Detail Model popup sod--------->
+            <div id="viewdetailModal" class="modal modal-wide newpopup fade">
+                <div class="modal-dialog newpopupwidth75">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                            <h4 class="modal-title"><span class="viewlistcs">OAT Booking Request Details (ID-{{OatDetailList[0].OATRequestID}})</span></h4>
+                        </div>
+                        <div class="modal-body">
+
+                            @*-----------start-------------*@
+                            <div ng-repeat="plist in psgrDetailList" class="panel-group" id="accordion">
+                                @*<h4 class="popuphdtxt fonts-oat" id="passH">  Passenger Information</h4>*@
+                                <div class="panel panel-default" id="tblviewPassInfo">
+                                    <div class="panel-heading">
+                                        <h4 data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index +1}}" class="panel-title expand " aria-expanded="true">
+                                            <div class="right-arrow pull-right">+</div>
+                                            <a href="#" class="font-s13">{{$index +1}}. <b>{{plist.Gender}} {{plist.FirstName}}&nbsp; {{plist.LastName}}</b></a>  <span class="pull-right font-s13"><b>Department:</b> {{plist.Department}}</span>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse{{$index +1}}" class="panel-collapse collapse in">
+                                        <div class="panel-body" id="tblviewFlight">
+                                            <div class="row">
+                                                <div class="col-md-3"><b>Phone No:</b> {{plist.PhoneNo}} </div>
+                                                <div class="col-md-4"><b>Email Id:</b> {{plist.EmailId}} </div>
+                                                <div class="col-md-5"><b>Base:</b> {{plist.Base}} </div>
+                                            </div>
+                                            <hr />
+                                            <h4 class="popuphdtxt  fonts-oat">Flight Information(s)</h4>
+                                            <div class="mob-width-scroll">
+                                                <table class="innerTable table table-striped table-bordered">
+                                                    <tr class="headerfont12">
+                                                        <th>Sector</th>
+                                                        <th>Travel Date</th>
+                                                        <th>Flight No.</th>
+                                                        <th>Departure Time</th>
+                                                        <th>Reason of Travel</th>
+                                                    </tr>
+                                                    <tr ng-repeat="flist in FltDetailList " ng-if="flist.PassengerID == plist.PassengerID ">
+                                                        <td>{{flist.OriginPlace}}-{{flist.DestinationPlace}}</td>
+                                                        <td>{{getangularDate(flist.DepartureDate)|  date : "dd/MM/yyyy"}}</td>
+                                                        <td>{{flist.FlightNumber}}</td>
+                                                        <td>{{flist.DepartureTime}}</td>
+                                                        <td>{{flist.ReasonForTravel}}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            @*------------end--------------*@
+                            <div style="display:none;" ng-repeat="plist in psgrDetailList" class="content_search_structure_box-modal">
+                                <h4 class="popuphdtxt" id="passH"> {{$index +1}}.) Passenger Information</h4>
+                                <div class="mob-width-scroll">
+                                    <table class="innerTable table table-striped table-bordered">
+                                        <tr class="headerfont12">
+                                            <th>S.no.</th>
+                                            <th>Traveler Name</th>
+                                            <th>Department</th>
+                                            <th>Phone No.</th>
+                                            <th>Email Id</th>
+                                            <th>Base</th>
+                                        </tr>
+                                        <tbody>
+                                            <tr class="headerfont12">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{plist.Gender}} {{plist.FirstName}}{{plist.LastName}} </td>
+                                                <td>{{plist.Department}}</td>
+                                                <td>{{plist.PhoneNo}}</td>
+                                                <td>{{plist.EmailId}}</td>
+                                                <td>{{plist.Base}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            <div id="viewdetailModalSendToITh" class="modal modal-wide newpopup fade">
+                <div class="modal-dialog newpopupwidth75">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                            <h4 class="modal-title"><span class="viewlistcs">Service Provider  Booking Request</span></h4>
+                        </div>
+                        <div class="modal-body">
+                            <form name="IthDetailsForm" id="Ith_form">
+                                <table class=" table table-striped table-bordered" id="tblExistinghotel">
+                                    <tr>
+                                        <td colspan="2">Service Provider  Name  :</td>
+                                        <td colspan="4" align="left">
+                                            <div class="form-group" ng-class="{'has-error' : IthDetailsForm.IthName.$invalid && submitIthInfo}">
+                                                <select class="form-control input-sm" id="ddlCustomers" name="IthName" style="text-align:left;" ng-model="ithDetaillst.ITHName" ng-change="ITHfilldropdown(ithDetaillst.ITHName);">
+                                                    <option value="" style="display:none">Please select </option>
+                                                    <option ng-repeat=" x in ithNameList" value="{{x}}">{{x}}</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Service Provider Code  :</td>
+                                        <td colspan="4">
+                                            <div class="form-group" ng-class="{'has-error' : IthDetailsForm.IthCode.$invalid && submitIthInfo}">
+                                                <input type="text" ng-disabled="ithDetaillst.ITHCode" autocomplete="off" name="IthCode" readonly class="form-control inpur-sm" ng-model="ithDetaillst.ITHCode" maxlength="200" required />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Service Provider Address  :</td>
+                                        <td colspan="4">
+                                            <div class="form-group" ng-class="{'has-error' : IthDetailsForm.IthAddrss.$invalid && submitIthInfo}">
+                                                <input type="text" ng-disabled="ithDetaillst.Address" autocomplete="off" name="IthAddrss" readonly class="form-control input-sm" ng-model="ithDetaillst.Address" maxlength="200" required />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Service Provider Phone  :</td>
+                                        <td colspan="4">
+                                            <div class="form-group" ng-class="{'has-error' : IthDetailsForm.IthPhone.$invalid && submitIthInfo}">
+                                                <input type="text" ng-disabled="ithDetaillst.Phone" autocomplete="off" name="IthPhone" readonly class="form-control input-sm" ng-model="ithDetaillst.Phone" maxlength="200" required />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Primary Email Id  :</td>
+                                        <td colspan="4">
+                                            <div class="form-group" ng-class="{'has-error' : IthDetailsForm.IthPEmail.$invalid && submitIthInfo}">
+                                                <input type="text" autocomplete="off" class="form-control input-sm" name="IthPEmail" readonly ng-model="ithDetaillst.PrimaryEmail" ng-disabled="ithDetaillst.PrimaryEmail" maxlength="200" required />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Other Email Id's  :</td>
+                                        <td colspan="4">
+                                            <div class="form-group" ng-class="{'has-error' : IthDetailsForm.IthOEmail.$invalid && submitIthInfo}">
+                                                <input type="text" autocomplete="off" class="form-control input-sm" name="IthOEmail" readonly ng-model="ithDetaillst.SecondaryEmail" ng-disabled="ithDetaillst.SecondaryEmail" maxlength="200" required />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Request Submitted By :</td>
+                                        <td colspan="4">
+                                            <div class="form-group" ng-class="{'has-error' : IthDetailsForm.IthSubmittedBy.$invalid && submitIthInfo}">
+                                                <input type="text" autocomplete="off" class="form-control input-sm" name="IthSubmittedBy" ng-model="ithDetaillst.submittedBy" maxlength="200" required />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div style="padding-top:20px; text-align:center">
+                                    <button type="button" class="btn btn-danger btn-rounded" id="SendReqToIthBtn" ng-click="sendReqToIth(ithDetaillst);">Send Request to Service Provider</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn pull-right" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="viewdetailModalIthStatus" class="modal modal-wide newpopup fade">
+                <div class="modal-dialog newpopupwidth98">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                            <h4 class="modal-title"><span class="viewlistcs">OAT Booking Details (Booking Req Id - {{ReqID}})</span></h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="content_search_structure_box-modal scroll">
+                                <h4 class="popuphdtxt">Service Provider  Details</h4>
+                                <div class="mob-width-scroll">
+                                    <table id="tblhodappovalinfo" class=" table table-striped table-bordered">
+                                        <tr class="popheadcolor">
+                                            <th>Service Provider Code</th>
+                                            <th>Service Provider Name</th>
+                                            <th>Service Provider Address</th>
+                                            <th>Primary Email ID</th>
+                                            <th>Secondary Email ID </th>
+                                            <th>Requested By</th>
+                                        </tr>
+                                        <tr style="text-align:left;padding:2px;" ng-repeat="Vlist in arrIthVenderDetail">
+                                            <td>{{Vlist.ITHCode}}</td>
+                                            <td>{{Vlist.ITHName}}</td>
+                                            <td>{{Vlist.Address}}</td>
+                                            <td>{{Vlist.PrimaryEmail}}</td>
+                                            <td>{{Vlist.SecondaryEmail}}</td>
+                                            <td>{{Vlist.submittedBy}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="content_search_structure_box-modal scroll pointer-cursor">
+                                <h4 class="pull-left travelgraystrip-oat" ng-click="travelopenHistoryDiv();"> <span ng-if="travelopenviewDiv != 'true'"><i class="glyphicon glyphicon-plus"></i></span><span ng-if="travelopenviewDiv == 'true'"><i class="glyphicon glyphicon-minus"></i></span> Traveller's Information</h4>
+                                @*<h4 class="popuphdtxt">Traveller's Information</h4>*@
+                                <div class="mob-width-scroll">
+                                    <div ng-if="travelopenviewDiv == 'true'">
+                                        <table id="tblhodappovalinfo" class="table table-striped table-bordered">
+                                            <tr>
+                                                <th>Emp Code</th>
+                                                <th>Emp Name</th>
+                                                <th>Sector</th>
+                                                <th>Airline Name</th>
+                                                <th>Flight No.</th>
+                                                <th>Travel Date </th>
+                                                <th>Departure Time</th>
+                                                <th>Action</th>
+                                                <th> Itenary </th>
+                                                @*<th ng-if="openCancelDocument == 'true'">Reason For Cancellation</th>*@
+                                            </tr>
+                                            <tr style="text-align:left;padding:2px;" ng-repeat="Flst in arrFlight">
+                                                <td>{{Flst.Empcode}}</td>
+                                                <td>{{Flst.EmpName}}</td>
+                                                <td>{{Flst.OriginPlace}}-{{Flst.DestinationPlace}}</td>
+                                                <td>{{Flst.AirCraftName == null? "-":Flst.AirCraftName}}</td>
+                                                <td>{{Flst.FlightNumber == null? "-":Flst.FlightNumber}}</td>
+                                                <td>{{getangularDate(Flst.DepartureDate)|  date : "dd/MM/y"}}</td>
+                                                <td>{{Flst.DepartureTime}}</td>
+                                                <td>
+                                                    <div @*ng-if="successRes{{$index}}"*@>
+                                                        <div ng-if="!Flst.IsFlightCancel && !successRes" ">
+                                                            <a ng-click=" hideShowCancelDocumentDiv('c',$index);" class="cancellation-oat" href="#" ng-if="!Flst.filePath"><img src="../img/cancled.png" height="20px" />Cancellation</a>
+                                                            <a href="#" ng-click="hideShowCancelDocumentDiv('frc' ,$index);" class="cancellation-oat" ng-if="Flst.filePath"><img src="../img/full-cancled.png" height="20px" />Full Refund Cancellation</a>
+                                                            @*<button class="editbtn_small btn btn-danger btn-sm ng-scope" style="margin:5px;" ng-click=" hideShowCancelDocumentDiv('c',$index);">Cancellation</button>*@
+                                                            @*<button class="canReq_small btn btn-danger btn-sm ng-scope" style="margin:5px;" ng-click="hideShowCancelDocumentDiv('frc' ,$index);">Full Refund Cancel</button>*@
+                                                        </div>
+
+                                                        <div ng-if="Flst.IsFlightCancel">
+                                                            <span>Cancelled @*due to *@</span><span> &nbsp;<a class="editbtn_small pointerCursor" ng-click=" hideShowCancelDocumentDiv('c',$index);"> View Detail</a> @*<img ng-src="data:image/jpeg;base64,{{Flst.cancellationSrc}}" />*@</span>
+                                                        </div>
+                                                        <div style="margin-top:10px;" ng-show="openCancelDocumentDiv{{$index}} == 'true'">
+                                                            <div ng-if="!Flst.IsFlightCancel && !successRes">
+                                                                <input type="text" placeholder="Please write Remarks" class="form-control input-sm" style="width: 90%;" id="CancelReason{{$index}}" ng-model="rsnForCancel" />
+                                                                <div>
+                                                                    <input class="btn-xs btn-group-justified" style="padding:5px;" id="cancellationSrc{{$index}}" type="file" />
+                                                                    <button type="button" class="canReq_small btn btn-gray ng-scope" ng-click="cancellationRequestToITh ($index,Flst.PassengerID,Flst.OriginPlace,Flst.DestinationPlace)"><i class="fa fa-spinner fa-spin fa-3x fa-fw spinner" hidden></i>Submit</button>
+                                                                </div>
+                                                            </div>
+                                                            <div ng-if="Flst.IsFlightCancel">
+                                                                Reason: {{Flst.CancellationReason}} &nbsp;<a class="editbtn_small" ng-if="Flst.CancellationAttachmentType != null && Flst.CancellationAttachmentType!= ''" ng-click="viewIthAttachedSrc(Flst.TrnId,Flst.ID,3)"> View Screen</a> @*<img ng-src="data:image/jpeg;base64,{{Flst.cancellationSrc}}" />*@</span>
+                                                            </div>
+                                                            <div ng-if="!Flst.IsFlightCancel && successRes">
+                                                                <h5>This request is cancelled.</h5>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    @*<div ng-show="successres{{$index}}  == 'true'">
+                                                            <span id="successresmsg{{$index}}"></span>
+                                                        </div>*@
+
+                                                </td>
+                                                <td>
+                                                    <div ng-if="Flst.filePath"><a href={{Flst.filePath}} download={{Flst.filePath}} target="_blank"> Download Itenary</a></div>
+                                                    <div ng-if="!Flst.filePath">Not Booked</div>
+                                                </td>
+                                                @*<td ng-if="openCancelDocument == 'true'"> </td>*@
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="content_search_structure_box-modal scroll">
+                                <div>
+                                    <div class="graystrip-oat" ng-if="ithMasterList[0].IsITHSentResponse == 1 ||ithMasterList[0].IsITHSentResponse == -1">
+                                        <div class="row pointer-cursor" ng-click="ithopenHistoryDiv();">
+                                            <div class="col-md-5">
+                                                <h4 class="pull-left "> <span ng-if="openviewDiv != 'true'"><i class="glyphicon glyphicon-plus"></i></span><span ng-if="openviewDiv == 'true'"><i class="glyphicon glyphicon-minus"></i></span> Options Provided By Service Provider</h4>
+                                            </div>
+
+                                            <div class="col-md-7">
+                                                <div class="note-info">Approval Status :<img src="../img/oatdesk.png" height="25" width="25">OAT Travel Desk  |   <img src="../img/oatuser.png" height="25" width="25" /> User   | <img src="../img/oatappv.png" height="25" width="25" /> HOD</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="openviewDiv == 'true'">
+                                        <div>
+                                            <div class="content_search_structure_box-modal" ng-repeat="Flist in transactionDetail">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h5 class="city-info-title">{{Flist.OriginPlace}}-{{Flist.DestinationPlace}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="mob-width-scroll" ng-if="!Flist.newIthDetail[0].IsFlightCancel">
+                                                    <table id="tblhodappovalinfo" class="table table-striped table-bordered ">
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Sector</th>
+                                                            <th>Airline Name</th>
+                                                            <th>Flight No.</th>
+                                                            <th>Travel Date </th>
+                                                            <th>Departure Time</th>
+                                                            <th>Price</th>
+                                                            <th>Documents</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                        <tr style="text-align:left;padding:2px;" ng-repeat="Ilst in Flist.newIthDetail">
+                                                            <td>{{$index+1}} <span id="PassId{{$index}}" style="display:none;">{{Ilst.PassengerID}}-{{Ilst.TrnId}}-{{Ilst.ID}}-{{Ilst.OATRequestID}}-{{Ilst.OriginPlace}}-{{Ilst.DestinationPlace}}</span></td>
+                                                            <td>{{Ilst.OriginPlace}}-{{Ilst.DestinationPlace}}</td>
+                                                            <td>{{Ilst.AirCraftName}}</td>
+                                                            <td>{{Ilst.FlightNumber}}</td>
+                                                            <td>{{getangularDate(Ilst.DepartureDate)|  date : "dd/MM/y"}}</td>
+                                                            <td>{{Ilst.DepartureTime}}</td>
+                                                            <td>{{Ilst.Amount}}</td>
+                                                            <td>
+                                                                <span ng-if="Ilst.ITHUploadRefType == null"> - </span>
+                                                                <a href="#" class="csod hoteldetails_bg_btn ng-scope" ng-if="Ilst.ITHUploadRefType != null" ng-click="viewIthAttachedSrc(Ilst.TrnId,Ilst.ID,1)"><i class="fa fa-eye" style="padding-right:2px;"></i>Click View</a>
+                                                            </td>
+                                                            <td>
+
+                                                                <input type="radio" ng-if="ithMasterList[0].OATDeskApproval == 0 && Flist.IsFlightOnHold == 0" name="{{Ilst.PassengerID}}{{Ilst.OriginPlace}}{{Ilst.DestinationPlace}}" ng-model="Ilst.SelectedOption" value="true" ng-init="Ilst.SelectedOption ='false'" @*ng-value="Ilst"*@ ng-click="getSelectedIthResponse(Flist.newIthDetail,Ilst.ID)" />
+                                                                @*<span ng-if="Flist.IsFlightOnHold == 1">HOLD {{Flist.FlightOnHoldBy}}</span>*@
+                                                                <span ng-if="Ilst.OATDeskApproval == 1"><span class="tooltip1">&nbsp;<img src="../img/oatdesk.png" height="25" width="25" title="Approved by OatDesk" />@*<span class="tooltiptext">Approved by OatDesk</span>*@</span></span>
+
+                                                                <span ng-if="Ilst.OATDeskApproval == 2"><span class="tooltip1">&nbsp;<img src="../img/rejected.png" height="15" width="15" title="Rejected by OatDesk" />@*<span class="tooltiptext">Approved by User</span>*@</span></span>
+                                                                <span ng-if="Ilst.UserApproval == 2"><span class="tooltip1">&nbsp;<img src="../img/rejected.png" height="15" width="15" title="Rejected by User" />@*<span class="tooltiptext">Approved by User</span>*@</span></span>
+                                                                <span ng-if="Ilst.HodApproval == 2"><span class="tooltip1">&nbsp;<img src="../img/rejected.png" height="15" width="15" title="Rejected by Hod" />@*<span class="tooltiptext">Approved by Hod</span>*@</span></span>
+                                                                <span ng-if="Ilst.UserApproval == 1">
+                                                                    <span class="tooltip1">
+                                                                        &nbsp;<img src="../img/oatuser.png" height="25" width="25" title="Approved by User" />@*<span class="tooltiptext">Approved by User</span>*@
+                                                                        <span ng-if="Flist.filePath && Ilst.isAlreadyNoShow == false && (ithMasterList[0].BookingFor == 'Roistering(Flight ops / In Flight)' || ithMasterList[0].BookingFor =='SPOC' )" ng-click="SaveManageNoShow(Ilst,getangularDate(Ilst.DepartureDate));"><a style="cursor:pointer;">Manage No Show</a></span><span @*ng-if=" "*@ ng-show="isvisible{{list.originPlace}}{{list.DestinationPlace}} ||Ilst.isAlreadyNoShow != false" @*ng-show = "IsVisible"*@><a href="#" ng-click="$event.preventDefault();logout()">NoShow Done</a><img src="../img/right.jpg" height="15" width="15" /></span>
+                                                                    </span>
+                                                                </span>
+                                                                <span ng-if="Ilst.HodApproval == 1">
+                                                                    <span class="tooltip1">
+                                                                        &nbsp;<img src="../img/oatappv.png" height="25" width="25" title="Approved by Hod" />
+                                                                        <span ng-if="Flist.filePath && Ilst.isAlreadyNoShow == false" ng-show="!isvisible{{list.originPlace}}{{list.DestinationPlace}}" ng-click="SaveManageNoShow(Ilst,getangularDate(Ilst.DepartureDate));"><a>Manage No Show</a></span><span ng-if="Ilst.isAlreadyNoShow != false" ng-show="isvisible{{list.originPlace}}{{list.DestinationPlace}}" @*ng-show = "IsVisible"*@><a href="#" ng-click="$event.preventDefault();logout()">NoShow Done</a><img src="../img/right.jpg" height="15" width="15" /></span>
+                                                                    </span>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr ng-if="(Flist.oatDeskApproval == 0) && Flist.IsFlightOnHold == 0">
+                                                            <td colspan="9">
+                                                                <div style=" background-color:#e4e4e4;padding:10px; ">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div>
+                                                                                <span><b> If you are not Ok with Provided Option, </b>Please check the checkbox <input class="paddingtop3-btn" type="checkbox" id="ithOptionCheckBox{{$index}}" ng-click="changeActionButtonIth($index)" />  </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6" ng-show="ithrevertButton{{$index}}">
+                                                                            <div class="row">
+                                                                                <div class="col-md-4">
+                                                                                    <input placeholder="Please write your Remarks" class="form-control inpur-sm" type="text" maxlength="50" id="RejectionRemark{{$index}}" />
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <div class="oatpaddingtop10">
+                                                                                        <input type="file" class="btn-xs btn-group-justified" id="RejectionSrc{{$index}}" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <button type="button" class="btn btn-danger revert-provider" ng-click="RevertToIth(Flist.newIthDetail[0],$index);">Revert To Service Provider </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div ng-if="Flist.newIthDetail[0].IsFlightCancel">
+                                                    <h4 style="padding: 5px;color:red"><b>This Sector is Cancelled. </b></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row text-center" ng-if="(ithMasterList[0].OATDeskApproval == 0 || ithMasterList[0].OATDeskApproval == null ) && transactionDetail[0].IsFlightOnHold == 0 && transactionDetail[0].IsFlightCancel != true ">
+                                            <div class="col-md-12">
+                                                <div class="confrn-send-user">
+                                                    <button type="button" class="btn btn-success btn-sm" ng-disabled="disableConfirmButton == 'true'" ng-click="ConfirmIthResponse(transactionDetail)">Confirm and Send To User</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div ng-if="ithMasterList[0].HodApproval ==1 && ithMasterList[0].BookingStatus !=1">
+                                                <div class="col-md-4" style="text-align:left">Send Final Confirmation to Service Provider for Booking:</div>
+                                                <div class="col-md-8" style="text-align:left">
+                                                    <button type="button" class="btn btn-warning btn-sm" ng-if="ithMasterList[0].BookingFor != 'Roistering(Flight ops / In Flight)' && ithMasterList[0].BookingFor != 'SPOC' " ng-click="sendMailToIthForBooking(ithMasterList[0].OATRequestID)">Send Mail to Service Provider </button>
+                                                    <button type="button" class="btn btn-warning btn-sm" ng-if="ithMasterList[0].BookingFor == 'Roistering(Flight ops / In Flight)' || ithMasterList[0].BookingFor == 'SPOC' " ng-click="sendMailToIthForBooking(x.OATRequestID)">Send Mail to Service Provider </button>
+                                                    </td>
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                    <div ng-if="transactionDetail[0].IsFlightOnHold != 0">
+                                        <h4 style="padding: 5px;"><b>Flight is on hold by {{transactionDetail[0].FlightOnHoldBy}} </b></h4>
+                                    </div>
+
+                                    @*</div>*@
+
+                                    <div ng-if="ithMasterList[0].IsITHSentResponse == 0||ithMasterList[0].IsITHSentResponse == null">
+                                        <h4 style="padding: 5px;"><b>Response is awaited from Service Provider </b></h4>
+                                    </div>
+                                    <div ng-if="ithMasterList[0].IsITHSentResponse == 2">
+                                        <h4 style="padding: 5px;"><b>Request is Rejected by Service Providor </b></h4>
+                                    </div>
+                                </div>
+
+                                <div class="content_search_structure_box-modal" ng-if="arrhistIthDetail.length != 0">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="pull-left view-history pointer-cursor">
+                                                <h4 ng-click="openHistoryDiv();"> <span ng-if="openDiv != 'true'"><i class="glyphicon glyphicon-plus"></i></span><span ng-if="openDiv == 'true'"><i class="glyphicon glyphicon-minus"></i></span> View History</h4>
+                                            </div>
+                                            <div class="content_search_structure_box-modal-inner content_search_structure_box-modal scroll">
+                                                <div class="mob-width-scroll">
+                                                    <table class="table table-striped table-bordered" ng-if="openDiv == 'true'">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th>Sector</th>
+                                                                <th>Airline Name</th>
+                                                                <th>Flight No.</th>
+                                                                <th>Travel Date </th>
+                                                                <th>Departure Time</th>
+                                                                <th>Amount</th>
+                                                                <th>Documents</th>
+                                                                <th>Cancellation Reason</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="logList in arrhistIthDetail">
+                                                                <td>{{$index + 1}}</td>
+                                                                <td>{{logList.OriginPlace}}-{{logList.DestinationPlace}}</td>
+                                                                <td>{{logList.AirCraftName}}</td>
+                                                                <td>{{logList.FlightNumber}}</td>
+                                                                <td>{{getangularDate(logList.DepartureDate)|  date : "dd/MM/y"}}</td>
+                                                                <td>{{logList.DepartureTime}}</td>
+                                                                <td>{{logList.Amount == null? "-":logList.Amount}}</td>
+                                                                <td> <a href="#" class="csod hoteldetails_bg_btn ng-scope" ng-click="viewIthAttachedSrc(logList.TrnId,logList.ID,2)"><i class="fa fa-eye" style="padding-right:2px;"></i>Click View</a></td>
+                                                                <td>{{logList.OATDeskRemarks == null? "-":logList.OATDeskRemarks}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <h4 class="pull-left controlgraystrip-oat pointer-cursor" ng-click="controlopenHistoryDiv();"> <span ng-if="controlopenviewDiv != 'true'"><i class="glyphicon glyphicon-plus"></i></span><span ng-if="controlopenviewDiv == 'true'"><i class="glyphicon glyphicon-minus"></i></span> Control</h4>
+                                    </div>
+                                    <div class="mob-width-scroll ">
+                                        <div ng-if="controlopenviewDiv == 'true'">
+                                            <table class="table-bordered table-striped flighdtl" ng-repeat="x in ithMasterList">
+                                                <tr>
+                                                    <td colspan="5" style="text-align:left">Status of HOD:</td>
+                                                    <td colspan="5" style="text-align:left" ng-if="x.HodApproval == 1"> Approved</td>
+                                                    <td colspan="5" style="text-align:left" ng-if="x.HodApproval == 2"> Rejected </td>
+                                                    <td colspan="5" style="text-align:left" ng-if="(x.HodApproval == 0 || x.HodApproval == null) &&( x.BookingFor != 'Roistering(Flight ops / In Flight)' && x.BookingFor !='SPOC' )">Pending</td>
+                                                    <td colspan="5" style="text-align:left" ng-if="( x.BookingFor == 'Roistering(Flight ops / In Flight)' || x.BookingFor =='SPOC' )">No need of hod approval for this booking request.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" style="text-align:left">Status of User:</td>
+                                                    <td colspan="5" style="text-align:left" ng-if="x.UserApproval == 1"> Approved</td>
+                                                    <td colspan="5" style="text-align:left" ng-if="x.UserApproval == 2"> Rejected </td>
+                                                    <td colspan="5" style="text-align:left" ng-if="x.UserApproval == null ||x.UserApproval == 0">Pending</td>
+                                                </tr>
+                                                <tr ng-if="x.IsITHSentResponse ==2">
+                                                    <td colspan="5" style="text-align:left">Undo Rejection of Service Providor:</td>
+                                                    <td colspan="5" style="text-align:left"><button type="button" class="btn btn-warning btn-sm">Undo Rejection of Service Providor</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" style="text-align:left">Resend Final Confirmation to Service Provider for Booking:</td>
+                                                    <td colspan="5" style="text-align:left">
+                                                        <button type="button" class="btn btn-warning btn-sm" ng-if="x.BookingFor != 'Roistering(Flight ops / In Flight)' && x.BookingFor != 'SPOC' " ng-click="sendMailToIthForBooking(x.OATRequestID)" ng-disabled="x.HodApproval !=1 || x.BookingStatus ==1">Resend Mail to Service Provider </button>
+                                                        <button type="button" class="btn btn-warning btn-sm" ng-if="x.BookingFor == 'Roistering(Flight ops / In Flight)' || x.BookingFor == 'SPOC' " ng-click="sendMailToIthForBooking(x.OATRequestID)" ng-disabled="x.UserApproval != 1 || x.BookingStatus ==1">Resend Mail to Service Provider </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" style="text-align:left">Resend Final Confirmation to User: </td>{{x.CancellationStatus}}
+                                                    <td colspan="5" style="text-align:left"><button type="button" @*ng-disabled="x.UserApproval !=1"*@ ng-disabled="x.BookingStatus !=1 || x.CancellationStatus =='FC'" ng-click="sendFinalConfirmationToUser(x.OATRequestID);" class="btn btn-warning btn-sm">Resend Mail to User</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" style="text-align:left">Permanently Cancel the Request on behalf of User: </td>
+                                                    <td colspan="5" style="text-align:left"> <button type="button" style="margin:5px;" class="btn btn-warning btn-sm" ng-click=" hideShowCancelDocumentDiv('c');" ng-if="x.BookingStatus !=1" ng-disabled="x.CancellationType=='c'">Cancellation</button><button type="button" class="btn btn-warning btn-sm" ng-if="x.BookingStatus ==1" ng-click="hideShowCancelDocumentDiv('frc');" ng-disabled="x.CancellationType=='frc'">Full Refund Cancellation</button></td>
+                                                </tr>
+                                                <tr ng-if="openCancelDocument == 'true'">
+                                                    <td colspan="5" style="text-align:left">Please Upload Your Supportive Document:</td>
+                                                    <td colspan="1" style="text-align:left"><input type="text" id="CancelReason" maxlength="50" class="form-control input-sm" /></td>
+                                                    <td colspan="3" style="text-align:left"><input type="file" id="cancellationSrc" class="form-control input-sm" /></td>
+                                                    <td colspan="1" style="text-align:left"><button type="button" class="btn btn-danger btn-sm" ng-click="cancellationRequestToWholeBookingRequest(x.OATRequestID)">Send Mail to Service Provider </button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" style="text-align:left">Send Hold Request to Service Provider: </td>{{IsReqSentToIth}}
+                                                    <td colspan="5" style="text-align:left" ng-if="x.IsFlightOnHold ==0"><button type="button" class="btn btn-warning btn-sm" ng-disabled="!x.IsReqSentToIth ||x.BookingStatus ==1 " ng-click="sendHoldRequest()">Send Hold Request</button></td>
+                                                    <td colspan="5" style="text-align:left" ng-if="x.IsFlightOnHold ==1"><button type="button" class="btn btn-warning btn-sm" ng-disabled="!x.IsReqSentToIth ||x.BookingStatus ==1 " ng-click="undoHoldRequest()">Undo Hold Request</button></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                                </div>
+                            </div>
+
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+            </div>
+
+            <!-- --------------------Loader--------------------------------------------------->
+            <div class="loader">
+                <center>
+                    <span class="loading-image" id="loaderMsg" style="font-weight:bold;font-size:22px;color:#ff0000;"></span>
+                    <img class="loading-image" src="../images/loading.gif" alt="loading.."><br />
+                </center>
+            </div>
+            <!-- --------------------End of Loader----------------------------------------->
+        </div>
+
+
+
+        @*<script>
+                $(document).ready(function () {
+                    debugger;
+
+                    $("#plushide").click(function () {
+                        alert('hi');
+                        $("#div-view-history").show();
+                        $("#minusshow").show();
+                    });
+                    $("#minusshow").click(function () {
+                        $("#div-view-history").hide();
+                        $("#plushide").show();
+                    });
+                });
+            </script>*@
+</body>
+</html>

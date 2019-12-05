@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "TrDetail";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <title>SOD | Travel Detail</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../Assest/js/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../Assest/css/bootstrap.min.css">
+    <script type="text/javascript" src="../Assest/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link href="../css/responsive.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="travelMain">
+        <header class="container">
+            <div class="row">
+                <div class="col-md-3"><div class="mainlogo"><img src="~/images/logo_round_spicejet.png" /></div></div>
+                <div class="col-md-6"><div class="headingtxtall">ESS Portal</div><div class="headingtxtall2">Travel Details</div></div>
+                <div class="col-md-3"><div class="logocelebration"></div></div>
+            </div>
+        </header>
+
+
+        <section class="container">
+            <div class="empmaindv">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="Traveldtldv">
+                            <table width="100%">
+                                <tr><td>Name</td><td><input type="text" /></td></tr>
+                                <tr><td>Email id</td><td><input type="text" /></td></tr>
+                                <tr><td>Gender</td><td><input type="text" /></td> </tr>
+                                <tr><td>Phone </td><td><input type="text" /></td> </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="empdtldv">
+                            <table width="100%">
+                                <tr><td>Booking For</td><td><div class="bookingfor"><select><option>Confirm</option><option>Standby</option></select></div> </td></tr>
+                                <tr><td>Meals</td><td class="bookingfor"><select><option>Not Required</option><option>VGML</option><option>NVML</option></select></td> </tr>
+                                <tr><td>Reason for Travel</td><td class="reasontravel"><textarea name="textarea"></textarea></td> </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12"><div class="flghtdtheading">Flight Details</div></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="flightdtlshow">
+                        <table width="100%">
+                            <tr><td>Sector</td><td>Travel Date</td><td>Flight No.</td><td>Departure Time</td><td>Arrival Time</td></tr>
+                            <tr><td>Mum - Del</td><td>25 feb, 2016</td><td>SG 160</td><td>6:50 AM</td><td>8:15 AM</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12"><div class="submitbtncs"> <div class="submitbtn"><a href="Approver.html">SUBMIT</a></div></div></div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
+
+

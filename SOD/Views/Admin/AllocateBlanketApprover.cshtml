@@ -1,0 +1,173 @@
+﻿
+@{
+    ViewBag.Title = "Admin | Allocate Blanket Approver";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+
+<script src="../Scripts/jquery-1.10.2.min.js"></script>
+<script>
+
+    //Dom Loading
+    $(document).ready(function() {
+        $("#displayList").hide();
+        clearConrol();
+    });
+
+
+    //Bind Employee Common Info List
+    function getEmployee() {
+        var empcode = document.getElementById("txtEmpId").value;
+        if (empcode == "") {
+            alert('Please Enter Employee Id.');
+            document.getElementById("txtEmpId").focus();
+            return false;
+        }
+
+        $.getJSON("../Admin/GetEmployeeInfo?empcode=" + empcode,
+            function (json) {
+                if (json.length) {
+                    clearConrol();
+                    $("#displayList").show();
+                    $('table tr:not(:first)').remove();
+                    var tr;
+                    $('#hdEmpId').val(json[0].EmpId);
+                    $('#hddesigId').val(json[0].DesignationId);
+                    tr = $('<tr/>');
+                    tr.append("<td> Employee Id :" + json[0].EmpCode + "</td>");
+                    tr.append("<td> Employee Code :" + json[0].EmpName + "</td>");
+                    $('table').append(tr);
+                    tr = $('<tr/>');
+                    tr.append("<td> Department : " + json[0].Department + "</td>");
+                    tr.append("<td> Designation : " + json[0].Designation + "</td>");
+                    $('table').append(tr);
+                }
+                else {
+                    $("#displayList").hide();
+                    clearConrol();
+                    alert('Sorry ! Information not available.');
+                }
+            });
+      }
+
+    //Allocate Blanket Approval List
+    function allocate() {
+        clearConrol();
+        var EmpId = parseInt($('#hdEmpId').val());
+        var id = JSON.stringify({ EmpId: EmpId });
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: '../Admin/AllocateBlanketApp',
+            data: id,
+            success: function (data) {
+                if (data == 0) {
+                    $('#spanfail').html("Record already exists.");
+                }
+                else if (data == 1) {
+                    $('#spanSuccess').html("Save Successfully.");
+                }
+                else {
+                    $("#spanfail").html("Error : Invalid Entry.");
+                }
+            },
+            error: function () {
+                $("#spanfail").html("Error on Save data or record already exists.");
+            }
+        });
+    }
+
+    //Clear Control
+    function clearConrol() {
+        $('#spanSuccess').html("");
+        $("#spanfail").html("");
+    }
+
+    //View Blanket List
+    function viewBlanketList() {
+        var url = "../Admin/SodBlanketApproverList?deptId=0";
+        window.location.href = url;
+    }
+     
+</script>
+
+
+<div style="padding-left: 50px">
+        <h3>Allocate Blanket Approver</h3>
+<hr />
+        <div class="main_partadm">
+            <section class="section_part">
+                <div class="part_left_adm">
+                    <div style="margin-top: 20px;">
+                        <span class="part_txt">Employee Code   :</span>
+                        <span class="txtinput"><input type="text" id="txtEmpId" maxlength="15" style="height:30px;width:150px;border:1px solid groove"/> </span>
+                        <span class="getbtn"><input type="button" value=" Get Employee " onclick="getEmployee();" /></span>
+                        <span  class="appbtn"><input type="button" value=" View Blanket List " onclick="viewBlanketList();" /></span>
+                    </div>
+                </div>
+                <div id="displayList" style="margin-right:20px;padding-left:10px;padding-bottom:50px;">
+                    <input type="hidden" id="hdEmpId" />
+                    <input type="hidden" id="hddesigId" />
+                    <table style="width: 60%; line-height: 40px; border: 0; margin-top: 10px;" id="tblAllocate">
+                        <tr><th colspan="2" style="background-color:#f6f0f0">Employee Details</th></tr>
+                        <hr style="width: 100%; margin-right: 100px;" />
+                    </table>
+
+                    <div style="margin-left: 200px; margin-top: 10px; margin-bottom: 15px;">
+                        <div id="spanSuccess" style="color: green; font-weight: bold;"></div>
+                        <span id="spanfail" style="color: red; font-weight: bold;"></span>
+                    </div>
+                   <hr />
+                    <div class="savebtn" style="padding-left: 50px; margin-top: 20px;">
+                        <span class="appbtn"> <input type="button" id="btnSave" value=" Save " onclick="allocate();" /></span>
+                    </div>
+                </div>
+          </section>
+      </div>
+</div>
+
+<style>
+    .sodapprvlist {
+        width: 95%;
+        line-height: 40px;
+        margin-top: 10px;
+    }
+
+        .sodapprvlist td {
+            border: solid 1px #c2c2c2;
+            height: 35px;
+            padding-left: 10px;
+        }
+
+    .appbtn {
+        margin-left: 0px;
+    }
+
+        .appbtn input {
+            margin-left: 100px;
+            background-color: #EE1D23;
+            height: 35px;
+            width: 150px;
+            color: #fff;
+            border: 0px;
+        }
+
+    .ddlapprove select {
+        height: 30px;
+        width: 70%;
+    }
+
+     .txtinput text {
+        height: 30px;
+        width: 125px;
+    }
+
+   .getbtn input {
+      background-color: #EE1D23;
+      height: 35px;
+      width: 150px;
+      color: #fff;
+      border: 0px;
+  }
+</style>

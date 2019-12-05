@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0BC32EB1-D228-46E0-8D61-566DD521CE51}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SOD.Services</RootNamespace>
+    <AssemblyName>SOD.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ADO\ErrorLog.cs" />
+    <Compile Include="ADO\SodCommonServices.cs" />
+    <Compile Include="API\APIServices.cs" />
+    <Compile Include="ConnectionUtility.cs" />
+    <Compile Include="EntityFramework\SodEntities.cs" />
+    <Compile Include="Interface\IAdminRepository.cs" />
+    <Compile Include="Interface\IBlanketApprovalRepository.cs" />
+    <Compile Include="Interface\IBulkApproverRepositorty.cs" />
+    <Compile Include="Interface\IBulkUploadRepository.cs" />
+    <Compile Include="Interface\IcityMasterRepository.cs" />
+    <Compile Include="Interface\IDepartmentRepository.cs" />
+    <Compile Include="Interface\IDesignationRepository.cs" />
+    <Compile Include="Interface\IHdRepository.cs" />
+    <Compile Include="Interface\IHotelApproverRepository.cs" />
+    <Compile Include="Interface\IInclusionRepository.cs" />
+    <Compile Include="Interface\ILoggingRepository.cs" />
+    <Compile Include="Interface\IOALRepository.cs" />
+    <Compile Include="Interface\IOatApproverRepository.cs" />
+    <Compile Include="Interface\IOATrepository.cs" />
+    <Compile Include="Interface\IRevenueRepository.cs" />
+    <Compile Include="Interface\ISjSisConcernRepository.cs" />
+    <Compile Include="Interface\ISodApproverRepositorty.cs" />
+    <Compile Include="Interface\ISodBookingTypeRepository.cs" />
+    <Compile Include="Interface\IBillingRepository.cs" />
+    <Compile Include="Interface\ITransportRepository.cs" />
+    <Compile Include="Interface\ITravelRequestRepository.cs" />
+    <Compile Include="Interface\ITravelRequestTypeRepository.cs" />
+    <Compile Include="Interface\IUserAccountRepository.cs" />
+    <Compile Include="Interface\IUserChangeRequestHRRepository.cs" />
+    <Compile Include="Interface\IUserRepository.cs" />
+    <Compile Include="Interface\IUserRole.cs" />
+    <Compile Include="Interface\IVendorApprovalRepository.cs" />
+    <Compile Include="Interface\IVendorRepository.cs" />
+    <Compile Include="Migrations\201607130753321_InitialBaseline.cs" />
+    <Compile Include="Migrations\201607130753321_InitialBaseline.Designer.cs">
+      <DependentUpon>201607130753321_InitialBaseline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607130754255_PostMigration.cs" />
+    <Compile Include="Migrations\201607130754255_PostMigration.Designer.cs">
+      <DependentUpon>201607130754255_PostMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607130927145_InitialBaseline1.cs" />
+    <Compile Include="Migrations\201607130927145_InitialBaseline1.Designer.cs">
+      <DependentUpon>201607130927145_InitialBaseline1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607130927552_PostMigration1.cs" />
+    <Compile Include="Migrations\201607130927552_PostMigration1.Designer.cs">
+      <DependentUpon>201607130927552_PostMigration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607131002437_InitialBaseline2.cs" />
+    <Compile Include="Migrations\201607131002437_InitialBaseline2.Designer.cs">
+      <DependentUpon>201607131002437_InitialBaseline2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607131003148_PostMigration2.cs" />
+    <Compile Include="Migrations\201607131003148_PostMigration2.Designer.cs">
+      <DependentUpon>201607131003148_PostMigration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607131003388_PostMigration3.cs" />
+    <Compile Include="Migrations\201607131003388_PostMigration3.Designer.cs">
+      <DependentUpon>201607131003388_PostMigration3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607211128342_InitialBaseline3.cs" />
+    <Compile Include="Migrations\201607211128342_InitialBaseline3.Designer.cs">
+      <DependentUpon>201607211128342_InitialBaseline3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607211129141_PostMigration4.cs" />
+    <Compile Include="Migrations\201607211129141_PostMigration4.Designer.cs">
+      <DependentUpon>201607211129141_PostMigration4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608090637487_InitialBaseline4.cs" />
+    <Compile Include="Migrations\201608090637487_InitialBaseline4.Designer.cs">
+      <DependentUpon>201608090637487_InitialBaseline4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608090638567_PostMigration5.cs" />
+    <Compile Include="Migrations\201608090638567_PostMigration5.Designer.cs">
+      <DependentUpon>201608090638567_PostMigration5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608091008301_InitialBaseline5.cs" />
+    <Compile Include="Migrations\201608091008301_InitialBaseline5.Designer.cs">
+      <DependentUpon>201608091008301_InitialBaseline5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608120842541_InitialBaseline6.cs" />
+    <Compile Include="Migrations\201608120842541_InitialBaseline6.Designer.cs">
+      <DependentUpon>201608120842541_InitialBaseline6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608120843286_PostMigration6.cs" />
+    <Compile Include="Migrations\201608120843286_PostMigration6.Designer.cs">
+      <DependentUpon>201608120843286_PostMigration6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608261227031_New update 26 Aug.cs" />
+    <Compile Include="Migrations\201608261227031_New update 26 Aug.Designer.cs">
+      <DependentUpon>201608261227031_New update 26 Aug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608291041235_PostMigration7.cs" />
+    <Compile Include="Migrations\201608291041235_PostMigration7.Designer.cs">
+      <DependentUpon>201608291041235_PostMigration7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608291056556_InitialBaseline7.cs" />
+    <Compile Include="Migrations\201608291056556_InitialBaseline7.Designer.cs">
+      <DependentUpon>201608291056556_InitialBaseline7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608291111000_PostMigration8.cs" />
+    <Compile Include="Migrations\201608291111000_PostMigration8.Designer.cs">
+      <DependentUpon>201608291111000_PostMigration8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609010800178_InitialBaseline8.cs" />
+    <Compile Include="Migrations\201609010800178_InitialBaseline8.Designer.cs">
+      <DependentUpon>201609010800178_InitialBaseline8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609010801018_PostMigration9.cs" />
+    <Compile Include="Migrations\201609010801018_PostMigration9.Designer.cs">
+      <DependentUpon>201609010801018_PostMigration9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609020708553_PostMigration10.cs" />
+    <Compile Include="Migrations\201609020708553_PostMigration10.Designer.cs">
+      <DependentUpon>201609020708553_PostMigration10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610211102456_InitialBaseline9.cs" />
+    <Compile Include="Migrations\201610211102456_InitialBaseline9.Designer.cs">
+      <DependentUpon>201610211102456_InitialBaseline9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611021024502_InitialBaseline10.cs" />
+    <Compile Include="Migrations\201611021024502_InitialBaseline10.Designer.cs">
+      <DependentUpon>201611021024502_InitialBaseline10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611021026515_PostMigration11.cs" />
+    <Compile Include="Migrations\201611021026515_PostMigration11.Designer.cs">
+      <DependentUpon>201611021026515_PostMigration11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612201043092_InitialBaseline11.cs" />
+    <Compile Include="Migrations\201612201043092_InitialBaseline11.Designer.cs">
+      <DependentUpon>201612201043092_InitialBaseline11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612201044020_PostMigration12.cs" />
+    <Compile Include="Migrations\201612201044020_PostMigration12.Designer.cs">
+      <DependentUpon>201612201044020_PostMigration12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701021153420_InitialBaseline12.cs" />
+    <Compile Include="Migrations\201701021153420_InitialBaseline12.Designer.cs">
+      <DependentUpon>201701021153420_InitialBaseline12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701021154204_PostMigration13.cs" />
+    <Compile Include="Migrations\201701021154204_PostMigration13.Designer.cs">
+      <DependentUpon>201701021154204_PostMigration13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701030551002_InitialBaseline13.cs" />
+    <Compile Include="Migrations\201701030551002_InitialBaseline13.Designer.cs">
+      <DependentUpon>201701030551002_InitialBaseline13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701030552249_PostMigration14.cs" />
+    <Compile Include="Migrations\201701030552249_PostMigration14.Designer.cs">
+      <DependentUpon>201701030552249_PostMigration14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701030656125_InitialBaseline14.cs" />
+    <Compile Include="Migrations\201701030656125_InitialBaseline14.Designer.cs">
+      <DependentUpon>201701030656125_InitialBaseline14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701030656568_PostMigration15.cs" />
+    <Compile Include="Migrations\201701030656568_PostMigration15.Designer.cs">
+      <DependentUpon>201701030656568_PostMigration15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701030706189_InitialBaseline15.cs" />
+    <Compile Include="Migrations\201701030706189_InitialBaseline15.Designer.cs">
+      <DependentUpon>201701030706189_InitialBaseline15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701030706354_PostMigration16.cs" />
+    <Compile Include="Migrations\201701030706354_PostMigration16.Designer.cs">
+      <DependentUpon>201701030706354_PostMigration16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701050845360_InitialBaseline16.cs" />
+    <Compile Include="Migrations\201701050845360_InitialBaseline16.Designer.cs">
+      <DependentUpon>201701050845360_InitialBaseline16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701050846236_PostMigration17.cs" />
+    <Compile Include="Migrations\201701050846236_PostMigration17.Designer.cs">
+      <DependentUpon>201701050846236_PostMigration17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701111245076_InitialBaseline17.cs" />
+    <Compile Include="Migrations\201701111245076_InitialBaseline17.Designer.cs">
+      <DependentUpon>201701111245076_InitialBaseline17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701251318307_InitialBaseline18.cs" />
+    <Compile Include="Migrations\201701251318307_InitialBaseline18.Designer.cs">
+      <DependentUpon>201701251318307_InitialBaseline18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701251318506_PostMigration18.cs" />
+    <Compile Include="Migrations\201701251318506_PostMigration18.Designer.cs">
+      <DependentUpon>201701251318506_PostMigration18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AdminRepository.cs" />
+    <Compile Include="Repository\BillingRepository.cs" />
+    <Compile Include="Repository\BlanketApprovalRepository.cs" />
+    <Compile Include="Repository\BulkApproverRepositorty.cs" />
+    <Compile Include="Repository\BulkUploadRepository.cs" />
+    <Compile Include="Repository\cityMasterRepository.cs" />
+    <Compile Include="Repository\DepartmentRepository.cs" />
+    <Compile Include="Repository\DesignationRepository.cs" />
+    <Compile Include="Repository\HdRepository.cs" />
+    <Compile Include="Repository\HotelApproverRepository.cs" />
+    <Compile Include="Repository\InclusionRepository.cs" />
+    <Compile Include="Repository\LoggingRepository.cs" />
+    <Compile Include="Repository\OALRepository.cs" />
+    <Compile Include="Repository\OatApproverRepository.cs" />
+    <Compile Include="Repository\OATrepository.cs" />
+    <Compile Include="Repository\RevenueRepository.cs" />
+    <Compile Include="Repository\SjSisConcernRepository.cs" />
+    <Compile Include="Repository\SodApproverRepositorty.cs" />
+    <Compile Include="Repository\SodBookingTypeRepository.cs" />
+    <Compile Include="Repository\TransportRepository.cs" />
+    <Compile Include="Repository\TravelRequestRepository.cs" />
+    <Compile Include="Repository\TravelRequestTypeRepository.cs" />
+    <Compile Include="Repository\UserAccountRepository.cs" />
+    <Compile Include="Repository\UserChangeRequestHRRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\VendorApprovalRepository.cs" />
+    <Compile Include="Repository\VendorRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NHiberNet\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201607130753321_InitialBaseline.resx">
+      <DependentUpon>201607130753321_InitialBaseline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607130754255_PostMigration.resx">
+      <DependentUpon>201607130754255_PostMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607130927145_InitialBaseline1.resx">
+      <DependentUpon>201607130927145_InitialBaseline1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607130927552_PostMigration1.resx">
+      <DependentUpon>201607130927552_PostMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607131002437_InitialBaseline2.resx">
+      <DependentUpon>201607131002437_InitialBaseline2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607131003148_PostMigration2.resx">
+      <DependentUpon>201607131003148_PostMigration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607131003388_PostMigration3.resx">
+      <DependentUpon>201607131003388_PostMigration3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607211128342_InitialBaseline3.resx">
+      <DependentUpon>201607211128342_InitialBaseline3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607211129141_PostMigration4.resx">
+      <DependentUpon>201607211129141_PostMigration4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608090637487_InitialBaseline4.resx">
+      <DependentUpon>201608090637487_InitialBaseline4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608090638567_PostMigration5.resx">
+      <DependentUpon>201608090638567_PostMigration5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608091008301_InitialBaseline5.resx">
+      <DependentUpon>201608091008301_InitialBaseline5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608120842541_InitialBaseline6.resx">
+      <DependentUpon>201608120842541_InitialBaseline6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608120843286_PostMigration6.resx">
+      <DependentUpon>201608120843286_PostMigration6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608261227031_New update 26 Aug.resx">
+      <DependentUpon>201608261227031_New update 26 Aug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608291041235_PostMigration7.resx">
+      <DependentUpon>201608291041235_PostMigration7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608291056556_InitialBaseline7.resx">
+      <DependentUpon>201608291056556_InitialBaseline7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608291111000_PostMigration8.resx">
+      <DependentUpon>201608291111000_PostMigration8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609010800178_InitialBaseline8.resx">
+      <DependentUpon>201609010800178_InitialBaseline8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609010801018_PostMigration9.resx">
+      <DependentUpon>201609010801018_PostMigration9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609020708553_PostMigration10.resx">
+      <DependentUpon>201609020708553_PostMigration10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610211102456_InitialBaseline9.resx">
+      <DependentUpon>201610211102456_InitialBaseline9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611021024502_InitialBaseline10.resx">
+      <DependentUpon>201611021024502_InitialBaseline10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611021026515_PostMigration11.resx">
+      <DependentUpon>201611021026515_PostMigration11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612201043092_InitialBaseline11.resx">
+      <DependentUpon>201612201043092_InitialBaseline11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612201044020_PostMigration12.resx">
+      <DependentUpon>201612201044020_PostMigration12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021153420_InitialBaseline12.resx">
+      <DependentUpon>201701021153420_InitialBaseline12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021154204_PostMigration13.resx">
+      <DependentUpon>201701021154204_PostMigration13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030551002_InitialBaseline13.resx">
+      <DependentUpon>201701030551002_InitialBaseline13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030552249_PostMigration14.resx">
+      <DependentUpon>201701030552249_PostMigration14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030656125_InitialBaseline14.resx">
+      <DependentUpon>201701030656125_InitialBaseline14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030656568_PostMigration15.resx">
+      <DependentUpon>201701030656568_PostMigration15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030706189_InitialBaseline15.resx">
+      <DependentUpon>201701030706189_InitialBaseline15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030706354_PostMigration16.resx">
+      <DependentUpon>201701030706354_PostMigration16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701050845360_InitialBaseline16.resx">
+      <DependentUpon>201701050845360_InitialBaseline16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701050846236_PostMigration17.resx">
+      <DependentUpon>201701050846236_PostMigration17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701111245076_InitialBaseline17.resx">
+      <DependentUpon>201701111245076_InitialBaseline17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701251318307_InitialBaseline18.resx">
+      <DependentUpon>201701251318307_InitialBaseline18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701251318506_PostMigration18.resx">
+      <DependentUpon>201701251318506_PostMigration18.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SOD.Model\SOD.Model.csproj">
+      <Project>{42a0fa88-d4fa-4021-a904-309f621fa939}</Project>
+      <Name>SOD.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

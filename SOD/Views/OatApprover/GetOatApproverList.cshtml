@@ -1,0 +1,481 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <title>Oat | Booking List</title>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../css/SODstyle.css" rel="stylesheet" />
+    <script type="text/javascript">
+    //Dom Loading
+    $(document).ready(function () {
+        $("#tooltip-ex a").tooltip({
+            placement: 'top'
+        });
+        bindList();
+        $('.loader').hide();
+    });
+
+    //Need to implement further
+    $(document).on('click', '.accordion', function () {
+        for (i = 0; i < acc.length; i++) {
+            acc[0].onclick(function () {
+                this.classList.toggle("active");
+                this.nextElementSibling.classList.toggle("show");
+            });
+        }
+    });
+
+
+    //Bind booking List
+    function bindList() {
+        $.getJSON("../OatApprover/GetBookingData",
+            function (json) {
+                if (json.length > 0) { $("#dvrecord").show(); $("#dvna").hide(); } else { $("#dvna").show(); $("#dvrecord").hide(); }
+                $('#tbldetail  tr:not(:first)').remove();
+                var tr;
+                var counter = 0;
+                //Append each row to html table
+                for (var i = 0; i < json.length; i++) {
+                    tr = $('<tr/>');
+                    counter = i+1;
+                    tr.append("<td>" + counter + "</td>");
+                    var trNo = json[i].TravelRequestId;
+                    var btype = "OAT-" + json[i].TravelRequestId;
+
+                    tr.append("<td class='dtallleft'>" + "<a data-toggle=modal href='#viewdetailModal' class='csod' onclick=viewdetail('" + trNo + "'); title='View booking details'>" + btype + "</a>" + "</td>");
+                    tr.append("<td class='dtallleft'>" + ToJavaScriptDate(json[i].RequestDate) + "</td>");
+                    tr.append("<td class='dtallleft'>" + json[i].RequestedEmpName + "</td>");
+                    tr.append("<td class='dtallleft'>" + json[i].RequestedEmpId + "</td>");
+                    tr.append("<td class='dtallleft'>" + json[i].RequestedEmpDesignation + "</td>");
+                    tr.append("<td class='dtallleft'>" + json[i].ReasonForTravel + "</td>");
+                    var travelRequestId = json[i].TravelRequestId + ',' + @Session["EmpId"] ;
+
+                    tr.append("<td><div class=sts>" + "<a href=#  onclick=approve('" + travelRequestId + "');> Approve</a> | <a href=# onclick=reject('" + travelRequestId + "'); > Reject</a>" + "</div></td>");
+
+                    $('#tbldetail').append(tr);                    
+                }
+                
+            });
+       
+        }
+
+    //Date Parse function
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return (dt.getDate() ) + "/" + (dt.getMonth()+1) + "/" + dt.getFullYear();
+    }
+
+
+
+    //Approve Request
+    function approve(travelRequestId) {
+
+        var result = confirm("Are you sure to approve this request?");
+        if (result)
+        {
+            var travelReqId = JSON.stringify({ travelReqId: travelRequestId });
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '../oatmail/ApproveOatBookingRequest',
+                data: travelReqId,
+                beforeSend: function () {
+                    showprogressStatus(travelRequestId.split(',')[0], "OAT", 'a');
+                    // location.reload(); 
+                    
+                },
+                complete: function () {
+                    //$('.loader').hide();
+                    // location.reload(); 
+                    updatTableStatus(travelRequestId.split(',')[0], "OAT", 'a');
+                },
+                success: function (data) {
+                    updatTableStatus(travelRequestId.split(',')[0], "OAT", 'a');
+                        alert(data);
+                        //location.reload();
+                    
+                },
+                error: function (xhr, status, exception) {
+                    updatTableStatus(travelRequestId.split(',')[0], "OAT", 'a');
+                    //location.reload();
+                }
+            });
+        }
+    }
+
+    //Reject Request
+    function reject(travelRequestId) {
+
+        var result = confirm("Are you sure to reject the request?");
+        if (result) {
+            var travelReqId = JSON.stringify({ travelReqId: travelRequestId });
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '../oatmail/RejectOatBookingRequest',
+                data: travelReqId,
+                beforeSend: function () {
+                    showprogressStatus(travelRequestId.split(',')[0], "OAT", 'r');
+                },
+                complete: function () {
+                },
+                success: function (response) {
+                    updatTableStatus(travelRequestId.split(',')[0], "OAT", 'r');
+                    alert(response);
+                                       
+                },
+                error: function (xhr, status, exception) {
+                    updatTableStatus(travelRequestId.split(',')[0], "OAT", 'r');
+                }
+            });
+        }
+    }
+
+
+
+    function updatTableStatus(trRequestId,bts,type) {
+        var val = bts+ "-" + trRequestId;
+        $('#tbldetail tr').each(function () {
+            var s = $(this).find("td .csod").html()
+            if (s === val && type === 'r') {
+                $(this).css("background-color", "#F5CBA7");
+                var th = $(this);
+                th.find(".sts").replaceWith("<img src='../img/progloader.gif' class='sts1' style='margin-bottom:4px; width:90px;height:15px;'/> ")
+                th.find(".sts1").replaceWith("<span style='color:red'>Rejected </span><img  src='../img/rejected1.png' style='margin-bottom:4px; width:20px;height:20px;' alt='Rejected' />");
+                return;
+            }
+            else if (s === val && type === 'a') {
+                $(this).css("background-color", "#81F7BE");
+                var th = $(this);
+                th.find(".sts").replaceWith("<img src='../img/progloader.gif' class='sts1' style='margin-bottom:4px; width:90px;height:15px;'/> ")
+                th.find(".sts1").replaceWith("<span style='color:green'>Approved </span> <img  src='../img/right.png' style='margin-bottom:4px; width:20px;height:20px;' alt='Approved' />");
+                return;
+            }
+
+        });
+    }
+
+   
+    function viewdetail(TRId)
+    {
+        $http({
+            method: "GET",
+            url: "../OAT/GetDetailsOATList?TrId=" + TRId
+        }).then(function mySucces(response) {
+            $scope.trdlist = response.data.flightList;
+            $scope.plists = response.data.pasgList;
+            $scope.hlists= response.data.hotelList;
+            $scope.trn = TRId;
+        }, function myError(response) {
+            alert(response);
+        });
+    }
+
+
+    function viewdetail(trId)
+    {
+        //var trId = JSON.stringify({ trId: trId });
+        $.getJSON("../OAT/GetDetailsOATList?TrId=OAT-" + trId,
+           function (json) {
+               //Declare array
+               var arrFlight = [];
+               var arrpass = [];
+               var arrhotel=[];
+
+               //push  value in array
+               arrFlight.push(json["flightList"]);
+               arrpass.push(json["pasgList"]);
+               arrhotel.push(json["hotelList"]);
+
+               //Empty tables
+               $("#tblviewFlight").children().remove();
+               $("#tblviewPassInfo").children().remove();
+               $("#tblviewHotelInfo").children().remove();
+             
+               var tr;
+
+
+               //Flight Info tbl
+             
+               tr = "<tr class='popheadcolor'><td>Sector</td><td>Travel Date</td><td>Flight Info</td><td>Flight No.</td><td>Departure Time</td></tr>";
+
+               $('#tblviewFlight').append(tr);
+               for (var i = 0; i < arrFlight[0].length; i++) {
+                   tr = $('<tr/>');
+                   tr.append("<td>" + arrFlight[0][i].OriginPlace + "-" + arrFlight[0][i].DestinationPlace + "</td>");
+                   tr.append("<td>" + ToJavaScriptDate(arrFlight[0][i].DepartureDate) + "</td>");
+                   tr.append("<td>" + arrFlight[0][i].DepFlightInfo + "</td>");
+                   tr.append("<td>" + arrFlight[0][i].DepFlightNumber + "</td>");
+                   tr.append("<td>" + arrFlight[0][i].DepartureTime + "</td>");
+                   $('#tblviewFlight').append(tr);
+               }
+
+               //passenger info tbl
+              
+                   tr = "<tr class='popheadcolor'><td>First Name</td><td>Last Name</td><td>Gender</td></tr>";
+                   $('#tblviewPassInfo').append(tr);
+                   for (var i = 0; i < arrpass[0].length; i++) {
+                       tr = $('<tr/>');
+                   
+                       tr.append("<td>" + arrpass[0][i].FirstName + "</td>");
+                       tr.append("<td>" + arrpass[0][i].LastName + "</td>");
+                       tr.append("<td>" + arrpass[0][i].Gender + "</td>");
+                       $('#tblviewPassInfo').append(tr);
+                   }
+
+               //hotel info table
+                   if(arrhotel[0].length>0){
+                       $('#hoteldetails').show();
+                       tr = "<tr class='popheadcolor'><td>City</td><td>Check-In Date</td><td>Check-Out Date</td><td>Cancellation Status</td></tr>";
+                       $('#tblviewHotelInfo').append(tr);
+                       for (var i = 0; i < arrhotel[0].length; i++) {
+                           tr = $('<tr/>');
+                   
+                           tr.append("<td>" + arrhotel[0][i].City + "</td>");
+                           tr.append("<td>" + ToJavaScriptDate(arrhotel[0][i].CheckInDate) + "</td>");
+                           tr.append("<td>" + ToJavaScriptDate(arrhotel[0][i].CheckOutDate) + "</td>");
+                           tr.append("<td>" + arrhotel[0][i].usercancellation == 'Cancelled by User' ? arrhotel[0][i].usercancellation: '-' + "</td>");
+                           $('#tblviewHotelInfo').append(tr);
+                       }
+                   }else{
+                       $('#hoteldetails').hide();
+
+                   }
+
+           });
+    }
+
+    //Toogle Div
+    function toggleDiv(divId) {
+        $("#" + divId).toggle();
+    }
+
+
+    function showprogressStatus(trRequestId,bts,type) {
+        var val = bts+ "-" + trRequestId;
+        $('#tbldetail tr').each(function () {
+            var s = $(this).find("td .csod").html()
+            if (s === val && type === 'r') {
+                $(this).css("background-color", "#F5CBA7");
+                var th = $(this);
+                th.find(".sts").replaceWith("<img src='../img/progloader.gif' class='sts1' style='margin-bottom:4px; width:90px;height:15px;'/> ")
+                return;
+            }
+            else if (s === val && type === 'a') {
+                $(this).css("background-color", "#81F7BE");
+                var th = $(this);
+                th.find(".sts").replaceWith("<img src='../img/progloader.gif' class='sts1' style='margin-bottom:4px; width:90px;height:15px;'/> ")
+                return;
+            }
+
+        });
+    }
+    </script>
+
+</head>
+<body>
+    <div>
+        <div class="bookingheadr">
+
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="usrdtlsdiaplay">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <nav class="navbar navbar-default navbar-static-top navbar-transparent">
+                                        <div class="container">
+                                            <div class="row">
+                                                <!-- Brand and toggle get grouped for better mobile display -->
+                                                <div class="navbar-header">
+                                                    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                                                        <span class="sr-only">Toggle navigation</span>
+                                                        <span class="icon-bar"></span>
+                                                        <span class="icon-bar"></span>
+                                                        <span class="icon-bar"></span>
+                                                    </button>
+                                                    <a href="#" class="navbar-brand" id="logo"><img src="../img/logo_spicejet.png" /></a>
+                                                    <div class="nav navbar-header headertitle">  <div class="sodHeading"> OAT BOOKING SYSTEM</div></div>
+                                                </div>
+
+                                                <!-- Collection of nav links and other content for toggling -->
+                                                <div id="navbarCollapse" class="collapse navbar-collapse" style="background:#EE1D23; border:none; padding:3px;">
+                                                    <div class="dropdown" style="padding-bottom:5px;">@Session["UserInfo"]   </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------------------------------Content---------------->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" id="dvrecord">
+                    <div class="row">
+                        <div class="col-md-12"><div style="text-align:center; font-size:18px;margin-top:10px; margin-bottom:20px;">OAT Booking Request Approval</div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="apptblgrd">
+                                <div>
+                                    <table class="flighdtl" style="width:100%;" id="tbldetail">
+                                        <tr class="gridheader"><td>Sr.No.</td><td>Req. ID</td><td>Req. Date</td><td>Name</td><td>Emp. Id</td><td>Designation</td><td>Purpose</td><td>Action</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" id="dvna"><div style="text-align:center; font-size:14px;margin-top:50px;color:#ff0000">No record found for approval.</div></div>
+            </div>
+        </div>
+        
+        <div id="viewdetailModal" class="modal modal-wide fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">View OAT Booking Request Details</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="popuphdtxt">Flight(s) Information <span id="spanReqid"></span></h4>
+                        <table class="flighdtl" id="tblviewFlight"></table>
+
+                        <h4 class="popuphdtxt">Passenger(s) Information</h4>
+                        <div class="apptblgrd">
+                            <table class="flighdtl" id="tblviewPassInfo"></table>
+                        </div>
+
+                        <div id="hoteldetails"><h4 class="popuphdtxt">Hotels Information</h4></div>
+                        <div class="apptblgrd">
+                            <table class="flighdtl" id="tblviewHotelInfo"></table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!--------------------------------------------Footer---------------->
+        <div style="padding-top:70px;"></div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+        <!-- ------------------------------------------END Footer---------------->
+    </div>
+
+    <!-- --------------------Loader-------------------------------------->
+    <div class="loader">
+        <center>
+            <img class="loading-image" src="../images/loading.gif" alt="loading..">
+        </center>
+    </div>
+</body>
+
+</html>
+
+<!--Model popup-->
+<script>
+    $(".modal-wide").on("show.bs.modal", function () {
+        var height = $(window).height() - 0;
+        $(this).find(".modal-body").css("max-height", height);
+    });
+
+</script>
+
+<style>
+    /* irrelevant styling */
+    body {
+        text-align: center;
+    }
+
+        body p {
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+    #tallModal .modal-body p {
+        margin-bottom: 900px;
+    }
+</style>
+
+<!--Accordian Style-->
+<style>
+    button.accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 13px;
+        transition: 0.4s;
+        line-height: 2px;
+    }
+
+        button.accordion.active, button.accordion:hover {
+            background-color: #ddd;
+        }
+
+        button.accordion:after {
+            content: '\02795';
+            font-size: 13px;
+            color: #777;
+            float: right;
+            margin-left: 5px;
+        }
+
+        button.accordion.active:after {
+            content: "\2796";
+        }
+
+    div.panel {
+        padding: 0 15px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: 0.6s ease-in-out;
+        opacity: 0;
+    }
+
+        div.panel.show {
+            opacity: 1;
+            max-height: 400px;
+        }
+</style>
+
+<script>
+     var acc = document.getElementsByClassName("accordion");
+    var acc = $("#maindiv .accordion");
+    var i;
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function () {
+            this.classList.toggle("active");
+            this.nextElementSibling.classList.toggle("show");
+        }
+    }
+</script>
+
+

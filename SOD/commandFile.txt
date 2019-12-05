@@ -1,0 +1,38 @@
+﻿PM> Add-Migration "InitialBaseline" –IgnoreChanges
+
+PM> Add-Migration "PostMigration"
+
+PM> Update-Database -force
+
+PM> Update-Database -verbose
+
+PM> Update-Database 
+
+
+Install-Package EntityFramework -Version 6.1.0
+
+
+--======================OAT TABLE
+[dbo].[ITACodeSectorMaster]
+[dbo].[OATPAXTyepeMaster]
+[dbo].[OATTravelRequestMaster]
+[dbo].[OATTravelRequestFlightDetail]
+[dbo].[OATTravelRequestPassengerDetail]
+[dbo].[ITHTransactionMaster]
+[dbo].[ITHTransactionDetail]
+[dbo].[ITHTransactionDetailLog]
+[dbo].[OATFinancialApprovalMaster_Roistering]
+[dbo].[OATFinancialApprovalDetail_Roistering]
+[dbo].[OATUploadItenary]
+[dbo].[ITHVendorMaster]
+[dbo].[OATDeskRejectedTransactionDetail]
+
+--======truncate cmd
+--Truncate Table OATTravelRequestMaster
+--Truncate Table OATTravelRequestFlightDetail
+--Truncate Table OATTravelRequestPassengerDetail
+--Truncate Table ITHTransactionMaster
+--Truncate Table ITHTransactionDetail
+--Truncate Table ITHTransactionDetailLog
+--Truncate Table OATFinancialApprovalDetail_Roistering
+--Truncate Table OATUploadItena

@@ -1,0 +1,966 @@
+﻿@{
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml"; ;
+    ViewBag.Title = "OAT|Booking";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    @*<script src="../Scripts/jquery-1.10.2.js"></script>*@
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/sanitize.js"></script>
+    <link href="../css/radiobtn.css" rel="stylesheet" />
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    @*<link href="~/js/handle-counter.css" rel="stylesheet" />*@
+    <script src="~/js/handleCounter.js"></script>
+    <script src="../js/timerpickerJS.js"></script>
+    <link href="../css/timepicker.css" rel="stylesheet" />
+    <script src="../js/select2/select2.min.js"></script>
+    <link href="../css/select2/select2.min.css" rel="stylesheet" />
+    <link href="../css/select2/selectize.default.css" rel="stylesheet" />
+    <script src="../js/select2/selectize.js"></script>
+    @*<script src="../js/oalScript.js"></script>*@
+    <script src="~/js/angular/oatdisplay.js"></script>
+
+    @*<script>
+            $(document).ready(function () {
+                $('.timepicker').wickedpicker({
+                    twentyFour: false, title:
+                        'Select Time', showSeconds: false
+                });
+            });
+        </script>*@
+
+    <style>
+
+
+        a.disabled {
+            pointer-events: none;
+            cursor: default;
+        }
+
+        .ui-menu-item {
+            width: 25% !important;
+            float: left;
+        }
+
+        .ui-widget-content {
+            width: 18%;
+            font-size: 18px;
+            border: 1px solid #aaaaaa;
+            color: #222222;
+            background: #ffffff;
+        }
+
+        .madatoryImg {
+            color: red;
+        }
+
+        .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+            color: black;
+        }
+
+        .form-control[readonly] {
+            cursor: not-allowed;
+            background-color: #fff !important;
+            opacity: 1;
+        }
+
+        /*.selectize-input {
+            padding: 5px 8px !important;
+        }*/
+
+        @@media only screen and (max-width: 767px) {
+            .inputSpinnerText {
+                width: 30px;
+                padding: 6px;
+            }
+        }
+
+        @@media (min-width: 768px) {
+            .Five-columns > .col-sm-2 {
+                width: 20%;
+            }
+        }
+    </style>
+</head>
+
+<body ng-app="OatViewDetails" ng-controller="OatView">
+    <div class="content_header_txt">
+        <div>OAT Booking Form </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="oat-container-section" class="content_search_structure_box">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label>Booking Type</label>
+                            <select class="form-control input-sm" ng-init="bookingType = 'Domestic'" ng-model="bookingType" ng-options="item for item in choiceBookingType" ng-change="getBookingType();"> </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label>Booking For</label>
+                            <select class="form-control input-sm" input-disabled="editableInput" ng-init="selectedType = 'Self'" ng-model="selectedType" ng-options="item for item in choiceBookingFor" ng-change="getBookingFor();"></select>
+                        </div>
+                        <div class="col-md-2">
+                            <label>   No. of Pax.</label>
+                            <div class="handle-counter" style="display:flex;" id="handleCounter">
+                                <button class="counter-minus btn btn-danger counter-left" id="minusBtn" ng-click="getNumber('minus');">-</button>
+                                <input type="text" id="noOfPAx" ng-model="noOfPax" class="form-control input-counter inputSpinnerText">
+                                <button class="counter-plus btn btn-danger counter-left" id="plusBtn" ng-click="getNumber('plus');">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="MobforShow">
+        <section id="oat-tabs-panel-bg" class="home-content-top">
+            <div class="container ">
+                <!--our-quality-shadow-->
+                <div class="tabbable-panel">
+                    <div class="tabbable-line">
+                        <ul class="nav nav-tabs tabtop ">
+                            <li id="personalTabLI" class="active"> <a href="#tab_default_1" data-toggle="tab" id="personalTab">Personal Info</a> </li>
+                            <li id="FlightTabLI"> <a href="#tab_default_2" data-toggle="tab" id="FlightTab">Flight Info</a> </li>
+                            <li id="hotelTabLI"> <a href="#tab_default_3" data-toggle="tab" id="hotelTab"> Hotel Info</a> </li>
+                        </ul>
+                        <div class="tab-content margin-tops ">
+                            <div class="tab-pane active fade in" id="tab_default_1">
+                                <div class="row text-center" ng-if="selectedType  == 'SPOC'">
+                                    <div class="col-md-12">
+                                        <input type="radio" name="flightype" checked="checked" value="behalfOfHod" ng-model="SpocType" id="behalfOfHod" ng-click=changespocType('behalfOfHod'); /><label for="behalfOfHod" class="bookingtypetxt txtfont_normal radiosod_align">On behalf of HOD</label>&nbsp;
+                                        <input type="radio" name="flightype" value="behalfOfClevel" ng-model="SpocType" id="behalfOfClevel" ng-click=changespocType('behalfOfClevel');@*"SpocType = 'behalfOfClevel'"*@ /><label for="behalfOfClevel" class="bookingtypetxt txtfont_normal radiosod_align">On behalf of C-Level</label>
+                                    </div>
+                                </div>
+                                <div class="row text-center" ng-if="selectedType  == 'Roistering(Flight ops / In Flight)'">
+                                    <div class="col-md-12">
+                                        <input type="radio" name="flightype" checked="checked" value="Pilot" ng-model="SpocType" id="behalfOfHod" ng-click=changespocType('Pilot'); /><label for="Pilot" class="bookingtypetxt txtfont_normal radiosod_align">Pilot</label>&nbsp;
+                                        <input type="radio" name="flightype" value="Crew" ng-model="SpocType" id="behalfOfClevel" ng-click=changespocType('Crew'); /><label for="Crew" class="bookingtypetxt txtfont_normal radiosod_align">Crew</label>
+                                    </div>
+                                </div>
+                                <div class="tab-border">
+                                    <form name="othersPersonalForm" id="form_id">
+                                        <div class="eachdetailsBorder" ng-if="selectedType  == 'Self'" ng-repeat="x in empDetails track by $index">
+                                            <div ng-form="othersPersonalForm">
+                                                <div class="row personal-check-bg">
+                                                    <div class="col-md-3">
+                                                        @*<span> #{{$index}} </span>*@
+                                                        <div>
+                                                            <input class="chkbx-arrange" type="checkbox" id="Isflight{{$index}}" ng-model="PassengerDetails[$index].IsFlightRequired" ng-change="addOrRemoveHotel($index,PassengerDetails[$index],'Flight')" /> <label class="hreq_label">Is Flight Required</label>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-3">
+
+                                                        <div>
+                                                            <input class="chkbx-arrange" type="checkbox" id="IsHotel{{$index}}" ng-model="PassengerDetails[$index].IsHotelRequired" ng-change="addOrRemoveHotel($index,PassengerDetails[$index],'Hotel')" /> <label class="hreq_label">Is Hotel Required</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row oat-control-input" style="margin-left:5px;margin-right:5px">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.selfPassangerCode.$invalid  && submitPersonalDetails}">
+                                                            <div>
+                                                                <label>ECN (Employee Id/Code)</label><span class="madatoryImg">*</span>
+                                                                <input type="text" ng-if="selectedType  == 'Self'" id="empCode{{$index}}" name="selfPassangerCode" placeholder="Employee Code" ng-model="x.EmpCode" ng-disabled="x.EmpCode" onkeydown="validateNumber(event);" autocomplete="off" class="form-control input-sm" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.selfPassengerFName.$invalid  && submitPersonalDetails}">
+                                                            <div>
+                                                                <label style="width:25%">Title <span class="madatoryImg">*</span></label>
+                                                                <label>First Name</label><span class="madatoryImg">*</span>
+                                                                <span style="display:flex">
+                                                                    <input type="text" style="width:30%" class="form-control input-sm" ng-model="x.Gender" ng-disabled="x.Gender" placeholder="Title" name="selfPassengerFName" />
+
+                                                                    <input name="selfPassengerFName" type="text" placeholder="Employee Name" ng-model="x.FirstName" ng-disabled="x.FirstName" autocomplete="off" class="form-control input-sm" required>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.selfPassengerLName.$invalid  && submitPersonalDetails}">
+                                                            <div>
+                                                                <label>Last Name</label><span class="madatoryImg">*</span>
+                                                                <input name="selfPassengerLName" type="text" placeholder="Employee Name" ng-model="x.LastName" ng-disabled="x.LastName" autocomplete="off" class="form-control input-sm" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.selfPassangerDesignation.$invalid  && submitPersonalDetails}">
+                                                            <div>
+                                                                <label>Designation</label><span class="madatoryImg">*</span>
+                                                                <input name="selfPassangerDesignation" type="text" placeholder="Designation" ng-model="x.Designation" ng-disabled="x.Designation" autocomplete="off" class="form-control input-sm" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="margin-left:5px;margin-right:5px">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : othersPersonalForm.selfPassangerDepartment.$invalid  && submitPersonalDetails}">
+                                                                <div>
+                                                                    <label>Department</label><span class="madatoryImg">*</span>
+                                                                    <input type="text" name="selfPassangerDepartment" placeholder="Department" ng-model="x.Department" ng-disabled="x.Department" autocomplete="off" class="form-control input-sm" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : othersPersonalForm.selfPhoneNo.$invalid  && submitPersonalDetails} ">
+                                                                <div>
+                                                                    <label>Mobile No.</label><span class="madatoryImg">*</span>
+                                                                    <input type="text" name="selfPhoneNo" placeholder="Mobile No." ng-model="x.Phone" maxlength="10" ng-disabled="x.Phone" ng-pattern="/^[7-9][0-9]{9}$/" onkeydown="validateNumber(event);" autocomplete="off" class="form-control input-sm" required>
+                                                                </div>
+                                                                <p ng-if="othersPersonalForm.selfPhoneNo.$error.pattern && submitPersonalOtherDetails" class="help-block">Please enter valid Phone no.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : othersPersonalForm.selfEmailId.$invalid && submitPersonalDetails}">
+                                                                <div>
+                                                                    <label>Email ID</label><span class="madatoryImg">*</span>
+                                                                    <input name="selfEmailId" type="text" placeholder="Email Id" autocomplete="off" ng-model="x.Email" ng-disabled="x.Email" class="form-control input-sm" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*&#64;[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{3,4})$/" required>
+                                                                </div>
+                                                                <p ng-if="othersPersonalForm.selfEmailId.$error.pattern && submitPersonalOtherDetails" class="help-block">Please enter valid Email ID.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : othersPersonalForm.selfBase.$invalid && submitPersonalDetails} ">
+                                                                <div>
+                                                                    <label>Base</label><span class="madatoryImg">*</span>
+                                                                    <input name="selfBase" type="text" placeholder="Base" autocomplete="off" ng-model="x.Base" class="form-control input-sm" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="eachdetailsBorder" ng-if="selectedType  != 'Self'" ng-repeat="x in getNumber('') track by $index">
+                                            <div ng-form="othersPersonalForm">
+                                                <div class="row personal-check-bg">
+                                                    <div class="col-md-3" ng-if="selectedType  == 'Others (On Behalf of Employee / Non-Employee)'">
+                                                        @*<span> #{{$index}} </span>*@
+                                                        <div>
+                                                            <input type="checkbox" id="IsEmployee{{$index}}" ng-init="PassengerDetails[$index].IsEmployee = true" ng-model="PassengerDetails[$index].IsEmployee" ng-change="FetchEmployeeData(PassengerDetails[$index].EmpCode,$index);" /> <label style="font-weight: 700;">Please uncheck if not Employee</label>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-3">
+
+                                                        <div>
+                                                            <input type="checkbox" id="Isflight{{$index}}" ng-model="PassengerDetails[$index].IsFlightRequired" ng-change="addOrRemoveHotel($index,PassengerDetails[$index],'Flight')" /> <label style="font-weight: 700;">Is Flight Required</label>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-3">
+
+                                                        <div>
+                                                            <input type="checkbox" id="IsHotel{{$index}}" ng-model="PassengerDetails[$index].IsHotelRequired" ng-change="addOrRemoveHotel($index,PassengerDetails[$index],'Hotel')" /> <label style="font-weight: 700;">Is Hotel Required</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row Five-columns oat-control-input" style="margin-left:5px;margin-right:5px">
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.PassangerCode.$invalid  && submitPersonalOtherDetails}">
+                                                            <div>
+                                                                <label>ECN (Employee Id/Code)<span class="madatoryImg">*</span></label>
+                                                                <input type="text" id="empCode{{$index}}" name="PassangerCode" placeholder="Employee Code" ng-model="PassengerDetails[$index].EmployeeCode" onkeydown="validateNumber(event);" ng-blur="FetchEmployeeData(PassengerDetails[$index].EmployeeCode,$index);" autocomplete="off" class="form-control input-sm" required />
+                                                            </div>
+                                                            <p id="notvalidEmp{{$index}}" style="color:red ; padding-top:5px ; display:none"> This  employee code is not valid.</p>
+                                                            <p id="duplicateEmp{{$index}}" style="color:red ; padding-top:5px ; display:none"> This  employee code is already entered.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.paxType.$invalid  && submitPersonalOtherDetails}">
+                                                            <div>
+                                                                <label>Pax Type<span class="madatoryImg">*</span></label>
+                                                                <select class="form-control input-sm" input-disabled="editableInput" @*ng-init="PassengerDetails[$index].PAXType = Adult'"*@ ng-model="PassengerDetails[$index].PAXType" name="paxType">
+                                                                    @*<option style="display:none" value=""></option>*@
+                                                                    <option ng-repeat="x in paxType" ng-selected="x.PAXType == 'Adult'" value="{{x.PAXType}}">{{x.PaxTypeRemarks}} </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.PassengerTitle.$invalid  && submitPersonalOtherDetails}">
+                                                            <div>
+                                                                <label @*style="width:25%"*@>Title<span class="madatoryImg">*</span></label>
+                                                                @*<label>First Name</label>*@
+                                                                <span @*style="display:flex"*@>
+                                                                    <select @*style="width:30%"*@ class="form-control input-sm" ng-model="PassengerDetails[$index].Gender" placeholder="Title" ng-disabled="PassengerDetails[$index].Gender && isemployeeData{{$index}}" name="PassengerTitle">
+                                                                        <option style="display:none" value="">Select Title</option>
+                                                                        <option ng-selected="true" value="Mr.">Mr.</option>
+                                                                        <option value="Ms.">Ms.</option>
+                                                                    </select>
+
+                                                                    @*<input name="PassengerFName" type="text" placeholder="Employee Name" ng-model="PassengerDetails[$index].FirstName" ng-disabled="PassengerDetails[$index].FirstName && isemployeeData" autocomplete="off" class="form-control input-sm" required>*@
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.PassengerFName.$invalid  && submitPersonalOtherDetails}">
+                                                            <div>
+                                                                <label>First Name<span class="madatoryImg">*</span></label>
+                                                                <input name="PassengerFName" type="text" placeholder="Employee Name" ng-pattern="/^[ A-Za-z_.\s]*$/" ng-model="PassengerDetails[$index].FirstName" ng-disabled="PassengerDetails[$index].FirstName && isemployeeData{{$index}} " autocomplete="off" class="form-control input-sm" required>
+                                                                <p ng-if="othersPersonalForm.PassengerFName.$error.pattern && submitPersonalOtherDetails" class="help-block">Please enter only character.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.PassengerLName.$invalid  && submitPersonalOtherDetails}">
+                                                            <div>
+                                                                <label>Last Name<span class="madatoryImg">*</span></label>
+                                                                <input name="PassengerLName" type="text" placeholder="Employee Name" ng-pattern="/^[A-Za-z_.\s]*$/" ng-model="PassengerDetails[$index].LastName" ng-disabled="PassengerDetails[$index].LastName && isemployeeData{{$index}}&& isEmpLName{{$index}}  " autocomplete="off" class="form-control input-sm" required>
+                                                                <p ng-if="othersPersonalForm.PassengerLName.$error.pattern && submitPersonalOtherDetails" class="help-block">Please enter only character.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row Five-columns oat-control-input" style="margin-left:5px;margin-right:5px">
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.PassangerDesignation.$invalid  && submitPersonalOtherDetails}">
+                                                            <div>
+                                                                <label>Designation<span class="madatoryImg">*</span></label>
+                                                                <input name="PassangerDesignation" type="text" placeholder="Designation" ng-model="PassengerDetails[$index].Designation" ng-disabled="PassengerDetails[$index].Designation && isemployeeData{{$index}} " autocomplete="off" class="form-control input-sm" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.PassangerDepartment.$invalid  && submitPersonalOtherDetails}">
+                                                            <div>
+                                                                <label>Department<span class="madatoryImg">*</span></label>
+                                                                <input type="text" name="PassangerDepartment" placeholder="Department" ng-model="PassengerDetails[$index].Department" ng-disabled="PassengerDetails[$index].Department &&  isemployeeData{{$index}} " autocomplete="off" class="form-control input-sm" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.PhoneNo.$invalid  && submitPersonalOtherDetails} ">
+                                                            <div>
+                                                                <label>Mobile No.<span class="madatoryImg">*</span></label>
+                                                                <input type="text" name="PhoneNo" placeholder="Mobile No." ng-model="PassengerDetails[$index].PhoneNo" maxlength="10" ng-disabled="PassengerDetails[$index].PhoneNo && isemployeeData{{$index}} && isEmpMobile{{$index}}" ng-pattern="/^[7-9][0-9]{9}$/" onkeydown="validateNumber(event);" autocomplete="off" class="form-control input-sm" required>
+                                                            </div>
+                                                            <p ng-if="othersPersonalForm.PhoneNo.$error.pattern && submitPersonalOtherDetails" class="help-block">Please enter valid Phone no.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.emailId.$invalid && submitPersonalOtherDetails}">
+                                                            <div>
+                                                                <label>Email ID<span class="madatoryImg">*</span></label>
+                                                                <input name="emailId" type="text" placeholder="Email Id" autocomplete="off" ng-model="PassengerDetails[$index].EmailId" ng-disabled="PassengerDetails[$index].EmailId && isemployeeData{{$index}} && isEmpEmail{{$index}} " class="form-control input-sm" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*&#64;[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{3,4})$/" required>
+                                                            </div>
+                                                            <p ng-if="othersPersonalForm.emailId.$error.pattern && submitPersonalOtherDetails" class="help-block">Please enter valid Email ID.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group" ng-class="{'has-error' : othersPersonalForm.base.$invalid && submitPersonalOtherDetails} ">
+                                                            <div>
+                                                                <label>Base<span class="madatoryImg">*</span></label>
+                                                                <input name="base" type="text" placeholder="Base" autocomplete="off" ng-model="PassengerDetails[$index].Base" class="form-control input-sm" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            @*----------------------------------------------------------------  Flight  Details --------------------------------------------*@
+                            <div class="tab-pane fade" id="tab_default_2">
+                                <form class="mrgntopminus" name="flightDetailsForm" id="flight_form">
+
+                                    <div class="row text-center">
+                                        <div class="col-md-12 ">
+                                            <input type="radio" name="flightype" checked="checked" value="One Way" ng-model="fltType" id="OneWay" ng-click="changeFltType('One Way')" /><label for="OneWay" class="bookingtypetxt txtfont_normal font12  radiosod_align"> One Way</label>
+                                            <input type="radio" name="flightype" value="Round Trip" ng-model="fltType" id="RoundTrip" ng-click="changeFltType('Round Trip')" /><label for="RoundTrip" class="bookingtypetxt txtfont_normal font12 radiosod_align"> Round Trip</label>
+                                            <input type="radio" name="flightype" value="Multi Trip" ng-model="fltType" id="MultiTrip" ng-click="changeFltType('Multi Trip')" /><label for="MultiTrip" class="bookingtypetxt txtfont_normal font12 radiosod_align ">Multicity</label>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        @*----------------------------------------------------------------  One way and multiple  Details --------------------------------------------*@
+                                        <div ng-if="fltType !='Round Trip'" ng-form="flightDetailsForm">
+                                            <div class="tab-border input-equal-height">
+                                                <div class="row" ng-repeat="lst in FlightDetails track by $index">
+                                                    <div class="col-md-12">
+                                                        <div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="flight-info-title ">
+                                                                        <label class="title-left-padding">ECN - {{lst.EmpCode}} | {{lst.EmpName}} (Please fill flight information)</label>
+                                                                        <span class="pull-right" ng-if="$index != 0"><input type="checkbox" ng-model="FlightDetails[$index].Issamedetail" ng-click="FillDetailsAsAbove(FlightDetails,$index,'flight');" /> <label style="font-weight: 700;">Is same flight details as above</label></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="eachdetailsBorder">
+                                                                <div class="row" style="margin-left:5px;margin-right:5px">
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                            <div>
+                                                                                <label>From<span class="madatoryImg">*</span></label>
+                                                                                <input type="text" ng-if="FlightDetails[$index].Issamedetail" name="noRoundFrom" ng-model="lst.OriginPlace" placeholder="Source Station" autocomplete="off" class="form-control input-sm" required>
+                                                                                <select id="select-from{{$index}}"  ng-if="!FlightDetails[$index].Issamedetail" class="FlightSelectize" ng-required="true" ng-cloak ng-model="lst.OriginPlace" placeholder="Source Station"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                            <div>
+                                                                                <label>To<span class="madatoryImg">*</span></label>
+                                                                                <select id="select-to{{$index}}" ng-if="!FlightDetails[$index].Issamedetail" ng-required="true" ng-cloak ng-model="lst.DestinationPlace" placeholder="Destination Station"></select>
+                                                                                <input type="text"  ng-if="FlightDetails[$index].Issamedetail" name="noRoundFrom" ng-model="lst.DestinationPlace" placeholder="Destination Station" autocomplete="off" class="form-control input-sm" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group" ng-class="{ 'has-error' : !lst.DepartureDate && submitFlightInfo }">
+                                                                            <div>
+                                                                                <label>Departure Date<span class="madatoryImg">*</span></label>
+                                                                                <input type="text" name="noRoundDepDate" datepicker readonly ng-model="lst.DepartureDate" placeholder="Departure Date" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        
+                                                                        <div class="col-sm-6">
+                                                                          <div class="form-group" ng-class="{ 'has-error' : !lst.DepartureTime && submitFlightInfo }">
+                                                                                <div>
+                                                                                    <label>Flight From<span class="madatoryImg">*</span></label>
+                                                                                    <input name="checkInTime" id="checkindatecity1" type="text" ng-model="lst.DepartureT1" placeholder="Check-In Time" autocomplete="off" class="form-control input-sm input-equal-height-hotel timepicker  ng-valid hasWickedpicker ng-dirty" onkeypress="return false;" aria-showingpicker="true" tabindex="-1">
+                                                                                </div>
+                                                                            </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="form-group" ng-class="{ 'has-error' : !lst.DepartureTime && submitFlightInfo }">
+                                                                                    <div ng-if="selectedType  != 'Roistering(Flight ops / In Flight)'">
+                                                                                        <label>Flight To<span class="madatoryImg">*</span></label>
+                                                                                        <input name="checkOutTime" type="text" ng-model="lst.DepartureT2" placeholder="Check-Out Time" autocomplete="off" class="form-control input-sm input-equal-height-hotel timepicker ng-valid hasWickedpicker ng-dirty" onkeypress="return false;" aria-showingpicker="true" tabindex="-1">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    
+                                                                </div>
+                                                                <div class="row" style="margin-left:5px;margin-right:5px">
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group" @*ng-class="{ 'has-error' : !lst.AirCraftName && submitFlightInfo }"*@>
+                                                                            <div>
+                                                                                <label>Airline Name</label>
+                                                                                <input type="text" name="noRoundAircraftName" ng-model="lst.AirCraftName" placeholder="Airline Name" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip"  />
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group" @*ng-class="{ 'has-error' : !lst.FlightNumber && submitFlightInfo }" *@>
+                                                                            <div>
+                                                                                <label> Flight No.</label>
+                                                                                <input type="text" name="noRoundFlightNo" ng-model="lst.FlightNumber" placeholder="Flight No" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" />
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group" ng-class="{ 'has-error' : !lst.ReasonForTravel && submitFlightInfo }">
+                                                                            <div>
+                                                                                <label>Reason Of Traveling<span class="madatoryImg">*</span></label>
+                                                                                <input name="noRoundReaosn" ng-model="lst.ReasonForTravel" placeholder="Reason for travelling" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" required />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="eachdetailsBorder multidivider-strip" ng-if="fltType=='Multi Trip'" ng-repeat="multlst in lst.multicity">
+                                                                <div class="row" style="margin-left:5px;margin-right:5px; margin-top:10px;">
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                            <div>
+                                                                                <label>From<span class="madatoryImg">*</span></label>
+                                                                                <input type="text" ng-if="lst.Issamedetail" name="noRoundFrom" ng-model="multlst.OriginPlace" placeholder="Source Station" autocomplete="off" class="form-control input-sm" required>
+                                                                                <select id="select-multfrom{{$parent.$parent.$parent.$index}}{{$index}}" ng-if="!lst.Issamedetail" class="" ng-required="true" ng-cloak ng-model="multlst.OriginPlace" placeholder="Source Station"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                            <div>
+                                                                                <label>To<span class="madatoryImg">*</span></label>
+                                                                                <input type="text" ng-if="lst.Issamedetail" name="noRoundFrom" ng-model="multlst.DestinationPlace" placeholder="Source Station" autocomplete="off" class="form-control input-sm" required>
+                                                                                <select id="select-multto{{$parent.$parent.$parent.$index}}{{$index}}" ng-if="!lst.Issamedetail" name="noRoundTo" ng-required="true" ng-cloak ng-model="multlst.DestinationPlace" placeholder="Source Station" class=""></select>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group" ng-class="{ 'has-error' : !multlst.DepartureDate&& submitFlightInfo }">
+                                                                            <div>
+                                                                                <label>Departure Date<span class="madatoryImg">*</span></label>
+                                                                                <input type="text" name="noRoundDepDatemult" datepicker readonly ng-model="multlst.DepartureDate" placeholder="Departure Date" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" ng-required="true">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group" ng-class="{ 'has-error' : !multlst.DepartureTime && submitFlightInfo }">
+                                                                                <div>
+                                                                                    <label>Flight From<span class="madatoryImg">*</span></label>
+                                                                                    <input name="checkInTime" id="checkindatecity2" type="text" ng-model="multlst.DepartureT1" placeholder="Check-In Time" autocomplete="off" class="form-control input-sm input-equal-height-hotel timepickermult">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group" ng-class="{ 'has-error' : !multlst.DepartureTime && submitFlightInfo }">
+                                                                                <div ng-if="selectedType  != 'Roistering(Flight ops / In Flight)'">
+                                                                                    <label>Flight To<span class="madatoryImg">*</span></label>
+                                                                                    <input name="checkOutTime" type="text" ng-model="multlst.DepartureT2" placeholder="Check-Out Time" autocomplete="off" class="form-control input-sm input-equal-height-hotel timepickermult">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="row" style="margin-left:5px;margin-right:5px">
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group" @*ng-class="{ 'has-error' : !multlst.AirCraftName && submitFlightInfo }"*@>
+                                                                            <div>
+                                                                                <label>Airline Name</label>
+                                                                                <input type="text" name="noRoundAircraftNamemult" ng-model="multlst.AirCraftName" placeholder="Airline Name" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip"  />
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group" @*ng-class="{ 'has-error' : !multlst.FlightNumber && submitFlightInfo }" *@>
+                                                                            <div>
+                                                                                <label> Flight No.</label>
+                                                                                <input type="text" name="noRoundFlightNomult" ng-model="multlst.FlightNumber" placeholder="Flight No" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" />
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group" ng-class="{ 'has-error' : !multlst.ReasonForTravel && submitFlightInfo }">
+                                                                            <div>
+                                                                                <label>Reason Of Traveling<span class="madatoryImg">*</span></label>
+                                                                                <input name="noRoundReaosnmult" ng-model="multlst.ReasonForTravel" placeholder="Reason for travelling" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" required />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div ng-show="fltType=='Multi Trip'">
+                                                                <div style="text-align:left; margin-top:0px;margin-left:15px;margin-bottom:10px ;">
+                                                                    <a href="#" ng-click="addnewDiv($index,'flight')" id="addButtonnew"><img src="../img/button.png" style="height:20px;" /></a>
+                                                                    <a href="#" id="removeButton" ng-click="removeDiv($index,'flight')"><img src="../img/remove.png" style="height:20px;" /></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*---------------------------------------------------------------- End of One way and multiple  Details --------------------------------------------*@
+                                        @*---------------------------------------------------------------- Round Trip Details --------------------------------------------*@
+                                        <div ng-if="fltType=='Round Trip'">
+                                            <div class="tab-border">
+                                                <div class="row" ng-repeat="lst in FlightDetails  track by $index">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="flight-info-title ">
+                                                                    <label class="title-left-padding">ECN - {{lst.EmpCode}} | {{lst.EmpName}} (Please fill flight information)</label>
+                                                                    <span class="pull-right" ng-if="$index != 0"><input type="checkbox" ng-model="FlightDetails[$index].Issamedetail" ng-click="FillDetailsAsAbove(FlightDetails,$index,'flight');" /> <label style="font-weight: 700;">Is same flight details as above</label></span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="eachdetailsBorder">
+                                                            <div class="row" style="margin-left:5px;margin-right:5px">
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <div>
+                                                                            <label>From<span class="madatoryImg">*</span></label>
+                                                                            <select id="select-returnfrom{{$index}}" ng-if="!FlightDetails[$index].Issamedetail" ng-required="true" ng-cloak ng-model="lst.OriginPlace" placeholder="Destination Station"></select>
+                                                                            <input type="text" ng-if="FlightDetails[$index].Issamedetail" name="noRoundFrom" ng-model="lst.OriginPlace" placeholder="Source Station" autocomplete="off" class="form-control input-sm" required>
+                                                                            @*<input type="text" name="noRoundFrom" ng-model="lst.OriginPlace" placeholder="Source Station" autocomplete="off" class="form-control input-sm" required>*@
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <div>
+                                                                            <label>To<span class="madatoryImg">*</span></label>
+                                                                            <select id="select-returnto{{$index}}" ng-required="true" ng-if="!FlightDetails[$index].Issamedetail" ng-cloak ng-model="lst.DestinationPlace" placeholder="Destination Station"></select>
+                                                                            <input type="text" ng-if="FlightDetails[$index].Issamedetail" name="noRoundFrom" ng-model="lst.DestinationPlace" placeholder="Destination Station" autocomplete="off" class="form-control input-sm" required>
+                                                                            @*<input name="To" type="text" ng-model="lst.DestinationPlace" placeholder="Destination station" autocomplete="off" class="form-control input-sm " required>*@
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group" ng-class="{ 'has-error' : !lst.DepartureDate && submitFlightInfo }">
+                                                                        <div>
+                                                                            <label>Departure Date<span class="madatoryImg">*</span></label>
+                                                                            <input name="roundDepartureDate" type="text" datepicker readonly ng-model="lst.DepartureDate" placeholder="Departure Date" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" required>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group input-equal-height" ng-class="{ 'has-error' : !lst.returnDepartureDate && submitFlightInfo }">
+                                                                        <div>
+                                                                            <label>Return Date<span class="madatoryImg">*</span></label>
+                                                                            <input name="roundreturnTime{{$index}}" type="text" datepicker readonly ng-model="lst.returnDepartureDate" min-date="lst.DepartureDate" placeholder="Departure Time" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" required>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group input-equal-height" ng-class="{ 'has-error' : !lst.ReasonForTravel && submitFlightInfo }">
+                                                                        <div>
+                                                                            <label>Reason Of Travelling<span class="madatoryImg">*</span></label>
+                                                                            <input name="roundreasonOftrv" type="text" ng-model="lst.ReasonForTravel" placeholder="Reason for Travelling" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" required>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="margin-left:5px;margin-right:5px">
+                                                                
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <div>
+                                                                            <label> Departure AirlineName</label>
+                                                                            <input name="roundDepartureAircraftName" type="text" ng-model="lst.AirCraftName" placeholder="Airline Name" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" >
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <div>
+                                                                            <label>Departure FlightNo.</label>
+                                                                            <input name="returnDepartureFlightNo" type="text" ng-model="lst.FlightNumber" placeholder="Flight No" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group" ng-class="{ 'has-error' : !lst.DepartureTime && submitFlightInfo }">
+                                                                            <div>
+                                                                                <label>Depature From<span class="madatoryImg">*</span></label>
+                                                                                <input name="DepartureTimeFrom" id="checkindatecity3" type="text" ng-model="lst.DepartureT1" placeholder="Check-In Time" autocomplete="off" class="form-control input-sm input-equal-height-hotel timepicker">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group" ng-class="{ 'has-error' : !lst.DepartureTime && submitFlightInfo }">
+                                                                            <div ng-if="selectedType  != 'Roistering(Flight ops / In Flight)'">
+                                                                                <label>Depature To<span class="madatoryImg">*</span></label>
+                                                                                <input name="DepartureTimeTo" type="text" ng-model="lst.DepartureT2" placeholder="Check-In Time" autocomplete="off" class="form-control input-sm input-equal-height-hotel timepicker">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group" @*ng-class="{ 'has-error' : !lst.returnAircraftName && submitFlightInfo }" *@>
+                                                                        <div>
+                                                                            <label>Return AirlineName</label>
+                                                                            <input name="returnAircraftName" type="text" ng-model="lst.returnAircraftName" placeholder="Airline Name" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group" @*ng-class="{ 'has-error' : !lst.returnFlightNo && submitFlightInfo }" *@>
+                                                                        <div>
+                                                                            <label>Return FlightNo.</label>
+                                                                            <input type="text" name="returnFlightNo" placeholder="Flight No." ng-model="lst.returnFlightNo" autocomplete="off" class="form-control input-sm input-equal-height-roundtrip" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group" ng-class="{ 'has-error' : !lst.returnDepartureTime && submitFlightInfo }">
+                                                                            <div>
+                                                                                <label>Return From<span class="madatoryImg">*</span></label>
+                                                                                <input name="ReturnTimeFrom" id="checkindatecity4" type="text" ng-model="lst.ReturnT1" placeholder="Check-In Time" autocomplete="off" class="form-control input-sm input-equal-height roundtimepicker">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group" ng-class="{ 'has-error' : !lst.returnDepartureTime && submitFlightInfo }">
+                                                                            <div ng-if="selectedType  != 'Roistering(Flight ops / In Flight)'">
+                                                                                <label>Return To<span class="madatoryImg">*</span></label>
+                                                                                <input name="ReturnTimeTo" type="text" ng-model="lst.ReturnT2" placeholder="Check-In Time" autocomplete="off" class="form-control input-sm input-equal-height roundtimepicker">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                           
+                                                                
+                                                                
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*----------------------------------------------------------------End of Round Trip Details --------------------------------------------*@
+                                    </div>
+
+                                </form>
+                            </div>
+                            @*----------------------------------------------------------------  End of Flight Details --------------------------------------------*@
+                            @*------------------------------------------------ Hotel Details ------------------------------------------------*@
+                            <div class="tab-pane fade" id="tab_default_3">
+                                <form name="HotelDetailsForm" id="Hotel_form">
+                                    <div class="tab-border">
+                                        <div class="row" ng-repeat="lst in HotelDetails track by $index" ng-form="HotelDetailsForm">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="flight-info-title ">
+                                                            <label class="title-left-padding">ECN -{{lst.EmpCode}}|{{lst.EmpName}}(Please fill flight information)</label>
+
+                                                            <span class="pull-right" ng-if="$index != 0"><input type="checkbox" ng-model="HotelDetails[$index].Issamedetail" ng-click="FillDetailsAsAbove(HotelDetails,$index,'hotel');" /> <label style="font-weight: 700;">Is same flight details as above</label></span>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="eachdetailsBorder">
+                                                    <div class="row" style="margin-left:5px;margin-right:5px">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : !lst.city && submitHotelInfo}">
+                                                                <div>
+                                                                    <label>City<span class="madatoryImg">*</span></label>
+                                                                    <select id="select-hotel{{$index}}" class="" ng-if="lst.multycityList.length == 0 && !lst.city" placeholder="City" ng-required="true" ng-cloak ng-model="lst.city"></select>
+                                                                    <input ng-if="lst.multycityList.length == 0 && lst.city" name="city" type="text" placeholder="City" autocomplete="off" ng-model="lst.city" ng-disabled="lst.city" class="form-control input-sm input-equal-height-roundtrip" required>
+                                                                    <select ng-if="lst.multycityList.length != 0" class="form-control input-sm" ng-model="lst.city" ng-change="selectdate(lst.city,$index)" name="city" >
+                                                                        <option ng-repeat="x in HotelDetails[$index].multycityList" value="{{x.DestinationPlace}}">{{x.DestinationPlace}} </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : !lst.checkinDate && submitHotelInfo}">
+                                                                <div>
+                                                                    <label>Check-In Date<span class="madatoryImg">*</span></label>
+                                                                    <input name="checkinDate" ng-if="ISflight && fltType == 'Round Trip'" datepicker readonly type="text" value="" ng-model="lst.checkinDate" min-date="lst.checkinDate" max-date="lst.checkoutDate" placeholder="Check-In Date" autocomplete="off" class="form-control input-sm input-equal-height-hotel" required>
+                                                                    <input name="checkinDate" ng-if="ISflight && fltType != 'Round Trip'" datepicker readonly type="text" value="" ng-model="lst.checkinDate" min-date="lst.checkinDate" placeholder="Check-In Date" autocomplete="off" class="form-control input-sm input-equal-height-hotel" required>
+                                                                    <input name="checkinDate" ng-if="!ISflight" datepicker readonly type="text" value="" ng-model="lst.checkinDate" @*min-date="lst.checkinDate"*@ placeholder="Check-In Date" autocomplete="off" class="form-control input-sm input-equal-height-hotel" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : !lst.checkoutDate && submitHotelInfo}">
+                                                                <div>
+                                                                    <label>Check-Out Date<span class="madatoryImg">*</span></label>
+                                                                    <input name="checkoutDate" ng-if="fltType != 'Round Trip'" datepicker readonly type="text" ng-model="lst.checkoutDate" min-date="lst.checkinDate" max-date="lst.checkinDate" placeholder="Check-Out Date" autocomplete="off" class="form-control input-sm input-equal-height-hotel" required>
+                                                                    <input name="checkoutDate" ng-if="fltType == 'Round Trip'" datepicker readonly type="text" ng-model="lst.checkoutDate" min-date="lst.checkinDate" max-date="lst.checkoutDate" placeholder="Check-Out Date" autocomplete="off" class="form-control input-sm input-equal-height-hotel" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div> 
+                                                                    <label>Transport Required<span class="madatoryImg">*</span></label>
+                                                                    <select class="form-control input-sm input-equal-height-hotel" name="isTransportRequired" ng-model="lst.isTransportRequired" placeholder="Please Select">
+                                                                        <option ng-selected="true">Yes</option>
+                                                                        <option>No</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-left:5px;margin-right:5px">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div>
+                                                                    <label>Check-In Time<span class="madatoryImg">*</span></label>
+                                                                    <input name="checkInTime" id="checkindatecity1" type="text" ng-model="lst.checkInTime" placeholder="Check-In Time" autocomplete="off" class="form-control input-sm input-equal-height-hotel timepicker ">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div>
+                                                                    <label>Check-Out Time<span class="madatoryImg">*</span></label>
+                                                                    <input name="checkOutTime" type="text" ng-model="lst.checkOutTime" placeholder="Check-Out Time" autocomplete="off" class="form-control input-sm input-equal-height-hotel timepicker">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label>Entitlement<span class="madatoryImg">*</span></label>
+                                                                <select class="form-control  input-sm input-equal-height-hotel" name="Entitlement" ng-model="lst.Entitlement" placeholder="Please select">
+                                                                    <option ng-selected="true">Single</option>
+                                                                    <option>Double</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : !lst.reasonOfHotel && submitHotelInfo}">
+                                                                <div>
+                                                                    <label>Reason for Booking<span class="madatoryImg">*</span></label>
+                                                                    <input name="reasonOfHotel" type="text" placeholder="Reason for Booking" ng-model="lst.reasonOfHotel" a autocomplete="off" class="form-control input-sm input-equal-height-hotel" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eachdetailsBorder multidivider-strip" ng-if="lst.multycityList.length != 0" ng-repeat="multlst in lst.multicity">
+
+                                                    <div class="row" style="margin-left:5px;margin-right:5px">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : HotelDetailsForm.citymult.$invalid && submitHotelInfo}">
+                                                                <div>
+                                                                    <label>City<span class="madatoryImg">*</span></label>
+                                                                    <select class="form-control input-sm input-equal-height-hotel" ng-model="multlst.city" name="citymult">
+                                                                        <option ng-repeat="x in HotelDetails[$parent.$parent.$index].multycityList" value="{{x.DestinationPlace}}">{{x.DestinationPlace}} </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : !multlst.checkinDate && submitHotelInfo}">
+                                                                <div>
+                                                                    <label>Check-In Date<span class="madatoryImg">*</span></label>
+                                                                    <input name="checkinDatemult" datepicker readonly type="text" value="" ng-model="multlst.checkinDate" placeholder="Check-In Date" autocomplete="off" class="form-control input-sm input-equal-height-hotel" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : !multlst.checkoutDate && submitHotelInfo}">
+                                                                <div>
+                                                                    <label>Check-Out Date<span class="madatoryImg">*</span></label>
+                                                                    <input name="checkoutDatemult" datepicker readonly type="text" ng-model="multlst.checkoutDate"  min-date="multlst.checkinDate" max-date="multlst.checkinDate" placeholder="Check-Out Date" autocomplete="off" class="form-control input-sm input-equal-height-hotel" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div>
+                                                                    <label>Transport Required<span class="madatoryImg">*</span></label>
+                                                                    <select class="form-control input-sm input-equal-height-hotel" name="isTransportRequired" ng-model="multlst.isTransportRequired" placeholder="Please Select">
+                                                                        <option ng-selected="true">Yes</option>
+                                                                        <option>No</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-left:5px;margin-right:5px">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div>
+                                                                    <label>Check-In Time<span class="madatoryImg">*</span></label>
+                                                                    <input name="checkInTime" type="text" ng-model="multlst.checkInTime" placeholder="Check-In Time" autocomplete="off" class="form-control input-sm input-equal-height-hotel timepickermult">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div>
+                                                                    <label>Check-Out Time<span class="madatoryImg">*</span></label>
+                                                                    <input name="checkOutTime" type="text" ng-model="multlst.checkOutTime" placeholder="Check-Out Time" autocomplete="off" class="form-control input-sm input-equal-height-hotel timepickermult">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label>Entitlement<span class="madatoryImg">*</span></label>
+                                                                <select class="form-control  input-sm input-equal-height-hotel" name="Entitlementmult" ng-model="multlst.Entitlement" placeholder="Please select">
+                                                                    <option ng-selected="true">Single</option>
+                                                                    <option>Double</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group" ng-class="{'has-error' : !multlst.reasonOfHotel && submitHotelInfo}">
+                                                                <div>
+                                                                    <label>Reason for Booking<span class="madatoryImg">*</span></label>
+                                                                    <input name="reasonOfHotelmult" type="text" placeholder="Reason for Booking" ng-model="multlst.reasonOfHotel" autocomplete="off" class="form-control input-sm input-equal-height-hotel " required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="lst.multycityList.length != 0">
+                                                    <div style="text-align:left; margin-top:0px;margin-left:15px;margin-bottom:10px ;">
+                                                        <a href="#" ng-click="addnewDiv($index,'hotel')"><img src="../img/button.png" style="height:20px;" /></a>
+                                                        <a href="#" ng-click="removeDiv($index,'hotel')"><img src="../img/remove.png" style="height:20px;" /></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                        @*------------------------------------------------End of  Hotel Details ------------------------------------------------*@
+                    </div>
+
+                    @*------------------------------------------------All submit button controls Details ------------------------------------------------*@
+                    <div style="margin-top:20px; margin-bottom:20px; text-align:center;">
+                        <div class="mob_btn_bttom">
+                            @*<input type="submit"  value="Continue >>" class="mob_Nstru_ContinueBtn btn btn-danger" form="self_personalForm" ng-click="SelfPersonalInfo(empDetails)" />*@
+                            <input type="submit" ng-if="personalTab" value="Continue >>" class="mob_Nstru_ContinueBtn btn btn-danger" form="form_id" ng-click="OtherPassangerDetails(PassengerDetails);" />
+                            <input type="submit" ng-if="FlightAndHotel" value="Go For Next Tab >>" class="mob_Nstru_ContinueBtn btn btn-danger" id="lnkContinue1" form="flight_form" ng-click="flightDetails(FlightDetails)" />
+                            <input type="submit" ng-if="Flighttab" value="Submit" class="mob_Nstru_ContinueBtn btn btn-danger" id="lnkContinue1" form="flight_form" ng-click="SubmitAllDetails(FlightDetails)" />
+                            <input type="submit" ng-if="HotelTab" value="Submit" class="mob_Nstru_ContinueBtn btn btn-danger" id="lnkContinue1" form="Hotelotel_form" ng-click="SubmitAllDetails(HotelDetails)" />
+                            <a class="mob_Nstru_RefreshBtn btn btn-danger" href="#" id="lnkRefresh" onclick="location.reload();" style="padding:5px 30px"> Refresh</a>
+                        </div>
+                    </div>
+                    @*------------------------------------------------ End ofAll submit button controls Details ------------------------------------------------*@
+
+                </div>
+            </div>
+
+            <div class="gap"></div>
+        </section>
+    </div>
+    <!-- --------------------Loader--------------------------------------------------->
+    <div class="loader">
+        <center>
+            <span class="loading-image" id="loaderMsg" style="font-weight:bold;font-size:22px;color:#ff0000;"></span>
+            <img class="loading-image" src="../images/loading.gif" alt="loading.."><br />
+        </center>
+    </div>
+
+
+
+    <div id="mob_footer_panel" class="mob_NStru_mainDv" style="display: block;">
+        <div class="mob_NStru_left_part"></div>
+        <div class="mob_NStru_right_part"></div>
+    </div>
+    <!-- --------------------End of Loader----------------------------------------->
+</body>
+
+</html>

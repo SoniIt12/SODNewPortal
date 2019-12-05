@@ -1,0 +1,1908 @@
+﻿/*================== OAT CSS==============*/
+#oat-container-section label{ font-size:16px; font-weight:normal;}
+#oat-container-section .input-sm{ height:35px !important; font-size:14px;}
+#oat-container-section .input-counter {
+    height: 35px !important;
+    font-size: 14px;
+    border-radius:0px;
+    text-align:center;
+}
+#oat-container-section .counter-left {border-radius:0px !important;}
+.oat-control-input input {
+    height: 35px !important;
+}
+.oat-control-input select {
+    height: 35px !important;
+}
+#oat-tabs-panel-bg .tab-content > .active, .pill-content > .active {
+    background-color: #fff !important;
+    border:solid 1px #e4e4e4;
+}
+#oat-tabs-panel-bg label{ font-weight:normal;}
+#oat-tabs-panel-bg .hreq_label{ font-weight:700; position:relative; top:4px;}
+.personal-check-bg {
+    margin: 2px 10px 10px 10px;
+    background-color: #e4e4e4;
+    padding: 5px 5px;
+}
+.flight-info-title{ background-color:#e4e4e4; padding:5px; margin-bottom:15px;}
+.title-left-padding{ padding-left:15px; font-weight:bold !important;}
+/*.input-equal-height input {
+    height: 35px;
+    font-size: 14px;
+}
+.input-equal-height select {
+    height: 35px;
+    font-size: 14px;
+}*/
+.input-equal-height-roundtrip{ height:35px !important;}
+.chkbx-arrange{ position:relative; top:5px;}
+.input-equal-height-hotel {
+    height: 35px !important;
+}
+.multidivider-strip {
+    border-top: solid 2px #e4e4e4;
+    /*box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 3px 0px 0 rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);*/
+}
+.oat-booking-header-tbl th{ background-color:#e4e4e4;}
+.oat-booking-header-tbl2 th {
+    background-color: #999;
+    color:#fff;
+}
+
+/*.oat-booking-header-tbl tr{background-color:#fff;}*/
+/*  Define the background color for all the ODD background rows  */
+.oat-booking-header-tbl tr:nth-child(odd) {
+    background: #fff!important;
+}
+.main-tbl-bg .table-striped > tbody > tr:nth-child(odd) > td {
+    background-color: #fff !important;
+    padding:10px;
+  
+}
+/*  Define the background color for all the EVEN background rows  */
+.oat-booking-header-tbl tr:nth-child(even) {
+    background: #e4e4e4;
+}
+.oat-booking-header-tbl2 tr:nth-child(odd) {
+    background: #fff !important;
+}
+/*  Define the background color for all the EVEN background rows  */
+.oat-booking-header-tbl2 tr:nth-child(even) {
+    background: #F7F7F7;
+}
+.oat-booking-header-tbl .txtuppercase {
+    text-transform: uppercase;
+}
+.innertbl-margin{margin-bottom:0px!important;}
+.color-plus {
+    color: #FF9900;
+}
+.color-minus {
+    color: #000;
+}
+.oat-search-control input{ height:35px!important;}
+.btnalign-center{ text-align:center;}
+
+.mrgntopminus{ margin-top:-20px;}
+.psngInfo-title{ font-size:18px; padding-bottom:5px; font-weight:bold;}
+.uplfileOpt {
+    width: auto;
+    cursor: pointer;
+    font-size: 12px;
+    display: inline;
+    padding: 6px 30px;
+    line-height: 30px;
+}
+.optfileuplod label{ margin-left:0px!important; font-size:14px!important;}
+.uploadbtnStyle {
+    background-color: #f99f24;
+    color: white;
+    border-radius: 7px;
+  
+}
+.oatmargintop10{ margin-top:10px;}
+.red-color {
+    color: #cd050b;
+}
+/*==================END OAT CSS==============*/
+.booking-status-option {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+#tblbookinginfo .bkinfohead th {
+    background-color: #e4e4e4;
+}
+.paddingbottom05{ padding-bottom:5px;}
+.dwnld-excel-format {
+    height: 26px;
+    width: 22px;
+    position: absolute;
+    left: 77px;
+    top: 26px;
+}
+.submit-hotel-btn-mob {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    text-align: center
+}
+.popuphdtxt{ text-align:left;}
+#bbselect img{ width:75%;}
+.bulk-title{font-size:20px; color:#fff; padding-top:15px;}
+.numb-passenger-box {
+    width: 35px;
+    color: #000;
+    padding-left: 5px;
+}
+.txt-center{text-align:center;}
+
+.plus-icon-add {
+    font-size: 10px;
+    position: relative;
+    top: -20px;
+    left: -12px;
+    color: #b33;
+}
+
+#txtadateD a {
+    font-weight: bold;
+    color: #4800ff
+}
+
+/*----------------------- 14 feb 2019--------------*/
+.textalign {
+    text-align: left
+}
+#logomain img{ width:70%}
+.detailsflight_border{width:100%; border:solid 1px #e4e4e4; margin-top:10px; margin-bottom:20px; padding:10px;}
+.margintopleft_checkbx{position:relative;left:3px; top:2px;}
+.txtfiltered{ padding-top:25px; font-size:11px;}
+ .Mbxcs_new td{ border:solid 1px #b33; padding-left:10px;padding-right:10PX; line-height:30px;padding-bottom:5px;}
+ .Mbxcs_new td select{border-radius: 0;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);color: #666;font-size: 12px;height: 25px;padding: 1px 3px 4px 8px;text-indent: 0px;border: solid 1px #e0e0e0;}
+ .content_inner_box_topborder {
+    border: solid 1px #f5f5f5;
+    margin-top: 0px;
+    padding: 10px;
+    border-top: solid 3px #c2c2c2;
+    border-radius: 3px;
+    display:table;
+}
+.content_inner_box_topborder_fixed {
+    padding-left:2.5%;
+    padding-right:2.5%;
+   
+    /*width:95%;
+    margin-left:2.5%;*/
+}
+ .newmdpop .newmodelpopwidth70{width:70%;}
+ .headertxt_whitecolortxt{color:#fff;font-size: 20px;}
+ #tbldetail .tblheaderbg th{ background-color:#e4e4e4;}
+ .tblsodlinkhiglight a{ color:#428bca}
+ .sts .tooltip1{border:solid 1px transparent}
+ .alltblheader #tblheaderbg th{background-color:#e4e4e4;}
+ .alignleft{text-align:left;}
+ .viewpasttravel_history{overflow:auto; height:400px;}
+ .newmdpop .commentpopup{ width: 35%;position: absolute;left: 64%;top: 15%;}
+ .extratextcontrol_height{ width:100%; height:34px; border:solid 1px #c2c2c2;border-radius:3px; padding-left:10px;}
+ .margintop10{ margin-top:10px;}
+ .margintop20{ margin-top:20px;}
+ .lineheight35{line-height:25px;}
+ .citycodedisplay{width:100%; height:300px;}
+ .editbtn_small {
+    padding: 2px 8px 1px 8px;
+    background-color: #FF9900;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    margin-right: 3px;
+    font-size: 12px;
+    border: 0px;
+}
+ .canReq_small{padding: 3px 2px 3px 2px;
+    background-color: #d9534f;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    margin-right: 3px;
+    font-size: 11px;
+    border: 0px;
+    line-height: 12px;width:70px;}
+   #tblbookinginfo .small_header_txt th{font-size:11px;}
+    #tblbookinginfo .small_header_txt td{font-size:11px;}
+#tblbookinginfo .small_header_txt2 th {
+    font-size: 12px;
+}
+
+#tblbookinginfo .small_header_txt2 td {
+    font-size: 12px;
+}
+
+    .form-control-custom-small {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 3px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+ .margintop05{margin-top:7px;}
+#tblviewFlight .headerpart_bg th {
+    background-color: #e4e4e4
+}
+#tblviewPassInfo .headerpart_bg th {
+    background-color: #e4e4e4;
+}
+#tblbookinginfo .headerpart_bg th {
+    background-color: #e4e4e4;
+}
+#maindiv .headerpart_bg th {
+    background-color: #e4e4e4;
+}
+.displaytable{width:100%; display:table;}
+.marginall{margin:2px;}
+.sjscheadertxt{font-size:16px;}
+.shadowboxCs{ box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
+    border: 1px solid transparent;}
+ .moblineheight{padding:10px;line-height:30px;}
+ .formatexcelTxt{color: #ec1c24;font-size: 16px; padding-top:5px;}
+ .fileuploadClt{ width:90%;}
+ .fileupldCss .well-sm {
+    padding: 5px;
+    border-radius: 3px;
+}
+ .fileupldCss .well{margin-bottom: 5px;}
+ .privateFare{ text-align:center;font-size:18px; padding-top:5px;}
+ .bulkBooking_box_topborder {
+    border: solid 1px #f5f5f5;
+    margin-top: 0px;
+    padding: 7px 3px;
+    border-top: solid 3px #c2c2c2;
+    border-radius: 3px;
+    display: table;
+}
+  #tblUploaddata .bkheader td{ background-color:#e4e4e4;color:#000;font-size: 13px;
+    padding: 2px;}
+.repectapprove_section {
+    margin-top: 0px;
+    border-top: solid 1px #e4e4e4;
+    border-bottom: solid 1px #e4e4e4;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    background-color: #f5f5f5;
+    width: 95%;
+    margin-left: 3.5%;
+}
+/*------------------------ End------------------*/
+.dropdown li a, .sup-dropdown li a {
+    display: block;
+    color: #666;
+    font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+    padding: 8px 16px;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: padding 0.2s ease-in-out;
+    -moz-transition: padding 0.2s ease-in-out;
+    -webkit-transition: padding 0.2s ease-in-out;
+    -o-transition: padding 0.2s ease-in-out;
+}
+.txtfont_normal{font-weight:normal;}
+
+
+.multictsubmitbtn{ width:130px;margin-left:-110px;}
+.multictsubmit_romovebtn{margin-left:-50px;}
+.mention-direction-arw{margin-top:0px; margin-bottom:10px; text-align:left}
+.flightdisplayheader {
+    background-color: #ec1c24;
+    padding: 3px;
+    height: 40px;
+    margin-left: 25px;
+    margin-right: 15px;
+    text-align: left;
+    color: #fff;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+.multidynamicsection {
+    border: solid 1px #b33;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 2px 2px 6px 2px #c2c2c2;
+}
+
+.MHeader_main {
+    background-color: transparent;
+    width: 100%;
+    display: table;
+    margin-top: 5px;
+}
+
+#usrimgtop img {
+    margin-top: -10px;
+}
+
+.welcmusrtxt_right {
+    text-align: right;
+}
+
+.userpic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.hodDetailsSerch {
+    padding: 10px;
+    border: solid 1px #c2c2c2;
+    margin-top: 20px;
+    line-height: 30px;
+    border-radius: 5px;
+    display: none;
+}
+
+.header_strip th {
+    background-color: #e4e4e4;
+    color: #000;
+}
+
+.rsendmail {
+    background-color: #5aa712;
+    padding: 6px 10px 6px 10px;
+    color: #fff;
+    border-radius:20px;
+}
+
+.content_inner_box {
+    border: solid 1px #f5f5f5; /*display:table; width:100%;*/
+    margin-top: 20px;
+    padding: 10px;
+    border-top: solid 3px #c2c2c2;
+    border-radius: 3px;
+}
+
+.content_search_structure_box {
+    display: table;
+    box-shadow: 0 0px 2px 0 #c2c2c2;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+.content_search_structure_box_fixed {
+    display: table;
+    box-shadow: 0 0px 2px 0 #c2c2c2;
+    width: 95%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    margin-left:2.5%;
+}
+
+.content_header_txt {
+    background-color: #f5f5f5;
+    color: #000;
+    padding: 5px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.approveandOk {
+    padding: 4px 8px 4px 8px;
+    background-color: #5aa712;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius:20px;
+    margin-right:3px;
+}
+
+.rejectandCancel {
+    padding: 4px 8px 4px 8px;
+    background-color: #ec1c24;
+    color: #fff;
+    border-radius:20px;
+}
+.green_bookhotel_btn {
+    padding: 4px 8px 4px 8px;
+    background-color: #5aa712;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius:20px;
+    margin-right:3px;
+    font-size:11px;
+    border:0;
+}
+.green_btn_withline_height{padding: 4px 8px 4px 8px;
+    background-color: #5aa712;
+    color: #fff;
+    margin-bottom: 10px;
+    border-radius:20px;
+    margin-right:3px; line-height:30px;font-size:11px;}
+.red_reject_btn {
+    padding: 1px 8px 1px 8px;
+    background-color: #ec1c24;
+    color: #fff;
+    border-radius: 20px;
+    border-color: #ec1c24;
+    font-size: 11px;
+}
+
+.green_btn_withline_mapprove{padding: 4px 8px 4px 8px;		
+	    background-color: #ffc107;		
+	    color: #fff;		
+	    margin-bottom: 10px;		
+	    border-radius:20px;		
+	    margin-right:3px; line-height:30px;}
+
+.hoteldetails_bg_btn {
+    background-color: #FF9900;
+    padding: 4px 8px 4px 8px;
+    border-radius: 20px;
+    color: #fff;
+    line-height: 35px;
+    font-size: 11px;
+}
+.canclled_showmsg{     
+    color: #FF0000; font-weight:bold;
+    line-height: 20px;padding-left:10px;}
+.open_confirm_showmsg{     
+    color: #009900; font-weight:bold;
+    line-height: 20px;padding-left:10px;}
+
+.notifymarks {
+    text-align: right;
+    margin-top: 15px;
+}
+
+.txtnormalfont {
+    font-weight: normal;
+}
+
+.dropprofileedit {
+    display: none;
+    width: 150%;
+    font-size: 11px;
+    background-color: #b33;
+    color: #fff;
+    border: 0px;
+}
+
+.MHeader_main .dropdown-submenu > a:after {
+    border-color: transparent transparent transparent #333;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    content: " ";
+    display: block;
+    float: right;
+    height: 0;
+    margin-right: -10px;
+    margin-top: 5px;
+    width: 0;
+}
+
+.loading-image {
+    /*position: absolute;
+    top: 40%;
+    left: 50%;
+    z-index: 10;*/
+
+    z-index: 10;
+    margin: auto;
+    position: relative;
+    top: 54%;
+    margin-top: 23%;
+    width:5%;
+}
+.loading-image1 {
+    /*position: absolute;
+    top: 40%;
+    left: 50%;
+    z-index: 10;*/
+    z-index: 10;
+    margin: auto;
+    position: relative;
+    top: 54%;
+    margin-top: 23%;
+    width: 25%;
+}
+
+.loader {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0%;
+    text-align: center;
+    z-index: 99999;
+    overflow: hidden;
+    opacity: 0.7;
+    background: rgba(255,255,255,0.9);
+    /*gdfh*/
+}
+
+#usrimgtop .dropdown ul.dropdown-menu:before {
+    content: "";
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    left: 80%;
+    /* right: 16px; */
+    z-index: 10;
+}
+
+.bookingtyp {
+    width: 104%;
+    height: 40px;
+    border-radius: 3px;
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+.bookingheadr {
+    /*background-image: url('../New_images/fnal.jpg');*/
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    background-color: #ec1c24;
+    height: 75px;
+}
+
+    .bookingheadr img {
+        margin-top: 5px;
+        width: 100%;
+    }
+
+.Stru_details_heading {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #ec1c24;
+    padding-left: 10px;
+    color: #fff;
+    margin-bottom: 10px;
+    height: 35px;
+}
+
+.Stru_radio_margin {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.personaDt_btn {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.Stru_viewAll {
+    font-size: 14px;
+    float: right;
+    margin-right: 20px;
+}
+
+.Stru_radio_margin label {
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.Stru_viewAll a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.Stru_pop_header_color {
+    color: #fff;
+    font-size: 18px;
+}
+
+.searchDvPagesize_right {
+    float: right;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.MHeader_main .navbar-nav > li > a {
+    color: #fff;
+    padding: 10px 8px;
+
+}
+    .MHeader_main .navbar-nav > li > a:hover {
+        color: #000;
+    }
+/*.MHeader_main .navbar-nav > li:hover {
+    color: #000;
+    padding: 4px 4px;
+    background-color:#f5f5f5;
+
+}
+.MHeader_main .navbar-nav > li>a:hover {
+    color: #000;
+  
+
+}*/
+
+.personal_new_stru {
+    border: solid 1px #c2c2c2;
+    padding: 10px;
+    line-height: 35px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 0 #c2c2c2;
+}
+
+.welcmusrtxt {
+    text-align: right;
+    font-size: 12px;
+    color: #fff;
+}
+
+#dropsubmnn .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    background-color: #ec1c24;
+}
+
+.SodHeadingTxt {
+    font-size: 20px;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.wrapper {
+    color: #555;
+    cursor: help;
+    font-family: Arial;
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    text-transform: none;
+    z-index: 999;
+    -webkit-transform: translateZ(0);
+    -webkit-font-smoothing: antialiased;
+}
+
+    .wrapper .tooltip {
+        background: #b50128;
+        bottom: 100%;
+        color: #fff;
+        display: block;
+        left: -86px;
+        margin-bottom: 13px;
+        opacity: 0;
+        padding: 6px;
+        pointer-events: none;
+        position: absolute;
+        width: 300px;
+        -webkit-transform: translateY(10px);
+        -moz-transform: translateY(10px);
+        -ms-transform: translateY(10px);
+        -o-transform: translateY(10px);
+        transform: translateY(10px);
+        -webkit-transition: all .25s ease-out;
+        -moz-transition: all .25s ease-out;
+        -ms-transition: all .25s ease-out;
+        -o-transition: all .25s ease-out;
+        transition: all .25s ease-out;
+        -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+        -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+        -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+        -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+    }
+
+        /* This bridges the gap so you can mouse into the tooltip without it disappearing */
+        .wrapper .tooltip:before {
+            bottom: -20px;
+            content: " ";
+            display: block;
+            height: 5px;
+            left: 0;
+            position: absolute;
+            width: 100%;
+        }
+        /* CSS Triangles - see Trevor's post */
+        .wrapper .tooltip:after {
+            border-left: solid transparent 10px;
+            border-right: solid transparent 10px;
+            border-top: solid #b50128 10px;
+            bottom: -10px;
+            content: " ";
+            height: 0;
+            left: 30%;
+            margin-left: 0px;
+            position: absolute;
+            width: 0;
+        }
+
+    .wrapper:hover .tooltip {
+        opacity: 1;
+        pointer-events: auto;
+        -webkit-transform: translateY(0px);
+        -moz-transform: translateY(0px);
+        -ms-transform: translateY(0px);
+        -o-transform: translateY(0px);
+        transform: translateY(0px);
+    }
+/* IE can just show/hide with no transition */
+.lte8 .wrapper .tooltip {
+    display: none;
+}
+
+.lte8 .wrapper:hover .tooltip {
+    display: block;
+}
+
+/*-------------------END TOOLTIPS ----*/
+
+/*------------------ CHECKBOX CSS----*/ 
+
+   .bg {
+            height: 100%;
+            display: flex;
+            align-items: left;
+            justify-content: center;
+            flex-direction: column;
+            padding: 3px;
+            background-color: #f5f5f5;
+            margin-bottom:3px;
+
+        }
+
+        .span_pseudo, .chiller_cb span:before, .chiller_cb span:after {
+            content: "";
+            display: inline-block;
+            background: #fff;
+            width: 0;
+            height: 0.2rem;
+            position: absolute;
+            transform-origin: 0% 0%;
+        }
+
+        .chiller_cb {
+            position: relative;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+            .chiller_cb input {
+                display: none;
+            }
+
+                .chiller_cb input:checked ~ span {
+                    background: #fd2727;
+                    border-color: #fd2727;
+                }
+
+                    .chiller_cb input:checked ~ span:before {
+                        width: 1rem;
+                        height: 0.15rem;
+                        transition: width 0.1s;
+                        transition-delay: 0.3s;
+                    }
+
+                    .chiller_cb input:checked ~ span:after {
+                        width: 0.4rem;
+                        height: 0.15rem;
+                        transition: width 0.1s;
+                        transition-delay: 0.2s;
+                    }
+
+                .chiller_cb input:disabled ~ span {
+                    background: #ececec;
+                    border-color: #dcdcdc;
+                }
+
+                .chiller_cb input:disabled ~ label {
+                    color: #dcdcdc;
+                }
+
+                    .chiller_cb input:disabled ~ label:hover {
+                        cursor: default;
+                    }
+
+            .chiller_cb label {
+                padding-left: 2rem;
+                position: relative;
+                z-index: 2;
+                cursor: pointer;
+                margin-bottom: 0;
+            }
+
+            .chiller_cb span {
+                display: inline-block;
+                width: 1.2rem;
+                height: 1.2rem;
+                border: 2px solid #ccc;
+                position: absolute;
+                left: 0;
+                transition: all 0.2s;
+                z-index: 1;
+                box-sizing: content-box;
+            }
+
+                .chiller_cb span:before {
+                    transform: rotate(-55deg);
+                    top: 1rem;
+                    left: 0.37rem;
+                }
+
+                .chiller_cb span:after {
+                    transform: rotate(35deg);
+                    bottom: 0.35rem;
+                    left: 0.2rem;
+                }
+
+/*-------------------END Checkbox css ----*/
+
+.NStru_flight_box {
+    margin-left: 10px;
+    padding: 8px;
+    margin-bottom: 10px;
+    margin-right: 0px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    /*-moz-box-shadow: 0 4px 8px 0 rgba(239, 239, 239, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(239, 239, 239, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(239, 239, 239, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);*/
+}
+
+.NStru_flight_box_return {
+    margin-left: 10px;
+    padding: 8px;
+    margin-bottom: 10px;
+    -moz-box-shadow: 0 4px 8px 0 rgba(239, 239, 239, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(239, 239, 239, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(239, 239, 239, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+}
+
+.NStru_selectflightheadtxt {
+    font-size: 18px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    margin-left: 10px;
+}
+
+.NStru_BookingDtl_Submit {
+    width: 150px;
+    height: 35px;
+    background-color: #b33;
+    border: 0px;
+    color: #fff;
+    font-size: 16px;
+}
+
+NStru_RePlan_Submit {
+    width: 150px;
+    height: 35px;
+    background-color: #b33;
+    border: 0px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.NStru_multiSection_btn_margin {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#mob_modify_part {
+    display: none;
+}
+/*========================TABS===============*/
+@import url(https://fonts.googleapis.com/css?family=Lato:400,900,700,300);
+
+.heading4 {
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'Lato', sans-serif;
+    color: #111111;
+    margin: 0px 0px 5px 0px;
+}
+
+.heading1 {
+    font-size: 30px;
+    line-height: 20px;
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+    color: #1b2834;
+    font-weight: 900;
+}
+
+.content-quality {
+    float: left;
+    width: 193px;
+}
+
+    .content-quality p {
+        margin-left: 10px;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 17px;
+    }
+
+        .content-quality p span {
+            display: block;
+        }
+
+.tabtop li a {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    color: #1b2834;
+    border-radius: 0px;
+    margin-right: 3.008px;
+    border: 1px solid #ebebeb !important;
+}
+
+.tabtop .active a:before {
+    content: "♦";
+    position: absolute;
+    top: 18px;
+    left: 71px;
+    color: #e31837;
+    font-size: 30px;
+    z-index: 999;
+}
+
+.tabtop li a:hover {
+    color: #e31837 !important;
+    text-decoration: none;
+}
+
+.tabtop .active a:hover {
+    color: #fff !important;
+}
+
+.tabtop .active a {
+    background-color: #e31837 !important;
+    color: #FFF !important;
+}
+
+.margin-tops {
+    margin-top: 0px;
+}
+
+.tabtop li a:last-child {
+    padding: 10px 22px;
+}
+
+.thbada {
+    padding: 10px 28px !important;
+}
+
+section p {
+    font-family: 'Lato', sans-serif;
+}
+
+.margin-tops4 {
+    margin-top: 20px;
+}
+
+.tabsetting {
+    border-top: 5px solid #ebebeb;
+    padding-top: 6px;
+}
+
+.services {
+    background-color: #d4d4d4;
+    min-height: 710px;
+    padding: 65px 0 27px 0;
+}
+
+    .services a:hover {
+        color: #000;
+    }
+
+    .services h1 {
+        margin-top: 0px !important;
+    }
+
+.heading-container p {
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+    font-size: 16px !important;
+    text-transform: uppercase;
+}
+
+.home-content-top .tab-content > .active, .pill-content > .active {
+    border: solid 1px #f5f5f5;
+    display: table;
+    padding-top: 20px;
+    width: 100%;
+    background-color: #f5f5f5;
+    -webkit-box-shadow: 0 8px 6px -6px grey;
+    -moz-box-shadow: 0 8px 6px -6px gray;
+    box-shadow: 0 8px 6px -6px grey;
+}
+
+.home-content-top .nav-tabs {
+    border-bottom: solid 1px transparent;
+}
+
+.home-content-top .tab-content {
+    border: 0px solid #b33;
+    border-top: none;
+    padding: 0px 0px;
+    background: -moz-linear-gradient(#ec1c24, #FFC83F);
+    position: relative;
+    z-index: 50;
+    top: -14px;
+}
+
+.home-content-top .nav-tabs > li > a {
+    background: #f5f5f5;
+    color: #333;
+    font-size: 16px;
+    border: 1px solid transparent;
+    border-bottom: none;
+    box-shadow: 0 0 19px rgba(0,0,0,0.09) inset;
+    -o-box-shadow: 0 0 19px rgba(0,0,0,0.09) inset;
+    -moz-box-shadow: 0 0 19px rgba(0,0,0,0.09) inset;
+    -webkit-box-shadow: -3px 5px 25px rgba(0,0,0,0.15) inset;
+    /* -webkit-box-shadow: 0 0 19px rgba(0,0,0,0.09) inset; */
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+     cursor:pointer !important;
+}
+
+
+.New_tmp_lyer {
+    background-color:#f5f5f5;  
+}
+
+.flighticon_destination {
+    position: absolute;
+    z-index: 999;
+    background: url('../New_images/icon/flight_depart.png');
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 34px;
+    /*background-color: green;*/
+    top: 9%;
+    right: 8%;
+}
+
+.flighticon_origin {
+    position: absolute;
+    z-index: 999;
+    background: url('../New_images/icon/flight_return.png');
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 34px;
+    top: 9%;
+    right: 8%;
+}
+
+.calender_common_all {
+    position: absolute;
+    z-index: 999;
+    background: url('../New_images/icon/nt_calender.png');
+    background-repeat: no-repeat;
+    height: 26px;
+    width: 28px;
+    top: 7%;
+    right: 8%;
+}
+
+.btncolor_spicejt {
+    background-color: #ec1c24;
+    padding: 9px 16px;
+    border-color: #ec1c24;
+    box-shadow: 0 8px 6px -6px grey;
+}
+<<<<<<< HEAD
+.red_common_btn_spicejt {
+    background-color: #ec1c24;
+    padding: 9px 16px;
+    border-color: #ec1c24;
+    box-shadow: 0 8px 6px -6px grey;
+}
+.mob_submit_topspace {
+    margin-top: 22px;
+}
+
+
+
+
+/*-------------------------- EMPBOOKING CSS-----------------*/
+
+.NStru_bookingtype_panle {
+    margin-top: 20px;
+    padding-bottom: 0px;
+    margin-bottom: 2px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.NStru_bookingtype_header_bg {
+    background-color: #f5f5f5;
+    padding: 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.NStru_empdetailssdv {
+    border-top: solid 1px #e4e4e4;
+    padding: 20px;
+    margin-bottom: 10px;
+    line-height: 30px;
+    font-size: 14px;
+}
+
+.heighlight_txt {
+    font-weight: bold;
+    color: #333;
+}
+
+.NStru_flightDetails_panel {
+    margin-top: 20px;
+    padding-bottom: 30px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+.NStru_hotelsDetails_panel {
+    margin-top: 20px;    
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.NStru_flgheadingDV {
+    text-align: center;
+    font-size: 16px;
+    padding: 8px;
+    margin-top: 0px;
+    margin-bottom: 9px;
+    background-color: #f5f5f5;
+    border-bottom: solid 1px #e4e4e4;
+    text-transform: uppercase;
+}
+
+.NStru_flightInfo {
+    padding: 5px;
+}
+
+.NStru_warning-label {
+    font-size: 12px;
+    font-weight: normal;
+    padding-left: 10px;
+    color: red;
+    padding-left: 0px;
+    position:relative;left:-20px;
+    text-transform:capitalize;
+    text-align:left;
+}
+
+.warning_Align {
+    padding: 10px;
+}
+
+.SOD_Footer {
+    position: relative;
+    height: 50px;
+    bottom: 0px;
+    display:none;
+}
+
+.SOD_Footer_inner {
+    position: relative;
+    bottom: 0px;
+    height: 50px;
+    background-color: #ec1c24;
+}
+
+.btn3d_Align {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.btn3d_Align_replan {
+    padding-top: 0px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.mob_NStru_mainDv {
+    display: none;
+}
+
+.depflightNo {
+    padding-left: 0px;
+}
+
+.retFlightNo {
+    padding-left: 10px;
+}
+
+.nav-tabs li a:hover:after {
+    border-color: #F5BD0E transparent transparent;
+    border-style: solid;
+    border-width: 13px 13px 0;
+    content: " ";
+    display: block;
+    height: 0;
+    margin: 0 auto;
+    position: relative;
+    width: 0;
+    z-index: 99;
+    top: 13px;
+    display: none;
+}
+
+.Mob_FlightmodifyDV {
+    display: none;
+}
+
+/*--------------------------END EMPBOOKING CSS-----------------*/
+/*========================END TABS===============*/
+/*================= menu header CSS=============*/
+.MHeader_main .dropdown-menu > li.kopie > a {
+    padding-left: 5px;
+}
+
+.MHeader_main .dropdown-submenu {
+    position: relative;
+}
+
+    .MHeader_main .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+    .MHeader_main .dropdown-submenu > a:after {
+        border-color: transparent transparent transparent #333;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        content: " ";
+        display: block;
+        float: right;
+        height: 0;
+        margin-right: -10px;
+        margin-top: 5px;
+        width: 0;
+    }
+
+    .MHeader_main .dropdown-submenu:hover > a:after {
+        border-left-color: #555;
+    }
+
+.MHeader_main .dropdown-menu > li > a:hover, .dropdown-menu > .active > a:hover {
+    text-decoration:none; /*underline;--28 Dec 2018*/
+}
+
+.MHeader_main .nav > li > a:hover, .nav > li > a:focus {
+    background-color: transparent;
+    border: solid 0px transparent;
+}
+
+.Menusodright {
+    float: right;
+    margin-top:15px;
+}
+
+@media (max-width: 767px) {
+
+    /*---------------- oneway Mobile css------*/
+    .Menusodright {   margin-top:10px;  }
+    .mob-flight-name{ position:absolute; top:3px;}
+    .mob-flight-depcity{ position:absolute; left:5px;}
+    .mob-flight-depDate{position: absolute;top: 15px;}
+    .mob-flight-depTime{position: relative; top: 30px;left:-10px;}
+    .mob-flight-directiobarow{position: absolute;left: 40%;top: -10px;}
+    .mob-flight-arrowhide{display:none;}
+    .mob-flight-arrcity{position: absolute;left: 107%;top: -20px;}
+    .mob-flight-duration{ position: relative;left: 133%;}
+    .mention-direction-arw{margin-top:10px; margin-bottom:10px; text-align:left; margin-left:10px;}
+    .approveandOk {line-height:35px;    }
+    .rsendmail{ background-color:transparent;color:forestgreen; padding:0px;}
+    .mob_topmargin10_btn{margin-top:10px;}
+    .margintopleft_checkbx{position:relative;left:3px; top:2px;}
+    .mob_topmargin5{margin-top:5px;}
+    .Mbxcs-new td{ border:solid 1px #b33; padding-left:10px;padding-right:10PX; line-height:30px;padding-bottom:5px;}
+    .Mbxcs_new td select{border-radius: 0;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);color: #666;font-size: 12px;height: 25px;width:100px;padding: 1px 3px 4px 8px;text-indent: 0px;border: solid 1px #e0e0e0;}
+    .txtfiltered {padding-top: 10px; font-size: 11px; padding-bottom:10px;}
+    .mob_padding_allside{ margin:10px;}
+    .content_inner_box_topborder { display:block; padding:0px; padding-top:15px;    }
+    .hoteldetails_bg_btn{border-radius: 20px;color: #E6B800;line-height: 15px; background-color:transparent; padding:0px;}
+    .open_confirm_showmsg {color: #009900;font-weight: bold;line-height: 20px;padding-left: 0px;}
+    .canclled_showmsg {padding-left: 0px;}
+    .green_bookhotel_btn{ background-color:transparent;color:#5aa712; padding:0px;}
+    .newmdpop .newmodelpopwidth70{width:95%;}
+    .newmdpop .commentpopup{ width: 95%;position: absolute;left: 0px;top: 5%;}
+    .margintop10{ margin-top:0px;}
+    .lineheight35{line-height:35px;}
+    .citycodedisplay{width: 100%; height:200px;}
+    .mobpadding10{ padding:10px;}
+    #approvelist .headerpart_bg th {
+        font-size: 11px;
+    }
+  
+     .mob_blk_main{ margin:5px;}
+     .formatexcelTxt {color: #ec1c24;font-size: 14px;padding-top: 5px;}
+     .fileuploadClt {width: 100%;}
+     .privateFare {text-align: left; font-size: 14px;padding-top: 5px;}
+     .mob_submit_topspace{ margin-top:10px;}
+     .mob_help_display_img{ width:100%; overflow:auto;}
+     .mob_help_part{position:relative;z-index:99; margin-top:20px; margin-bottom:20px; text-align:center; /*float:right;*/}
+     .mobbtnWidth{width:100%;}
+     .mob_onlyhotl { position: relative;top: -30px;left: 111px;}
+     .boktyphotl{font-size:9px; position:absolute; top:-3px;}
+     .txtfont_normal {font-weight: normal;}
+    .red_common_btn_spicejt {
+        background-color: #ec1c24;
+        padding: 9px 16px;
+        border-color: #ec1c24;
+        box-shadow: 0 8px 6px -6px transparent;
+    }
+    
+    .tbl-font-all {
+        box-shadow: 0 0px 2px 0 #c2c2c2;
+        font-size: 12px;
+    }
+    .content_header_txt{ font-size:16px;}
+    .booking-status-option {
+        font-size: 14px;
+    }
+    .dwnld-excel-format {
+        height: 26px;
+        width: 22px;
+        position: absolute;
+        left: 15px;
+        top: 1px;
+    }
+    .mob-app-look {
+        height: 50px;
+        background-color: #ec1c24;
+        position: fixed;
+        bottom: 0px;
+        z-index: 999999;
+    }
+        .mob-app-look .mob-footer-bg {
+            height: 50px;
+            background-color: #ec1c24;
+            width: 100%;
+            position: fixed;
+        }
+    .submit-hotel-btn-mob input {
+        position: fixed;
+        bottom: 7px;
+        z-index: 99999999;
+        background-color: transparent;
+        border-color: transparent;
+        font-size: 20px;
+        margin-left: -45px;
+    }
+    .mob-show-scroll{overflow:auto;width:100%;}
+    .headertxt_whitecolortxt {
+        color: #fff;
+        font-size: 16px;
+    }
+    .popuphdtxt {
+        font-size: 14px;
+        text-align:left;
+    }
+    .loading-image1 {
+        z-index: 10;
+        margin: auto;
+        position: relative;
+        top: 54%;
+        margin-top: 23%;
+        width: 80%;
+    }
+    .mention-direction-arw span{ padding-right:25px;line-height:30px;}
+    .ui-datepicker-multi-2 .ui-datepicker-group {
+        width: 43%;
+    }
+    .mod-approve-reject input{ width:100%; margin-bottom:10px;}
+    #bbselect img {
+        width:100%;
+        margin-top: 7px;
+    }
+    .bulk-title {
+        font-size: 16px;
+        color: #fff;
+        padding-top: 6px;
+    }
+    #usrimgtop .dropdown-menu {
+        position: relative;
+        top: -55px;
+        left: -7px;
+    }
+    .plus-icon-add {
+        font-size: 10px;
+        position: relative;
+        top: 0px;
+        left:0px;
+        color: #b33;
+    }
+
+    #txtadateD a {
+        font-weight: bold;
+        color: #4800ff
+    }
+    #personalTab{ font-size:11px;}
+    #FlightTab {
+        font-size: 11px;
+    }
+    #hotelTab {
+        font-size: 11px;
+    }
+    .font12{ font-size:12px !important;}
+    .oat-bottom-margin {
+        margin-bottom: 10px;
+      
+    }
+    .oat-right-margin {
+        margin-right: 10px;
+    }
+    /*#userimage{ position:relative; top:-55px;left:-7px;}*/
+    /*--------------------End oneway Mobile css----*/
+    .MHeader_main .navbar-nav {
+        display: inline;
+    }
+
+    .MHeader_main .navbar-default .navbar-brand {
+        display: inline;
+    }
+
+    .MHeader_main .navbar-default .navbar-toggle .icon-bar {
+        background-color: #fff;
+    }
+
+    .MHeader_main .navbar-default .navbar-nav .dropdown-menu > li > a {
+        color: red;
+        background-color: #ccc;
+        border-radius: 4px;
+        margin-top: 2px;
+    }
+
+    .MHeader_main .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #333;
+    }
+
+        .MHeader_main .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+        .MHeader_main .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+            background-color: #ccc;
+        }
+
+    .MHeader_main .navbar-nav .open .MHeader_main .dropdown-menu {
+        border-bottom: 1px solid white;
+        border-radius: 0;
+    }
+
+    .MHeader_main .dropdown-menu {
+        padding-left: 10px;
+    }
+
+        .MHeader_main .dropdown-menu .dropdown-menu {
+            padding-left: 20px;
+        }
+
+            .MHeader_main .dropdown-menu .dropdown-menu .dropdown-menu {
+                padding-left: 30px;
+            }
+
+
+    li.dropdown.open {
+        border: 0px solid red;
+    }
+
+    .navbar-collapse {
+        position: absolute;
+        z-index: 9999;
+        right: 0;
+        background-color: #fff;
+    }
+
+    .Menusodright ul li a {
+        color: #000;
+    }
+
+    #usrimgtop {
+        display: /*none*/ block;
+    }
+
+    .SodHeadingTxt {
+        font-size: 13px;
+        color: #fff;
+        margin-top: 5px;
+    }
+
+    .bookingtyp {
+        width: 104%;
+        height: 30px;
+        border-radius: 3px;
+        font-size: 11px;
+        padding-left: 5px;
+    }
+
+    .New_tmp_lyer {
+        height: 30px;
+    }
+
+    .navbar-toggle {
+        position: relative;
+        float: right;
+        padding: 6px 6px;
+        margin-top: -20px;
+        margin-right: 0px;
+        margin-bottom: 8px;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+    .bookingheadr{ height:55px;}
+    .bookingheadr img{ margin-top:-5px;}
+
+    .NStru_warning-label {
+        font-size: 12px;
+        font-weight: normal;
+        padding-left: 10px;
+        color: red;
+        padding-left: 0px;
+    }
+
+    .warning_Aligntxt {
+        padding-left: 10px;
+    }
+
+    .btn3d_Align {
+        padding-top: 20px;
+        padding-bottom: 10px;
+        text-align: center;
+        position: fixed;
+        bottom: 0px;
+        z-index: 99999;
+    }
+    .btn3d_Align .mob_submit{ background-color: transparent;    font-size: 18px; left: 20%; position: relative; border-color: transparent;top: 5px;}
+    .btn3d_Align  .mob_replan{position: relative;left: 80%; background-color: transparent;font-size: 18px;border-color: transparent;top: 5px; }
+    .btn3d_Align_replan {
+        padding-top: 0px;
+        padding-bottom: 20px;
+        text-align: center;
+        position: fixed;
+        bottom: -35px;
+        z-index: 99999;
+        margin-left: 50%;
+    }
+
+    .NStru_RePlan_Submit {
+        width: 100%;
+        height: 35px;
+        background-color: #b33;
+        border: 0px;
+        color: #fff;
+        font-size: 16px;
+    }
+
+    .mob_NStru_mainDv {
+        height: 50px;
+        position: fixed;
+        background-color: #ec1c24;
+        z-index: 9999;
+        bottom: 0px;
+        width: 100%;
+        display: block;
+    }
+
+    .mob_NStru_left_part {
+        float: left;
+        height: 60px;
+        background-color: #ec1c24;
+        width: 50%;
+    }
+
+    .mob_NStru_right_part {
+        float: right;
+        height: 60px;
+        background-color: #333;
+        width: 50%;
+    }
+
+    .tabtop li a:last-child {
+        padding: 10px 10px;
+        font-size: 13px;
+    }
+
+    .tabtop .active a::before {
+        content: "♦";
+        position: absolute;
+        top: 17px;
+        left: 71px;
+        color: #e31837;
+        font-size: 30px;
+        z-index: 999;
+        display:none;
+    }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        color: #fff;
+        cursor: default;
+        /* background-color: #FED904; */
+        background: #EB1217;
+        /* background: rgba(254,217,4,0.8); */
+        border: 1px solid #D10F1A;
+        border-bottom-color: transparent;
+        height: 41px;
+    }
+
+    .nav-tabs li a:hover:after {
+        border-color: #F5BD0E transparent transparent;
+        border-style: solid;
+        border-width: 13px 13px 0;
+        content: " ";
+        display: block;
+        height: 0;
+        margin: 0 auto;
+        position: relative;
+        width: 0;
+        z-index: 99;
+        top: 13px;
+        display: none;
+    }
+
+    .NStru_flight_box {
+        margin-left: 0px;
+        padding: 2px;
+        margin-bottom: 10px;
+        margin-right: 0px;
+        font-size: 11px;
+    }
+
+    .planeimg img {
+        padding-left: 0px;
+        width: 45%;
+    }
+
+    .depflightNo {
+        padding-left: 0px;
+    }
+
+    .deptime {
+        padding-left: 10px;
+    }
+
+    .depcity {
+        padding-left: 10px;
+    }
+
+    .rettime {
+        padding-left: 10px;
+    }
+
+    .retCity {
+        padding-left: 10px;
+    }
+
+    .NStru_selectflightheadtxt {
+        font-size: 16px;
+        margin-left: 0px;
+    }
+
+    .NStru_flight_box_return {
+        margin-left: 13px;
+        padding: 8px;
+        font-size: 11px;
+    }
+
+    .retFlightNo {
+        padding-left: 0px;
+    }
+
+    .mob_btn_bttom .mob_Nstru_ContinueBtn {
+        position: fixed;
+        bottom: 8px;
+        z-index: 99999999;
+        left: 0px;
+        width: 47%;
+        font-size: 16px;
+    }
+
+    .mob_btn_bttom .mob_Nstru_RefreshBtn {
+        position: fixed;
+        bottom: 8px;
+        z-index: 99999999;
+        right: 0px;
+        width: 42%;
+        background-color: transparent;
+        border-color: transparent;
+        font-size: 16px;
+    }
+
+    .Mob_FlightmodifyDV {
+        background-color: #000000;
+        height: 40px;
+        width: 100%;
+        display: none;
+        color: #fff;
+    }
+
+    .Mob_innermodify {
+        padding-left: 10px;
+        padding-top: 5px;
+        text-align: right;
+        padding-right: 20px;
+        font-size: 15px;
+        font-weight: bold;
+        position:relative;
+        color:#fff;
+    }
+    .Mob_innermodify a{ color:#fff; text-decoration:none;}
+
+    #mob_footer_panel {
+        display: block;
+    }
+
+    .navbar-toggle .icon-bar {
+        background-color: red;
+    }
+
+    .NStru_empdetailssdv {
+        border-top: solid 1px #e4e4e4;
+        padding: 20px;
+        margin-bottom: 10px;
+        line-height: 30px;
+        font-size: 12px;
+    }
+
+    .empdtlstxt {
+        font-size: 12px;
+    }
+
+    .MHeader_main .navbar-nav > li > a {
+        color: #000;
+    }
+
+    .personNm_leftmargin {
+        margin-left: -15px;
+        font-weight: normal;
+    }
+
+    .mobbtn_margin {
+        margin-top: -20px;
+    }
+
+    .Stru_radio_margin label {
+        font-size: 13px;
+    }
+
+    .hodDetailsSerch {
+        padding: 10px;
+        border: solid 1px #c2c2c2;
+        margin-top: 20px;
+        line-height: 30px;
+        border-radius: 5px;
+        display: none;
+        margin-bottom: 30px;
+    }
+
+    .searchDvPagesize_right {
+        float: left;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .Mob_grid_scrollWidth {
+        overflow: auto;
+        width: 100%;
+    }
+
+    .content_inner_box {
+        border: solid 1px #f5f5f5;
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px;
+        border-top: solid 3px #c2c2c2;
+        border-radius: 3px;
+    }
+
+    .flightdisplayheader {
+        display: none;
+    }
+    .multictsubmitbtn{ width:130px;margin-left:75px;}
+    .multictsubmit_romovebtn{margin-left:0px;}
+    .Mob_Stru_content_new{width:100%; overflow:auto;}
+    .Stru_details_heading{font-size:15px;}
+    .Stru_viewAll{font-size:11px;}
+    .loading-image {
+    /*position: absolute;
+    top: 40%;
+    left: 41%;
+    z-index: 10;*/
+
+     z-index: 10;
+    margin: auto;
+    position: relative;
+    top: 54%;
+    margin-top: 23%;
+    width:25%;
+}
+.mob_hotlcheck label{line-height:10px;}
+
+#logomain img{ width:85%; margin-top:5px;}
+.NStru_bookingtype_header_bg{ padding:5px;}
+.NStru_flgheadingDV{font-size:12px; padding:5px;}
+}
+
+
+
+@media (min-width: 768px) {
+    .MHeader_main ul.nav li:hover > ul.dropdown-menu {
+        display: block;
+    }
+
+    .MHeader_main #navbar {
+        text-align: center;
+    }
+}
+
+.MHeader_main .dropdown ul.dropdown-menu:before {
+    content: "";
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    /*right: 16px;*/
+    z-index: 10;
+}
+
+#usrimgtop .MHeader_main .dropdown ul.dropdown-menu:before {
+    content: "";
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    /*right: 16px;*/
+    z-index: 10;
+}
+
+ .mob_submit_topspace {margin-top: 22px;}
+.ishotelreq {
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 14px;
+}
+@media (min-width: 768px) {
+    .nav-tabs {
+        width: 40%;
+    }
+}
+
+@media (max-width: 768px) {
+    .chiller_cb {
+        height: auto;
+    }
+}

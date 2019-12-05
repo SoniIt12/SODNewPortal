@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>+o3D/GzyTw4=|U2N/m+eCGqxMuHEDC5AWiLe0QAa9LOzInSCOzN+bk+FDYYAf8id8vxNFn6Y/XojXyWs1Hbne/FNaV1VUXr3jFuu4/7iW2KThiVdmuNm1xx/sdplXmwaW2ofqY+RDIi/+jrN2U0Zg+ZQ=</Signature>
+  <SellRequestData>
+    <SellBy>SSR</SellBy>
+    <SellSSR>
+      <SSRRequest>
+        <SegmentSSRRequests>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber>9169</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2019-03-29T12:00:00</STD>
+            <DepartureStation>DEL</DepartureStation>
+            <ArrivalStation>BOM</ArrivalStation>
+            <PaxSSRs />
+          </SegmentSSRRequest>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber>8145</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2019-03-30T20:00:00</STD>
+            <DepartureStation>GOI</DepartureStation>
+            <ArrivalStation>DEL</ArrivalStation>
+            <PaxSSRs />
+          </SegmentSSRRequest>
+        </SegmentSSRRequests>
+        <CurrencyCode>INR</CurrencyCode>
+        <CancelFirstSSR>false</CancelFirstSSR>
+        <SSRFeeForceWaiveOnSell>false</SSRFeeForceWaiveOnSell>
+      </SSRRequest>
+    </SellSSR>
+  </SellRequestData>
+</SellRequest>

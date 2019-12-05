@@ -1,0 +1,16 @@
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\SOD.Model.dll
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\SOD.Model.pdb
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\Newtonsoft.Json.dll
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\System.Net.Http.Formatting.dll
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\System.Web.Http.dll
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\System.Web.Http.WebHost.dll
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\Newtonsoft.Json.xml
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\System.Net.Http.Formatting.xml
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\System.Web.Http.xml
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\bin\Debug\System.Web.Http.WebHost.xml
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\obj\Debug\SOD.Model.csproj.CoreCompileInputs.cache
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\obj\Debug\SOD.Model.csproj.CopyComplete
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\obj\Debug\SOD.Model.dll
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\obj\Debug\SOD.Model.pdb
+C:\SODPortal_2ndDec2019\sodnewportal\SOD.Model\obj\Debug\SOD.Model.csprojAssemblyReference.cache

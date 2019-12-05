@@ -1,0 +1,155 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+
+    <title>Sod | HR Confirmation Page</title>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/usertravelhistory.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../css/SODstyle.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/responsive.css" rel="stylesheet" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+    <link href="../3D_button/3dbtn.css" rel="stylesheet" />
+    <style type="text/css">
+        .succesmsg {
+            text-align: center;
+            font-size: 25px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            MailSendToFinance();
+        });
+
+        function MailSendToFinance() {
+
+           
+                $.ajax({
+                url: '../ChangeReq/SendChangeRequestToFinance',
+                type:'get',
+                data: { ReqId:@ViewBag.ReqId,status:'@ViewBag.Status'},
+                beforeSend:function(){
+                  // $('.loader').show();
+                },
+                success: function (flag) {
+                    @*if (flag != "0") {
+                        if (flag=="1")
+                            $('#dvMsg').append('<span>Request Id- '@ViewBag.ReqId' has been approved and same has been forwarded to finance team @TempData["emailId_HR"] for updation in SAP.</span>');
+                        else
+                            $('#dvMsg').append('<span>Request Id- '@ViewBag.ReqId' has been rejected and a confirmation mail forwarded to @TempData["emailId"].</span>');
+                    }
+                    else {
+                        $('#dvMsg').append('<span>Request Id- '@ViewBag.ReqId' has been already processed</span>');
+                    }*@
+
+                    if (flag == "1") {
+                        document.getElementById("dvMsg").textContent="Request Id- '@ViewBag.ReqId' has been approved and same has been forwarded to finance team @TempData["emailId_HR"] for updation in SAP.";
+                    }
+                    else if (flag == "2") {
+                        document.getElementById("dvMsg").textContent = "Request Id- '@ViewBag.ReqId' has been rejected and a confirmation mail forwarded to @TempData["emailId"].";
+                    }
+                    else {
+                        document.getElementById("dvMsg").textContent = "Request Id- '@ViewBag.ReqId' has been already processed";
+                    }
+                },
+                complete:function(){
+                    //$('.loader').hide();
+                },
+                error: function () { }
+            });
+          
+        }
+    </script>
+
+</head>
+<body>
+    <div>
+        <div class="bookingheadr">
+            <div class="headerimg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3"><div class="logoheader"><img src="../img/logo_spicejet.png" /></div> </div>
+                        <div class="col-md-9"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------------------------------Content---------------->
+        <div class="container">
+            <div style="padding-top:10%">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12"><div class="succesmsg"> Thank You ! </div></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"><div class="succesmsg" id="dvMsg"></div></div>
+                        </div>
+                        @*@if (ViewBag.Status == "Approve")
+        {
+            <div class="row">
+                <div class="col-md-12"><div class="succesmsg" id="dvMsg">Request Id- @ViewBag.ReqId has been approved and same has been forwarded to finance team @TempData["emailId_HR"] for updation in SAP.</div></div>
+            </div>
+        }
+        else if (ViewBag.Status == "Reject")
+        {
+            <div class="row">
+                <div class="col-md-12"><div class="succesmsg" id="dvMsg">Request Id- @ViewBag.ReqId has been rejected and a confirmation mail forwarded to @TempData["emailId"].</div></div>
+            </div>
+
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-12"><div class="succesmsg" id="dvMsg">Request Id- @ViewBag.ReqId has been already processed </div></div>
+            </div>
+        }*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--------------------------------------------Footer---------------->
+        <div style="padding-top:70px;"></div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+        <!-- ------------------------------------------END Footer---------------->
+    </div>
+
+    <div class="loader">
+        <center>
+            <img class="loading-image" src="../images/loading.gif" alt="loading..">
+        </center>
+    </div>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            var dv = document.getElementById("dvrecord");
+            dv.style.display = "none";
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.close();
+                return;
+            };
+        </script>
+    } 
+</body>
+</html>

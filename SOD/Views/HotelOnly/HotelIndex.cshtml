@@ -1,0 +1,266 @@
+﻿@{
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml";
+    ViewBag.Title = "Only Hotels |Booking";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SOD | Only Hotels Booking</title>
+
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../New_Calender/src/calender_jquery.daterange.js"></script>
+    <link href="../New_Calender/calender.css" rel="stylesheet" />
+    <script src="../Dropdownmenu/jquery-1.9.1.js"></script>
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <script src="../js/jsvalidation.js"></script>
+    <link href="../3D_button/3dbtn.css" rel="stylesheet" />
+    <script src="../js/timerpickerJS.js"></script>
+    <link href="../css/timepicker.css" rel="stylesheet" />
+    <link href="../css/radiobtn.css" rel="stylesheet" />
+    <link href="../css/responsive.css" rel="stylesheet" />
+    <script src="../js/select2/select2.min.js"></script>
+    <link href="../css/select2/select2.min.css" rel="stylesheet" />
+    <script src="../js/OnlyHotelJS.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.timepicker').wickedpicker({
+                twentyFour: false, title:
+                    'Select Time', showSeconds: false
+            });
+        });
+    </script>
+    <script>
+        function showimage() {
+            $('#place-image').show();
+        };
+        function hideimage() {
+            $('#place-image').hide();
+        };
+    </script>
+    <style>
+        .headcolor td {
+            text-align: center;
+            border-left: solid 1px #c2c2c2;
+            background-color: #EE1D23;
+            color: #fff;
+            height: 35px;
+        }
+
+        .rowcolor {
+            text-align: center;
+            border-left: solid 1px #c2c2c2;
+            border-bottom: solid 1px #c2c2c2;
+            line-height: 22px;
+            height: 30px;
+        }
+
+        .submitbtn {
+            background-color: #EE1D23;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background: #fff;
+        }
+
+        tr:nth-child(odd) { /*background: #f9f9f9;*/
+        }
+
+        .selected {
+            background-color: #A1DCF2;
+        }
+
+        #ddlacType {
+            border-radius: 0;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+            color: #666;
+            font-size: 12px;
+            height: 30px;
+            padding: 0px 0px 0px 0px;
+            text-indent: 0px;
+            border: solid 1px #e0e0e0;
+        }
+
+        .warning-label {
+            font-size: 12px;
+            font-weight: normal;
+            padding-left: 10px;
+            color: red;
+        }
+
+        .ui-menu-item {
+            width: 25% !important;
+            float: left;
+        }
+
+        .button {
+            background-color: #EB1217;
+            border: none;
+            color: white;
+            padding: 10px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button2 {
+            border-radius: 4px;
+        }
+
+        #errmsg {
+            color: red;
+        }
+
+        #errtxt-pickup {
+            color: red;
+        }
+
+        .helpimg {
+            text-align: center;
+            display: none;
+            position: absolute;
+            z-index: 9999;
+            right: 5%;
+        }
+    </style>
+</head>
+<body ng-app="hotelOnly" ng-controller="hotelOnlyCtrl">
+    <div class="content_header_txt">
+        <div> Only Hotel Booking</div>
+    </div>
+
+    <div class="container" style="padding-top:10px;">
+        <div>
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="text-align:right; font-weight:bold;color:red;padding-bottom:10px;">*Kindly ensure all details should be correct, norms applicable as per company policy</div>
+                    </div>
+                </div>
+                <div id='hoteldivdetails' class="moblineheight shadowboxCs">
+                    <div class='row' style="margin-bottom:10px">
+                        <div class='col-md-4'><div><span>ECN (Employee ID/Code)</span></div><div><input id="empCode" type='text' value="@Session["EmpCode"]" ng-disabled="empCode" class='form-control input-sm' style="width:100%;"></div></div>
+                        <div class='col-md-4'><div><span>Emp Name</span></div><div> <input id='txtempName' type='text' class='form-control input-sm' value="{{title=='F'? 'Ms.' : 'Mr.'}} @Session["FirstName"].ToString() @Session["LastName"].ToString()" ng-disabled="Fname" /></div></div>
+                        <div class='col-md-4'><div><span>Mobile No.</span></div><div><input id='empPhno' type='text' class='form-control input-sm' value="@Session["phone"]" ng-disabled="phone" maxlength="10" onkeydown="validateNumber(event);" /></div></div>
+
+                    </div>
+
+                    <div class='row' style="margin-bottom:10px">
+                        <div class='col-md-4'><div><span>Designation</span></div><div><input id='empDesign' type='text' class='form-control input-sm' value="@Session["UserInfo"].ToString().Split('|')[1]" ng-disabled="designation" /></div></div>
+                        <div class='col-md-4'><div><span>Department</span></div><div><input id='empDept' type='text' class='form-control input-sm' value="@Session["UserInfo"].ToString().Split('|')[2]" ng-disabled="department" /></div></div>
+                        <div class='col-md-4'><div><span>Email ID </span></div><div><input id='empEmail' type='text' class='form-control input-sm' value="@Session["Email"]" ng-disabled="email" /></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @*<div style="text-align:right;padding-top:10px"><a onmouseover="showimage()" onmouseout="hideimage()" href="#" style="font-weight:bold;color:red;">City Code Help &nbsp;<img src="../images/help.png" style="height:26px;width:22px;"></a></div>*@
+                </div>
+            </div>
+            <div hidden="hidden" id="place-image" class="helpimg">
+                <img class="citycodedisplay" src="../img/citycodes.png">
+            </div>
+            <div id='hoteldivdetails'>
+                <div class="content_inner_box" style="margin-bottom:15px;">
+                    <div class='row'>
+                        <div class="form-group lineheight35">
+                            <div class='col-md-4'><div><span>City Code</span><span id="errmsg">*</span></div><div><select id='txtCity' type='text' class='form-control input-sm select2' style="width:100%;"></select></div></div>
+                            <div class='col-md-4'><div><span>Check-In Date</span><span id="errmsg">*</span></div><div> <input id='txtCheckInDate' type='text' placeholder='dd/mm/yyyy' class='form-control input-sm' maxlength="10" /><i class='img_i_indt' onclick="document.getElementById('txtCheckInDate').focus();"></i></div></div>
+                            <div class='col-md-4'><div><span>Check-Out Date</span><span id="errmsg">*</span></div><div> <input id='txtCheckOutDate' type='text' placeholder='dd/mm/yyyy' class='form-control input-sm' maxlength="10" /><i class='img_i_odt' onclick="document.getElementById('txtCheckOutDate').focus();"></i></div></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group margintop10 lineheight35">
+                            <div class='col-md-4'><div><span>Check-In Time</span><span id="errmsg">*</span></div><div><input id='txtCheckintime' type='text' class=" form-control input-sm timepicker  extratextcontrol_height" maxlength="10" /></div></div>
+                            <div class='col-md-4'><div><span>Check-Out Time</span><span id="errmsg">*</span></div><div> <input id='txtCheckouttime' type='text' class="form-control input-sm timepicker extratextcontrol_height" maxlength="10" /></div></div>
+                            <div class='col-md-4'><div><span>Entitlement</span><span id="errmsg">*</span></div><div> <select class='form-control input-sm' id='entitlement'> <option>Single</option> <option>Sharing</option></select></div></div>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class="form-group margintop10 lineheight35">
+                            <div class='col-md-4'><div><span>Flight No. (Optional)</span></div><div><input id='flightno' type='text' class='form-control input-sm' maxlength="20" /></div></div>
+                            <div class='col-md-4'><div><span>PNR (Optional)</span></div><div><input id='pnrinfo' type='text' class='form-control input-sm' maxlength="6" /></div></div>
+                            <div class='col-md-4'><div><span>Travel Type</span><span id="errmsg">*</span></div><div><select class='form-control input-sm' id='traveltype'> <option>Surface/ Transport</option> <option>Other Airlines Booking</option><option>Hotel Extension </option><option>SpiceJet Airline/Others</option></select></div></div>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class="form-group margintop10 lineheight35">
+                            <div class="col-md-4"><div><span>Airport Transport Required</span><span id="errmsg">*</span></div><div><select id="airtransport" class='form-control input-sm' onchange="toggleAirTransport();"><option>No</option><option>Yes</option></select></div></div>
+                            <div class="col-md-4" id="cabTimingText" hidden="hidden"><div><span>If Yes, suggest Cab pickup timing: </span></div><div><input id="txtCabPickupTime" type="text" class="form-control input-sm timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%;" /></div></div>
+                            <div class='col-md-4'><div><span>Reason for hotel booking</span><span id="errmsg">*</span></div><div><input id='reasontxt' type='text' class='form-control input-sm' /></div></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="submit-hotel-btn-mob"><input class="btn btn-danger" type="button" id="hotelsubmit" value="Submit" onclick="SubmitHotelData();" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="addContainers"></div>
+            <div hidden style="text-align:left; margin-top:10px;" id="divaddcontainers">
+                <input type="button" id="addButtonnew" value="" name="add"
+                       style="background: url('../img/button.png') no-repeat; height:34px; width:34px;border:0px;" />
+                <input type="button" id="removeButton" value="" name="remove"
+                       style="background: url('../img/remove.png') no-repeat; height:34px; width:34px;border:0px;" />
+            </div>
+        </div>
+    </div>
+    <div id="detailsUser" hidden>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-xs-5"><span>EmpId : </span></div> <div class="col-xs-7"><span id="empCode">@Session["EmpCode"] </span> <span id="EmpId" style="visibility:hidden">@Session["EmpId"] </span></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5"><span>Name :</span></div> <div class="col-xs-7"><span id="empName"> @Session["FirstName"].ToString() @Session["LastName"].ToString() </span></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5"><span>Department :</span></div> <div class="col-xs-7"><span id="empDept"> @Session["UserInfo"].ToString().Split('|')[2]</span></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5"><span>Email ID :</span></div> <div class="col-xs-7"><span id="empEmail"> @Session["Email"] </span></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5"><span>Phone No.:</span></div> <div class="col-xs-7"><span id="empPhno">@Session["Phone"] </span></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5"><span>Designation :</span></div>  <div class="col-xs-7"><span id="empDesign"> @Session["UserInfo"].ToString().Split('|')[1] </span></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5"><span>Gender :</span></div>  <div class="col-xs-7"><span id="empGender"> @Session["Gender"]</span></div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+    </div>
+
+    <div class="loader">
+        <center>
+            <img class="loading-image" src="../images/loading.gif" alt="loading..">
+        </center>
+    </div>
+
+    <div class="mob-app-look">
+        <div class="mob-footer-bg" style=""></div>
+    </div>
+</body>
+</html>

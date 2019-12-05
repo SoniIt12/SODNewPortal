@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Sectors>
+  <DXB>
+    <Oneway>Yes</Oneway>
+    <RoundTrip>Yes</RoundTrip>
+    <Multicity>Yes</Multicity>
+  </DXB>
+
+  <MCT>
+    <Oneway>Yes</Oneway>
+    <RoundTrip>Yes</RoundTrip>
+    <Multicity>Yes</Multicity>
+  </MCT>
+
+  <MLE>
+    <Oneway>Yes</Oneway>
+    <RoundTrip>No</RoundTrip>
+    <Multicity>No</Multicity>
+  </MLE>
+ 
+</Sectors>

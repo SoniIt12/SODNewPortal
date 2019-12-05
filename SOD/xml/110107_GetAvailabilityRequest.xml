@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GetAvailabilityRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>ybysfKDHDAM=|eUP1Qlbu/aTHfostezwYgOisqutMvq6t5WG+5v2ORjDHftlZn5v05UWEtz0Z6FdbmX0XiHhHoHVHhlr92JL6xjcIdQgJJ901vpmtqDmKAvPhHcpd8KMEIRV/HRaJlW730rd1C3JQSnE=</Signature>
+  <TripAvailabilityRequest>
+    <AvailabilityRequests>
+      <AvailabilityRequest>
+        <DepartureStation>DEL</DepartureStation>
+        <ArrivalStation>MAA</ArrivalStation>
+        <BeginDate>2017-12-13T00:00:00</BeginDate>
+        <EndDate>2017-12-13T00:00:00</EndDate>
+        <FlightNumber> 107</FlightNumber>
+        <FlightType>All</FlightType>
+        <PaxCount>1</PaxCount>
+        <Dow>Daily</Dow>
+        <CurrencyCode>INR</CurrencyCode>
+        <AvailabilityType>Standby</AvailabilityType>
+        <MaximumConnectingFlights>5</MaximumConnectingFlights>
+        <AvailabilityFilter>ExcludeUnavailable</AvailabilityFilter>
+        <FareClassControl>LowestFareClass</FareClassControl>
+        <MinimumFarePrice>0</MinimumFarePrice>
+        <MaximumFarePrice>0</MaximumFarePrice>
+        <SSRCollectionsMode>None</SSRCollectionsMode>
+        <InboundOutbound>None</InboundOutbound>
+        <NightsStay>0</NightsStay>
+        <IncludeAllotments>false</IncludeAllotments>
+        <FareTypes>
+          <string>Z</string>
+        </FareTypes>
+        <PaxPriceTypes>
+          <PaxPriceType>
+            <PaxType>ADT</PaxType>
+            <PaxDiscountCode />
+          </PaxPriceType>
+        </PaxPriceTypes>
+        <IncludeTaxesAndFees>false</IncludeTaxesAndFees>
+        <FareRuleFilter>Default</FareRuleFilter>
+        <LoyaltyFilter>MonetaryOnly</LoyaltyFilter>
+      </AvailabilityRequest>
+    </AvailabilityRequests>
+    <LoyaltyFilter>MonetaryOnly</LoyaltyFilter>
+    <LowFareMode>false</LowFareMode>
+  </TripAvailabilityRequest>
+</GetAvailabilityRequest>

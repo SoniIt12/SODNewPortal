@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://121.242.92.173/SpicejetDynamicSectors/DynamicSectors.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SpiceJetDynamicSectors" />
+  <xs:element name="GetOriginStations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOriginStationsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SpiceJetDynamicSectors" minOccurs="0" name="GetOriginStationsResult" nillable="true" type="q1:ArrayOfOriginStations" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetArrivalStations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="DepartureStation" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetArrivalStationsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SpiceJetDynamicSectors" minOccurs="0" name="GetArrivalStationsResult" nillable="true" type="q2:ArrayOfArrivalStations" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,271 @@
+/* CSS Document */
+body {font-family:Arial;width:100%;background-image:url(../images/screen_bg.jpg); background-repeat:repeat-x repeat-y;background-size: cover; }
+.dasboard-icon i{ font-size:70px; color:#fff;}
+.dasboard-icon{ text-align:center; margin-top:10px;}
+.header_part {
+    background-color: #C9252C;
+    height: 75px;
+    width: 100%;
+}
+.logo_main img{ margin-top:10px;}
+.search_right input{ margin-top:20px; text-indent:10px;}
+.myprofile {
+    height: 160px;
+    background-color: #0099FF;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: solid 5px #e4e4e4;
+}
+.myprofile:hover {   background-color:#C9252C;  }
+.nameprofile { font-size:22px; color:#fff; text-align:center; padding-top:20px; font-weight:400;}
+.socialmedia {
+    height: 160px;
+    background-color: #666600;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: solid 5px #e4e4e4;
+}
+.socialmedia:hover {   background-color:#C9252C;  }
+.findingyway {
+    height: 160px;
+    background-color: #993366;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: solid 5px #e4e4e4;
+}
+.findingyway:hover {   background-color:#C9252C;  }
+
+.media_dv {
+    height: 160px;
+    background-color: #9E2E9A;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: solid 5px #e4e4e4;
+}
+.media_dv:hover {   background-color:#C9252C;  }
+.discussionform {
+    height: 160px;
+    background-color:#339999;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: solid 5px #e4e4e4;
+}
+.discussionform:hover {   background-color:#C9252C;  }
+.eventcalender {
+    height: 160px;
+    background-color: #FF3399;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: solid 5px #e4e4e4;
+}
+.eventcalender:hover {   background-color:#C9252C;  }
+
+.carrers {
+    height: 160px;
+    background-color: #50439F;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: solid 5px #e4e4e4;
+}
+.carrers:hover {   background-color:#C9252C;  }
+.discussionform {
+    height: 160px;
+    background-color: #339999;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: solid 5px #e4e4e4;
+}
+.discussionform:hover {   background-color:#C9252C;  }
+.inovationinavtn {
+    height: 160px;
+    background-color: #33CC66;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: solid 5px #e4e4e4;
+}
+.inovationinavtn:hover {   background-color:#C9252C;  }
+.footer_end { width:100%; height:60px; background-color:#C9252C; margin-top:15px; margin-bottom:0px;}
+.footer_menu { width:100%; padding-top:15px; color:#fff;}
+.footer_menu span { margin-left:10px;   }
+
+
+/*----------------------------- LOGIN PAGE -------------------------*/
+.login_main {width:100%;}
+.login_left_part {  background-image:url(../images/login_banner.png); background-repeat:no-repeat; height:600px; width:600px; }
+.login_right {width:100%; height:600px; background-color:#fff; }
+.headingslogan { font-size:28px; font-weight:400; padding: 20px 0 0 30px; color:#C9252C;}
+.login_txt_cont {font-size:14px; font-weight:400; padding:20px 0 0 30px;}
+.login_form { width:350px; height:235px; background-color:#C9252C; margin: 20px 0 0 30px;}
+.logintxtbx { margin:0px 0 0 0px;}
+.logintxtbx input { width:275px; height:35px; margin-top:20px; margin-left:30px; text-indent:40px; border:solid 1px #fff; background-color:#C9252C; color:#fff;   }
+.forgettxt { margin-top:20px; margin-left:30px;}
+.forgettxt .remember { float:left;  color:#fff; }
+.forgettxt .forget { float:right;  color:#fff; padding-right:40px; }
+.loginbtn { text-align:center;margin-top:20px;}
+.loginbtn a { background-color:#fff; padding:10px 40px 10px 40px; height:120px; height:40px; border-radius:3px; color:#C9252C; font-weight:bold; font-size:16px; }
+.username_icon { background-image:url( ../images/user_icon.png); background-repeat:no-repeat; height:20px; width:20px; position:absolute; z-index:2; margin:27px 0 0 40px}
+.password_icon { background-image:url( ../images/pwd_icon.png); background-repeat:no-repeat; height:20px; width:20px; position:absolute; z-index:2; margin:27px 0 0 40px}
+.calender_icon { background-image:url( ../images/calender_icon.png); background-repeat:no-repeat; height:20px; width:20px; position:absolute; z-index:2; margin:8px 0 0 74%;}
+
+/*-----------------------------End LOGIN PAGE -------------------------*/
+
+/*----------------------------- SOD TRAVEL PAGE -------------------------*/
+.travelMain { width:100%;background-image:url(../images/screen_bg.jpg); background-repeat:repeat-x repeat-y;background-size: cover;}
+.screenbg {  height:600px; width:100%;}
+.mainlogo img { margin:20px 0 0 20px;width:188px; height:126px;}
+.logocelebration {background-image:url(../images/logo_celebration.png); background-repeat:no-repeat; width:125px; height:112px; margin-top:20px; float:right; margin-right:20px;}
+.headingtxtall { font-size:35px; color:#fff; font-weight:400; padding-top:30px; text-align:center;}
+.headingtxtall2 { font-size:35px; color:#fff; font-weight:400; padding-top:5px; text-align:center;}
+.BookingWay { text-align:center; font-size:20px; color:#fff; font-weight:400;}
+ .oneway {padding-left:5px;  }
+ .Twoway {padding-left:45px;  }
+ .multicity {padding-left:45px;  }
+ .formtxt { font-size:20px; color:#fff; text-align:left;}
+ .formtxt { font-size:17px; color:#fff; text-align:left;}
+.rounttriponeway {width:50%; margin:auto;   margin-top:50px;}
+.rounttriponeway_multy {width:80%; margin:auto;   margin-top:50px;}
+.logocelebration { display:block;}
+.empmaindv {border:solid 1px #fff; margin:30px;}
+.flghtdtheading {color: #fff; font-size: 20px; padding-top: 10px; text-align: center;text-decoration: underline;}
+.submitbtncs {text-align:center; margin-top:10px; margin-bottom:20px;}
+.origindrop select {  width:90%; height:35px;  background-color:#C9252C; -webkit-appearance: button;
+    -webkit-border-radius: 2px;
+   
+    -webkit-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -webkit-user-select: none;
+    -moz-appearance: none;
+    background: #C9252C url("../Images/drop_icon.png") no-repeat scroll 95% center;
+    /*border: solid 1px #fff none !important;*/
+    border-radius: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    color: #fff;
+    font-size: 15px;
+    height: 35px;
+    padding: 6px;
+    text-indent: 0px;
+    border: solid 1px #fff;
+    text-overflow: "";
+   }
+.bookingfor select {  width:80%; height:35px;  background-color:#C9252C; -webkit-appearance: button;
+    -webkit-border-radius: 2px;
+   
+    -webkit-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -webkit-user-select: none;
+    -moz-appearance: none;
+    background: #C9252C url("../Images/drop_icon.png") no-repeat scroll 95% center;
+    /*border: solid 1px #fff none !important;*/
+    border-radius: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    color: #fff;
+    font-size: 15px;
+    height: 35px;
+    padding: 6px;
+    text-indent: 0px;
+    border: solid 1px #fff;
+    text-overflow: "";
+   }
+.reasontravel textarea { width:80%; height:90px; color:#000;}
+.destinationDv { margin-top:10px;}
+.dateoftravel input { width:90%; height:35px;border:solid 1px #fff;background-color:transparent; color:#fff; padding-left:10px;}
+.submitbtn a { padding:10px 40px 10px 40px; background-color:#fff; color:#C9252C; text-align:center; border-radius:3px; font-weight:bold; font-size:16px;}
+/*-----------------------------END SOD TRAVEL PAGE -------------------------*/
+fieldset.fsStyle {
+   
+   
+    font-weight: normal;
+    border: 0px solid #fff;
+    padding: 4px;
+    margin: 0px;
+}
+legend.legendStyle {
+    
+    color: #fff;
+    background-color: transparent;
+    font-weight: bold;
+}
+.dynamiccontroltbl {border:solid 1px #fff; margin-top:10px; width:100%; font-size:17px; color:#fff; padding-left:10px;}
+    .dynamiccontroltbl td { padding-left:10px; height:45px;    }
+    .dynamiccontroltbl input { background-color:#C9252C; border:solid 1px #fff; padding-left:10px;    }
+.flightselctbookingbox {border:solid 1px #fff; color:#fff; padding-left:10px; padding-top:10px; padding-bottom:10px; margin-top:20px;}
+.flighdtshow {width:100%; border:solid 1px #fff;}
+.flighdtshow td { color:#fff; padding-left:10px; padding-top:10px; font-size:15px;}
+.empdtldv {width:100%; height:200px; margin-top:20px; margin-left:30px; color:#fff; font-size:17px; margin-bottom:30px;}
+.empdtldv table td {  padding-top:10px;    }
+.flghtdtheading { font-size:20px; color:#fff; text-align:center; text-decoration:underline;}
+.flightdtlshow { padding:30px; border:solid 1px #fff; color:#fff; font-size:17px; margin:30px;}
+.flightdtlshow table td {  border:solid 1px #fff; padding-left:10px; height:35px;   }
+.Traveldtldv {width:100%; height:200px; margin-top:20px; margin-left:30px; color:#fff; font-size:17px;}
+.Traveldtldv table td {  padding-top:10px;    }
+.Traveldtldv input {  border:solid 1px #fff; background-color:#C9252C; color:#fff; padding-left:10px; width:70%;   }
+.rectanglebox {border:solid 0px #fff; margin:30px;}
+.approvedtl table td{ color:#fff; font-size:15px; padding-left:10px; border:solid 1px #fff; height:35px;}
+    .approvedtl table td a {color:#FFFF33;}
+.viewdetailsdv {margin:auto; width:60%; color:#fff; font-size:19px; font-weight:400;}
+    .viewdetailsdv table { border:solid 1px #fff;    }
+.viewdetailsdv table td { padding:20px;}
+#tooltip-ex a { color:#fff; text-decoration:none;}
+
+
+.Passenegerdtdv {margin-top:20px; font-size:16px; color:#fff; padding-left:30px; }
+.Passenegerdtdv2 {margin-top:20px; font-size:16px; color:#fff; padding-left:30px; padding-bottom:30px; }
+
+.title select {
+    width: 80px;
+    height: 35px;
+    background-color: #C9252C;
+    -webkit-appearance: button;
+    -webkit-border-radius: 2px;
+    -webkit-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -webkit-user-select: none;
+    -moz-appearance: none;
+    background: #C9252C url("../Images/drop_icon.png") no-repeat scroll 95% center;
+    border-radius: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    color: #fff;
+    font-size: 15px;
+    height: 35px;
+    padding: 2px 3px 3px 10px;
+    text-indent: 0px;
+    border: solid 1px #fff;
+    text-overflow: "";
+}
+.Passenegerdfor select {  width:95%; height:35px;  background-color:#C9252C; -webkit-appearance: button;
+    -webkit-border-radius: 2px;
+   
+    -webkit-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -webkit-user-select: none;
+    -moz-appearance: none;
+    background: #C9252C url("../Images/drop_icon.png") no-repeat scroll 95% center;
+    /*border: solid 1px #fff none !important;*/
+    border-radius: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    color: #fff;
+    font-size: 15px;
+    height: 35px;
+    padding: 6px;
+    text-indent: 0px;
+    border: solid 1px #fff;
+    text-overflow: "";
+   }
+.Passenegertxtdv input {
+    width: 92%;
+    height: 35px;
+    border: solid 1px #fff;
+    background-color: transparent;
+    color: #fff;
+    padding-left: 10px;
+}
+.Passenegertxtdv2 input {
+    width: 95%;
+    height: 35px;
+    border: solid 1px #fff;
+    background-color: transparent;
+    color: #fff;
+    padding-left: 10px;
+}
+.fstnm { padding-left:35px;}
+.gap { margin-top:20px;}

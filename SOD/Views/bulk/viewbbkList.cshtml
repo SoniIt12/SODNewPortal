@@ -1,0 +1,676 @@
+﻿
+
+@{
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml";
+    ViewBag.Title = "View Bulk Booking List";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SOD | Bulk List</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    @*<link href="../css/SODstyle.css" rel="stylesheet" />*@
+    <link href="../New_Calender/calender.css" rel="stylesheet" />
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+
+    <script src="../js/bulk-upload-js.js"></script>
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>*@
+    <script src="../New_Calender/src/calender_jquery.daterange.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="../js/angular/bulk-upload-ang.js"></script>
+    @*<script src="../asset/js/bootstrap.min.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            var d = new Date(),
+                datef = ((d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear())),
+                datet = ((d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear()));
+            $("#txtfromdate").val(datef);
+            $("#txttodate").val(datet);
+        });
+
+        $(function () {
+            $("#txtfromdate").datepicker({
+                numberOfMonths: 2,
+                defaultDate: new Date(),
+                maxDate: "+10M +00D",
+                dateFormat: "dd/mm/yy"
+            });
+        });
+
+        $(function () {
+            $("#txttodate").datepicker({
+                numberOfMonths: 2,
+                defaultDate: new Date(),
+                maxDate: "+1M +00D",
+                dateFormat: "dd/mm/yy"
+            });
+        });
+
+    </script>
+    <style>
+
+        .ui-menu-item {
+            width: 25% !important;
+            float: left;
+        }
+
+        .submitbtn {
+            background-color: #EE1D23;
+            color: #fff;
+        }
+
+        .srtarrowdouble a {
+            color: #428bca;
+            cursor: pointer;
+        }
+        /*ul > li, a {cursor: pointer;}*/
+        .ui-widget-content {
+            width: 18%;
+            font-size: 14px;
+            border: 1px solid #aaaaaa;
+            color: #222222;
+        }
+
+        .searchtxt {
+            margin-top: 10px;
+            float: right;
+        }
+
+        .searchDvPagesize_right {
+            float: left;
+            margin-top: 3px;
+        }
+    </style>
+    <style type="text/css">
+
+        /*.modal.modal-wide .modal-dialog {
+                width: 80%;
+            }*/
+
+        /*.modal-wide .modal-body {
+                overflow-y: auto;
+            }*/
+        /* irrelevant styling */
+        .modal-dialog {
+            left: 5px;
+        }
+
+            .modal-dialog div {
+                text-align: center;
+            }
+        /*.modal-dialog div  p { max-width: 400px;margin: 20px auto;}*/
+        .modal-body table tr th {
+            text-align: Center;
+            padding: 10px;
+        }
+
+        ul > li, a {
+            cursor: pointer;
+        }
+
+        a {
+            color: #222222;
+        }
+
+            a:hover {
+                color: #4800ff;
+            }
+
+        img {
+            cursor: pointer;
+        }
+
+        .popuphdtxt {
+            font-size: 18px;
+            font-family: Swis721 Cn BT,Sans-Serif;
+            padding-bottom: 1px;
+            padding-top: 1px;
+        }
+
+        .flighdtl {
+            width: 100%;
+            border: 1px solid #c2c2c2;
+        }
+
+        .popheadcolor {
+            background-color: #EE1D23;
+            color: #fff;
+            font-family: Swis721 Cn BT,Sans-Serif;
+        }
+
+        .modal-header {
+            min-height: 16.43px;
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+            background-color: #EE1D23;
+        }
+
+        .disabled {
+            pointer-events: none;
+            cursor: default;
+            opacity: 0.6;
+        }
+
+        .poptextEdit input {
+            border: solid 1px #EE1D23;
+        }
+
+            .poptextEdit input:focus {
+                outline: solid 1px #EE1D23;
+            }
+
+        .modal.modal-wide .modal-dialog {
+            width: 95%;
+        }
+
+        .poptextEdit input {
+            padding-left: 0px;
+        }
+
+        .flighdtl td input {
+            width: 100%;
+            margin: 0px;
+            font-size: 11px;
+            height: 25px;
+        }
+
+        input::-webkit-datetime-edit {
+            color: transparent;
+        }
+
+        input:focus::-webkit-datetime-edit {
+            color: transparent;
+        }
+
+        /*.flighdtl td input {
+                width: 86px;
+                margin: 4px;
+                height: 30px;
+            }*/
+
+        .removePadding td {
+            padding-left: 0px;
+        }
+
+        .flighdtl td select {
+            width: 100%;
+            margin: 0px;
+            font-size: 11px;
+            height: 25px;
+        }
+
+        .tooltip1 .tooltiptext {
+            left: 105%;
+            right: 0px;
+        }
+
+        .tooltip1 {
+            border-bottom: none;
+            cursor: pointer;
+        }
+
+        .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="content_header_txt">
+        <div>   View Bulk Booking Status and Travel History </div>
+    </div>
+    <div ng-app="appblk" ng-controller="bulkCtrl" ng-cloak>
+        <div class="bookingheadr" style="display:none">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="usrdtlsdiaplay">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <nav class="navbar navbar-default navbar-static-top navbar-transparent">
+                                        <div class="container">
+                                            <div class="row">
+                                                <!-- Brand and toggle get grouped for better mobile display -->
+                                                <div class="navbar-header">
+                                                    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                                                        <span class="sr-only">Toggle navigation</span>
+                                                        <span class="icon-bar"></span>
+                                                        <span class="icon-bar"></span>
+                                                        <span class="icon-bar"></span>
+                                                    </button>
+                                                    <a href="#" class="navbar-brand" id="logo"><img src="../img/logo_spicejet.png" /></a>
+                                                    <div class="nav navbar-header headertitle">  <div class="sodHeading"> SOD BULK BOOKING </div></div>
+                                                </div>
+
+                                                <!-- Collection of nav links and other content for toggling -->
+                                                <div id="navbarCollapse" class="collapse navbar-collapse" style="background:#EE1D23; border:none; padding:3px;">
+                                                    <div class="dropdown" style="padding-bottom:5px;">@Session["UserInfo"]   </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--------------------------------------------Content---------------->
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="booking-status-option">
+                        <input type="radio" name="radio" id="rdodate" checked="checked" value="1" ng-click="hideTbl()" /> Booking Date Wise
+                        <input type="radio" name="radio" id="rdopnr" value="2" ng-click="hideTbl()" />PNR Wise
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="content_search_structure_box">
+                        <div class="col-md-5">
+                            <div>From Date (dd/MM/yyyy)</div>
+                            <div class="paddingbottom05"><i class="img_i " onclick="document.getElementById('txtfromdate').focus();"></i><input id="txtfromdate" type="text" placeholder="From Date" class="fh_inputtxt2 form-control" required /></div>
+                        </div>
+                        <div class="col-md-5">
+                            <div>To Date (dd/MM/yyyy)</div>
+                            <div class="paddingbottom05"><i class="img_i" onclick="document.getElementById('txttodate').focus();"></i><input id="txttodate" type="text" placeholder="To Date" class="fh_inputtxt2 form-control" required /></div>
+                        </div>
+                        <div class="col-md-1">
+                            <div>Page Size</div>
+                            <div class="paddingbottom05">
+                                <select class="form-control input-sm" ng-model="entryLimit" style="height:36px;">
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>20</option>
+                                    <option>50</option>
+                                    <option>100</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="margintop20"><input type="submit" id="btnSearch_blkList" value="Search" class="submitbtn btn btn-danger" ng-click="getmasterbulkList()" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="dvtabledata" class="mobpadding10">
+                        <div>
+                            <div class="content_inner_box_topborder Mob_grid_scrollWidth" style="width:100%;" ng-show="trlist.length || trlists.length">
+                                <table class="table table-striped table-bordered" ng-show="trlist.length">
+                                    <tr class="popheadcolor fonttext14">
+                                        <th class="srtarrowdouble" width="8%">S No. &nbsp;<a ng-click="sort_by('SNo');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble" width="14%">Booking Id &nbsp;<a ng-click="sort_by('TRId');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble" width="15%">Booking Date &nbsp;<a ng-click="sort_by('TransactionDate');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble" width="35%">File Name &nbsp;<a ng-click="sort_by('FileName');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble" width="25%">Created By &nbsp;<a ng-click="sort_by('CreatedByName');"><i class="glyphicon glyphicon-sort"></i></a></th>
+
+
+                                    </tr>
+                                    <tr class="fonttext1" ng-repeat="list in filtered = (trlist | filter: search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                        <td>{{list.SNo}}</td>
+                                        <td>{{list.TRId}}</td>
+                                        <td>{{ToJavaScriptDate(list.TransactionDate)}}</td>
+                                        <td><a data-toggle="modal" href="#viewdetailModal" class="csod" ng-click="viewdetail(list.TRId , list.FileStatus)">{{list.FileName}}</a></td>
+                                        <td>{{list.CreatedByName}}</td>
+
+                                    </tr>
+                                </table>
+
+                                <table class="table table-striped table-bordered" style="width:100%;" ng-show="trlists.length">
+                                    <tr class="popheadcolor">
+                                        <th class="srtarrowdouble" width="5%">S No. &nbsp;<a ng-click="sort_by('ID');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble" width="10%">Emp. Code &nbsp;<a ng-click="sort_by('EmpCode');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble" width="20%">Name &nbsp;<a ng-click="sort_by('FirstName');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble" width="8%">Mob. No. &nbsp;<a ng-click="sort_by('MobileNo');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble">Travel Date &nbsp;<a ng-click="sort_by('TravelDate');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble" width="10%">Sector &nbsp;<a ng-click="sort_by('Sector');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble">Flight No. &nbsp;<a ng-click="sort_by('FlightNo');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble">Booking Type &nbsp;<a ng-click="sort_by('BookingType');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble">PNR &nbsp;<a ng-click="sort_by('PNR');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble">Meal &nbsp;<a ng-click="sort_by('Meal');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble">Bvg. &nbsp;<a ng-click="sort_by('Beverage');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble">Hotel Req. &nbsp;<a ng-click="sort_by('IsHotelRequired');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble">Date &nbsp;<a ng-click="sort_by('CreatedDate');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th class="srtarrowdouble">Tr.Id &nbsp;<a ng-click="sort_by('TrnId');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                    </tr>
+                                    <tr ng-repeat="list in filtered = (trlists | filter: search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{list.EmpCode}}</td>
+                                        <td>{{list.FirstName}}</td>
+                                        <td>{{list.MobileNo}}</td>
+                                        <td>{{list.TravelDate}}</td>
+                                        <td>{{list.Sector}}</td>
+                                        <td>{{list.FlightNo}}</td>
+                                        <td>{{list.BookingType}}</td>
+                                        <td ng-if="list.BookingType=='Confirm'">Not Applicable<span id='spnr'></span></td>
+                                        <td ng-if="list.BookingType=='Standby'">{{dlist.PNR_Statuss!='Pending'? list.PNR : 'Pending'}}<span id='spnr'></span></td>
+                                        <td>{{list.Meal}}</td>
+                                        <td>{{list.Beverage}}</td>
+                                        <td>{{list.IsHotelRequired==true ? 'Yes' : 'No'}}</td>
+                                        <td>{{ToJavaScriptDate(list.CreatedDate)}}</td>
+                                        <td>{{list.TrnId}}</td>
+                                    </tr>
+                                </table>
+                                <div class="col-md-12" ng-show="filteredItems == 0">
+                                    <div class="col-md-12"><div class="content_inner_box Mob_grid_scrollWidth" style="text-align:left; font-size:17px;color:red">No record found.</div></div>
+
+                                </div>
+
+                                <div class="col-md-12" ng-show="filteredItems > 0" style="z-index:0;">
+                                    <div pagination total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+                                </div>
+                            </div>
+                            @*If No Record Found*@
+                            <div class="col-md-12" ng-if="trlist.length ==0 &&trlists.length ==0">
+                                <div class="col-md-12"><div class="content_inner_box Mob_grid_scrollWidth" style="text-align:left; font-size:17px;color:red">No record found.</div></div>
+                            </div>
+                            @*<div class="col-md-12" ng-if="trlist.length == null &&trlists.length ==0">
+                                    <div class="col-md-12"><div class="content_inner_box Mob_grid_scrollWidth" style="text-align:left; font-size:17px;color:red">No record found.</div></div>
+                                </div>*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--------------------View Detail Model popup------------------------------------->
+        <div id="viewdetailModal" class="modal modal-wide fade">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs headertxt_whitecolortxt">View Bulk Booking Details ({{trn}})</span></h4>
+                        <input id="trn" value="{{trn}}" hidden />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div>
+                                <span>
+                                    <input type="radio" style="height:17px; width:17px;" name="typeDetails" value="bookingDetail" id="bookingDetail" checked="checked" ng-click="viewdetail(trn)" />
+                                    <label for="bookingDetail">Booking Details</label>
+                                </span>
+                                <span>
+                                    <input type="radio" style="height:17px; width:17px;margin-left:10px;" name="typeDetails" id="hotelReport" value="hotelReport" ng-click="viewdetailbkList(trn)" />
+                                    <label for="hotelReport" ng-click="viewdetailbkList(trn)">Hotel Report</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body" id="blkBookingDetails">
+                        <div>
+                            <div class="Mob_grid_scrollWidth">
+                                <table id="tblbookinginfo" class="flighdtl table table-striped table-bordered">
+                                    <tr class="popheadcolor small_header_txt">
+                                        <th>S No. </th>
+                                        <th>Emp Code </th>
+                                        <th>Emp Name</th>
+                                        <th>Travel Date</th>
+                                        <th>Sector</th>
+                                        <th>Flight No.</th>
+                                        <th>PNR</th>
+                                        <th>Meal</th>
+                                        <th>Beverage</th>
+                                        <th>Is Hotel Required</th>
+                                        <th>Check-In Date</th>
+                                        <th>Check-Out Date</th>
+                                        <th>Check-in Time</th>
+                                        <th>Check-out Time</th>
+                                        <th>Airport Transfer</th>
+                                        <th>Booking Type</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <tr class="fonttext11 small_header_txt" ng-repeat="dlist in trdlist">
+                                        <td>{{$index+1}}</td>
+                                        <td id="noEdit_EmpCode_{{$index+1}}" ng-mouseover="GetHotelDetails(dlist.EmpCode,trn)">
+                                            <div class="tooltip1">
+                                                {{dlist.EmpCode}}
+                                                <span class="tooltiptext" style="background-color:#fff;" ng-if="Hdetails.HotelName">
+                                                    <table class="table table-striped table-bordered" style="font-size:10px;width:100%;">
+                                                        <tr><th><b>City:</b>  {{Hdetails.City}}</th></tr>
+                                                        <tr><th style="color: grey;"><b>HotelName:</b>  {{Hdetails.HotelName}}</th></tr>
+                                                        <tr><th> <b> Hotel Address:</b> {{Hdetails.HotelAddress}}</th></tr>
+                                                        <tr><th style="color: grey;"> <b>Hotel Phone no :</b>  {{Hdetails.HotelPhoneNo}}</th></tr>
+                                                        <tr><th><b>hotel Status:</b>  {{Hdetails.HotelStatus}}</th></tr>
+                                                        <tr ng-if="Hdetails.HotelConfirmationNo" style="color: grey;"><td><b>Hotel Confirmation No.:</b>  {{Hdetails.HotelConfirmationNo}}</td></tr>
+                                                        <tr><th> <b>HotelReferenceID :</b> {{Hdetails.HotelReferenceID}}</th></tr>
+                                                    </table>
+                                                </span>
+                                                <span class="tooltiptext" style="background-color:#fff;" ng-if="!Hdetails.HotelName">
+                                                    <table class="table table-striped table-bordered" style="font-size:10px;width:100%;">
+                                                        <tr><td style="color: red;"><b>Hotel is not allocated .</b></td></tr>
+                                                    </table>
+                                                </span>
+                                            </div>
+                                            <div class="tooltip1" ng-if="dlist.IsBookingcancelled"><img style='margin-bottom:4px;margin-left:4px;' src='../img/rejected.png' height="15" width="15" /><span class="tooltiptext">This Booking is Cancelled</span></div>
+                                        </td>
+                                        <td id="edit_employee_{{$index+1}}" style="padding-left:0px;" hidden><input type="text" class="form-control" style="margin-left:5px;width:50px;" value="{{dlist.EmpCode}}" id="edtEmpcode_{{$index+1}}" maxlength="10" ng-blur="fetchdetails($index+1,trn)" onkeydown="validateNumber(event);" required></td>
+                                        <td>{{dlist.Title}}  {{dlist.FirstName}}  {{dlist.LastName}}</td>
+                                        <td>{{dlist.TravelDate}}</td>
+                                        <td>{{dlist.Sector}}</td>
+                                        <td>{{dlist.FlightNo}}</td>
+                                        <td ng-if="dlist.BookingType=='Confirm' || dlist.BookingType=='confirm'">Not Applicable</td>
+                                        <td ng-if="dlist.BookingType=='Standby' || dlist.BookingType=='standby'">{{dlist.PNR!=''? dlist.PNR : 'Pending'}}</td>
+                                        <td>{{dlist.Meal}}</td>
+                                        <td>{{dlist.Beverage!='' ? dlist.Beverage : 'NA'}}</td>
+                                        <td id="" style="display:none"><input id="ishHtelReq_{{$index+1}}" type="text" value="{{dlist.IsHotelRequired==true ? 'Yes' : 'No'}}" /></td>
+                                        <td style="width: 2%;">{{dlist.IsHotelRequired==true ? 'Yes' : 'No'}}</td>
+                                        <td id="noEdit_checkinDate_{{$index+1}}">
+                                            <span ng-if="dlist.CheckInDate=='-2209008600000' ||dlist.CheckInDate=='631132200000'">NA</span>
+                                            <span ng-if="dlist.CheckInDate !='-2209008600000' && dlist.CheckInDate !='631132200000' && dlist.IsHotelRequired!=false"">{{dlist.CheckInDate| date:'dd/MM/yyyy'}}</span>
+                                            <span ng-if="dlist.IsHotelRequired!=true">NA</span>
+                                        </td>
+                                        <td id="edit_checkinDate_{{$index+1}}" style="max-width: 115px ; padding-left: 0px;" hidden>
+                                            <input style="margin-left:5px;" class="form-control-custom-small" type="text" ng-model="dlist.CheckInDate" date='dd/MM/yyyy' formatted-date format="MM/dd/yyyy" datepicker required readonly />
+                                        </td>
+                                        <td id="noEdit_checkoutDate_{{$index+1}}">
+                                            <span ng-if="dlist.CheckOutDate=='-2209008600000' ||dlist.CheckOutDate=='631132200000'">NA</span>
+                                            <span ng-if="dlist.CheckOutDate !='-2209008600000' && dlist.CheckOutDate !='631132200000' && dlist.IsHotelRequired!=false">{{dlist.CheckOutDate| date:'dd/MM/yyyy'}}</span>
+                                            <span ng-if="dlist.IsHotelRequired!=true">NA</span>
+                                        </td>
+
+                                        @*<td id="noEdit_checkoutDate_{{$index+1}}">{{dlist.CheckOutDate| date:'dd/MM/yyyy'}}</td>*@
+                                        <td id="edit_checkoutDate_{{$index+1}}" style="max-width: 115px; padding-left: 0px;" hidden>
+                                            <input style="margin-left:5px;" class="form-control-custom-small" type="text" ng-model="dlist.CheckOutDate" date='dd/MM/yyyy' formatted-date datepicker required readonly />
+                                        </td>
+                                        <td>
+                                            {{dlist.CheckinTime}}
+                                        </td>
+                                        <td>
+                                            {{dlist.CheckoutTime}}
+                                        </td>
+                                        <td>
+                                            <span ng-if="dlist.AirportTransport == true">Yes</span>
+                                            <span ng-if="dlist.AirportTransport == false">No</span>
+                                            @*<span ng-if="dlist.IsHotelRequired!=true">NA</span>*@
+                                        </td>
+                                        <td>{{dlist.BookingType}}
+</td>
+                                        <td ng-if="dlist.FileSatus != 'Rejected'">
+                                            <button class="editbtn_small" id="editBtn_{{$index+1}}" ng-if="!dlist.IsBookingcancelled" ng-click="EditDetailList($index+1)">Edit</button>
+                                            <button class="btn-xs btn-primary" id="btnupdate_{{$index+1}}" ng-click="updateRow(dlist,trn,$index+1)" hidden> Update</button>
+                                            <button style="margin-bottom:5px;" class="btn-xs btn-warning" id="updateCancel_{{$index+1}}" ng-click="cancelUpdate(dlist,trn,$index+1)" hidden> Cancel</button>
+                                            <button ng-if="!dlist.IsBookingcancelled" class="canReq_small" id="bookingCancel{{$index+1}}" ng-click="bookingCancel(dlist,trn,$index+1)">Cancel Req.</button>
+                                            <div @*class="tooltip1"*@ ng-if="dlist.IsBookingcancelled"><img style='margin-bottom:4px;margin-left:4px;' src='../img/rejected.png' height="15" width="15" /> <span style="color:red">cancelled</span>@*<span class="tooltiptext">This Booking is Cancelled</span>*@</div>
+                                        </td>
+                                        <td ng-if="dlist.FileSatus == 'Rejected'" style="color:red">
+                                            Rejected <img style='margin-bottom:4px;margin-left:4px;' src='../img/rejected.png' height="15" width="15" />
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="dlists in NoOfDiv" class="removePadding" id="addnewDiv">
+                                        <td>{{$index+1}}</td>
+                                        <td><input class="form-control-custom-small" type="text" id="addEmpCode{{$index+1}}" ng-blur="fetchdetails_edit($index+1,trn)" onkeydown="validateNumber(event);"></td>
+                                        <td><input class="form-control-custom-small" type="text" id="addEmpName{{$index+1}}" style="width: 115px;"></td>
+                                        <td><input class="form-control-custom-small" type="text" ng-model="addTrvdate" is-open="$parent.opened" datepicker /></td>                                '
+                                        <td><input class="form-control-custom-small" type="text" id="addsector" value="{{trdlist[0].Sector}}"></td>
+                                        <td><input class="form-control-custom-small" type="text" id="addflightNo" value="{{trdlist[0].FlightNo}}"></td>
+                                        <td><input class="form-control-custom-small" type="text" id="addPnr"></td>
+                                        <td><select class="form-control-custom-small" style="width:80px;" id="addmeal"><option value="VGML">VGML</option><option value="NVGML">NVML</option></select></td>
+                                        <td><select class="form-control-custom-small" id="addBvrg" style="width:70px;"><option value="BVG">BVG</option><option value="NA">NA</option></select></td>
+                                        <td>
+                                            <select class="form-control-custom-small" id="ddlhotel" ng-model="dlists.ddlhotelreq" ng-change="clearfields(dlists.ddlhotelreq,{{$index+1}})">
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </td>
+                                        @*</lata>*@
+                                        <td><input class="form-control-custom-small" type="text" ng-model="addChkIndt" id="addChkIndt" ng-disabled="dlists.ddlhotelreq==0" datepicker /></td>
+                                        <td><input class="form-control-custom-small" type="text" ng-model="addChkOutdt" id="addChkOutdt" datepicker ng-disabled="dlists.ddlhotelreq==0" /></td>
+                                        <td><input class="form-control-custom-small" type="text" ng-model="addChkInTime" id="addChkInTime{{$index+1}}" ng-disabled="dlists.ddlhotelreq==0" /> </td>
+                                        <td><input class="form-control-custom-small" type="text" ng-model="addChkOutTime" id="addChkOutTime{{$index+1}}" ng-disabled="dlists.ddlhotelreq==0" /> </td>
+                                        <td><select class="form-control-custom-small" id="addAirTrans" ng-disabled="dlists.ddlhotelreq==0" style="width: 70px;">
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option></select></td>
+                                        <td><select class="form-control-custom-small" id="addBookType" style="width: 85px;"><option value="standby">Standby</option><option value="confirm">Confirm</option></select></td>
+                                        <td hidden><input type="text" id="addAgencyCode" value="{{trdlist[0].AgencyCode}}" disabled></td>
+                                        <td><input type="checkbox" ng-if="validEmployee" /></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="text-align:left; margin-top:0px;">
+                                <a href="#" ng-click="addnewDiv()" id="addButtonnew"><img src="../img/button.png" style="height:20px;" /></a>
+                                <a href="#" id="removeButton" ng-click="removeDiv()"><img src="../img/remove.png" style="height:20px;" /></a>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" ng-disabled="btnDisable" id="btnGeneratePNR" style="margin-top:15px" ng-click="GeneratePnrRoleHod();" class="submitbtn" hidden>Generate PNR</button>
+                            <button type="submit" ng-disabled="btnDisable" id="btnsendRqtoHOD" style="margin-top:15px" ng-click="sendReqtoHOD_edit();" class="btn btn-danger btn-sm" hidden>Send Request to HOD</button>
+                            <input type="hidden" id="hdnbbr" value="@ViewBag.bbbRight" />
+                        </div>
+                    </div>
+                    <div class="modal-body" id="blkHotelReport">
+                        <div class="mob_display_tbview">
+                            <div class="row pull-right btn-lg">
+                                <button class="btn-warning btn-sm" ng-show="trlistb.length" id="bulkdwnlink" ng-click="downloadexcelBlist(trn)">Download &nbsp;<img src="../img/excel.jpg" height="22" width="20" alt="Approved" /></button>
+                            </div>
+                            <table class="table table-striped table-bordered" style="width:100%;" ng-show="trlistb.length">
+                                <tr class="popheadcolor fonttext11">
+                                    <th width="5%">S No.</th>
+                                    <th>Flight No.</th>
+                                    <th width="10%">Staff ID </th>
+                                    <th width="10%">City </th>
+                                    <th width="10%">ETA </th>
+                                    <th width="10%">Checkin</th>
+                                    <th width="10%">CheckOut</th>
+                                    <th width="10%">Checkin Time </th>
+                                    <th>Gender</th>
+                                    <th width="10%">Name </th>
+                                    <th width="10%">Department </th>
+                                    <th>Room Night</th>
+                                    <th>Room Type</th>
+                                    <th>Hotel Name</th>
+                                    <th>Hotel Conf. No.</th>
+                                    <th>HOD Approval</th>
+                                </tr>
+                                <tr class="fonttext11" ng-repeat="blist in trlistb">
+                                    <td>{{blist.SNo}}</td>
+                                    <td>SG {{blist.FlightNo}}</td>
+                                    <td>{{blist.StaffId}}</td>
+                                    <td>{{blist.City_Name}}</td>
+                                    <td>{{blist.ETA}}</td>
+                                    <td>{{blist.Check_In}}</td>
+                                    <td>{{blist.Check_Out}}</td>
+                                    <td>{{blist.Check_In_Time}}</td>
+                                    <td>{{blist.Gender}}</td>
+                                    <td>{{blist.Name}}</td>
+                                    <td>{{blist.Department}}</td>
+                                    <td>{{blist.Room_Night}}</td>
+                                    <td>{{blist.Room_Type}}</td>
+                                    <td>{{blist.HOTAC}}</td>
+                                    <td>{{blist.HotelConfirmationNo}}</td>
+                                    <td ng-if="list.HOD_Approval==1">Approved &nbsp;<img src="../img/right.jpg" height="15" width="15" alt="Approved" /></td>
+                                    <td ng-if="list.HOD_Approval!=1'">Pending &nbsp;<img src="../img/pend.jpg" height="15" width="15" alt="Pending" /></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!--If No Record Found-->
+                        <div class="row" ng-show="!trlistb.length">
+                            <div class="col-md-12"><div class="content_inner_box Mob_grid_scrollWidth" style="text-align:left; font-size:17px;margin-top:0px;color:red">No record found.</div></div>
+                            @*<div class="col-md-12">
+                                    <h4 style="color:red">No Record found</h4>
+                                </div>*@
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <div id="viewhoteldetailModal" class="modal modal-wide fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id="dvHotelBookingDataShow">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                            <h4 class="modal-title"><span class="viewHotelHeader">View Hotel Booking Request Details - {{Hdetails.TravelRequestId}}</span></h4>
+                            <input type="hidden" id="hddnEmpCode" value="{{Hdetails.EmployeeCode}}" />
+                        </div>
+                        <div class="modal-body">
+                            <h4 ng-if="hotelData.length != 0" class="popuphdtxt" id="hotelH">Hotel(s) Information</h4>
+                            <table class="flighdtl" id="tblHotelDet">
+                                <tr class="popheadcolor" style="font-weight:bold;">
+                                    <td>City</td>
+                                    <td>HotelName</td>
+                                    <td>Hotel Address</td>
+                                    <td>Hotel Phone nO</td>
+                                    <td>Hotel Price</td>
+                                    <td>Hotel status</td>
+                                </tr>
+                                <tr>
+                                    <td>{{Hdetails.City}}</td>
+                                    <td>{{Hdetails.HotelName}} </td>
+                                    <td>{{Hdetails.HotelAddress}}</td>
+                                    <td>{{Hdetails.HotelPhoneNo}}</td>
+                                    <td>{{Hdetails.HotelPrice}} </td>
+                                    <td>
+                                        hotel Status: {{Hdetails.HotelStatus}}  <br />
+                                        Hotel Confirmation No.: {{Hdetails.HotelConfirmationNo}}  <br />
+                                        HotelReferenceID : {{Hdetails.HotelReferenceID}}   <br />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="col-md-12">
+                            <span style="font-size:12px;font-weight:normal;padding-left:10px;color:red; float:left;">#Hotel can be pre-booked upto 24:00 hours prior to the flight departure.</span>
+                        </div>
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </div>
+            <!-- --------------------Loader--------------------------------------------------->
+            <div class="loader">
+                <center>
+                    <span class="loading-image" id="loaderMsg" style="font-weight:bold;font-size:22px;color:#ff0000;"></span>
+                    <img class="loading-image" src="../images/loading.gif" alt="loading.."><br />
+                </center>
+            </div>
+            <!-- --------------------End of Loader----------------------------------------->
+            <!--------------------------------------------Footer------------------------------>
+            <div style="padding-top:70px;"></div>
+            <footer class="essfooter">
+                <div class="container"></div>
+            </footer>
+            <!-- ------------------------------------------END Footer------------------------->
+        </div>
+    </div>
+</body>
+</html>
+
+

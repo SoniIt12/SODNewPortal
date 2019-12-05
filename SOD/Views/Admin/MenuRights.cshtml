@@ -1,0 +1,450 @@
+﻿
+@{
+    ViewBag.Title = "MenuRights";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<style>
+ul, #myUL {
+  list-style-type: none;
+}
+
+#myUL {
+  margin: 0;
+  padding: 0;
+}
+
+.caret11 {
+  cursor: pointer;
+  -webkit-user-select: none;   /* Safari 3.1+ */
+  -moz-user-select: none;      /* Firefox 2+ */
+  -ms-user-select: none;       /* IE 10+ */
+  user-select: none;
+}
+
+.caret11::before {
+  /*content: "\25B6";*/
+  /*content: "\27A6";*/ 
+   content: "\2795"; 
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+  font-size:13px;
+  color:#b33;
+}
+.caret11-down::before {
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Safari */
+  content: "\2212"; 
+  font-size:15px;
+  font-weight:bold;
+ /* transform: rotate(90deg);  */
+}
+.nested {
+  display: none;
+}
+.active {
+  display: block;
+}
+
+</style>
+
+<div>
+    <div class="admin_content_txtheading">Menu Rights</div>
+</div>
+
+<section class="content">
+    <div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div style="display:none;" id="alertmsg">
+                    <div class="alert alert-danger">
+                        <span id="spanmsg" style="font-weight: bold;"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    
+
+    <div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="bulklistadmin_searchbox">
+                        <div class="col-md-5">
+                            <div style="padding-top:5px;text-align:center"> Choose Menu rights category :</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div>
+                                <select id="roleddl" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="button" class="btn btn-danger" value="Expand All" id="btnexpand" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            </div>
+    </div>
+
+    <div>
+        <div class="row">
+         <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="bulklistadmin_searchbox">
+                        <div class="col-md-12">
+                            <ul id="myUL">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+
+    <div style="margin-top:10px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="text-align:center"><input class="btn btn-danger" type="button" value="Save" id="btnsave" /></div>
+            </div>
+        </div>
+    </div>
+</section>
+<div>
+</div>
+<div>
+</div>
+
+<script src="../js/jquery-2.1.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        BindAllRoles();
+        DisplayAllMenus();
+        $('body').on('click', 'span.caret11', function (event) {
+            if ($(event.target).hasClass('caret11'))
+            {
+                this.parentElement.querySelector(".nested").classList.toggle("active");
+                this.classList.toggle("caret11-down");
+            } 
+        });
+
+        $('body').on('change', '.parent', function (event) {
+            //event.preventDefault();
+            if ($(event.target).hasClass('parent')) {
+                  var flag;
+                  if (this.checked && $('caret11').hasClass('caret11-down')) {
+                        flag = true;
+                        $('.child').parents('ul:eq(0)').prev().find('.parent').each(function () {
+                            if (this.indeterminate) {
+                                if (!this.checked == false)
+                                    flag = false;
+                            }
+                            else 
+                            {
+                                if (!this.checked)
+                                    flag = false;
+                            }
+                        });
+                        $(this).parents('li:eq(0)').find('.child').prop('checked', flag);
+                    }
+                    else {
+                        flag = this.checked;
+                        $(this).parents('li:eq(0)').find('.child').prop('checked', flag);
+                    }
+            }
+        });
+
+        //add child
+        $('body').on('change', '.child', function () {
+            if ($(this).parents('ul:eq(0)').prev().find('.parent').prop('checked', true) && this.checked == false)
+            {
+                $(this).parents('ul:eq(0)').prev().find('.parent').prop('indeterminate', true);
+                $(this).parents('ul:eq(0)').prev().find('.parent').prop('checked', false);
+            }
+            if ($(this).parents('ul:eq(0)').find('.child:checked').length == 0)
+            {
+                $(this).parents('ul:eq(0)').prev().find('.parent').prop('checked', false);
+                $(this).parents('ul:eq(0)').prev().find('.parent').prop('indeterminate', false);
+            }
+            if (this.checked==true)
+            {
+                var flag = true;
+                $(this).parents('ul:eq(0)').find('.child').each(function() {
+                    if (this.checked == false)
+                        flag = false;
+                });
+                if (flag) {
+                    $(this).parents('ul:eq(0)').prev().find('.parent').prop('indeterminate', false);
+                    $(this).parents('ul:eq(0)').prev().find('.parent').prop('checked', flag);
+                }
+                else {
+                    $(this).parents('ul:eq(0)').prev().find('.parent').prop('indeterminate', true);
+                    $(this).parents('ul:eq(0)').prev().find('.parent').prop('checked', false);
+                }
+            }
+        });
+
+        //Expand all menu
+        $('#btnexpand').click(() => {
+            var count = 0;
+            if (document.getElementById('btnexpand').value != "Collapse") {
+                for (var i = 0; i < document.getElementsByClassName('caret11').length; i++) {
+                    if (document.getElementsByClassName('caret11')[i].parentElement.querySelector('.nested').className == 'nested') {
+                        document.getElementsByClassName('caret11')[i].parentElement.querySelector('.nested').classList.toggle('active')
+                        document.getElementsByClassName('caret11')[i].classList.toggle('caret11-down');
+                        count++;
+                    }
+                    else
+                        count++;
+                }
+
+                if (count == document.getElementsByClassName('caret11').length)
+                    document.getElementById('btnexpand').value = "Collapse";
+            }
+            else {
+               
+                for (var i = 0; i < document.getElementsByClassName('parent').length; i++) {
+                    if (document.getElementsByClassName('parent')[i].checked || document.getElementsByClassName('parent')[i].indeterminate) {
+                        document.getElementsByClassName('caret11')[i].parentElement.querySelector('.nested').className == 'nested active'
+                    }
+                    else {
+                        document.getElementsByClassName('caret11')[i].parentElement.querySelector('.nested').className = "nested";
+                        document.getElementsByClassName('caret11')[i].className='caret11';
+                    }
+                }
+                document.getElementById('btnexpand').value = "Expand All";
+            }
+        });
+
+    //bind new Ids
+        function NewIds(IDs) {
+            var NewIds = IDs.split(',');
+            var OldsIds = window.existingMenu.split(',');
+            var derivedIds = "";
+            for (var i = 0; i < NewIds.length; i++)
+            {
+                var flag = false;
+                for (var j = 0; j < OldsIds.length; j++)
+                {
+                    if (NewIds[i] == OldsIds[j])
+                        break;
+                  
+                    if (j == OldsIds.length-1)
+                        derivedIds += NewIds[i] + ",";
+                }
+            }
+            return derivedIds.substring(0,derivedIds.length-1);
+        }
+       //btn Save click
+        $('#btnsave').click(() => {
+            if ($("#btnsave").val() == "Update" && window.existingMenu != "") {
+                var newMenuIds = GetCheckboxValues();
+                if (GetCheckboxValues().toString() == window.existingMenu.toString()) {
+                    //alert('already');
+                    document.getElementById('alertmsg').style.display = "block";
+                    document.getElementById('spanmsg').textContent = "Already Assigned!!!";
+                    setTimeout(function () {
+                        document.getElementById('alertmsg').style.display = "none";
+                        document.getElementById('spanmsg').textContent = "";
+                    }, 5000);
+                }
+                else 
+                    SaveToDb(GetCheckboxValues())
+            }
+            else {
+                    if (validation())
+                    {
+                        SaveToDb(GetCheckboxValues())
+                    }
+            }
+        });
+        
+        $('#roleddl').on('change', () => {
+            DisplayAllMenus();
+            $('#btnexpand').val('Expand All');
+        });
+    });
+
+    //Save DataDB
+    function SaveToDb(newMenuIds) {
+        $.ajax({
+            url: '../Admin/SaveSODRoleMenusID',
+            type:'post',
+            data: { RoleID: $('#roleddl').val(), menuids: newMenuIds },
+            success: function (status) {
+                if (status == 1) {
+                    document.getElementById('alertmsg').style.display = "block";
+                    document.getElementById('alertmsg').childNodes[1].className = 'alert alert-success';
+                    //document.getElementById('spanmsg').color="white";
+                    document.getElementById('spanmsg').textContent = "Saved Successfully!!!";
+
+                    setTimeout(function () {
+                        document.getElementById('alertmsg').childNodes[1].className = 'alert alert-danger';
+                        document.getElementById('alertmsg').style.display = "none";
+                      //  document.getElementById('spanmsg').color = "red";
+                        document.getElementById('spanmsg').textContent = "";
+                    }, 5000);
+                    DisplayAllMenus();
+                }
+                else {
+                    document.getElementById('alertmsg').style.display = "block";
+                    document.getElementById('spanmsg').textContent = "Unable to save!!!";
+                    setTimeout(function () {
+                        document.getElementById('alertmsg').style.display = "none";
+                        document.getElementById('spanmsg').textContent = "";
+                    }, 5000);
+                }
+            },
+            error: function () { }
+        });
+
+    }
+
+    //Get GetParentCheckIndeterminate
+    function GetParentCheckIndeterminate() {
+        var val = "";
+        for (var i = 0; i < document.getElementsByClassName('parent').length; i++)
+        {
+            if (document.getElementsByClassName('parent')[i].checked == true || document.getElementsByClassName('parent')[i].indeterminate == true)
+                val = document.getElementsByClassName('parent')[i].value + ",";
+        }
+        return val.substring(0,val.length-1);
+    }
+
+    //Get Check box Values
+    function GetCheckboxValues() {
+        var menuid = "";
+        $('.child').parents('ul').prev().find('.parent').each(function (index, val) {
+            if (this.checked == true || this.indeterminate) {
+                menuid += val.value + ",";
+                $('.parent').parents('li:eq(' + index + ')').find('.child').each(function (i, v) {
+                    if (this.checked) {
+                        menuid += v.value + ",";
+                    }
+                });
+            }
+        });
+        return menuid.substring(0, menuid.length - 1);
+    }
+
+    //Check Indeterminate Parent Menu
+    function CheckIndeterminateParentMenu() {
+        $('.parent').parents('li').each(function (i, v) {
+            var length = 0;
+            $('.parent').parents('li:eq(' + i + ')').find('.child').each(function () {
+                if (this.checked)
+                    length++;
+
+            });
+            if (length != 0)
+            {
+                if (length >= $('.parent').parents('li:eq(' + i + ')').find('.child').length) {
+                    document.getElementsByClassName('parent')[i].checked = true;
+                    document.getElementsByClassName('parent')[i].indeterminate = false;
+                    document.getElementsByClassName('caret11')[i].parentElement.querySelector('.nested').classList.toggle('active');
+                    document.getElementsByClassName('caret11')[i].classList.toggle('caret11-down');
+                }
+                else {
+                    document.getElementsByClassName('parent')[i].checked = false;
+                    document.getElementsByClassName('parent')[i].indeterminate = true;
+                    document.getElementsByClassName('caret11')[i].parentElement.querySelector('.nested').classList.toggle('active');
+                    document.getElementsByClassName('caret11')[i].classList.toggle('caret11-down');
+                }
+            }
+            else
+            {
+                document.getElementsByClassName('parent')[i].checked = false;
+                document.getElementsByClassName('parent')[i].indeterminate = false;
+            }
+        });
+    }
+   
+     //Display all menu
+    function DisplayAllMenus() {
+        $.getJSON("../Admin/LoadAllMenus?Role=" + document.getElementById('roleddl').value, function (data) {
+            if (data != null && data != undefined && data.length > 0)
+            {
+                $('#myUL').empty();
+                var parentmenu = data.filter(function (menu) {
+                    return menu.MenuType == "P";
+                });
+                var childmenu = data.filter(menu=> {
+                    return menu.MenuType == "C";
+                });
+                for (var i = 0; i < parentmenu.length; i++)
+                {
+                    var header = "<li ><span class='caret11 '><input type='checkbox' class='parent' value=" + parentmenu[i].MenuId + ">" + " " + parentmenu[i].MenuName + "</span>";
+                    var submenu= "<ul class='nested'>";
+                    for (var j = 0; j < childmenu.length; j++)
+                    {
+                        if (parentmenu[i].ParentId == childmenu[j].ParentId)
+                        {
+                            submenu += childmenu[j].RoleID == $('#roleddl').val() ? "<li style='color:green;font-weight:bold'><input type='checkbox'   class='child' value=" + childmenu[j].MenuId + " checked=checked>" + " " + childmenu[j].MenuName + "</li>" : "<li><input type='checkbox' class='child' value=" + childmenu[j].MenuId + ">" + " " + childmenu[j].MenuName + "</li>";
+                        }
+                    }
+                    header += submenu + "</ul>" + "</li>";
+                    $('#myUL').append(header);
+                    header = "";
+                    submenu = "";
+                }
+                CheckIndeterminateParentMenu();
+                window.existingMenu = GetCheckboxValues();
+                GetCheckboxValues() != "" ? $('#btnsave').val("Update") : $('#btnsave').val("Save");
+            }
+            else
+                alert('no data');
+        });
+    }
+
+   //Validations
+    function validation() {
+        var flag=true;
+        $('.child').parents('ul').prev().find('.parent').each(function () {
+            if (this.checked == true || this.indeterminate == true)
+            {
+                flag = true;
+                return false;
+            }
+            else
+                flag = false;
+        });
+        if (!flag) 
+        {
+            document.getElementById('alertmsg').style.display = "block";
+            document.getElementById('spanmsg').textContent = "Please select atleast one menu.";
+            setTimeout(function () {
+                $('#alertmsg').css('display', 'none');
+                $('#spanmsg').text('');
+            }, 5000);
+        }
+        return flag;
+    }
+
+    //Bind All Roles
+    function BindAllRoles() {
+        $.ajax({
+            url: '../Admin/BindSODRoleMaster',
+            type: 'get',
+            async:false,
+            success: function (data) {
+                if (data != null && data.length > 0 && data != undefined)
+                {
+                    $('#roleddl').empty();
+                    for(var i=0;i<data.length;i++)
+                    $('#roleddl').append($('<option></option>').attr('value',data[i].RoleId).text(data[i].RoleName));
+                }
+            },
+            error: function () { }
+        });
+    }
+    
+</script>
+

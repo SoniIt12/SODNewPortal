@@ -1,0 +1,44 @@
+﻿@{
+    String PreviousController = string.Empty;
+    String currentController = (Request.Url.Segments.Skip(1).Take(1).SingleOrDefault()).Trim('/').ToLower();
+    //String currentController = (Request.Url.Segments.Skip(2).Take(1).SingleOrDefault()).Trim('/').ToLower(); // for server
+    if (currentController != "user" && currentController != "sjsisbooking" && currentController != "SJSCFlightBooking")
+    {
+        
+         PreviousController = (Request.UrlReferrer.Segments.Skip(1).Take(1).SingleOrDefault()).Trim('/').ToLower();
+        //PreviousController = (Request.UrlReferrer.Segments.Skip(2).Take(1).SingleOrDefault()).Trim('/').ToLower(); //for server
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="https://www.spicejet.com/images/favicon9.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    @RenderSection("scripts", required: false)
+    @RenderSection("css", false)
+  
+</head>
+
+<body>
+    <div>
+        @if (currentController == "sjsisbooking" || PreviousController == "sjsisbooking"|| currentController=="SJSCFlightBooking" || PreviousController == "HotelOnly")
+        {
+            @Html.Partial("_SjscHeaderBar");
+        }
+        else
+        {
+            @Html.Partial("ApplicationHeaderPartial")
+        }
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

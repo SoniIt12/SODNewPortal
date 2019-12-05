@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Sod | Employee Details";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<script src="../js/angular/angular.min.js"></script>
+<script src="../js/angular/hdemployeeviewdetails.js"></script>
+<link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+<link href="../css/finalsodstyle.css" rel="stylesheet" />
+<link href="~/Assest/css/AdminNew.css" rel="stylesheet" />
+<script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+<link href="../css/bootstrap.min.css" rel="stylesheet" />
+<script src="../js/angular/sanitize.js"></script>
+
+@*<script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>*@
+
+
+
+<style>
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{ padding:3px!important;}
+</style>
+<div ng-app="EmpViewDetails" ng-controller="EmpView">
+
+    <div>
+        <div class="admin_content_txtheading"> View Employee Details</div>
+    </div>
+
+    <section class="content">
+        <div class="Alladmin_content_box">
+            <div class="row">
+                <div class="col-md-4">
+                    <div>Search</div>
+                    <div><input type="text" ng-model="search" placeholder="Enter keyword to search" id="search_textbox" class="form-control"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="filter-txt-topmargin"><span style="text-align:center; font-size:12px;margin-top:10px; margin-bottom:20px;">Filtered {{ filtered.length }} Records from <b>{{ totalItems }}</b> Total Records</span></div>
+                </div>
+                <div class="col-md-2">
+                    <div> Page Size :</div>
+                    <div><select class="form-control" ng-model="entryLimit">
+  
+    <option>10</option>
+    <option>20</option>
+    <option>50</option>
+    <option>100</option>
+</select></div>
+                </div>
+                <div class="col-md-2">
+                    <div class="empdtl-btn"><button id="btnSearch_blkList" class="btn btn-danger" ng-click="(search.length>0)?loaddata(search):empty()">Search</button></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div ng-show="filteredItems > 0">
+                    <div class="emp-dtl-show-overflow">
+                        <table class="table table-striped table-bordered" style="width:100%;" id="tbldetail">
+                            <tr class="popheadcolor">
+                                <th>S.N.</th>
+                                <th>
+                                    EmpId<a ng-click="sort_by('ID');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+
+                                <th>
+                                    Employee Code<a ng-click="sort_by('EmployeeCode');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    FirstName  <a ng-click="sort_by('FirstName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    LastName <a ng-click="sort_by('LastName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    DOB <a ng-click="sort_by('DOB');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Gender <a ng-click="sort_by('Gender');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Dept ID <a ng-click="sort_by('DepartmentID');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Dept Name <a ng-click="sort_by('DepartmentName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Desig. ID <a ng-click="sort_by('DesignationID');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Desig. Name <a ng-click="sort_by('DesignationName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Phone <a ng-click="sort_by('Phone');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Email <a ng-click="sort_by('Email');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Emp Vertical Code <a ng-click="sort_by('EmployeeVertical');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>Emp Vertical Description</th>
+                            </tr>
+
+                            <tr ng-repeat="list in filtered = (trlist | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                <td>{{$index+1}}</td>
+                                <td>{{list.ID}}</td>
+                                <td>{{list.EmployeeCode}}</td>
+                                <td>{{list.FirstName}}</td>
+                                <td>{{list.LastName}}</td>
+                                <td>{{list.DOB}}</td>
+                                <td>{{list.Gender}}</td>
+                                <td>{{list.DepartmentID}}</td>
+                                <td>{{list.DepartmentName}}</td>
+                                <td>{{list.DesignationID}}</td>
+                                <td>{{list.DesignationName}}</td>
+                                <td>{{list.Phone}}</td>
+                                <td>{{list.Email}}</td>
+                                <td>{{list.EmployeeVertical}}</td>
+                                <td>{{list.EmpVerticalDescription}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div class="row">
+            <div class="col-md-12">
+                <!--If No Record Found-->
+                <div id="notFoundDiv" ng-show="(trlist).length==0"><h4>&emsp;No Records Found</h4></div>
+            </div>
+           
+        </div>
+
+        <div class="row">
+            <!--Pagination-->
+            <div class="col-md-12" ng-show="filteredItems > 0" style="z-index:0;">
+                <div pagination total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+            </div>
+        </div>
+
+        <div class="space-bottom"></div>
+    </section>
+
+    
+</div>

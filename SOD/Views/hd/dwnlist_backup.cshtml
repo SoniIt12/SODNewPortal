@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "Sod | Download";
+    //Layout = null;
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<html>
+<head>
+    <title></title>
+ 
+    <!--Calender JS css-->
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../Calender/css/foundation-datepicker.css" rel="stylesheet" />
+ 
+
+   <style>
+        .img_i {
+            background-image: url(../img/Departure_Date.png);
+            background-repeat: no-repeat;
+            height: 23px;
+            width: 22px;
+            position: absolute;
+            margin-top: 4px;
+            margin-left: 135px;
+            z-index: 9;
+        }
+
+        i {
+            font-size: 1.1em;
+        }
+
+        .fh_inputtxt2 {
+            width: 150px;
+            height: 30px;
+            padding-left: 5px;
+            text-indent: 5px;
+            color: #000000;
+            font-size: 15px;
+            font-weight: 400;
+            border: solid 1px #e4e4e4;
+            font-family: Arial;
+            border-radius: 3px;
+        }
+
+        .searchDiv {
+            float: left;
+        }
+
+            .searchDiv input {
+                border-radius: 3px;
+                margin-left: 10px;
+                height: 28px;
+                width: 150px;
+                border: solid 1px #c2c2c2;
+                padding-left: 10px;
+            }
+    </style>
+</head>
+<body>
+
+    <div>
+        <div class="container" style="margin-top:-40px;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div style="text-align:center; font-size:18px;margin-top:5px; margin-bottom:10px;"> Download Travel History </div>
+                    </div>
+                    <hr style="width:100%;" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="searchDiv">
+                            <div id="Div1">
+                                From Date   <i class="img_i" onclick="document.getElementById('txtfdate').focus();"></i>
+                                <input id="txtfdate" type="text"  placeholder="dd/mm/yyyy" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="searchDiv">
+                            <div style="margin-left:20px;">
+                                To Date   <i class="img_i" onclick="document.getElementById('txttodate').focus();"></i>
+                                <input id="txttodate" type="text"   placeholder="dd/mm/yyyy" maxlength="10">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div style="text-align:left;" class="searchDiv">
+                            Type  :
+                            <select id="ddltype" class="fh_inputtxt2">
+                                <option value="0">-- All --</option>
+                                <option value="1"> SOD </option>
+                                <option value="2"> NON-SOD </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="searchDiv">  <button id="btnExport">Export Data</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../Calender/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../Calender/js/foundation-datepicker.js" type="text/javascript"></script>
+   
+    <script>
+    $(document).ready(function () {
+        $('#btnExport').click(function () {
+            var prm = $("#txtfdate").val() + "," + $("#txttodate").val() + "," + $("#ddltype").val();
+            window.location = '../hd/ExportListFromTsv?strprm=' + prm;
+        });
+    });
+    </script>
+
+    <script>
+    $('#demo-3').fdatepicker();
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var checkin = $('#txtfdate').fdatepicker({
+        onRender: function (date) {
+            debugger;
+            //return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            return '05/01/2016' < date.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 7);
+            checkout.update(newDate);
+        }
+        checkin.hide();
+        $('#txttodate')[0].focus();
+    }).data('datepicker');
+    var checkout = $('#txttodate').fdatepicker({
+        onRender: function (date) {
+            return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        checkout.hide();
+    }).data('datepicker');
+
+    </script>
+</body>
+
+
+</html>

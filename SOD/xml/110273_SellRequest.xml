@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>EG/KL4K0d+I=|RWBckXhaN+g8/FTTjW2s4q5met+Kv7xBcx0nE90wkS75ArNLO+DUXpL083hnsBAbFEO/p9pqHjGxVdVzCx3ZtjHE9qKegIDGJ+AdBH5YBrTpuCd3nhLJIG3jCHA5giktEXIFH/wcxTE=</Signature>
+  <SellRequestData>
+    <SellBy>JourneyBySellKey</SellBy>
+    <SellJourneyByKeyRequest>
+      <SellJourneyByKeyRequestData>
+        <ActionStatusCode>LL</ActionStatusCode>
+        <JourneySellKeys>
+          <SellKeyList>
+            <JourneySellKey>SG~ 160~ ~~BOM~03/23/2018 06:00~DEL~03/23/2018 08:15~</JourneySellKey>
+            <FareSellKey>0~Z~~ZSOD~9922~~6~X</FareSellKey>
+            <StandbyPriorityCode>NR</StandbyPriorityCode>
+          </SellKeyList>
+          <SellKeyList>
+            <JourneySellKey>SG~  62~ ~~MCT~04/02/2018 00:30~AMD~04/02/2018 04:20~^SG~ 501~ ~~AMD~04/02/2018 06:00~MAA~04/02/2018 08:25~^SG~ 104~ ~~MAA~04/03/2018 07:00~DEL~04/03/2018 09:45~</JourneySellKey>
+            <FareSellKey>0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X</FareSellKey>
+            <StandbyPriorityCode>NR</StandbyPriorityCode>
+          </SellKeyList>
+          <SellKeyList>
+            <JourneySellKey>SG~ 103~ ~~DEL~03/25/2018 14:45~MAA~03/25/2018 17:25~^SG~ 502~ ~~MAA~03/26/2018 12:45~AMD~03/26/2018 15:00~^SG~  61~ ~~AMD~03/26/2018 22:00~MCT~03/26/2018 23:00~</JourneySellKey>
+            <FareSellKey>0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X^0~Z~~ZSOD~9922~~11~X</FareSellKey>
+            <StandbyPriorityCode>NR</StandbyPriorityCode>
+          </SellKeyList>
+        </JourneySellKeys>
+        <PaxPriceType>
+          <PaxPriceType>
+            <PaxType>ADT</PaxType>
+            <PaxDiscountCode />
+          </PaxPriceType>
+        </PaxPriceType>
+        <CurrencyCode>INR</CurrencyCode>
+        <SourcePOS>
+          <State>New</State>
+          <AgentCode>SDFINANCED</AgentCode>
+          <OrganizationCode>SDFINANCED</OrganizationCode>
+          <DomainCode>WWWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </SourcePOS>
+        <PaxCount>1</PaxCount>
+        <LoyaltyFilter>MonetaryOnly</LoyaltyFilter>
+        <IsAllotmentMarketFare>false</IsAllotmentMarketFare>
+        <PreventOverLap>false</PreventOverLap>
+      </SellJourneyByKeyRequestData>
+    </SellJourneyByKeyRequest>
+  </SellRequestData>
+</SellRequest>

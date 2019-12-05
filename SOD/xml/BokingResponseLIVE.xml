@@ -1,0 +1,1195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GetBookingResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Booking>
+    <ExtensionData />
+    <OtherServiceInfoList />
+    <State>Clean</State>
+    <RecordLocator>J9KKXM</RecordLocator>
+    <CurrencyCode>INR</CurrencyCode>
+    <PaxCount>1</PaxCount>
+    <SystemCode />
+    <BookingID>82734888</BookingID>
+    <BookingParentID>0</BookingParentID>
+    <ParentRecordLocator />
+    <BookingChangeCode />
+    <GroupName />
+    <BookingInfo>
+      <ExtensionData />
+      <State>Clean</State>
+      <BookingStatus>Confirmed</BookingStatus>
+      <BookingType />
+      <ChannelType>API</ChannelType>
+      <CreatedDate>2018-11-20T07:02:40.59Z</CreatedDate>
+      <ExpiredDate>2018-11-22T15:00:00Z</ExpiredDate>
+      <ModifiedDate>2018-11-20T07:02:40.59Z</ModifiedDate>
+      <PriceStatus>Valid</PriceStatus>
+      <ProfileStatus>KnownIndividual</ProfileStatus>
+      <ChangeAllowed>true</ChangeAllowed>
+      <CreatedAgentID>2103324</CreatedAgentID>
+      <ModifiedAgentID>2103324</ModifiedAgentID>
+      <BookingDate>2018-11-20T07:02:40.59Z</BookingDate>
+      <OwningCarrierCode>SG</OwningCarrierCode>
+      <PaidStatus>PaidInFull</PaidStatus>
+    </BookingInfo>
+    <POS>
+      <ExtensionData />
+      <State>Clean</State>
+      <AgentCode>NONSODAPP</AgentCode>
+      <OrganizationCode>NONSODAPP</OrganizationCode>
+      <DomainCode>WWW</DomainCode>
+      <LocationCode>WWW</LocationCode>
+    </POS>
+    <SourcePOS>
+      <ExtensionData />
+      <State>Clean</State>
+      <AgentCode>SDFINANCED</AgentCode>
+      <OrganizationCode>SDFINANCED</OrganizationCode>
+      <DomainCode>WWWW</DomainCode>
+      <LocationCode>WWW</LocationCode>
+    </SourcePOS>
+    <TypeOfSale>
+      <ExtensionData />
+      <State>Clean</State>
+      <PaxResidentCountry>IN</PaxResidentCountry>
+      <PromotionCode />
+      <FareTypes />
+    </TypeOfSale>
+    <BookingHold>
+      <ExtensionData />
+      <State>Clean</State>
+      <HoldDateTime>9999-12-31T00:00:00Z</HoldDateTime>
+    </BookingHold>
+    <BookingSum>
+      <ExtensionData />
+      <BalanceDue>0</BalanceDue>
+      <AuthorizedBalanceDue>0</AuthorizedBalanceDue>
+      <SegmentCount>2</SegmentCount>
+      <PassiveSegmentCount>0</PassiveSegmentCount>
+      <TotalCost>1298.0000</TotalCost>
+      <PointsBalanceDue>0</PointsBalanceDue>
+      <TotalPointCost>0</TotalPointCost>
+      <AlternateCurrencyCode />
+      <AlternateCurrencyBalanceDue>0</AlternateCurrencyBalanceDue>
+    </BookingSum>
+    <ReceivedBy>
+      <ExtensionData />
+      <State>Clean</State>
+      <ReceivedBy />
+      <ReceivedReference />
+      <ReferralCode />
+      <LatestReceivedBy />
+      <LatestReceivedReference />
+    </ReceivedBy>
+    <RecordLocators />
+    <Passengers>
+      <Passenger>
+        <ExtensionData />
+        <State>Clean</State>
+        <CustomerNumber />
+        <PassengerNumber>0</PassengerNumber>
+        <FamilyNumber>0</FamilyNumber>
+        <PaxDiscountCode />
+        <Names>
+          <BookingName>
+            <ExtensionData />
+            <State>Clean</State>
+            <FirstName>Arun</FirstName>
+            <MiddleName />
+            <LastName>Sharma</LastName>
+            <Suffix />
+            <Title>MR</Title>
+          </BookingName>
+        </Names>
+        <PassengerInfo>
+          <ExtensionData />
+          <State>Clean</State>
+          <BalanceDue>0</BalanceDue>
+          <Gender>Male</Gender>
+          <Nationality />
+          <ResidentCountry />
+          <TotalCost>1298.0000</TotalCost>
+          <WeightCategory>Male</WeightCategory>
+        </PassengerInfo>
+        <PassengerProgram>
+          <ExtensionData />
+          <State>Clean</State>
+          <ProgramCode />
+          <ProgramLevelCode />
+          <ProgramNumber />
+        </PassengerProgram>
+        <PassengerFees>
+          <PassengerFee>
+            <ExtensionData />
+            <State>Clean</State>
+            <ActionStatusCode>HK</ActionStatusCode>
+            <FeeCode>BVG</FeeCode>
+            <FeeDetail />
+            <FeeNumber>0</FeeNumber>
+            <FeeType>SSRFee</FeeType>
+            <FeeOverride>false</FeeOverride>
+            <FlightReference>20181121 SG 191 DELBLR</FlightReference>
+            <Note />
+            <SSRCode>BVG</SSRCode>
+            <SSRNumber>1</SSRNumber>
+            <PaymentNumber>0</PaymentNumber>
+            <ServiceCharges>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>ServiceCharge</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>BVG</ChargeCode>
+                <TicketCode>BVG</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>50.0000</Amount>
+                <ChargeDetail>BEVERAGES</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>50.0000</ForeignAmount>
+              </BookingServiceCharge>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>IncludedTax</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>CGST07</ChargeCode>
+                <TicketCode>CST</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>4.0000</Amount>
+                <ChargeDetail>DEL-BLR</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>4.0000</ForeignAmount>
+              </BookingServiceCharge>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>IncludedTax</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>SGST07</ChargeCode>
+                <TicketCode>SST</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>4.0000</Amount>
+                <ChargeDetail>DEL-BLR</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>4.0000</ForeignAmount>
+              </BookingServiceCharge>
+            </ServiceCharges>
+            <CreatedDate>2018-11-20T07:02:40.59Z</CreatedDate>
+            <IsProtected>false</IsProtected>
+          </PassengerFee>
+          <PassengerFee>
+            <ExtensionData />
+            <State>Clean</State>
+            <ActionStatusCode>HK</ActionStatusCode>
+            <FeeCode>VGML</FeeCode>
+            <FeeDetail />
+            <FeeNumber>1</FeeNumber>
+            <FeeType>SSRFee</FeeType>
+            <FeeOverride>false</FeeOverride>
+            <FlightReference>20181121 SG 191 DELBLR</FlightReference>
+            <Note />
+            <SSRCode>VGML</SSRCode>
+            <SSRNumber>1</SSRNumber>
+            <PaymentNumber>0</PaymentNumber>
+            <ServiceCharges>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>ServiceCharge</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>VGML</ChargeCode>
+                <TicketCode>VGM</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>275.0000</Amount>
+                <ChargeDetail>Veg Meal</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>275.0000</ForeignAmount>
+              </BookingServiceCharge>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>IncludedTax</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>CGST07</ChargeCode>
+                <TicketCode>CST</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>21.0000</Amount>
+                <ChargeDetail>DEL-BLR</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>21.0000</ForeignAmount>
+              </BookingServiceCharge>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>IncludedTax</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>SGST07</ChargeCode>
+                <TicketCode>SST</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>21.0000</Amount>
+                <ChargeDetail>DEL-BLR</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>21.0000</ForeignAmount>
+              </BookingServiceCharge>
+            </ServiceCharges>
+            <CreatedDate>2018-11-20T07:02:40.59Z</CreatedDate>
+            <IsProtected>false</IsProtected>
+          </PassengerFee>
+          <PassengerFee>
+            <ExtensionData />
+            <State>Clean</State>
+            <ActionStatusCode>HK</ActionStatusCode>
+            <FeeCode>BVG</FeeCode>
+            <FeeDetail />
+            <FeeNumber>2</FeeNumber>
+            <FeeType>SSRFee</FeeType>
+            <FeeOverride>false</FeeOverride>
+            <FlightReference>20181121 SG 198 BLRDEL</FlightReference>
+            <Note />
+            <SSRCode>BVG</SSRCode>
+            <SSRNumber>1</SSRNumber>
+            <PaymentNumber>0</PaymentNumber>
+            <ServiceCharges>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>ServiceCharge</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>BVG</ChargeCode>
+                <TicketCode>BVG</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>50.0000</Amount>
+                <ChargeDetail>BEVERAGES</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>50.0000</ForeignAmount>
+              </BookingServiceCharge>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>IncludedTax</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>CGST29</ChargeCode>
+                <TicketCode>CST</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>4.0000</Amount>
+                <ChargeDetail>BLR-DEL</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>4.0000</ForeignAmount>
+              </BookingServiceCharge>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>IncludedTax</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>SGST29</ChargeCode>
+                <TicketCode>SST</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>4.0000</Amount>
+                <ChargeDetail>BLR-DEL</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>4.0000</ForeignAmount>
+              </BookingServiceCharge>
+            </ServiceCharges>
+            <CreatedDate>2018-11-20T07:02:40.59Z</CreatedDate>
+            <IsProtected>false</IsProtected>
+          </PassengerFee>
+          <PassengerFee>
+            <ExtensionData />
+            <State>Clean</State>
+            <ActionStatusCode>HK</ActionStatusCode>
+            <FeeCode>VGML</FeeCode>
+            <FeeDetail />
+            <FeeNumber>3</FeeNumber>
+            <FeeType>SSRFee</FeeType>
+            <FeeOverride>false</FeeOverride>
+            <FlightReference>20181121 SG 198 BLRDEL</FlightReference>
+            <Note />
+            <SSRCode>VGML</SSRCode>
+            <SSRNumber>1</SSRNumber>
+            <PaymentNumber>0</PaymentNumber>
+            <ServiceCharges>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>ServiceCharge</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>VGML</ChargeCode>
+                <TicketCode>VGM</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>275.0000</Amount>
+                <ChargeDetail>Veg Meal</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>275.0000</ForeignAmount>
+              </BookingServiceCharge>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>IncludedTax</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>CGST29</ChargeCode>
+                <TicketCode>CST</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>21.0000</Amount>
+                <ChargeDetail>BLR-DEL</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>21.0000</ForeignAmount>
+              </BookingServiceCharge>
+              <BookingServiceCharge>
+                <ExtensionData />
+                <State>Clean</State>
+                <ChargeType>IncludedTax</ChargeType>
+                <CollectType>SellerChargeable</CollectType>
+                <ChargeCode>SGST29</ChargeCode>
+                <TicketCode>SST</TicketCode>
+                <CurrencyCode>INR</CurrencyCode>
+                <Amount>21.0000</Amount>
+                <ChargeDetail>BLR-DEL</ChargeDetail>
+                <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                <ForeignAmount>21.0000</ForeignAmount>
+              </BookingServiceCharge>
+            </ServiceCharges>
+            <CreatedDate>2018-11-20T07:02:40.59Z</CreatedDate>
+            <IsProtected>false</IsProtected>
+          </PassengerFee>
+        </PassengerFees>
+        <PassengerAddresses />
+        <PassengerTravelDocuments />
+        <PassengerBags />
+        <PassengerID>130843845</PassengerID>
+        <PassengerTypeInfos>
+          <PassengerTypeInfo>
+            <ExtensionData />
+            <State>Clean</State>
+            <DOB>9999-12-31T00:00:00Z</DOB>
+            <PaxType>ADT</PaxType>
+          </PassengerTypeInfo>
+        </PassengerTypeInfos>
+        <PassengerInfos>
+          <PassengerInfo>
+            <ExtensionData />
+            <State>Clean</State>
+            <BalanceDue>0</BalanceDue>
+            <Gender>Male</Gender>
+            <Nationality />
+            <ResidentCountry />
+            <TotalCost>1298.0000</TotalCost>
+            <WeightCategory>Male</WeightCategory>
+          </PassengerInfo>
+        </PassengerInfos>
+        <PassengerInfants />
+        <PseudoPassenger>false</PseudoPassenger>
+        <PassengerTypeInfo>
+          <ExtensionData />
+          <State>Clean</State>
+          <DOB>9999-12-31T00:00:00Z</DOB>
+          <PaxType>ADT</PaxType>
+        </PassengerTypeInfo>
+      </Passenger>
+    </Passengers>
+    <Journeys>
+      <Journey>
+        <ExtensionData />
+        <State>Clean</State>
+        <NotForGeneralUse>false</NotForGeneralUse>
+        <Segments>
+          <Segment>
+            <ExtensionData />
+            <State>Clean</State>
+            <ActionStatusCode>HK</ActionStatusCode>
+            <ArrivalStation>BLR</ArrivalStation>
+            <CabinOfService>Y</CabinOfService>
+            <ChangeReasonCode />
+            <DepartureStation>DEL</DepartureStation>
+            <PriorityCode />
+            <SegmentType />
+            <STA>2018-11-21T09:00:00</STA>
+            <STD>2018-11-21T06:20:00</STD>
+            <International>false</International>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber> 191</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <Fares>
+              <Fare>
+                <ExtensionData />
+                <State>Clean</State>
+                <ClassOfService>Z</ClassOfService>
+                <ClassType> </ClassType>
+                <RuleTariff />
+                <CarrierCode>SG</CarrierCode>
+                <RuleNumber>9922</RuleNumber>
+                <FareBasisCode>ZSOD</FareBasisCode>
+                <FareSequence>0</FareSequence>
+                <FareClassOfService>Z</FareClassOfService>
+                <FareStatus>Default</FareStatus>
+                <FareApplicationType>Route</FareApplicationType>
+                <OriginalClassOfService>Z</OriginalClassOfService>
+                <XrefClassOfService />
+                <PaxFares>
+                  <PaxFare>
+                    <ExtensionData />
+                    <State>Clean</State>
+                    <PaxType>ADT</PaxType>
+                    <PaxDiscountCode />
+                    <FareDiscountCode />
+                    <ServiceCharges>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>FarePrice</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode />
+                        <TicketCode />
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>0</Amount>
+                        <ChargeDetail />
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>0</ForeignAmount>
+                      </BookingServiceCharge>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>TravelFee</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode>RCS</ChargeCode>
+                        <TicketCode>RCS</TicketCode>
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>100.0000</Amount>
+                        <ChargeDetail>DEL-BLR</ChargeDetail>
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>100.0000</ForeignAmount>
+                      </BookingServiceCharge>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>TravelFee</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode>PSF</ChargeCode>
+                        <TicketCode>PSF</TicketCode>
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>153.0000</Amount>
+                        <ChargeDetail>DEL-BLR</ChargeDetail>
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>153.0000</ForeignAmount>
+                      </BookingServiceCharge>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>TravelFee</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode>UDF</ChargeCode>
+                        <TicketCode>UDF</TicketCode>
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>12.0000</Amount>
+                        <ChargeDetail>DEL-BLR</ChargeDetail>
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>12.0000</ForeignAmount>
+                      </BookingServiceCharge>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>Tax</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode>CGST07</ChargeCode>
+                        <TicketCode>CST</TicketCode>
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>3.0000</Amount>
+                        <ChargeDetail>DEL-BLR</ChargeDetail>
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>3.0000</ForeignAmount>
+                      </BookingServiceCharge>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>Tax</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode>SGST07</ChargeCode>
+                        <TicketCode>SST</TicketCode>
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>3.0000</Amount>
+                        <ChargeDetail>DEL-BLR</ChargeDetail>
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>3.0000</ForeignAmount>
+                      </BookingServiceCharge>
+                    </ServiceCharges>
+                  </PaxFare>
+                </PaxFares>
+                <ProductClass>ZD</ProductClass>
+                <IsAllotmentMarketFare>false</IsAllotmentMarketFare>
+                <TravelClassCode>Y</TravelClassCode>
+                <FareSellKey>0~Z~ ~ZSOD~9922~~0~X</FareSellKey>
+                <InboundOutbound>None</InboundOutbound>
+              </Fare>
+            </Fares>
+            <Legs>
+              <Leg>
+                <ExtensionData />
+                <State>Clean</State>
+                <ArrivalStation>BLR</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <STA>2018-11-21T09:00:00</STA>
+                <STD>2018-11-21T06:20:00</STD>
+                <FlightDesignator>
+                  <ExtensionData />
+                  <CarrierCode>SG</CarrierCode>
+                  <FlightNumber> 191</FlightNumber>
+                  <OpSuffix> </OpSuffix>
+                </FlightDesignator>
+                <LegInfo>
+                  <ExtensionData />
+                  <State>Clean</State>
+                  <AdjustedCapacity>189</AdjustedCapacity>
+                  <EquipmentType>7M8</EquipmentType>
+                  <EquipmentTypeSuffix>189</EquipmentTypeSuffix>
+                  <ArrivalTerminal />
+                  <ArrvLTV>330</ArrvLTV>
+                  <Capacity>189</Capacity>
+                  <CodeShareIndicator> </CodeShareIndicator>
+                  <DepartureTerminal>1D</DepartureTerminal>
+                  <DeptLTV>330</DeptLTV>
+                  <ETicket>false</ETicket>
+                  <FlifoUpdated>false</FlifoUpdated>
+                  <IROP>false</IROP>
+                  <Status>Closed</Status>
+                  <Lid>195</Lid>
+                  <OnTime> </OnTime>
+                  <PaxSTA>2018-11-22T08:19:26.8634855</PaxSTA>
+                  <PaxSTD>2018-11-22T08:19:26.8634855</PaxSTD>
+                  <PRBCCode>737800</PRBCCode>
+                  <ScheduleServiceType> </ScheduleServiceType>
+                  <Sold>196</Sold>
+                  <OutMoveDays>0</OutMoveDays>
+                  <BackMoveDays>0</BackMoveDays>
+                  <LegNests />
+                  <LegSSRs />
+                  <OperatingFlightNumber>    </OperatingFlightNumber>
+                  <OperatedByText />
+                  <OperatingCarrier />
+                  <OperatingOpSuffix> </OperatingOpSuffix>
+                  <SubjectToGovtApproval>false</SubjectToGovtApproval>
+                  <MarketingCode />
+                  <ChangeOfDirection>false</ChangeOfDirection>
+                  <MarketingOverride>false</MarketingOverride>
+                </LegInfo>
+                <InventoryLegID>1411006</InventoryLegID>
+              </Leg>
+            </Legs>
+            <PaxBags />
+            <PaxSeats />
+            <PaxSSRs>
+              <PaxSSR>
+                <ExtensionData />
+                <State>Clean</State>
+                <ActionStatusCode>HK</ActionStatusCode>
+                <ArrivalStation>BLR</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>BVG</SSRCode>
+                <SSRNumber>1</SSRNumber>
+                <SSRDetail />
+                <FeeCode>BVG</FeeCode>
+                <Note />
+                <SSRValue>1</SSRValue>
+              </PaxSSR>
+              <PaxSSR>
+                <ExtensionData />
+                <State>Clean</State>
+                <ActionStatusCode>HK</ActionStatusCode>
+                <ArrivalStation>BLR</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>VGML</SSRCode>
+                <SSRNumber>1</SSRNumber>
+                <SSRDetail />
+                <FeeCode>VGML</FeeCode>
+                <Note />
+                <SSRValue>1</SSRValue>
+              </PaxSSR>
+            </PaxSSRs>
+            <PaxSegments>
+              <PaxSegment>
+                <ExtensionData />
+                <State>Clean</State>
+                <BoardingSequence>184</BoardingSequence>
+                <CreatedDate>2018-11-20T07:02:40.59Z</CreatedDate>
+                <LiftStatus>Boarded</LiftStatus>
+                <OverBookIndicator>O</OverBookIndicator>
+                <PassengerNumber>0</PassengerNumber>
+                <PriorityDate>2018-11-20T07:02:40.3Z</PriorityDate>
+                <TripType>None</TripType>
+                <TimeChanged>false</TimeChanged>
+                <POS>
+                  <ExtensionData />
+                  <State>Clean</State>
+                  <AgentCode>NONSODAPP</AgentCode>
+                  <OrganizationCode>NONSODAPP</OrganizationCode>
+                  <DomainCode>WWW</DomainCode>
+                  <LocationCode>WWW</LocationCode>
+                </POS>
+                <SourcePOS>
+                  <ExtensionData />
+                  <State>Clean</State>
+                  <AgentCode>SDFINANCED</AgentCode>
+                  <OrganizationCode>SDFINANCED</OrganizationCode>
+                  <DomainCode>WWWW</DomainCode>
+                  <LocationCode>WWW</LocationCode>
+                </SourcePOS>
+                <VerifiedTravelDocs />
+                <ModifiedDate>2018-11-21T01:07:45.12Z</ModifiedDate>
+                <ActivityDate>2018-11-21T01:07:45.12Z</ActivityDate>
+                <BaggageAllowanceWeight>0</BaggageAllowanceWeight>
+                <BaggageAllowanceWeightType>Default</BaggageAllowanceWeightType>
+                <BaggageAllowanceUsed>false</BaggageAllowanceUsed>
+                <ReferenceNumber>0</ReferenceNumber>
+              </PaxSegment>
+            </PaxSegments>
+            <PaxTickets />
+            <SalesDate>2018-11-20T07:02:40.59Z</SalesDate>
+            <SegmentSellKey>SG~ 191~ ~~DEL~11/21/2018 06:20~BLR~11/21/2018 09:00~</SegmentSellKey>
+            <PaxScores />
+            <ChannelType>Default</ChannelType>
+          </Segment>
+        </Segments>
+        <JourneySellKey>SG~ 191~ ~~DEL~11/21/2018 06:20~BLR~11/21/2018 09:00~</JourneySellKey>
+      </Journey>
+      <Journey>
+        <ExtensionData />
+        <State>Clean</State>
+        <NotForGeneralUse>false</NotForGeneralUse>
+        <Segments>
+          <Segment>
+            <ExtensionData />
+            <State>Clean</State>
+            <ActionStatusCode>HK</ActionStatusCode>
+            <ArrivalStation>DEL</ArrivalStation>
+            <CabinOfService>Y</CabinOfService>
+            <ChangeReasonCode />
+            <DepartureStation>BLR</DepartureStation>
+            <PriorityCode />
+            <SegmentType />
+            <STA>2018-11-21T23:20:00</STA>
+            <STD>2018-11-21T20:30:00</STD>
+            <International>false</International>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber> 198</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <Fares>
+              <Fare>
+                <ExtensionData />
+                <State>Clean</State>
+                <ClassOfService>Z</ClassOfService>
+                <ClassType> </ClassType>
+                <RuleTariff />
+                <CarrierCode>SG</CarrierCode>
+                <RuleNumber>9922</RuleNumber>
+                <FareBasisCode>ZSOD</FareBasisCode>
+                <FareSequence>0</FareSequence>
+                <FareClassOfService>Z</FareClassOfService>
+                <FareStatus>Default</FareStatus>
+                <FareApplicationType>Route</FareApplicationType>
+                <OriginalClassOfService>Z</OriginalClassOfService>
+                <XrefClassOfService />
+                <PaxFares>
+                  <PaxFare>
+                    <ExtensionData />
+                    <State>Clean</State>
+                    <PaxType>ADT</PaxType>
+                    <PaxDiscountCode />
+                    <FareDiscountCode />
+                    <ServiceCharges>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>FarePrice</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode />
+                        <TicketCode />
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>0</Amount>
+                        <ChargeDetail />
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>0</ForeignAmount>
+                      </BookingServiceCharge>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>TravelFee</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode>RCS</ChargeCode>
+                        <TicketCode>RCS</TicketCode>
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>100.0000</Amount>
+                        <ChargeDetail>BLR-DEL</ChargeDetail>
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>100.0000</ForeignAmount>
+                      </BookingServiceCharge>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>TravelFee</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode>PSF</ChargeCode>
+                        <TicketCode>PSF</TicketCode>
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>153.0000</Amount>
+                        <ChargeDetail>BLR-DEL</ChargeDetail>
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>153.0000</ForeignAmount>
+                      </BookingServiceCharge>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>TravelFee</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode>UDF</ChargeCode>
+                        <TicketCode>UDF</TicketCode>
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>118.0000</Amount>
+                        <ChargeDetail>BLR-DEL</ChargeDetail>
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>118.0000</ForeignAmount>
+                      </BookingServiceCharge>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>Tax</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode>CGST29</ChargeCode>
+                        <TicketCode>CST</TicketCode>
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>3.0000</Amount>
+                        <ChargeDetail>BLR-DEL</ChargeDetail>
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>3.0000</ForeignAmount>
+                      </BookingServiceCharge>
+                      <BookingServiceCharge>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <ChargeType>Tax</ChargeType>
+                        <CollectType>SellerChargeable</CollectType>
+                        <ChargeCode>SGST29</ChargeCode>
+                        <TicketCode>SST</TicketCode>
+                        <CurrencyCode>INR</CurrencyCode>
+                        <Amount>3.0000</Amount>
+                        <ChargeDetail>BLR-DEL</ChargeDetail>
+                        <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                        <ForeignAmount>3.0000</ForeignAmount>
+                      </BookingServiceCharge>
+                    </ServiceCharges>
+                  </PaxFare>
+                </PaxFares>
+                <ProductClass>ZD</ProductClass>
+                <IsAllotmentMarketFare>false</IsAllotmentMarketFare>
+                <TravelClassCode>Y</TravelClassCode>
+                <FareSellKey>0~Z~ ~ZSOD~9922~~0~X</FareSellKey>
+                <InboundOutbound>None</InboundOutbound>
+              </Fare>
+            </Fares>
+            <Legs>
+              <Leg>
+                <ExtensionData />
+                <State>Clean</State>
+                <ArrivalStation>DEL</ArrivalStation>
+                <DepartureStation>BLR</DepartureStation>
+                <STA>2018-11-21T23:20:00</STA>
+                <STD>2018-11-21T20:30:00</STD>
+                <FlightDesignator>
+                  <ExtensionData />
+                  <CarrierCode>SG</CarrierCode>
+                  <FlightNumber> 198</FlightNumber>
+                  <OpSuffix> </OpSuffix>
+                </FlightDesignator>
+                <LegInfo>
+                  <ExtensionData />
+                  <State>Clean</State>
+                  <AdjustedCapacity>149</AdjustedCapacity>
+                  <EquipmentType>737</EquipmentType>
+                  <EquipmentTypeSuffix>700</EquipmentTypeSuffix>
+                  <ArrivalTerminal>1C</ArrivalTerminal>
+                  <ArrvLTV>330</ArrvLTV>
+                  <Capacity>149</Capacity>
+                  <CodeShareIndicator> </CodeShareIndicator>
+                  <DepartureTerminal />
+                  <DeptLTV>330</DeptLTV>
+                  <ETicket>false</ETicket>
+                  <FlifoUpdated>false</FlifoUpdated>
+                  <IROP>false</IROP>
+                  <Status>Closed</Status>
+                  <Lid>156</Lid>
+                  <OnTime> </OnTime>
+                  <PaxSTA>2018-11-22T08:19:26.8634855</PaxSTA>
+                  <PaxSTD>2018-11-22T08:19:26.8634855</PaxSTD>
+                  <PRBCCode>737-700</PRBCCode>
+                  <ScheduleServiceType> </ScheduleServiceType>
+                  <Sold>150</Sold>
+                  <OutMoveDays>0</OutMoveDays>
+                  <BackMoveDays>0</BackMoveDays>
+                  <LegNests />
+                  <LegSSRs />
+                  <OperatingFlightNumber>    </OperatingFlightNumber>
+                  <OperatedByText />
+                  <OperatingCarrier />
+                  <OperatingOpSuffix> </OperatingOpSuffix>
+                  <SubjectToGovtApproval>false</SubjectToGovtApproval>
+                  <MarketingCode />
+                  <ChangeOfDirection>false</ChangeOfDirection>
+                  <MarketingOverride>false</MarketingOverride>
+                </LegInfo>
+                <InventoryLegID>1417393</InventoryLegID>
+              </Leg>
+            </Legs>
+            <PaxBags />
+            <PaxSeats>
+              <PaxSeat>
+                <ExtensionData />
+                <State>Clean</State>
+                <PassengerNumber>0</PassengerNumber>
+                <ArrivalStation>DEL</ArrivalStation>
+                <DepartureStation>BLR</DepartureStation>
+                <UnitDesignator>13A</UnitDesignator>
+                <CompartmentDesignator>Y</CompartmentDesignator>
+                <SeatPreference>None</SeatPreference>
+                <Penalty>0</Penalty>
+                <SeatTogetherPreference>true</SeatTogetherPreference>
+                <PaxSeatInfo>
+                  <ExtensionData />
+                  <SeatSet>25</SeatSet>
+                  <Deck>1</Deck>
+                  <Properties>
+                    <KeyValuePairOfstringstring>
+                      <ExtensionData />
+                      <key>BLOCKED</key>
+                      <value>FALSE</value>
+                    </KeyValuePairOfstringstring>
+                    <KeyValuePairOfstringstring>
+                      <ExtensionData />
+                      <key>LEGROOM</key>
+                      <value>TRUE</value>
+                    </KeyValuePairOfstringstring>
+                    <KeyValuePairOfstringstring>
+                      <ExtensionData />
+                      <key>EXITROW</key>
+                      <value>TRUE</value>
+                    </KeyValuePairOfstringstring>
+                    <KeyValuePairOfstringstring>
+                      <ExtensionData />
+                      <key>WINDOW</key>
+                      <value>TRUE</value>
+                    </KeyValuePairOfstringstring>
+                    <KeyValuePairOfstringstring>
+                      <ExtensionData />
+                      <key>WING</key>
+                      <value>TRUE</value>
+                    </KeyValuePairOfstringstring>
+                    <KeyValuePairOfstringstring>
+                      <ExtensionData />
+                      <key>SRVZONE</key>
+                      <value>2</value>
+                    </KeyValuePairOfstringstring>
+                    <KeyValuePairOfstringstring>
+                      <ExtensionData />
+                      <key>BRDZONE</key>
+                      <value>2</value>
+                    </KeyValuePairOfstringstring>
+                    <KeyValuePairOfstringstring>
+                      <ExtensionData />
+                      <key>TCC</key>
+                      <value>Y</value>
+                    </KeyValuePairOfstringstring>
+                  </Properties>
+                </PaxSeatInfo>
+              </PaxSeat>
+            </PaxSeats>
+            <PaxSSRs>
+              <PaxSSR>
+                <ExtensionData />
+                <State>Clean</State>
+                <ActionStatusCode>HK</ActionStatusCode>
+                <ArrivalStation>DEL</ArrivalStation>
+                <DepartureStation>BLR</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>BVG</SSRCode>
+                <SSRNumber>1</SSRNumber>
+                <SSRDetail />
+                <FeeCode>BVG</FeeCode>
+                <Note />
+                <SSRValue>1</SSRValue>
+              </PaxSSR>
+              <PaxSSR>
+                <ExtensionData />
+                <State>Clean</State>
+                <ActionStatusCode>HK</ActionStatusCode>
+                <ArrivalStation>DEL</ArrivalStation>
+                <DepartureStation>BLR</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>VGML</SSRCode>
+                <SSRNumber>1</SSRNumber>
+                <SSRDetail />
+                <FeeCode>VGML</FeeCode>
+                <Note />
+                <SSRValue>1</SSRValue>
+              </PaxSSR>
+            </PaxSSRs>
+            <PaxSegments>
+              <PaxSegment>
+                <ExtensionData />
+                <State>Clean</State>
+                <BoardingSequence>110</BoardingSequence>
+                <CreatedDate>2018-11-20T07:02:40.59Z</CreatedDate>
+                <LiftStatus>Boarded</LiftStatus>
+                <OverBookIndicator>S</OverBookIndicator>
+                <PassengerNumber>0</PassengerNumber>
+                <PriorityDate>2018-11-20T07:02:40.3Z</PriorityDate>
+                <TripType>None</TripType>
+                <TimeChanged>false</TimeChanged>
+                <POS>
+                  <ExtensionData />
+                  <State>Clean</State>
+                  <AgentCode>NONSODAPP</AgentCode>
+                  <OrganizationCode>NONSODAPP</OrganizationCode>
+                  <DomainCode>WWW</DomainCode>
+                  <LocationCode>WWW</LocationCode>
+                </POS>
+                <SourcePOS>
+                  <ExtensionData />
+                  <State>Clean</State>
+                  <AgentCode>SDFINANCED</AgentCode>
+                  <OrganizationCode>SDFINANCED</OrganizationCode>
+                  <DomainCode>WWWW</DomainCode>
+                  <LocationCode>WWW</LocationCode>
+                </SourcePOS>
+                <VerifiedTravelDocs />
+                <ModifiedDate>2018-11-21T15:49:27.857Z</ModifiedDate>
+                <ActivityDate>2018-11-21T15:49:27.857Z</ActivityDate>
+                <BaggageAllowanceWeight>0</BaggageAllowanceWeight>
+                <BaggageAllowanceWeightType>Default</BaggageAllowanceWeightType>
+                <BaggageAllowanceUsed>false</BaggageAllowanceUsed>
+                <ReferenceNumber>0</ReferenceNumber>
+              </PaxSegment>
+            </PaxSegments>
+            <PaxTickets />
+            <SalesDate>2018-11-20T07:02:40.59Z</SalesDate>
+            <SegmentSellKey>SG~ 198~ ~~BLR~11/21/2018 20:30~DEL~11/21/2018 23:20~</SegmentSellKey>
+            <PaxScores />
+            <ChannelType>Default</ChannelType>
+          </Segment>
+        </Segments>
+        <JourneySellKey>SG~ 198~ ~~BLR~11/21/2018 20:30~DEL~11/21/2018 23:20~</JourneySellKey>
+      </Journey>
+    </Journeys>
+    <BookingComments>
+      <BookingComment>
+        <ExtensionData />
+        <State>Clean</State>
+        <CommentType>Default</CommentType>
+        <CommentText>SOD-Standby| 00115591| Arun Sharma| Executive – Human Resources| Human Resources| 9990071633| ARUN.KUMAR5@SPICEJET.COM</CommentText>
+        <PointOfSale>
+          <ExtensionData />
+          <State>Clean</State>
+          <AgentCode>NONSODAPP</AgentCode>
+          <OrganizationCode>NONSODAPP</OrganizationCode>
+          <DomainCode>WWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </PointOfSale>
+        <CreatedDate>2018-11-20T07:02:40.59Z</CreatedDate>
+      </BookingComment>
+      <BookingComment>
+        <ExtensionData />
+        <State>Clean</State>
+        <CommentType>Manifest</CommentType>
+        <CommentText>AUTO EMAIL &amp; SMS SENT (SG):  For a hassle-free Check-in and Boarding experience,  Reporting time D-120 minutes.---NILISHA UPADHYAY</CommentText>
+        <PointOfSale>
+          <ExtensionData />
+          <State>Clean</State>
+          <AgentCode>IROP001</AgentCode>
+          <OrganizationCode>SG</OrganizationCode>
+          <DomainCode>WWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </PointOfSale>
+        <CreatedDate>2018-11-20T11:37:42.047Z</CreatedDate>
+      </BookingComment>
+      <BookingComment>
+        <ExtensionData />
+        <State>Clean</State>
+        <CommentType>Default</CommentType>
+        <CommentText />
+        <PointOfSale>
+          <ExtensionData />
+          <State>Clean</State>
+          <AgentCode>IROP001</AgentCode>
+          <OrganizationCode>SG</OrganizationCode>
+          <DomainCode>WWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </PointOfSale>
+        <CreatedDate>2018-11-20T11:37:42.057Z</CreatedDate>
+      </BookingComment>
+      <BookingComment>
+        <ExtensionData />
+        <State>Clean</State>
+        <CommentType>Manifest</CommentType>
+        <CommentText>AUTO  SMS AND EMAIL SENT (sg) :  EARLY REPORTING D-120 for a hassle-free Check-in and Boarding experience, ---</CommentText>
+        <PointOfSale>
+          <ExtensionData />
+          <State>Clean</State>
+          <AgentCode>IROP001</AgentCode>
+          <OrganizationCode>SG</OrganizationCode>
+          <DomainCode>WWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </PointOfSale>
+        <CreatedDate>2018-11-20T12:09:18.03Z</CreatedDate>
+      </BookingComment>
+      <BookingComment>
+        <ExtensionData />
+        <State>Clean</State>
+        <CommentType>Default</CommentType>
+        <CommentText />
+        <PointOfSale>
+          <ExtensionData />
+          <State>Clean</State>
+          <AgentCode>IROP001</AgentCode>
+          <OrganizationCode>SG</OrganizationCode>
+          <DomainCode>WWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </PointOfSale>
+        <CreatedDate>2018-11-20T12:09:18.033Z</CreatedDate>
+      </BookingComment>
+    </BookingComments>
+    <BookingQueueInfos />
+    <BookingContacts>
+      <BookingContact>
+        <ExtensionData />
+        <State>Clean</State>
+        <TypeCode>P</TypeCode>
+        <Names>
+          <BookingName>
+            <ExtensionData />
+            <State>Clean</State>
+            <FirstName>Arun</FirstName>
+            <MiddleName />
+            <LastName>Sharma</LastName>
+            <Suffix />
+            <Title>MR</Title>
+          </BookingName>
+        </Names>
+        <EmailAddress>ARUN.KUMAR5@SPICEJET.COM</EmailAddress>
+        <HomePhone>9990071633</HomePhone>
+        <WorkPhone />
+        <OtherPhone />
+        <Fax />
+        <CompanyName>SpiceJet</CompanyName>
+        <AddressLine1>SpiceJet Ltd.| 319 | Udyog Vihar | Phase IV</AddressLine1>
+        <AddressLine2 />
+        <AddressLine3 />
+        <City>Gurgaon - 122016</City>
+        <ProvinceState>HR</ProvinceState>
+        <PostalCode />
+        <CountryCode>IN</CountryCode>
+        <CultureCode />
+        <DistributionOption>Email</DistributionOption>
+        <CustomerNumber />
+        <NotificationPreference>None</NotificationPreference>
+        <SourceOrganization>SDFINANCED</SourceOrganization>
+      </BookingContact>
+    </BookingContacts>
+    <Payments>
+      <Payment>
+        <ExtensionData />
+        <State>Clean</State>
+        <ReferenceType>Booking</ReferenceType>
+        <ReferenceID>82734888</ReferenceID>
+        <PaymentMethodType>AgencyAccount</PaymentMethodType>
+        <PaymentMethodCode>AG</PaymentMethodCode>
+        <CurrencyCode>INR</CurrencyCode>
+        <PaymentAmount>1298.0000</PaymentAmount>
+        <CollectedCurrencyCode>INR</CollectedCurrencyCode>
+        <CollectedAmount>1298.0000</CollectedAmount>
+        <QuotedCurrencyCode>INR</QuotedCurrencyCode>
+        <QuotedAmount>1298.0000</QuotedAmount>
+        <Status>Approved</Status>
+        <AccountNumber>SDFINANCED</AccountNumber>
+        <AccountNumberID>0</AccountNumberID>
+        <Expiration>9999-12-31T00:00:00Z</Expiration>
+        <AuthorizationCode />
+        <AuthorizationStatus>Approved</AuthorizationStatus>
+        <ParentPaymentID>0</ParentPaymentID>
+        <Transferred>false</Transferred>
+        <ReconcilliationID>0</ReconcilliationID>
+        <FundedDate>1800-01-01T00:00:00Z</FundedDate>
+        <Installments>0</Installments>
+        <PaymentText />
+        <ChannelType>API</ChannelType>
+        <PaymentNumber>1</PaymentNumber>
+        <AccountName />
+        <SourcePointOfSale>
+          <ExtensionData />
+          <State>Clean</State>
+          <AgentCode>SDFINANCED</AgentCode>
+          <OrganizationCode>SDFINANCED</OrganizationCode>
+          <DomainCode>WWWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </SourcePointOfSale>
+        <PointOfSale>
+          <ExtensionData />
+          <State>Clean</State>
+          <AgentCode>NONSODAPP</AgentCode>
+          <OrganizationCode>NONSODAPP</OrganizationCode>
+          <DomainCode>WWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </PointOfSale>
+        <PaymentID>103667227</PaymentID>
+        <Deposit>false</Deposit>
+        <AccountID>0</AccountID>
+        <Password />
+        <AccountTransactionCode />
+        <VoucherID>0</VoucherID>
+        <VoucherTransactionID>0</VoucherTransactionID>
+        <OverrideVoucherRestrictions>false</OverrideVoucherRestrictions>
+        <OverrideAmount>false</OverrideAmount>
+        <RecordLocator />
+        <PaymentAddedToState>true</PaymentAddedToState>
+        <DCC>
+          <ExtensionData />
+          <DCCRateID>00000000-0000-0000-0000-000000000000</DCCRateID>
+          <DCCStatus>DCCNotOffered</DCCStatus>
+          <ValidationDCCApplicable>false</ValidationDCCApplicable>
+          <ValidationDCCRateValue>0</ValidationDCCRateValue>
+          <ValidationDCCCurrency />
+          <ValidationDCCAmount>0</ValidationDCCAmount>
+          <ValidationDCCPutInState />
+        </DCC>
+        <ThreeDSecure>
+          <ExtensionData />
+          <BrowserUserAgent />
+          <BrowserAccept />
+          <RemoteIpAddress />
+          <TermUrl />
+          <ProxyVia />
+          <ValidationTDSApplicable>false</ValidationTDSApplicable>
+          <ValidationTDSPaReq />
+          <ValidationTDSAcsUrl />
+          <ValidationTDSPaRes />
+          <ValidationTDSSuccessful>false</ValidationTDSSuccessful>
+          <ValidationTDSAuthResult />
+          <ValidationTDSCavv />
+          <ValidationTDSCavvAlgorithm />
+          <ValidationTDSEci />
+          <ValidationTDSXid />
+        </ThreeDSecure>
+        <PaymentFields />
+        <PaymentAddresses />
+        <CreatedDate>2018-11-20T07:02:40.71Z</CreatedDate>
+        <CreatedAgentID>2103324</CreatedAgentID>
+        <ModifiedDate>2018-11-20T07:02:40.877Z</ModifiedDate>
+        <ModifiedAgentID>2103324</ModifiedAgentID>
+        <BinRange>0</BinRange>
+        <ApprovalDate>2018-11-20T07:02:40.877Z</ApprovalDate>
+      </Payment>
+    </Payments>
+    <BookingComponents />
+    <NumericRecordLocator>193621211225</NumericRecordLocator>
+  </Booking>
+</GetBookingResponse>

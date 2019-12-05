@@ -1,0 +1,1632 @@
+﻿@{
+    ViewBag.Title = "Sod | Hotels";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<html>
+<head>
+    <title>SOD | Travel Desk</title>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/hotelJS.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        #viewdetailModalHotel .hotellistmodalwidth {
+            width: 87%;
+            font-size: 13px;
+        }
+    </style>
+    <script src="../js/angular/sanitize.js"></script>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+
+    <script type="text/javascript">
+
+        //Contractual/Non-contractual hotel radio button change sod
+        function Exis_NewChange() {
+            if ($('input[name="radioHotel"]:checked').val() == 'rdoExisting') {
+                $("#txthnameE").hide();
+                $("#ddlCustomers").show();
+                $("#nonContrPrice").prop("hidden", true);
+                $("#approvalRowDiv").prop("hidden", true);
+                $("#requestToHotelDivRow").prop("hidden", false);
+                $("#nonContrInclusionHead").prop("hidden", true);
+                $("#nonContrInclusions1").prop("hidden", true);
+                $("#nonContrInclusions2").prop("hidden", true);
+                $("#nonContrInclusions3").prop("hidden", true);
+                $("#txtcodeE").prop("readonly", true);
+                $("#txthemailE").prop("readonly", true);
+                $("#mealdiv").prop("hidden", false);
+                $("#nonContrCurrencyType").prop("hidden", true);
+                $("#nonContrPriceInternational").prop("hidden", true);
+            }
+            else if ($('input[name="radioHotel"]:checked').val() == 'rdoNew') {
+                $("#txthnameE").show();
+                $("#ddlCustomers").hide();
+                $("#nonContrPrice").prop("hidden", false);
+                $("#requestToHotelDivRow").prop("hidden", true);
+                $("#txtprice").val('');
+                $("#nonContrInclusionHead").prop("hidden", false);
+                $("#nonContrInclusions1").prop("hidden", false);
+                $("#nonContrInclusions2").prop("hidden", false);
+                $("#nonContrInclusions3").prop("hidden", false);
+                $("#txtcodeE").prop("readonly", false);
+                $("#txthemailE").prop("readonly", false);
+                $("#txthaddressE").prop("readonly", false);
+                $("#txthphoneE").prop("readonly", false);
+                $("#txtotheremailE").prop("readonly", false);
+                $("#mealdiv").prop("hidden", true);
+                $("#nonContrCurrencyType").prop("hidden", false);
+                $("#nonContrPriceInternational").prop("hidden", true);
+                $("#txthnameE").val("");
+                $("#txtcodeE").val("");
+                $("#txthaddressE").val("");
+                $("#txthemailE").val("");
+                $("#txthphoneE").val("");
+                $("#txtotheremailE").val("");
+                $("#txtRqstSubE").val("");
+            }
+        }
+
+        //Contractual/Non-contractual hotel radio button change oat
+        function Exis_NewChangeOat() {
+            if ($('input[name="radioHotelOat"]:checked').val() == 'rdoExistingOat') {
+                $("#txthnameOat").prop("hidden", true);
+                $("#ddlCustomersOat").prop("hidden", false);
+                $("#nonContrPriceOat").prop("hidden", true);
+                $("#approvalRowDivOat").prop("hidden", true);
+                $("#requestToHotelDivRowOat").prop("hidden", false);
+                $("#nonContrInclusionHeadOat").prop("hidden", true);
+                $("#nonContrInclusions1Oat").prop("hidden", true);
+                $("#nonContrInclusions2Oat").prop("hidden", true);
+                $("#nonContrInclusions3Oat").prop("hidden", true);
+            }
+            else if ($('input[name="radioHotelOat"]:checked').val() == 'rdoNewOat') {
+                $("#txthnameOat").prop("hidden", false);
+                $("#ddlCustomersOat").prop("hidden", true);
+                $("#nonContrPriceOat").prop("hidden", false);
+                $("#requestToHotelDivRowOat").prop("hidden", true);
+                $("#txtpriceOat").val('');
+                $("#nonContrInclusionHeadOat").prop("hidden", false);
+                $("#nonContrInclusions1Oat").prop("hidden", false);
+                $("#nonContrInclusions2Oat").prop("hidden", false);
+                $("#nonContrInclusions3Oat").prop("hidden", false);
+            }
+        }
+
+        function Exis_NewChangeEx() {
+            if ($('input[name="radioHotelEx"]:checked').val() == 'rdoExisting') {
+                $("#txthnameEx").hide();
+                $("#ddlCustomersEx").show();
+                $("#nonContrPriceEx").prop("hidden", true);
+                $("#approvalRowDivEx").prop("hidden", true);
+                $("#requestToHotelDivRowEx").prop("hidden", false);
+                $("#nonContrInclusionHeadEx").prop("hidden", true);
+                $("#nonContrInclusions1Ex").prop("hidden", true);
+                $("#nonContrInclusions2Ex").prop("hidden", true);
+                $("#nonContrInclusions3Ex").prop("hidden", true);
+                $("#txtcodeEx").prop("readonly", true);
+                $("#txthemailEx").prop("readonly", true);
+                $("#mealdivEx").prop("hidden", false);
+                $("#nonContrCurrencyTypeEx").prop("hidden", true);
+                $("#nonContrPriceInternationalEx").prop("hidden", true);
+            }
+            else if ($('input[name="radioHotelEx"]:checked').val() == 'rdoNew') {
+                $("#txthnameEx").hide();
+                $("#ddlCustomersEx").show();
+                $("#nonContrPriceEx").prop("hidden", false);
+                $("#requestToHotelDivRowEx").prop("hidden", true);
+                $("#txtpriceEx").val('');
+                $("#nonContrInclusionHeadEx").prop("hidden", false);
+                $("#nonContrInclusions1Ex").prop("hidden", false);
+                $("#nonContrInclusions2Ex").prop("hidden", false);
+                $("#nonContrInclusions3Ex").prop("hidden", false);
+                $("#txtcodeEx").prop("readonly", false);
+                $("#txthemailEx").prop("readonly", false);
+                $("#txthaddressEx").prop("readonly", false);
+                $("#txthphoneEx").prop("readonly", false);
+                $("#txtotheremailEx").prop("readonly", false);
+                $("#mealdivEx").prop("hidden", true);
+                $("#mealdivEx").prop("hidden", true);
+                $("#nonContrCurrencyTypeEx").prop("hidden", false);
+                $("#nonContrPriceInternationalEx").prop("hidden");
+                $("#txthnameEx").val("");
+                $("#txtcodeEx").val("");
+                $("#txthaddressEx").val("");
+                $("#txthemailEx").val("");
+                $("#txthphoneEx").val("");
+                $("#txtotheremailEx").val("");
+                $("#txtRqstSubEx").val("");
+            }
+        }
+
+        function toggleStatus() {
+            var priceval = $("#txtprice").val();
+            if (priceval > 7000) {
+                $("#approvalRowDiv").prop("hidden", false);
+                $("#tdapprover2").prop("hidden", false);
+                $("#chkapprover1").prop("hidden", false);
+            } else {
+                $("#approvalRowDiv").prop("hidden", false);
+                $("#tdapprover2").prop("hidden", true);
+                $("#chkapprover1").prop("hidden", true);
+            }
+        }
+
+        function toggleStatusOat() {
+            var priceval = $("#txtpriceOat").val();
+            if (priceval > 7000) {
+                $("#approvalRowDivOat").prop("hidden", false);
+                $("#tdapproverOat2").prop("hidden", false);
+                //$("#tdapproverOat3").prop("hidden", false);
+                $("#chkapproverOat1").prop("hidden", false);
+            } else {
+                $("#approvalRowDivOat").prop("hidden", false);
+                $("#tdapproverOat2").prop("hidden", true);
+                //$("#tdapproverOat3").prop("hidden", true);
+                $("#chkapproverOat1").prop("hidden", true);
+            }
+        }
+
+
+        function toggleStatusEx() {
+            var priceval = $("#txtpriceEx").val();
+            if (priceval > 7000) {
+                $("#approvalRowDivEx").prop("hidden", false);
+                $("#tdapprover2Ex").prop("hidden", false);
+                $("#chkapprover1Ex").prop("hidden", false);
+            } else {
+                $("#approvalRowDivEx").prop("hidden", false);
+                $("#tdapprover2Ex").prop("hidden", true);
+                $("#chkapprover1Ex").prop("hidden", true);
+            }
+        }
+
+        function ShowCurrency() {
+            if ($('input[name="typeHotel"]:checked').val() == 'InternationalCurr') {
+                $("#nonContrPriceInternational").prop("hidden", false);
+                $("#nonContrPrice").prop("hidden", true);
+                $("#approvalRowDiv").prop("hidden", false);
+                $("#tdapprover2").prop("hidden", false);
+                $("#chkapprover1").prop("hidden", false);
+            } else {
+                $("#nonContrPriceInternational").prop("hidden", true);
+                $("#nonContrPrice").prop("hidden", false);
+                $("#approvalRowDiv").prop("hidden", false);
+                $("#tdapprover2").prop("hidden", true);
+                $("#chkapprover1").prop("hidden", true);
+            }
+        }
+        function ShowCurrencyEx() {
+            if ($('input[name="typeHotelEx"]:checked').val() == 'InternationalCurr') {
+                $("#nonContrPriceInternationalEx").prop("hidden", false);
+                $("#nonContrPriceEx").prop("hidden", true);
+                $("#approvalRowDivEx").prop("hidden", false);
+                $("#tdapprover2Ex").prop("hidden", false);
+                $("#chkapprover1Ex").prop("hidden", false);
+            } else {
+                $("#nonContrPriceInternationalEx").prop("hidden", true);
+                $("#nonContrPriceEx").prop("hidden", false);
+                $("#approvalRowDivEx").prop("hidden", false);
+                $("#tdapprover2Ex").prop("hidden", true);
+                $("#chkapprover1Ex").prop("hidden", true);
+            }
+        }
+    </script>
+
+  
+</head>
+
+<!--------------------------------------------Content---------------->
+<body>
+    <div ng-app="TransHistory" ng-controller="TransController" ng-init="paginit('hotellist')" ng-cloak>
+        <div>
+            <div class="admin_content_txtheading">Hotel Alignment</div>
+        </div>
+        <section class="content">
+            <div class="Alladmin_content_box">
+                <div class="row">
+                    <div class="col-md-4 search-box-hotel-aligment">
+                        <div>
+                           <input type="text" ng-model="search" ng-change="filter();" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="bookingtype saerch-hotel-align-radiobtn">
+                            <table id="tbltitle" class="mob_traveldesk">
+                                <tr id="trsodtype">
+                                    <td><input type="radio" style="height:17px; width:17px;" ng-model="radio" name="radio" value="sodhotel" ng-checked="true" id="rdoSod" ng-change="Sod_OatChange('sodhotel');" /></td>
+                                    <td class="bookingtypetxt radio_space">SOD Hotel Request</td>
+                                    <td><input hidden type="radio" ng-model="radio" name="radio" style="height:17px; width:17px;margin-left:10px;" value="oathotel" id="rdoNonSod" ng-change="Sod_OatChange('oathotel');" /></td>
+                                    <td hidden class="bookingtypetxt radio_space">OAT Hotel Request</td>
+                                    <td><input type="radio" ng-model="radio" name="radio" style="height:17px; width:17px;margin-left:10px;" value="exceptionalhotel" id="rdoExceptional" ng-change="Sod_OatChange('exceptional');" /></td>
+                                    <td class="bookingtypetxt">IROP</td>
+                                    <td><input type="radio" ng-model="radio" name="radio" style="height:17px; width:17px;margin-left:10px;" value="checkoutTimeRadio" id="rdoCheckTime" ng-change="Sod_OatChange('checktime');" /></td>
+                                    <td class="bookingtypetxt">Check-in/out Time Confliction</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div id="soddiv">
+                    <div class="col-md-12" style="text-align:right;padding-bottom:10px;" ng-show="filteredItems > 0">
+                        <a id="btnHotelRequest" data-toggle="modal" href="#viewdetailModalBookHotel" class="btn btn-warning btn-sm" ng-click="GetApproverIds();" style="background-color: #EE1D23; border-color: #EE1D23;">
+                            Request to Hotel
+                        </a>
+                    </div>
+                    <div class="col-md-12" >
+                        <div style="width:100%;" ng-show="filteredItems > 0">
+                            <table class="table-striped table-bordered" id="tbldetail">
+                                <tr class="tbl-header-background">
+                                    <th>S No.</th>
+                                    <th>
+                                        Req.ID <a ng-click="sort_by('TravelRequestId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th hidden="hidden">HotelRequestId</th>
+                                    @*<th>
+                    Request Date &nbsp;<a ng-click="sort_by('BookingRequestDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                </th>*@
+                                    <th hidden="hidden">Gender</th>
+                                    <th>
+                                        Approval Date <a ng-click="sort_by('ApprovalDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Booking For <a ng-click="sort_by('BookingFor');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>Name</th>
+                                    <th>
+                                        Department <a ng-click="sort_by('RequestedEmpDept');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Designation <a ng-click="sort_by('RequestedEmpDesignation');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Travel Date <a ng-click="sort_by('TravelDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Sector <a ng-click="sort_by('Sector');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Flight-No. <a ng-click="sort_by('FlightNo');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        PNR <a ng-click="sort_by('Pnr');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Traveldesk Status <a ng-click="sort_by('BookingStatus');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Club Id <a ng-click="sort_by('clubId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>Hotel Response Status </th>
+                                    <th>Hotel Name <a ng-click="sort_by('HotelName');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                    <th>Hotel Confirmation No. </th>
+                                    <th>Cancellation Status </th>
+                                    <th>Financial Approval Status </th>
+                                    <th style="text-align:center">Action<input type="checkbox" id="chkheader" data-ng-model="selectedAll" ng-click="checkAll();" /></th>
+                                </tr>
+                                <tr class="tbl-row-padding" ng-repeat="list in filtered = (trlist | filter: search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                    <td class="indexsod">{{$index+1}}</td>
+                                    <td><a data-toggle="modal" href="#viewdetailModal" class="csod" ng-click="viewdetail(list.TravelRequestId)">{{list.TravelRequestCode}}</a></td>
+                                    <td hidden="hidden">{{list.HotelRequestId}}</td>
+                                    @*<td>{{list.BookingRequestDate}}</td>*@
+                                    <td hidden>{{list.Title}}</td>
+                                    <td>{{ToJavaScriptDateTime(list.ApprovalDate)}}</td>
+                                    <td>{{list.BookingFor}}</td>
+                                    <td>{{list.RequestedEmpName}}</td>
+                                    <td>{{list.RequestedEmpDept}}</td>
+                                    <td>{{list.RequestedEmpDesignation}}</td>
+                                    <td>{{list.TravelDate}}</td>
+                                    <td>{{list.Sector}}</td>
+                                    <td>{{list.FlightNo}}</td>
+                                    <td>{{list.Pnr}}</td>
+
+                                    <td ng-if="list.BookingStatus=='Close'" ng-mouseover="showstatus(list.TravelRequestId, list.HotelRequestId)">
+                                        {{list.BookingStatus}}
+                                        <div>&nbsp;<img src="../img/right.jpg" height="15" width="15" style="cursor:default" /></div>
+                                    </td>
+                                    <td ng-if="list.BookingStatus=='Rejected'" ng-mouseover="showstatus(list.TravelRequestId, list.HotelRequestId)">
+                                        {{list.BookingStatus}}
+                                        <div>&nbsp;<img src="../img/rejected1.png" height="15" width="15" style="cursor:default" /></div>
+                                    </td>
+                                    <td ng-if="list.BookingStatus=='Pending'" ng-mouseover="showstatus(list.TravelRequestId, list.HotelRequestId)">
+                                        {{list.BookingStatus}}
+                                        <div>&nbsp;<img src="../img/pendingflickering.gif" height="20" width="20" style="border-radius:50px ;cursor:default" /></div>
+                                    </td>
+                                    <td ng-if="list.BookingStatus=='Error'" ng-mouseover="showstatus(list.TravelRequestId, list.HotelRequestId)">
+                                        {{list.BookingStatus}}
+                                        <div>&nbsp;<img src="../img/error.png" height="16" width="16" style="cursor:default" /></div>
+                                    </td>
+                                    <td>{{list.clubId=='0'?' ':list.clubId}}</td>
+                                    <td>
+                                        <a data-toggle=modal href="#viewdetailModalHotel" class="csod" ng-click="viewdetailHotel(list.TravelRequestId, list.HotelRequestId)">{{list.HotelStatus=="Approved by Hotel" ? "Confirmed by Hotel" : list.HotelStatus}}</a><br />
+                                        <a href="#" style="color:red;" ng-if="list.HotelStatus=='' && list.CancellationStatus==''" id="btnCancelRqstHotelApp" class="csod" ng-click="hotelCancellationUser(list.TravelRequestId, list.HotelRequestId)">
+                                            Cancel Request
+                                        </a>
+                                    </td>
+                                    <td>{{list.HotelName=='NA'?'':list.HotelName}}</td>
+                                    <td>{{list.HotelConfirmationNo}}</td>
+                                    <td>{{list.CancellationStatus}}</td>
+                                    <td>
+                                        <span ng-if="list.HodApprovalStatus=='0'">
+                                            <a data-toggle=modal href="#viewdetailModalHODStatus" class="csod" ng-click="viewdetailHODApproval(list.TravelRequestId, list.HotelRequestId)">Pending</a>
+                                            <button type="button" id="btnResendApprover" class="btn btn-info btn-xs" style="margin:3px" ng-click="ResendApproverRequest(list.TravelRequestId, list.HotelRequestId)">
+                                                Resend Mail
+                                            </button>
+                                            <button type="button" ng-if="list.HotelStatus==''" id="btnRqstHotelApp" class="btn btn-warning btn-xs" ng-click="RequestToHotlAfterApproval(list.TravelRequestId, list.HotelRequestId)">
+                                                Mail to Hotel
+                                            </button>
+                                        </span>
+                                        <span ng-if="list.HodApprovalStatus=='1'">
+                                            <a data-toggle=modal href="#viewdetailModalHODStatus" class="csod" ng-click="viewdetailHODApproval(list.TravelRequestId, list.HotelRequestId)">Approved</a><br />
+                                            <button type="button" ng-if="list.HotelStatus==''" id="btnRqstHotelApp" class="btn btn-warning btn-sm" ng-click="RequestToHotlAfterApproval(list.TravelRequestId, list.HotelRequestId)">
+                                                Mail to Hotel
+                                            </button>
+                                        </span>
+                                        <a ng-if="list.HodApprovalStatus=='2'" data-toggle=modal href="#viewdetailModalHODStatus" class="csod" ng-click="viewdetailHODApproval(list.TravelRequestId, list.HotelRequestId)">Rejected</a>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <input type="checkbox" ng-if="(list.HotelStatus == '' && list.HodApprovalStatus=='' && list.CancellationStatus=='') || (list.HotelStatus == 'Rejected by Hotel' && list.CancellationStatus=='')"
+                                               ng-model="list.Selected" ng-checked="selectedAll" ng-hide="false" />
+                                    </td>
+                                    <td style="text-align:center"  hidden="hidden"><input type="checkbox" @*ng-if="(list.HotelStatus == '' && list.HodApprovalStatus=='' && list.CancellationStatus=='') || (list.HotelStatus == 'Rejected by Hotel' && list.CancellationStatus=='') || (($index+1) <= 2)"*@ ng-model="list.Selection" ng-checked="selectionAll" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12" ng-show="filteredItems == 0">
+                        <div class="col-md-12 text-center" style="color:red;margin-top:50px">
+                            <h4>No Record found</h4>
+                        </div>
+                    </div>
+                    <!--Pagination-->
+                    <div class="col-md-12" ng-show="filteredItems > 0" style="z-index:0;margin-bottom:50px;">
+                        <div pagination total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+                    </div>
+                </div>
+                <div id="oatdiv" hidden="hidden">
+                    <div class="col-md-12" ng-show="filteredItemsOat > 0">
+                        <table class="table table-striped table-bordered" style="width:100%;" id="tbloatdetail">
+                            <tr class="popheadcolor">
+                                <th>S No.</th>
+                                <th>
+                                    Req.ID &nbsp;<a ng-click="sort_by('TravelRequestId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Request Date &nbsp;<a ng-click="sort_by('RequestDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+
+                                <th>Name</th>
+                                <th>
+                                    Department &nbsp;<a ng-click="sort_by('RequestedEmpDept');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Travel Date &nbsp;<a ng-click="sort_by('TravelDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+
+                                <th>
+                                    Flight-No. &nbsp;<a ng-click="sort_by('FlightNo');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    PNR &nbsp;<a ng-click="sort_by('Pnr');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>Traveldesk Status </th>
+                                <th>Hotel Response Status </th>
+                                <th>Hotel Name </th>
+                                <th>Cancellation Status </th>
+                                <th>Financial Approval Status</th>
+                                <th>Action<input type="checkbox" id="chkheaderOat" data-ng-model="selectedAll" ng-click="checkAll();" /></th>
+                            </tr>
+                            <tr ng-repeat="list in troatlist ">
+                                <td>{{$index+1}}</td>
+                                <td><a data-toggle=modal href="#viewdetailModalOat" class="csod" ng-click="viewdetailoat(list.TravelRequestId)">OAT-{{list.TravelRequestId}}</a></td>
+                                <td>{{ToJavaScriptDate(list.RequestDate)}}</td>
+                                <td>{{list.RequestedEmpName}}</td>
+                                <td>{{list.RequestedEmpDept}}</td>
+                                <td>{{ToJavaScriptDate(list.TravelDate)}}</td>
+                                <td>{{list.FlightNo}}</td>
+                                <td>{{list.Pnr}}</td>
+                                <td ng-class="{'green': list.BookingStatus === 'Close', 'red':list.BookingStatus === 'Rejected'}">
+                                    {{list.BookingStatus}}
+                                </td>
+                                <td><a data-toggle=modal href="#viewdetailModalHotelOat" class="csod" ng-click="viewdetailHotelOat(list.TravelRequestId)">{{list.HotelStatus=="Approved by Hotel" ? "Confirmed by Hotel" : list.HotelStatus}}</a></td>
+                                <td>{{list.HotelName=='NA'?'':list.HotelName}}</td>
+                                <td>{{list.CancellationStatus}}</td>
+                                <td>
+                                    <span ng-if="list.HodApprovalStatus=='0'">
+                                        <a data-toggle=modal href="#viewdetailModalHODStatusOat" class="csod" ng-click="viewdetailHODApprovalOat(list.TravelRequestId)">Pending</a>
+                                        <button type="button" id="btnResendApproverOat" class="btn btn-warning btn-sm" ng-click="ResendApproverRequestOat(list.TravelRequestId)">
+                                            Resend Mail
+                                        </button>
+                                    </span>
+                                    <span ng-if="list.HodApprovalStatus=='1'">
+                                        <a data-toggle=modal href="#viewdetailModalHODStatusOat" class="csod" ng-click="viewdetailHODApprovalOat(list.TravelRequestId)">Approved</a><br />
+                                        <button type="button" ng-if="list.HotelStatus==''" id="btnRqstHotelAppOat" class="btn btn-warning btn-sm" ng-click="RequestToHotlAfterApprovalOat(list.TravelRequestId)">
+                                            Mail to Hotel
+                                        </button>
+                                    </span>
+                                    <a ng-if="list.HodApprovalStatus=='2'" data-toggle=modal href="#viewdetailModalHODStatusOat" class="csod" ng-click="viewdetailHODApprovalOat(list.TravelRequestId)">Rejected</a>
+
+                                </td>
+                                <td><input type="checkbox" ng-if="list.HotelStatus == '' && list.HodApprovalStatus=='' && list.CancellationStatus==''" ng-model="list.Selected" ng-checked="selectedAll" ng-hide="false" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-12" ng-show="filteredItemsOat == 0">
+                        <div class="col-md-12">
+                            <h4>No Record found</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="text-align:right;padding-top:10px" ng-show="filteredItemsOat > 0">
+                        <a id="btnHotelRequestOat" data-toggle="modal" href="#viewdetailModalBookHotelOat" class="btn btn-warning btn-sm" ng-click="GetApproverIds();" style="background-color: #EE1D23; border-color: #EE1D23;">
+                            Request to Hotel
+                        </a>
+                    </div>
+                    <!--Pagination-->
+                    <div class="col-md-12" ng-show="filteredItemsOat > 0" style="z-index:0; margin-bottom:50px;">
+                        <div pagination total-items="filteredItemsOat" page="currentPageOat" ng-model="entryLimitOat" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+                    </div>
+                </div>
+
+                <div id="exceptionaldiv" hidden="hidden">
+                    <div class="col-md-12" style="text-align:right;padding-bottom:10px;" ng-show="filteredItemsEx > 0">
+                        <a id="btnHotelRequestEx" data-toggle="modal" href="#viewdetailModalBookHotelEx" ng-click="GetApproverIds();" class="btn btn-warning btn-sm" style="background-color: #EE1D23; border-color: #EE1D23;">
+                            Request to Hotel
+                        </a>
+                    </div>
+                    <div class="col-md-12" ng-show="filteredItemsEx > 0">
+                        <table class="table-striped table-bordered" id="tbldetailEx">
+                            <tr class="tbl-header-background">
+                                <th>S No.</th>
+                                <th>
+                                    Req.ID &nbsp;<a ng-click="sort_by('TravelRequestId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th hidden="hidden">HotelRequestId</th>
+                                <th hidden="hidden">Gender</th>
+                                <th>
+                                    Request Date &nbsp;<a ng-click="sort_by('BookingRequestDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Booking For &nbsp;<a ng-click="sort_by('BookingFor');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>Name</th>
+                                <th>
+                                    Department &nbsp;<a ng-click="sort_by('RequestedEmpDept');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Designation &nbsp;<a ng-click="sort_by('RequestedEmpDesignation');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Travel Date &nbsp;<a ng-click="sort_by('TravelDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Sector &nbsp;<a ng-click="sort_by('Sector');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Flight-No. &nbsp;<a ng-click="sort_by('FlightNo');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    PNR &nbsp;<a ng-click="sort_by('Pnr');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>Traveldesk Status </th>
+                                <th>
+                                    Club Id &nbsp;<a ng-click="sort_by('clubId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>Hotel Response Status </th>
+                                <th>Hotel Name </th>
+                                <th>Hotel Confirmation No. </th>
+                                <th>Cancellation Status </th>
+                                <th>Financial Approval Status </th>
+                                <th style="text-align:center">Action<input type="checkbox" id="chkheaderEx" data-ng-model="selectedAll" ng-click="checkAll();" /></th>
+                            </tr>
+                            <tr class="tbl-row-padding" ng-repeat="list in filtered = (trlistEx | filter: search | orderBy : predicate :reverse) | startFrom:(currentPageEx-1)*entryLimitEx | limitTo:entryLimitEx">
+                                <td>{{$index+1}}</td>
+                                <td><a data-toggle="modal" href="#viewdetailModal" class="csod" ng-click="viewdetail(list.TravelRequestId)">{{list.TravelRequestCode}}</a></td>
+                                <td hidden="hidden">{{list.HotelRequestId}}</td>
+                                <td hidden>{{list.Title}}</td>
+                                <td>{{list.BookingRequestDate}}</td>
+                                <td>{{list.BookingFor}}</td>
+                                <td>{{list.RequestedEmpName}}</td>
+                                <td>{{list.RequestedEmpDept}}</td>
+                                <td>{{list.RequestedEmpDesignation}}</td>
+                                <td>{{list.TravelDate}}</td>
+                                <td>{{list.Sector}}</td>
+                                <td>{{list.FlightNo}}</td>
+                                <td>{{list.Pnr}}</td>
+
+                                <td ng-if="list.BookingStatus=='Close'">
+                                    {{list.BookingStatus}}
+                                    <div>&nbsp;<img src="../img/right.jpg" height="15" width="15" title="Status" style="cursor:default" /></div>
+                                </td>
+                                <td ng-if="list.BookingStatus=='Rejected'">
+                                    {{list.BookingStatus}}
+                                    <div>&nbsp;<img src="../img/rejected1.png" height="15" width="15" title="Status" style="cursor:default" /></div>
+                                </td>
+                                <td ng-if="list.BookingStatus=='Pending'">
+                                    {{list.BookingStatus}}
+                                    <div>&nbsp;<img src="../img/pendingflickering.gif" height="15" width="15" title="Status" style="cursor:default" /></div>
+                                </td>
+                                <td ng-if="list.BookingStatus=='Error'">
+                                    {{list.BookingStatus}}
+                                    <div>&nbsp;<img src="../img/error.png" height="16" width="16" title="Status" /></div>
+                                </td>
+                                <td>{{list.clubId=='0'?' ':list.clubId}}</td>
+                                <td>
+                                    <a data-toggle=modal href="#viewdetailModalHotel" class="csod" ng-click="viewdetailHotel(list.TravelRequestId, list.HotelRequestId)">{{list.HotelStatus=="Approved by Hotel" ? "Confirmed by Hotel" : list.HotelStatus}}</a><br />
+
+                                    <a href="#" style="color:red;" ng-if="list.HotelStatus=='' && list.CancellationStatus==''" id="btnCancelRqstHotelApp" class="csod" ng-click="hotelCancellationUser(list.TravelRequestId, list.HotelRequestId)">
+                                        Cancel Request
+                                    </a>
+                                </td>
+                                <td>{{list.HotelName=='NA'?'':list.HotelName}}</td>
+                                <td>{{list.HotelConfirmationNo}}</td>
+                                <td>{{list.CancellationStatus}}</td>
+                                <td>
+                                    <span ng-if="list.HodApprovalStatus=='0'">
+                                        <a data-toggle=modal href="#viewdetailModalHODStatus" class="csod" ng-click="viewdetailHODApproval(list.TravelRequestId, list.HotelRequestId)">Pending</a>
+                                        <button type="button" id="btnResendApprover" class="btn btn-info btn-xs" style="margin:3px" ng-click="ResendApproverRequest(list.TravelRequestId, list.HotelRequestId)">
+                                            Resend Mail
+                                        </button>
+                                        <button type="button" ng-if="list.HotelStatus==''" id="btnRqstHotelApp" class="btn btn-warning btn-xs" ng-click="RequestToHotlAfterApproval(list.TravelRequestId, list.HotelRequestId)">
+                                            Mail to Hotel
+                                        </button>
+                                    </span>
+                                    <span ng-if="list.HodApprovalStatus=='1'">
+                                        <a data-toggle=modal href="#viewdetailModalHODStatus" class="csod" ng-click="viewdetailHODApproval(list.TravelRequestId, list.HotelRequestId)">Approved</a><br />
+                                        <button type="button" ng-if="list.HotelStatus==''" id="btnRqstHotelApp" class="btn btn-warning btn-sm" ng-click="RequestToHotlAfterApproval(list.TravelRequestId, list.HotelRequestId)">
+                                            Mail to Hotel
+                                        </button>
+                                    </span>
+                                    <a ng-if="list.HodApprovalStatus=='2'" data-toggle=modal href="#viewdetailModalHODStatus" class="csod" ng-click="viewdetailHODApproval(list.TravelRequestId, list.HotelRequestId)">Rejected</a>
+
+                                </td>
+                                <td style="text-align:center">
+                                    <input type="checkbox" ng-if="(list.HotelStatus == '' && list.HodApprovalStatus=='' && list.CancellationStatus=='') || (list.HotelStatus == 'Rejected by Hotel' && list.CancellationStatus=='')"
+                                           ng-model="list.Selected" ng-checked="selectedAll" ng-hide="false" />
+                                </td>
+                                <td style="text-align:center" hidden="hidden"><input type="checkbox" ng-if="(list.HotelStatus == '' && list.HodApprovalStatus=='' && list.CancellationStatus=='') || (list.HotelStatus == 'Rejected by Hotel' && list.CancellationStatus=='') || (($index+1) <= 2)" ng-model="list.Selection" ng-checked="selectionAll" /></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="col-md-12" ng-show="filteredItemsEx == 0">
+                        <div class="col-md-12">
+                            <h4>No Record found</h4>
+                        </div>
+                    </div>
+
+                    <!--Pagination-->
+                    <div class="col-md-12" ng-show="filteredItemsEx > 0" style="z-index:0; margin-bottom:50px;">
+                        <div pagination total-items="filteredItemsEx" page="currentPageEx" ng-model="entryLimitEx" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+                    </div>
+                </div>
+
+                <div id="timediv" hidden="hidden">
+                    <div class="col-md-12" ng-show="filteredItemsTime > 0">
+                        <table class="table-striped table-bordered" id="tbldetailTime">
+                            <tr class="tbl-header-background">
+                                <th>S No.</th>
+                                <th>
+                                    Req.ID &nbsp;<a ng-click="sort_by('TravelRequestId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Request Date &nbsp;<a ng-click="sort_by('BookingRequestDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Booking For &nbsp;<a ng-click="sort_by('BookingFor');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>Name</th>
+                                <th>
+                                    Department &nbsp;<a ng-click="sort_by('RequestedEmpDept');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Travel Date &nbsp;<a ng-click="sort_by('TravelDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Sector &nbsp;<a ng-click="sort_by('Sector');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    Flight-No. &nbsp;<a ng-click="sort_by('FlightNo');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>
+                                    PNR &nbsp;<a ng-click="sort_by('Pnr');"><i class="glyphicon glyphicon-sort"></i></a>
+                                </th>
+                                <th>Hotel Name </th>
+                                <th>Check-in Time (User)</th>
+                                <th>Check-out Time (User) </th>
+                                <th>Check-in Time (Hotel)</th>
+                                <th>Check-out Time (Hotel) </th>
+                            </tr>
+                            <tr class="tbl-row-padding" ng-repeat="list in filtered = (trlistTime | filter: search | orderBy : predicate :reverse) | startFrom:(currentPageTime-1)*entryLimitTime | limitTo:entryLimitTime">
+                                <td>{{$index+1}}</td>
+                                <td><a data-toggle="modal" href="#viewdetailModal" class="csod" ng-click="viewdetail(list.TravelRequestId)">{{list.TravelRequestCode}}</a></td>
+                                <td>{{list.BookingRequestDate}}</td>
+                                <td>{{list.BookingFor}}</td>
+                                <td>{{list.RequestedEmpName}}</td>
+                                <td>{{list.RequestedEmpDept}}</td>
+                                <td>{{list.TravelDate}}</td>
+                                <td>{{list.Sector}}</td>
+                                <td>{{list.FlightNo}}</td>
+                                <td>{{list.Pnr}}</td>
+                                <td>{{list.HotelName=='NA'?'':list.HotelName}}</td>
+                                <td>{{list.CheckinTime}}</td>
+                                <td>{{list.CheckoutTime}}</td>
+                                <td>{{list.CheckinTimeHotel}}</td>
+                                <td>{{list.CheckoutTimeHotel}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-12" ng-show="filteredItemsTime == 0">
+                        <div class="col-md-12 text-center" style="margin-top:50px;color:red;">
+                            <h4>No Record found</h4>
+                        </div>
+                    </div>
+                    <!--Pagination-->
+                    <div class="col-md-12" ng-show="filteredItemsTime > 0" style="z-index:0; margin-bottom:50px;">
+                        <div pagination total-items="filteredItemsTime" page="currentPageTime" ng-model="entryLimitTime" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+        </section>
+
+
+        <!-------View Detail Model popup sod--------->
+        <div id="viewdetailModal" class="modal modal-wide newpopup fade">
+            <div class="modal-dialog newpopupwidth75">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">Hotel Booking Request Details (ID-{{arrbooking[0].TravelRequestId}})</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tblbookinginfo" class="flighdtl table table-striped table-bordered">
+                            <tr class="popheadcolor">
+                                <th>Hotel Reference Id</th>
+                                <th>City</th>
+                                <th>Check-In Date</th>
+                                <th>Check-Out Date</th>
+                                <th>No. of Guests</th>
+                                <th>Airport Transport Required</th>
+                                <th>Hotal Approval</th>
+                            </tr>
+                            <tr ng-repeat="blist in arrbooking" style="text-align:left;padding:2px;">
+                                <td>{{blist.HotelReferenceID}}</td>
+                                <td>{{blist.City}}</td>
+                                <td>{{ToJavaScriptDate(blist.CheckInDate)}}</td>
+                                <td>{{ToJavaScriptDate(blist.CheckOutDate)}}</td>
+                                <td>{{blist.NoOfGuest}}</td>
+                                <td>{{blist.AirportTransport==false ? "No" :"Yes"}}</td>
+                                <td>{{blist.HotelStatus=='Approved by Hotel' ? "Allocated": "Not Allocated"}}</td>
+                            </tr>
+                        </table>
+                        <h4 class="popuphdtxt">Travel Information</h4>
+                        <table class="flighdtl table table-striped table-bordered" id="tblviewFlight">
+                            <tr class="popheadcolor">
+                                <th>Sector</th>
+                                <th>Travel Date</th>
+                                <th>Flight No.</th>
+                                <th>Departure Time</th>
+                                @*<th>Arrival Time</th>*@
+                                <th ng-if="arrbooking[0].SodBookingTypeId==1">Meals</th>
+                            </tr>
+                            <tr ng-repeat="flist in arrFlight">
+                                <td>{{flist.OriginPlace}}-{{flist.DestinationPlace}}</td>
+                                <td>{{ToJavaScriptDate(flist.TravelDate)}}</td>
+                                <td>{{flist.FlightNo}}{{flist.DepFlightNumber}}</td>
+                                <td>{{flist.DepartureTime}}</td>
+                                @*<td>{{flist.ArrivalTime}}</td>*@
+                                <td ng-if="arrbooking[0].SodBookingTypeId==1">{{flist.Meals}}</td>
+                            </tr>
+                        </table>
+
+                        <h4 class="popuphdtxt" id="passH">Passenger(s) Information</h4>
+                        <table class="flighdtl table table-striped table-bordered" id="tblviewPassInfo">
+                            <tr class="popheadcolor">
+                                <th>Traveler Name</th>
+                                <th>Department</th>
+                                <th>Ph.No.</th>
+                                <th>Email Id</th>
+                                <th>Reason for Travel</th>
+                            </tr>
+                            <tr ng-repeat="plist in arrpassod">
+                                <td>{{plist.Title }} {{plist.RequestedEmpName}} </td>
+                                <td>{{plist.RequestedEmpDept}}</td>
+                                <td>{{plist.Phno}}</td>
+                                <td>{{plist.EmailId}}</td>
+                                <td>{{plist.ReasonForTravel}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!-------View detail model popup oat-------->
+        <div id="viewdetailModalOat" class="modal modal-wide fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">Hotel Booking Request Details (ID-{{arrbookingOat[0].TravelRequestId}})</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tblbookinginfoOat" class="flighdtl table table-striped table-bordered">
+                            <tr class="popheadcolor">
+                                <th>Hotel Reference Id</th>
+                                <th>City</th>
+                                <th>Check-In Date</th>
+                                <th>Check-Out Date</th>
+                                <th>No. of Guests</th>
+                                <th>Airport Transport Required</th>
+                            </tr>
+                            <tr ng-repeat="blist in arrbookingOat" style="text-align:left;padding:2px;">
+                                <td>{{blist.HotelReferenceId}}</td>
+                                <td>{{blist.City}}</td>
+                                <td>{{ToJavaScriptDate(blist.CheckInDate)}}</td>
+                                <td>{{ToJavaScriptDate(blist.CheckOutDate)}}</td>
+                                <td>{{blist.guests}}</td>
+                                <td>{{blist.AirportTransport==false ? "No" :"Yes"}}</td>
+                            </tr>
+                        </table>
+
+                        <h4 class="popuphdtxt">Travel Information</h4>
+                        <table class="flighdtl table table-striped table-bordered" id="tblviewFlightOat">
+                            <tr class="popheadcolor">
+                                <th>Sector</th>
+                                <th>Travel Date</th>
+                                <th>Flight No.</th>
+                                <th>Departure Time</th>
+                                @*<th>Arrival Time</th>*@
+                                <th ng-if="arrbookingOat[0].SodBookingTypeId==1">Meals</th>
+                            </tr>
+                            <tr ng-repeat="flist in arrFlightOat">
+                                <td>{{flist.OriginPlace}}-{{flist.DestinationPlace}}</td>
+                                <td>{{ToJavaScriptDate(flist.DepartureDate)}}</td>
+                                <td>{{flist.DepFlightNumber}}</td>
+                                <td>{{flist.DepartureTime}}</td>
+                                @*<td>{{flist.ArrivalTime}}</td>*@
+                                <td ng-if="arrbookingOat[0].SodBookingTypeId==1">{{flist.Meals}}</td>
+                            </tr>
+                        </table>
+
+                        <h4 class="popuphdtxt" id="passHOat">Passenger(s) Information</h4>
+                        <table class="flighdtl" id="tblviewPassInfoOat">
+                            <tr class="popheadcolor">
+                                <th>Traveler Name</th>
+                                <th>Department</th>
+                                <th>Ph.No.</th>
+                                <th>Email Id</th>
+                            </tr>
+                            <tr ng-repeat="plist in arrpassodOat">
+                                <td>{{plist.Title }} {{plist.RequestedEmpName}} </td>
+                                <td>{{plist.RequestedEmpDept}}</td>
+                                <td>{{plist.Phno}}</td>
+                                <td>{{plist.EmailId}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+
+        <!-------View detail model popup hotel details sod-------->
+        <div id="viewdetailModalHotel" class="modal newpopup modal-wide fade">
+            <div class="modal-dialog newpopupwidth75">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs header_white_color">Hotel Details (ID-{{trequestIdhotel}})</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="flighdtl pop_left_space table table-striped table-bordered" id="tblviewHotel">
+                            <tr class="popheadcolor">
+                                <th>Hotel Code</th>
+                                <th>Request Date</th>
+                                <th>Hotel Name</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Hotel Type</th>
+                                <th>Price</th>
+                                <th>Hotel Status</th>
+                                <th>Hotel Confirmation No.</th>
+                                <th>Approval/Rejection/ Cancellation DateTime</th>
+                            </tr>
+                            <tr ng-repeat="flist in rejectedData">
+                                <td>{{flist.HotelCode}}</td>
+                                <td>{{ToJavaScriptDate(flist.RequestDate)}}</td>
+                                <td>{{flist.HotelName}}</td>
+                                <td>{{flist.HotelAddress}}</td>
+                                <td>{{flist.HotelPhone}}</td>
+                                <td>{{flist.PrimaryEmail}}</td>
+                                <td>{{flist.HotelType}}</td>
+                                <td>{{flist.HotelPrice=='0'?'':flist.HotelPrice}}</td>
+                                <td>{{flist.Status}}</td>
+                                <td>{{flist.HotelConfirmationNo}}</td>
+                                <td>{{(ToJavaScriptDate(flist.ApprovalDate))=="31-Dec-1899" ? " " : ToJavaScriptDateTime(flist.ApprovalDate)}}</td>
+
+                            </tr>
+                            <tr ng-repeat="flist in cancelledData">
+                                <td>{{flist.HotelCode}}</td>
+                                <td>{{ToJavaScriptDate(flist.RequestDate)}}</td>
+                                <td>{{flist.HotelName}}</td>
+                                <td>{{flist.HotelAddress}}</td>
+                                <td>{{flist.HotelPhone}}</td>
+                                <td>{{flist.PrimaryEmail}}</td>
+                                <td>{{flist.HotelType}}</td>
+                                <td>{{flist.HotelPrice=='0'?'':flist.HotelPrice}}</td>
+                                <td>{{flist.Status}}</td>
+                                <td>{{flist.HotelConfirmationNo}}</td>
+                                <td>{{(ToJavaScriptDate(flist.ApprovalDate))=="31-Dec-1899" ? " " : ToJavaScriptDateTime(flist.ApprovalDate)}}</td>
+
+                            </tr>
+                            <tr ng-repeat="flist in arrbookinghotelTrid">
+                                <td>{{flist.HotelCode}}</td>
+                                <td>{{ToJavaScriptDate(flist.RequestDate)}}</td>
+                                <td>{{flist.HotelName}}</td>
+                                <td>{{flist.HotelAddress}}</td>
+                                <td>{{flist.HotelPhone}}</td>
+                                <td>{{flist.PrimaryEmail}}</td>
+                                <td>{{flist.HotelType}}</td>
+                                <td>{{flist.HotelPrice=='0'?'':flist.HotelPrice}}</td>
+                                <td>{{flist.Status}}</td>
+                                <td>{{flist.HotelConfirmationNo}}</td>
+                                <td>{{(ToJavaScriptDate(flist.ApprovalDate))=="31-Dec-1899" ? " " : ToJavaScriptDateTime(flist.ApprovalDate)}}</td>
+
+                            </tr>
+                            <tr ng-repeat="list in sharedUserdetails" ng-if="sharedUserdetails!=''">
+                                <td style="text-align:left;" colspan="6">Sharing With:</td>
+                                <td style="text-align:left;" colspan="5">
+                                    <span>TravelRequestID: {{sharedtravID}}</span><br />
+                                    <span>EmpCode: {{list.RequestedEmpCode}}</span><br />
+                                    <span>Name: {{list.RequestedEmpName}}</span>
+
+                                </td>
+                            </tr>
+                            <tr ng-if="hotelData[0].usercancellation!='Cancelled by User' && hotelData[0].usercancellation!='Cancelled' && hotelData[0].HotelStatus!='Rejected by Hotel'">
+                                <td style="text-align:left;" colspan="6">Send Confimation Mail to User:</td>
+                                <td style="text-align:left;" colspan="5">
+                                    <button type="button" id="btnsubmit" class="btn btn-warning btn-sm" ng-show="btnsubmit" ng-disabled="printloading" ng-if="hotelData[0].IsAllocated==0 && hotelData[0].HotelStatus=='Approved by Hotel'" ng-click="apphotelinfo(arrbookinghotelTrid[0].TravelRequestId, arrbookinghotelTrid[0].HotelRequestId)">Send Confirmation Mail</button>
+                                    <span ng-if="hotelData[0].IsAllocated==1" id="ResponseMail">
+                                        Confirmation Mail has been sent. &nbsp;
+                                        <button type="button" id="btnsubmitResend" class="btn btn-warning btn-sm" ng-show="btnsubmitResend" ng-click="apphotelinfo(arrbookinghotelTrid[0].TravelRequestId, arrbookinghotelTrid[0].HotelRequestId)">Resend Mail to User</button>
+                                    </span>
+                                    <span id="ResponseTextApproval" hidden="hidden">
+                                        Confirmation Mail has been sent. &nbsp;
+                                        <button type="button" id="btnsubmitResend2" class="btn btn-warning btn-sm" ng-show="btnsubmitResend2" ng-click="apphotelinfo(arrbookinghotelTrid[0].TravelRequestId, arrbookinghotelTrid[0].HotelRequestId)">Resend Mail to User</button>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr ng-if="hotelData[0].HotelStatus!=null && hotelData[0].HotelStatus!='Rejected by Hotel' && hotelData[0].usercancellation!='Cancelled by User' && hotelData[0].usercancellation!='Cancelled'">
+                                <td style="text-align:left;" colspan="6">Send Cancellation Request to Hotel & Re-Book:</td>
+                                @*<td colspan="4"><input id='txtcancel' type='text' placeholder='Reason for Cancellation' class='form-control input-sm' /></td>*@
+                                <td style="text-align:left;" colspan="5">
+                                    <button ng-if="hotelData[0].IsCancelled=='0'" type='button' class='btn btn-warning btn-sm' id='cancelButton' ng-click="hotelCancellation(arrbookinghotelTrid[0].TravelRequestId,arrbookinghotelTrid[0].HotelRequestId);">Send Cancellation Request</button>
+
+                                </td>
+                            </tr>
+                            <tr ng-if="(hotelData[0].HotelStatus!=null && hotelData[0].HotelStatus!='Rejected by Hotel') || (getCancelled)">
+                                <td style="text-align:left;" colspan="6">Permanently Cancel the Request for User:</td>
+                                @*<td colspan="4"><input id='txtcancel' type='text' placeholder='Reason for Cancellation' class='form-control input-sm' /></td>*@
+                                <td style="text-align:left;" colspan="5">
+                                    <button ng-if="hotelData[0].IsCancelled=='0' || getCancelled" type='button' class='btn btn-warning btn-sm' id='cancelButtonUser' ng-click="hotelCancellationUser(arrbookinghotelTrid[0].TravelRequestId,arrbookinghotelTrid[0].HotelRequestId);">Permanent Cancellation By User</button>
+                                    <span ng-if="hotelData[0].IsCancelled=='1'" id="ResponseTextUser">
+                                        Request has been cancelled. &nbsp;
+                                        <button type="button" id="btnsubmitCancelUser" class="btn btn-warning btn-sm" ng-click="hotelCancellationUser(arrbookinghotelTrid[0].TravelRequestId,arrbookinghotelTrid[0].HotelRequestId)">Resend Cancellation Request</button>
+                                    </span>
+                                    <span hidden="hidden" id="ResponseCancel">
+                                        Request has been cancelled. &nbsp;
+                                        <button type="button" id="btnsubmitCancel2User" class="btn btn-warning btn-sm" ng-click="hotelCancellationUser(arrbookinghotelTrid[0].TravelRequestId,arrbookinghotelTrid[0].HotelRequestId)">Resend Cancellation Request</button>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr ng-if="(hotelData[0].usercancellation!='Cancelled by User' && hotelData[0].usercancellation!='Cancelled' && hotelData[0].HotelStatus!='Rejected by Hotel' && !getCancelled)">
+                                <td style="text-align:left;" colspan="6">Resend Request to Hotel:</td>
+                                <td style="text-align:left;" colspan="5">
+                                    <button type="button" id="btnResendMail" class="btn btn-warning btn-sm" ng-click="ResendRequestToHotel(arrbookinghotelTrid[0].TravelRequestId,sharedtravID,arrbookinghotelTrid[0].HotelRequestId, sharedhId)">Resend Mail to Hotel</button>
+                                    <span id="ResponseTextResend" hidden="hidden">Mail has been resent.</span>
+                                </td>
+                            </tr>
+                            <tr ng-if="hotelData[0].HotelStatus=='Approved by Hotel' && hotelData[0].usercancellation!='Cancelled by User' && hotelData[0].usercancellation!='Cancelled'">
+                                <td style="text-align:left;" colspan="6">Mail to Hotel for receiving Checkin-Checkout time:</td>
+                                <td style="text-align:left;" colspan="5">
+                                    <button type="button" id="btnResponsiveMail" class="btn btn-warning btn-sm" ng-click="SendResponsiveMail(arrbookinghotelTrid[0].TravelRequestId,sharedtravID,arrbookinghotelTrid[0].HotelRequestId, sharedhId)">Send Responsive Mail</button>
+                                    <span id="ResponsiveMailResend" hidden="hidden">Responsive Mail has been sent.</span>
+
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <!-------View detail model popup hotel details oat-------->
+        <div id="viewdetailModalHotelOat" class="modal newpopup modal-wide fade">
+            <div class="modal-dialog newpopupwidth75">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs header_white_color">Hotel Details (ID-{{arrbookinghotelTridOat[0].TravelRequestId}})</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="flighdtl table table-striped table-bordered" id="tblviewHotel">
+                            <tr class="popheadcolor">
+                                <th>Hotel Code</th>
+                                <th>Request Date</th>
+                                <th>Hotel Name</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Hotel Type</th>
+                                <th>Price</th>
+                                <th>Hotel Status</th>
+                                <th>Hotel Confirmation No.</th>
+                                <th>Approval/Rejection DateTime</th>
+                            </tr>
+                            <tr ng-repeat="flist in arrbookinghotelTridOat">
+                                <td>{{flist.HotelCode}}</td>
+                                <td>{{ToJavaScriptDate(flist.RequestDate)}}</td>
+                                <td>{{flist.HotelName}}</td>
+                                <td>{{flist.HotelAddress}}</td>
+                                <td>{{flist.HotelPhone}}</td>
+                                <td>{{flist.PrimaryEmail}}</td>
+                                <td>{{flist.HotelType}}</td>
+                                <td>{{flist.HotelPrice=='0'?'':flist.HotelPrice}}</td>
+                                <td>{{flist.Status}}</td>
+                                <td>{{flist.HotelConfirmationNo}}</td>
+                                <td>{{(ToJavaScriptDate(flist.ApprovalDate))=="1-Jan-1900" ? " " : ToJavaScriptDateTime(flist.ApprovalDate)}}</td>
+                            </tr>
+                            <tr ng-repeat="list in sharedUserdetailsOat" ng-if="sharedUserdetailsOat!=''">
+                                <td colspan="6">Sharing With:</td>
+                                <td colspan="5">
+                                    <span>TravelRequestID: {{sharedtravIDOat}}</span><br />
+                                    <span>EmpCode: {{list.RequestedEmpCode}}</span><br />
+                                    <span>Name: {{list.RequestedEmpName}}</span>
+
+                                </td>
+                            </tr>
+                            <tr ng-if="hotelDataOat[0].usercancellation!='Cancelled by User'">
+                                <td colspan="6">Send Confimation Mail to User:</td>
+                                <td colspan="5">
+                                    <button type="button" id="btnsubmitOat" class="btn btn-warning btn-sm" ng-show="btnsubmitOat" ng-if="hotelDataOat[0].IsAllocated==0 && hotelDataOat[0].HotelStatus=='Approved by Hotel'" ng-click="apphotelinfoOat(arrbookinghotelTridOat[0].TravelRequestId)">Send Confirmation Mail</button>
+                                    <span ng-if="hotelDataOat[0].IsAllocated==1" id="ResponseMailOat">
+                                        Confirmation Mail has been sent. &nbsp;
+                                        <button type="button" id="btnsubmitOatResend" class="btn btn-warning btn-sm" ng-show="btnsubmitOatResend" ng-click="apphotelinfoOat(arrbookinghotelTridOat[0].TravelRequestId)">Resend Mail to User</button>
+                                    </span>
+                                    <span id="ResponseTextApprovalOat" hidden="hidden">
+                                        Confirmation Mail has been sent. &nbsp;
+                                        <button type="button" id="btnsubmitOatResend2" class="btn btn-warning btn-sm" ng-show="btnsubmitOatResend2" ng-click="apphotelinfoOat(arrbookinghotelTridOat[0].TravelRequestId)">Resend Mail to User</button>
+                                    </span>
+
+                                </td>
+                            </tr>
+                            <tr ng-if="hotelDataOat[0].HotelStatus!=null">
+                                <td colspan="6">Send Cancellation Request to Hotel:</td>
+                                @*<td colspan="4"><input id='txtcancel' type='text' placeholder='Reason for Cancellation' class='form-control input-sm' /></td>*@
+                                <td colspan="5">
+                                    <button ng-if="hotelDataOat[0].IsCancelled=='0'" type='button' class='btn btn-warning btn-sm' id='cancelButtonOat' ng-click="hotelCancellationOat(arrbookinghotelTridOat[0].TravelRequestId);">Send Cancellation Request</button>
+                                    <span ng-if="hotelDataOat[0].IsCancelled=='1'" id="ResponseTextOat">Cancellation Request has been sent.</span>
+                                    <span hidden="hidden" id="ResponseCancelOat">Cancellation Request has been sent.</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">Send Reminder Mail to Hotel:</td>
+                                <td colspan="5">
+                                    <button type="button" id="btnResendMailOat" class="btn btn-warning btn-sm" ng-click="ResendRequestToHotelOat(arrbookinghotelTridOat[0].TravelRequestId,sharedtravIDOat)">Resend Mail to Hotel</button>
+                                    <span id="ResponseTextResendOat" hidden="hidden">Mail has been resent.</span>
+
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <div id="viewdetailModalBookHotel" class="modal newpopup modal-wide fade">
+            <div class="modal-dialog newpopupwidth75">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">Hotel Booking Request</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div ng-show="hotelBookingDiv">
+                            <div class="row">
+                                <div style="margin-top:10px; margin-bottom:10px; width:100%;" class="col-md-6">
+                                    <div class="bookingtype">
+                                        <table id="tbltitleHotel">
+                                            <tr id="trsodtypeHotel">
+                                                <td><input type="radio" style="height:17px; width:17px;" name="radioHotel" value="rdoExisting" checked="checked" id="rdoExisting" onchange="Exis_NewChange();" /></td>
+                                                <td class="bookingtypetxt radio_space">Contractual</td>
+                                                <td><input type="radio" name="radioHotel" style="height:17px; width:17px;margin-left:10px;" value="rdoNew" id="rdoNew" onchange="Exis_NewChange();" /></td>
+                                                <td class="bookingtypetxt radio_space">Non-Contractual</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div style="color:red;text-align:left;">*Hotel Cancelled by User</div>*@
+                            <table class="flighdtl_Bk_request table table-striped table-bordered" id="tblExistinghotel">
+                                <tr>
+                                    <td colspan="2">Hotel Name  :</td>
+                                    <td colspan="4" align="left">
+                                        <input  style="display:none" type="text" class="inputremark form-control " ng-model="txthnameE" autocomplete="off" id="txthnameE" maxlength="200" onkeydown="preventAndOperator(event);" required />
+                                        <select class="inputremark form-control " id="ddlCustomers" style="text-align:left;" onchange="hotelfilldropdown();"></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Hotel Code  :</td>
+                                    <td colspan="4">
+                                        <input type="text" readonly="readonly" autocomplete="off" class="inputremark form-control" ng-model="txtcodeE" id="txtcodeE" maxlength="200" required />
+                                        <input type="text" hidden="hidden" id="txtTax" />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Hotel Address  :</td>
+                                    <td colspan="4">
+                                        <input type="text" readonly="readonly" autocomplete="off" class="inputremark form-control" ng-model="txthaddressE" id="txthaddressE" maxlength="200" required />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Hotel Phone  :</td>
+                                    <td colspan="4">
+                                        <input type="text" readonly="readonly" autocomplete="off" class="inputremark form-control" ng-model="txthphoneE" id="txthphoneE" onkeydown="validatePhoneNumber(event);" maxlength="200" required />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Primary Email Id  :</td>
+                                    <td colspan="4">
+                                        <input type="text" readonly="readonly" autocomplete="off" class="inputremark form-control" ng-model="txthemailE" id="txthemailE" maxlength="200" required />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Other Email Id's  :</td>
+                                    <td colspan="4">
+                                        <input type="text" readonly="readonly" autocomplete="off" class="inputremark form-control" ng-model="txtotheremailE" id="txtotheremailE" maxlength="200" required />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                </tr>
+                                <tr id="mealdiv">
+                                    <td colspan="2">Price Per Night :</td>
+                                    <td colspan="4" align="left">
+                                        <div id="mealpricediv1" hidden="hidden">
+                                            Meal Type:&nbsp;&nbsp;<input type="radio" name="radiomeal" value="meal1" checked="checked" id="rdomeal1" /><span id="mealtype"></span>&nbsp; (<span id="txthCurrency1"></span>)&nbsp;&nbsp;
+                                            Single Price: <span id="singlemealprice"></span>&nbsp;&nbsp;&nbsp;
+                                            Double Price: <span id="doublemealprice"></span><br />
+                                        </div>
+                                        <div id="mealpricediv2" hidden="hidden">
+                                            Meal Type:&nbsp;&nbsp;<input type="radio" name="radiomeal" value="meal2" id="rdomeal2" /><span id="mealtype2"></span>&nbsp; (<span id="txthCurrency2"></span>)&nbsp;&nbsp;
+                                            Single Price: <span id="singlemealprice2"></span>&nbsp;&nbsp;&nbsp;
+                                            Double Price: <span id="doublemealprice2"></span><br />
+                                        </div>
+                                        <div id="mealpricediv3" hidden="hidden">
+                                            Meal Type:&nbsp;&nbsp;<input type="radio" name="radiomeal" value="meal3" id="rdomeal3" /><span id="mealtype3"></span>&nbsp; (<span id="txthCurrency3"></span>)&nbsp;&nbsp;
+                                            Single Price: <span id="singlemealprice3"></span>&nbsp;&nbsp;&nbsp;
+                                            Double Price: <span id="doublemealprice3"></span><br />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Request Submitted By :</td>
+                                    <td colspan="4">
+                                        <input type="text" autocomplete="off" class="inputremark form-control" ng-model="txtRqstSubE" id="txtRqstSubE" maxlength="200" required />
+                                    </td>
+                                </tr>
+                                <tr id="nonContrCurrencyType" hidden="hidden">
+                                    <td colspan="2">Currency Type  :</td>
+                                    <td colspan="4" style="text-align:left">
+                                        <input type="radio" style="height:17px; width:17px;" name="typeHotel" value="DomesticCurr" checked="checked" onchange="ShowCurrency();" />
+                                        <label for="DomesticCurr">Domestic</label>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input type="radio" style="height:17px; width:17px;margin-left:10px;" name="typeHotel" value="InternationalCurr" onchange="ShowCurrency();" />
+                                        <label for="InternationalCurr">International</label>
+                                    </td>
+                                </tr>
+                                <tr id="nonContrInclusionHead" hidden="hidden">
+                                    <td colspan="6"><b>Hotel Inclusions</b></td>
+                                </tr>
+                                <tr id="nonContrInclusions1" hidden="hidden">
+                                    <td colspan="1">Accommodation:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtaccomodation" id="txtaccomodation" required />
+                                    </td>
+                                    <td colspan="1">Meal Plan:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtfood" id="txtfood" />
+                                    </td>
+                                </tr>
+                                <tr id="nonContrInclusions2" hidden="hidden">
+                                    <td colspan="1">Airport Transfers:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtairporttransfer" id="txtairporttransfer" required />
+                                    </td>
+                                    <td colspan="1">Room Service:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtroom" id="txtroom" />
+                                    </td>
+                                </tr>
+                                <tr id="nonContrInclusions3" hidden="hidden">
+                                    <td colspan="1">Buffet Time:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtbuffet" id="txtbuffet" required />
+                                    </td>
+                                    <td colspan="1">Laundry:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtlaundry" id="txtlaundry" />
+                                    </td>
+                                </tr>
+                                <tr id="nonContrPrice" hidden="hidden">
+                                    <td colspan="2">Price Per Night :</td>
+                                    <td colspan="1">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtprice" id="txtprice" maxlength="6" onkeyup="toggleStatus()" onkeydown="validateNumber(event);" required />
+                                    </td>
+                                    <td colspan="1">
+                                        Is Tax Included? <input type="checkbox" id="chktax" />
+                                    </td>
+                                    <td colspan="2">
+                                        <span style="color:darkblue">*For Price > Rs. 7000, financial approval is required.</span>
+                                    </td>
+                                </tr>
+                                <tr id="nonContrPriceInternational" hidden="hidden">
+                                    <td colspan="2">Price Per Night  :</td>
+                                    <td colspan="1">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtprice" id="txtprice" maxlength="6" onkeydown="validateNumber(event);" required />
+                                    </td>
+                                    <td colspan="1">
+                                        <select class="form-control select4" id="selecttxtCurrency1" name="CurrList">
+                                            <option value="Null" hidden>- Please select Currency -</option>
+                                            <option value="{{x.CurrencyCode}}" ng-repeat="x in CurrencyList">{{x.CurrencyName}}-{{x.CurrencyCode}}</option>
+                                        </select>
+                                    </td>
+                                    <td colspan="2">
+                                        Is Tax Included? <input type="checkbox" id="chktax" />
+                                    </td>
+                                </tr>
+
+                                <tr id="approvalRowDiv" hidden="hidden">
+                                    <td colspan="2">Approval Required from  :</td>
+                                    <td id="tdapprover1"><span id="SpanApprover1"></span>&nbsp;<input type="checkbox" id="chkapprover1" checked /><br /> <span id="EmailApprover1"></span> </td>
+                                    <td id="tdapprover2"><span id="SpanApprover2"></span>&nbsp;<input type="checkbox" id="chkapprover2" checked /><br /> <span id="EmailApprover2"></span> </td>
+                                    @*<td id="tdapprover3"><span id="SpanApprover3"></span>&nbsp;<input type="checkbox" id="chkapprover3" /><br /> <span id="EmailApprover3"></span> </td>*@
+
+                                    <td colspan="2">
+                                        <button type="button" id="btnFinancialApproval" class="btn btn-warning btn-sm" ng-click="sendFinancialApprovalRequest()">
+                                            Send Approval Request
+                                        </button>
+                                    </td>
+                                </tr>
+
+
+                                <tr id="requestToHotelDivRow">
+                                    <td colspan="2">Approval Remarks  :</td>
+                                    <td colspan="3">
+                                        <input type="text" class="inputremark form-control" ng-model="txtremarksE" id="txtremarksE" maxlength="200" required />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnHotelRequestE" class="btn btn-warning btn-sm" ng-click="requestToHotel()">
+                                            Send Request to Hotel
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-if="clubbingSelectionDiv">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="flighdtl">
+                                        <thead>
+                                            <tr>
+                                                <th>Travel Request ID</th>
+                                                <th style="display:none;">hotel Request ID</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Designation</th>
+                                                <th>Action</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody ng-repeat="lst in listForClubbling">
+                                            <tr>
+                                                <td>{{lst.TravelRequestId}}</td>
+                                                <td style="display:none;">{{lst.HotelRequestId}}</td>
+                                                <td>{{lst.EmployeeCode}}</td>
+                                                <td>{{lst.EmployeeName}}</td>
+                                                <td>{{lst.Designation}}</td>
+                                                <td><input type="radio" name="selected" ng-model="$parent.selected" value="{{$index}}" /> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <button ng-if="sendToHotelButton" type="button" style="margin-top:10px" class="btn btn-danger btn-sm text-center" ng-click="sendhotelrequestwithClubbing(listForClubbling,selected)">
+                                        Send RequestTo Hotel
+                                    </button>
+                                    <button ng-if="sendToFinancialButton" type="button" style="margin-top:10px" class="btn btn-danger btn-sm text-center" ng-click="sendFinanciahotelrequestwithClubbing(listForClubbling,selected)">
+                                        Send Approval Request
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="viewdetailModalBookHotelEx" class="modal newpopup modal-wide fade">
+            <div class="modal-dialog newpopupwidth75">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">Hotel Booking Request</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div ng-if="hotelBookingDiv">
+                            <div class="row">
+                                <div style="margin-top:10px; margin-bottom:10px; width:100%;" class="col-md-6">
+                                    <div class="bookingtype">
+                                        <table id="tbltitleHotelEx">
+                                            <tr id="trsodtypeHotelEx">
+                                                <td><input type="radio" style="height:17px; width:17px;" name="radioHotelEx" value="rdoExisting" id="rdoExisting" onchange="Exis_NewChangeEx();" checked /></td>
+                                                <td class="bookingtypetxt radio_space">Contractual</td>
+                                                <td><input type="radio" name="radioHotelEx" style="height:17px; width:17px;margin-left:10px;" value="rdoNew" id="rdoNew" onchange="Exis_NewChangeEx();" /></td>
+                                                <td class="bookingtypetxt radio_space">Non-Contractual</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div style="color:red;text-align:left;">*Hotel Cancelled by User</div>*@
+                            <table class="flighdtl table table-striped table-bordered" id="tblExistinghotelEx">
+                                <tr>
+                                    <td colspan="2">Hotel Name  :</td>
+                                    <td colspan="3" align="left">
+                                        <input style="display:none" type="text" autocomplete="off" class="inputremark form-control" ng-model="txthnameEx" id="txthnameEx" maxlength="200" onkeydown="preventAndOperator(event)" required />
+                                        <select class="inputremark form-control" id="ddlCustomersEx" style="text-align:left;" onchange="hotelfilldropdownEx();"></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Hotel Code  :</td>
+                                    <td colspan="3">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" readonly="readonly" ng-model="txtcodeEx" id="txtcodeEx" maxlength="200" required />
+                                        <input type="text" hidden="hidden" id="txtTaxEx" />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Hotel Address  :</td>
+                                    <td colspan="3">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" readonly="readonly" ng-model="txthaddressEx" id="txthaddressEx" maxlength="200" required />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Hotel Phone  :</td>
+                                    <td colspan="3">
+                                        <input type="text" readonly="readonly" autocomplete="off" class="inputremark form-control" ng-model="txthphoneEx" id="txthphoneEx" onkeydown="validatePhoneNumber(event);" maxlength="200" required />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Primary Email Id  :</td>
+                                    <td colspan="3">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" readonly="readonly" ng-model="txthemailEx" id="txthemailEx" maxlength="200" required />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Other Email Id's  :</td>
+                                    <td colspan="3">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" readonly="readonly" ng-model="txtotheremailEx" id="txtotheremailEx" maxlength="200" required />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                </tr>
+                                <tr id="mealdivEx">
+                                    <td colspan="2">Price Per Night  :</td>
+                                    <td colspan="4" align="left">
+                                        <div id="mealpricediv1Ex" hidden="hidden">
+                                            Meal Type: &nbsp; <input type="radio" autocomplete="off" name="radiomealEx" value="meal1" checked="checked" id="rdomeal1Ex" /><span id="mealtypeEx"></span>&nbsp;(<span id="txthCurrency1Ex"></span>)&nbsp;&nbsp;
+                                            Single Price: <span id="singlemealpriceEx"></span>&nbsp;&nbsp;&nbsp;
+                                            Double Price: <span id="doublemealpriceEx"></span><br />
+                                        </div>
+                                        <div id="mealpricediv2Ex" hidden="hidden">
+                                            Meal Type: &nbsp;<input type="radio" name="radiomealEx" value="meal2" id="rdomeal2Ex" /><span id="mealtype2Ex"></span>&nbsp;(<span id="txthCurrency2Ex"></span>)&nbsp;&nbsp;
+                                            Single Price: <span id="singlemealprice2Ex"></span>&nbsp;&nbsp;&nbsp;
+                                            Double Price: <span id="doublemealprice2Ex"></span><br />
+                                        </div>
+                                        <div id="mealpricediv3Ex" hidden="hidden">
+                                            Meal Type: &nbsp; <input type="radio" name="radiomealEx" value="meal3" id="rdomeal3Ex" /><span id="mealtype3Ex"></span>&nbsp;(<span id="txthCurrency3Ex"></span>)&nbsp;&nbsp;
+                                            Single Price: <span id="singlemealprice3Ex"></span>&nbsp;&nbsp;&nbsp;
+                                            Double Price: <span id="doublemealprice3Ex"></span><br />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Request Submitted By :</td>
+                                    <td colspan="4">
+                                        <input type="text" autocomplete="off" class="inputremark form-control" ng-model="txtRqstSubEx" id="txtRqstSubEx" maxlength="200" required />
+                                    </td>
+                                </tr>
+                                <tr id="nonContrCurrencyTypeEx" hidden="hidden">
+                                    <td colspan="2">Currency Type  :</td>
+                                    <td colspan="4" style="text-align:left">
+                                        <input type="radio" style="height:17px; width:17px;" name="typeHotelEx" value="DomesticCurr" checked="checked" onchange="ShowCurrencyEx();" />
+                                        <label for="DomesticCurr">Domestic</label>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input type="radio" style="height:17px; width:17px;margin-left:10px;" name="typeHotelEx" value="InternationalCurr" onchange="ShowCurrencyEx();" />
+                                        <label for="InternationalCurr">International</label>
+                                    </td>
+                                </tr>
+
+                                <tr id="requestToHotelDivRowEx">
+                                    <td colspan="2">Approval/Rejection Remarks  :</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtremarksEx" id="txtremarksEx" maxlength="200" required />
+                                        @*<input type="hidden" ng-model="allocated" value="{{allocated}}" />*@
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnHotelRequestExceptionEx" class="btn btn-warning btn-sm" ng-click="requestToHotelEx()">
+                                            Send Request to Hotel
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr id="nonContrInclusionHeadEx" hidden="hidden">
+                                    <td colspan="6"><b>Hotel Inclusions</b></td>
+                                </tr>
+                                <tr id="nonContrInclusions1Ex" hidden="hidden">
+                                    <td colspan="1">Accommodation:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtaccomodation" id="txtaccomodationEx" required />
+                                    </td>
+                                    <td colspan="1">Food:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtfood" id="txtfoodEx" />
+                                    </td>
+                                </tr>
+                                <tr id="nonContrInclusions2Ex" hidden="hidden">
+                                    <td colspan="1">Airport Transfers:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtairporttransfer" id="txtairporttransferEx" required />
+                                    </td>
+                                    <td colspan="1">Room Service:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtroom" id="txtroomEx" />
+                                    </td>
+                                </tr>
+                                <tr id="nonContrInclusions3Ex" hidden="hidden">
+                                    <td colspan="1">Buffet Time:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtbuffet" id="txtbuffetEx" required />
+                                    </td>
+                                    <td colspan="1">Laundry:</td>
+                                    <td colspan="2">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtlaundry" id="txtlaundryEx" />
+                                    </td>
+                                </tr>
+                                <tr id="nonContrPriceEx" hidden="hidden">
+                                    <td colspan="2">Price Per Night :</td>
+                                    <td colspan="1">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtprice" id="txtpriceEx" maxlength="6" onkeyup="toggleStatusEx()" onkeydown="validateNumber(event);" required />
+                                    </td>
+                                    <td colspan="1">
+                                        Is Tax Included? <input type="checkbox" id="chktaxEx" />
+                                    </td>
+                                    <td colspan="2">
+                                        <span style="color:darkblue">*For Price > Rs. 7000, financial approval is required.</span>
+                                    </td>
+                                </tr>
+                                <tr id="nonContrPriceInternationalEx" hidden="hidden">
+                                    <td colspan="2">Price Per Night :</td>
+                                    <td colspan="1">
+                                        <input type="text" class="inputremark form-control" autocomplete="off" ng-model="txtprice" id="txtpriceEx" maxlength="6" onkeydown="validateNumber(event);" required />
+                                    </td>
+                                    <td colspan="1">
+                                        <select class="form-control select4" id="selecttxtCurrencyEx" name="CurrList">
+                                            <option value="Null" hidden>- Please select Currency -</option>
+                                            <option value="{{x.CurrencyCode}}" ng-repeat="x in CurrencyList">{{x.CurrencyName}}-{{x.CurrencyCode}}</option>
+                                        </select>
+                                    </td>
+                                    <td colspan="2">
+                                        Is Tax Included? <input type="checkbox" id="chktaxEx" />
+                                    </td>
+                                </tr>
+                                <tr id="approvalRowDivEx" hidden="hidden">
+                                    <td colspan="2">Approval Required from  :</td>
+                                    <td id="tdapprover1Ex"><span id="SpanApprover1Ex"></span>&nbsp;<input type="checkbox" id="chkapprover1Ex" checked /><br /> <span id="EmailApprover1Ex"></span> </td>
+                                    <td id="tdapprover2Ex"><span id="SpanApprover2Ex"></span>&nbsp;<input type="checkbox" id="chkapprover2Ex" checked /><br /> <span id="EmailApprover2Ex"></span> </td>
+                                    @*<td id="tdapprover3"><span id="SpanApprover3"></span>&nbsp;<input type="checkbox" id="chkapprover3" /><br /> <span id="EmailApprover3"></span> </td>*@
+                                    <td colspan="2">
+                                        <button type="button" id="btnFinancialApproval" class="btn btn-warning btn-sm" ng-click="sendFinancialApprovalRequestEx()">
+                                            Send Approval Request
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-if="clubbingSelectionDiv">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="flighdtl table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Travel Request ID</th>
+                                                <th style="display:none;">hotel Request ID</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Designation</th>
+                                                <th>Action</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody ng-repeat="lst in listForClubbling">
+                                            <tr>
+                                                <td>{{lst.TravelRequestId}}</td>
+                                                <td style="display:none;">{{lst.HotelRequestId}}</td>
+                                                <td>{{lst.EmployeeCode}}</td>
+                                                <td>{{lst.EmployeeName}}</td>
+                                                <td>{{lst.Designation}}</td>
+                                                <td class="txt-center"><input type="radio" name="selected" ng-model="$parent.selected" value="{{$index}}" /> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <button ng-if="sendToHotelButton" type="button" style="margin-top:10px" class="btn btn-danger btn-sm text-center" ng-click="sendhotelrequestwithClubbing(listForClubbling,selected)">
+                                        Send RequestTo Hotel
+                                    </button>
+                                    <button ng-if="sendToFinancialButton" type="button" style="margin-top:10px" class="btn btn-danger btn-sm text-center" ng-click="sendFinanciahotelrequestwithClubbing(listForClubbling,selected)">
+                                        Send Approval Request
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="viewdetailModalHODStatus" class="modal newpopup modal-wide fade">
+            <div class="modal-dialog newpopupwidth75">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">HOD Approval Status (ID-{{approvalinfo[0].TravelRequestId}})</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tblhodappovalinfo" class="flighdtl table table-striped table-bordered" ng-repeat="blist in approvalinfo">
+                            <tr class="popheadcolor">
+                                <th>Approver 1</th>
+                                <th>Approval Date </th>
+                                <th>Approval status </th>
+                            </tr>
+                            <tr style="text-align:left;padding:2px;">
+                                <td>{{blist.ApproverNameLevel1}}</td>
+                                <td>{{ToJavaScriptDate(blist.ApprovalDateLevel1)=="31-Dec-1899"? "" : ToJavaScriptDate(blist.ApprovalDateLevel1)}}</td>
+                                <td>
+                                    <span ng-if="blist.ApprovalStatusLevel1=='0'">Pending</span>
+                                    <span ng-if="blist.ApprovalStatusLevel1=='1'">Approved</span>
+                                    <span ng-if="blist.ApprovalStatusLevel1=='2'">Rejected</span>
+                                </td>
+
+                            </tr>
+                            <tr ng-if="blist.ApproverNameLevel2 !=null" class="popheadcolor">
+                                <th>Approver 2</th>
+                                <th>Approval Date </th>
+                                <th>Approval status </th>
+                            </tr>
+                            <tr ng-if="blist.ApproverNameLevel2 !=null" style="text-align:left;padding:2px;">
+                                <td>{{blist.ApproverNameLevel2}}</td>
+                                <td>{{ToJavaScriptDate(blist.ApprovalDateLevel2)=="31-Dec-1899"? "" : ToJavaScriptDate(blist.ApprovalDateLevel2)}}</td>
+                                <td>
+                                    <span ng-if="blist.ApprovalStatusLevel2=='0'">Pending</span>
+                                    <span ng-if="blist.ApprovalStatusLevel2=='1'">Approved</span>
+                                    <span ng-if="blist.ApprovalStatusLevel2=='2'">Rejected</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <div id="viewdetailModalHODStatusOat" class="modal modal-wide fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">HOD Approval Status (ID-{{approvalinfoOat[0].TravelRequestId}})</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tblhodappovalinfoOat" class="flighdtl" ng-repeat="blist in approvalinfoOat">
+                            <tr class="popheadcolor">
+                                <th>Approver 1</th>
+                                <th>Approval Date </th>
+                                <th>Approval status </th>
+
+                            </tr>
+                            <tr style="text-align:left;padding:2px;">
+                                <td>{{blist.ApproverNameLevel1}}</td>
+                                <td>{{ToJavaScriptDate(blist.ApprovalDateLevel1)=="31-Dec-1899"? "" : ToJavaScriptDate(blist.ApprovalDateLevel1)}}</td>
+                                <td>
+                                    <span ng-if="blist.ApprovalStatusLevel1=='0'">Pending</span>
+                                    <span ng-if="blist.ApprovalStatusLevel1=='1'">Approved</span>
+                                    <span ng-if="blist.ApprovalStatusLevel1=='2'">Rejected</span>
+                                </td>
+
+                            </tr>
+                            <tr ng-if="blist.ApproverNameLevel2 !=null" class="popheadcolor">
+                                <th>Approver 2</th>
+                                <th>Approval Date </th>
+                                <th>Approval status </th>
+                            </tr>
+                            <tr ng-if="blist.ApproverNameLevel2 !=null" style="text-align:left;padding:2px;">
+                                <td>{{blist.ApproverNameLevel2}}</td>
+                                <td>{{ToJavaScriptDate(blist.ApprovalDateLevel2)=="31-Dec-1899"? "" : ToJavaScriptDate(blist.ApprovalDateLevel2)}}</td>
+                                <td>
+                                    <span ng-if="blist.ApprovalStatusLevel2=='0'">Pending</span>
+                                    <span ng-if="blist.ApprovalStatusLevel2=='1'">Approved</span>
+                                    <span ng-if="blist.ApprovalStatusLevel2=='2'">Rejected</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+
+
+    </div>
+    <!------Div Loader------------------------------------------------------>
+    <div class="loader" style="width:200px;height:200px;position:fixed;top:50%;left:50%;
+    margin-top: -100px; margin-left: -100px; background-color:transparent;">
+        <center>
+            <img class="loading-image" src="../images/loading.gif" alt="loading..">
+        </center>
+    </div>
+</body>
+</html>

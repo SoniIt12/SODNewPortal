@@ -1,0 +1,1498 @@
+﻿@model IEnumerable<SOD.Model.TravelRequestModels>
+@{
+    ViewBag.Title = "SOD-SJSC | Search Flight";
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <title>Sod SJSC | Search Flight</title>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../New_Calender/src/calender_jquery.daterange.js"></script>
+    <link href="../New_Calender/calender.css" rel="stylesheet" />
+    <script src="../Dropdownmenu/jquery-1.9.1.js"></script>
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    <script src="../js/jsvalidation.js"></script>
+    <link href="../3D_button/3dbtn.css" rel="stylesheet" />
+    <link href="../css/radiobtn.css" rel="stylesheet" />
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .ui-menu-item {
+            width: 25% !important;
+            float: left;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var counter = 2;
+        $(document).ready(function () {
+            $('input[type="radio"]').click(function () {
+                $('.NStru_flight_box').find('input:radio:checked').parents('.NStru_flight_box').css('border', 'solid 2px #008000');
+                $('.NStru_flight_box').find('input:radio:not(:checked)').parents('.NStru_flight_box').css('border', '');
+            });
+            //flight validations multicity-----------------------------------------------------------------------------
+            function checkradiomul(i) {
+                $('.detailsflight_border:eq('+i+') input#chkradiodept:checked').click(function () {
+                    this.checked = false;
+                });
+                $('.detailsflight_border:eq('+i+') input#chkradiodept:not(:checked)').click(function () {
+                    this.checked = true;
+                });
+                $('.NStru_flight_box').find('input:radio:checked').parents('.NStru_flight_box').css('border', 'solid 2px #008000');
+                $('.NStru_flight_box').find('input:radio:not(:checked)').parents('.NStru_flight_box').css('border', '');
+            }
+            $('body').on('click', '#chkradiodept', function () {
+                if (window.indexdiv != null && window.indexdiv.split(',').length > 0) {
+                    for (var i = 0; i < window.indexdiv.split(',').length; i++)
+                        checkradiomul(window.indexdiv.split(',')[i]);
+                }
+            });
+            hideshowFlightDiv('0');
+            Sod_NonSodChange();
+            $('#dvMsg').hide();
+            disablepassengerfeilds();
+            $('#ddlbookingtype').on('change',function(){
+                if($(this).val()==1)
+                    Sod_NonSodChange($(this).val());
+                else if($(this).val()==2)
+                    OnlyHotelBooking();
+                else if($(this).val()==4)
+                    BulkBookingChange();
+            });
+            $('#bookingtype').on('change', function () {
+                if ($(this).val() == 1)
+                    Sod_NonSodChange($(this).val());
+                else
+                    OnlyHotelBooking();
+
+            });
+            $("#addButtonnew").click(function () {
+                if (counter > 5) {
+                    alert("Only 5 Multicity Sectors are allowed.");
+                    return false;
+                }
+                var newTextBoxDiv = $(document.createElement('div')).attr("id", 'TextBoxDiv' + counter);
+                newTextBoxDiv.after().html('<div class="dynamiccontroltbl multidynamicsection" style=display:table;width:100%;margin-top:10px;border-radius:3px; padding:5px; border:solid 1px #b33; "> <p style="font-size:16px; color:#b33; margin-left:15px; padding-top:10px;">City #' + counter + ' :</p><div class=""><div class=""> <div class="col-md-3 form-group"> <div> <input type="text" name="textbox' + counter
+                    +'" id="textboxorigin' + counter +
+                    '" value=""  placeholder="Leaving from..." class="form-control" /><label>Origin</label></div></div> <div class="col-md-3 form-group"><input type="text" name="textbox' + counter + '" id="textboxdest' + counter + '" value="" placeholder="Going to..." class="form-control" /><label>Destination</label> </div> <div class="col-md-3 form-group"> <div id="Div4">  <i onclick="document.getElementById("txtddate").focus();"></i> <input type="text"  name="textbox' + counter + '" id="txttraveldt' + counter + '" value="" placeholder="Departure Date " autocomplete="off" class="form-control" /><label>Date of Travel</label></div></div></div></div></div>');
+                newTextBoxDiv.appendTo("#TextBoxesGroup");
+                //for multicity bind
+                GetOriginStation('textboxorigin' + counter, 'textboxdest' + counter);
+                $(function () {
+                    $('#txttraveldt' + counter).datepicker({
+                        numberOfMonths: 2,
+                        defaultDate: new Date(),
+                        minDate:new Date(),
+                        maxDate:"+10M +00D",
+                        dateFormat: "dd/mm/yy",
+                    });
+                });
+                counter++;
+            });
+            $("#removeButton").click(function () {
+                if (counter == 2) {
+                    alert("No more textbox to remove");
+                    return false;
+                }
+                counter--;
+                $("#TextBoxDiv" + counter).remove();
+            });
+            $("#getButtonValue").click(function () {
+                var msg = '';
+                for (i = 1; i < counter; i++) {
+                    msg += "\n Textbox #" + i + " : " + $('#textbox' + i).val();
+                }
+                alert(msg);
+            });
+
+            $("#lnkapprover").hide();
+            $("#lnkbulkapprover").hide();
+            $("#lnkoatapprover").hide();
+            $("#lnkbbklist").hide();
+            //Get User Travel History List
+            $("#lnktravelHistory").click(function(){
+                $("#lnktravelHistory").attr("href", "../SodApprover/ViewTravelList");
+            });
+
+            //Get User Travel History List
+            $("#lnktravelHistory").click(function(){
+                $("#lnktravelHistory").attr("href", "../SodApprover/ViewTravelList");
+            });
+            //radio button new code 6 feb 2019
+            $('input[name="bookingtype"]').click(function(){
+                if ($(this).prop('checked', true) && $(this).val() == 1 || $(this).val() == 2) {
+                    Sod_NonSodChange($(this).val());
+                }
+                 else {
+                    if ($(this).prop('checked', true) && $(this).val() == 3)
+                         window.location.href='@Url.Action("Index", "sjsisBooking")';
+                }
+            });
+        });
+        //Hide show div
+        function hideshowFlightDiv(flag)
+        {
+            //downtime();return;
+
+            $('.loader').hide();
+            if(flag=='0')
+            {
+                $('#dvMainRowContainer').hide();
+                $('#lnkContinue').hide();
+                $('#lnkRefresh').hide();
+                $('#imgFlyteType').hide();
+                $('#mob_footer_panel').hide();
+            }
+            else
+            {
+                $('#dvMainRowContainer').show();
+                $('#lnkContinue').show();
+                $('#lnkRefresh').show();
+                $('#imgFlyteType').show();
+                $('#mob_footer_panel').show();
+            }
+        }
+        function ClearContentsFilghts(option){
+            if($(option).text().trim()=="One Way")
+            {
+                //alert("one way");
+                $("#tab_default_2").find("input[type=text]").val('').end()
+                  .find("select").val('').end();
+                $("#tab_default_3").find("input[type=text]").val('').end()
+                  .find("select").val('').end().find('#TextBoxesGroup').children('div:gt(0)').remove();
+                if($("#flightHeaderSector").text().trim()!="")
+                {
+                    $('#dvMainRowContainer').children('div:gt(0)').hide();
+                }
+                hideshowFlightDiv('0');
+                window.counter=2;
+            }
+            else if($(option).text().trim()=="Round Trip")
+            {
+                $("#tab_default_1").find("input[type=text]").val('').end()
+                .find("select").val('').end();
+                $("#tab_default_3").find("input[type=text]").val('').end()
+                  .find("select").val('').end().find('#TextBoxesGroup').children('div:gt(0)').remove();
+                if($("#flightHeaderSector").text().trim()!="")
+                {
+                    $('#dvMainRowContainer').children('div:gt(0)').hide();
+                }
+                hideshowFlightDiv('0');
+                window.counter=2;
+            }
+            else
+            {
+                $("#tab_default_1").find("input[type=text]").val('').end()
+                .find("select").val('').end();
+                $("#tab_default_2").find("input[type=text]").val('').end()
+               .find("select").val('').end();
+                hideshowFlightDiv('0');
+                window.counter=2;
+            }
+            $('#dvMsg').css('display','none');
+            $('input[name="bookingtype"]').prop("disabled", false);
+            $('.NStru_flight_box').css('border', '');
+            $('.NStru_flight_box').find('input:radio').prop('checked', false);
+        }
+        //disable passenger dropdown bydefault
+        function disablepassengerfeilds(){
+            $("#ddpassenger").prop( "disabled", true );
+            $("#ddpassenger_roundtrip").prop( "disabled", true );
+            $("#ddpassenger_multicity").prop( "disabled", true );
+            window.ddlbookingTypes=1;
+        }
+        //New Sod/Non-Sod change function
+        function Sod_NonSodChange(ddlvalue)
+        {
+            if(ddlvalue==1)
+            {
+                $("#ddpassenger")[0].selectedIndex = 0;
+                $("#ddpassenger_roundtrip")[0].selectedIndex = 0;
+                $("#ddpassenger_multicity")[0].selectedIndex = 0;
+
+                $("#ddpassenger").prop( "disabled", true );
+                $("#ddpassenger_roundtrip").prop( "disabled", true );
+                $("#ddpassenger_multicity").prop( "disabled", true );
+                window.ddlbookingTypes=1;
+            }
+            else
+            {
+                $("#ddpassenger").prop( "disabled", false );
+                $("#ddpassenger_roundtrip").prop( "disabled", false );
+                $("#ddpassenger_multicity").prop( "disabled", false );
+                window.ddlbookingTypes=2;
+            }
+        }
+
+        //Hotel booking
+        function OnlyHotelBooking(){
+            var win = window.open(url, '_blank');
+            win.focus();
+        }
+        //DownTime
+        function downtime()
+        {
+            alert('SOD Downtime: New updates are going on... ... ... ...\nPlease try after some times. \nSorry for your inconvenience.');
+        }
+        //OAT booking
+        function OALBookingChange(){
+            var url='../oat/oatbooking';
+            var win = window.open(url, '_blank');
+            win.focus();
+        }
+    </script>
+    <script>
+        var travelRequestTypeIdG = "";
+        $(function () {
+            $("#txtddate").datepicker({
+                numberOfMonths: 2,
+                defaultDate: new Date(),
+                minDate: new Date(),
+                maxDate: "+10M +00D",
+                dateFormat: "dd/mm/yy",
+            });
+        });
+        $(function () {
+            $("#txttraveldt1").datepicker({
+                numberOfMonths: 2,
+                defaultDate: new Date(),
+                minDate: new Date(),
+                maxDate: "+10M +00D",
+                dateFormat: "dd/mm/yy",
+            });
+        });
+        $(function () {
+            var fromDate = $("#rarrivaldt").datepicker({
+                numberOfMonths: 2,
+                dateFormat: "dd/mm/yy",
+                defaultDate: new Date(),
+                minDate: new Date(),
+                maxDate: "+10M +00D",
+                onSelect: function (selectedDate) {
+                    var instance = $(this).data("datepicker");
+                    var date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                    date.setDate(date.getDate());
+                    toDate.datepicker("option", "minDate", date);
+                },
+                onClose: function (event, ui) { $("#rdepartdt").focus(); }
+            });
+            var toDate = $("#rdepartdt").datepicker({
+                numberOfMonths: 2,
+                defaultDate: new Date(),
+                minDate: new Date(),
+                maxDate: "+10M +00D",
+                dateFormat: "dd/mm/yy"
+            });
+        });
+        //mobile view flag update function
+        function mobileviewstatus(data) {
+            var flagmobile = 0;
+            var xmldata = $.parseXML(data);
+            var xml = $(xmldata);
+            var flights = xml.find('flights');
+            var dtsector = xml.find('dtsector');
+            if (xml.find('dtsector').length > 0)
+                flagmobile = 1;
+            else
+                flagmobile = flights.length > 0 ? 1 : 0;
+            detectmob(flagmobile);
+        }
+        //One way submit data
+        function OnewaySubmit() {
+            //validations
+            if ($("#txt-pickup").val() == "") {
+                alert('Please select origin place');
+                $("#txt-pickup").focus();
+                return false;
+            }
+            else if ($("#txt-destination").val() == "") {
+                alert('Please select destination place');
+                $("#txt-destination").focus();
+                return false;
+            }
+            else if ($("#txtddate").val() == "") {
+                alert('Please select travel date.');
+                $("#txtddate").focus();
+                return false;
+            }
+            var sodRequestList = new Array();
+            var obj = new Object();
+            obj.TravelRequestTypeId = "1";
+            travelRequestTypeIdG = "1";
+            obj.OriginPlace = document.getElementById("txt-pickup").value.split("-")[1];
+            obj.DestinationPlace = document.getElementById("txt-destination").value.split("-")[1];
+            obj.TravelDate = document.getElementById("txtddate").value;
+            obj.Passengers = $('#ddpassenger').val();
+            obj.SodBookingType = window.ddlbookingTypes;
+            obj.BookingFor = $('#ddlbookingFor').val();
+
+            sodRequestList.push(obj);
+            var sodRequestsList = JSON.stringify({ sodRequestsList: sodRequestList });
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '../user/SodRequestSubmit',
+                data: sodRequestsList,
+                beforeSend: function () {
+                    $('.loader').show()
+                },
+                complete: function () {
+                    $('.loader').hide();
+                },
+                success: function (data) {
+                    TravelResponse(data);
+                    $("#ddlbookingFor").prop("disabled", true);
+                    $('.Mob_innermodify').show();
+                    $('input[name="bookingtype"]').prop("disabled", true);
+                    if (window.innerWidth <= 800 && window.innerHeight <= 740) {
+                        mobileviewstatus(data);
+                    }
+                },
+                error: function (xhr, status, exception) {
+                    $("#spanfail").html("Searching error");
+                    $('.loader').hide();
+                }
+            });
+        }
+        //Round Trip submit data
+        function RoundTripSubmit() {
+            //validations
+            if ($("#txt-pickup-rt").val() == "") {
+                alert('Please select origin place');
+                $("#txt-pickup-rt").focus();
+                return false;
+            }
+            else if ($("#txt-destination-rt").val() == "") {
+                alert('Please select destination place');
+                $("#txt-destination-rt").focus();
+                return false;
+            }
+            else if ($("#rarrivaldt").val() == "") {
+                alert('Please select travel date.');
+                $("#rarrivaldt").focus();
+                return false;
+            }
+            else if ($("#rdepartdt").val() == "") {
+                alert('Please select return date.');
+                $("#rdepartdt").focus();
+                return false;
+            }
+            var sodRequestList = new Array();
+            var obj = new Object();
+            obj.TravelRequestTypeId = "2";
+            travelRequestTypeIdG = "2";
+            obj.OriginPlace = document.getElementById("txt-pickup-rt").value.split("-")[1];
+            obj.DestinationPlace = document.getElementById("txt-destination-rt").value.split("-")[1];
+            obj.TravelDate = document.getElementById("rarrivaldt").value;
+            obj.ReturnDate = document.getElementById("rdepartdt").value;
+            obj.Passengers = $('#ddpassenger_roundtrip').val();
+            obj.SodBookingType = window.ddlbookingTypes;
+            obj.BookingFor = $('#ddlbookingFor_roundtrip').val();
+
+            sodRequestList.push(obj);
+            var sodRequestsList = JSON.stringify({ sodRequestsList: sodRequestList });
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '../user/SodRequestSubmit',
+                data: sodRequestsList,
+                beforeSend: function () {
+                    $('.loader').show()
+                },
+                complete: function () {
+                    $('.loader').hide();
+                },
+                success: function (data) {
+                    TravelResponse(data);
+                    $("#ddlbookingFor_roundtrip").prop("disabled", true);
+                    $('input[name="bookingtype"]').prop("disabled", true);
+                    //-------------------------
+                    if (window.innerWidth <= 800 && window.innerHeight <= 740) {
+                        mobileviewstatus(data);
+                    }
+                },
+                error: function () {
+                    $("#spanfail").html("Searching error..");
+                }
+            });
+        }
+        //Multicity Submit
+        function MulticitySubmit() {
+            //alert("hi multicity");
+            var sodRequestList = new Array();
+            var counter = 0;
+            var passenger = 0;
+            var flag = 0;
+            $('.dynamiccontroltbl').each(function () {
+                var obj = new Object();
+                counter++;
+                //------------Validations---------------------------
+                if ($(this).find("input")[0].value == "") {
+                    alert('Please select origin place');
+                    $(this).find("input")[0].focus();
+                    flag = 1;
+                    return false;
+                }
+                else if ($(this).find("input")[1].value == "") {
+                    alert('Please select destination place');
+                    $(this).find("input")[1].focus();
+                    flag = 1;
+                    return false;
+                }
+                else if ($(this).find("input")[2].value == "") {
+                    alert('Please select travel date.');
+                    $(this).find("input")[2].focus();
+                    flag = 1;
+                    return false;
+                }
+                if ($('#tab_default_3').is(':visible')) {
+                    var index = 0;
+                    for (var i = 1; i <= document.getElementsByClassName('dynamiccontroltbl').length; i++) {
+                        for (var j = 1; j <= document.getElementsByClassName('dynamiccontroltbl').length; j++) {
+                            if ($('#txttraveldt' + i + '').val() == $('#txttraveldt' + j + '').val() && j > i) {
+                                if ($('#textboxorigin' + i + '').val() == $('#textboxorigin' + j + '').val() && $('#textboxdest' + i + '').val() == $('#textboxdest' + j + '').val()) {
+                                    flag = 1;
+                                    index = j;
+                                    break;
+                                }
+                            }
+                        }
+                        if (flag == 1) {
+                            alert('Please change the date');
+                            $('#txttraveldt' + index + '').focus();
+                            return false;
+                        }
+                    }
+                }
+                if (flag == 0) {
+                    obj.TravelRequestTypeId = "3";
+                    travelRequestTypeIdG = "3";
+                    obj.OriginPlace = $(this).find("input")[0].value.split("-")[1];
+                    obj.DestinationPlace = $(this).find("input")[1].value.split("-")[1];
+                    obj.TravelDate = $(this).find("input")[2].value;
+                    obj.Passengers = $('#ddpassenger_multicity').val();
+                    obj.SodBookingType = window.ddlbookingTypes;
+                    obj.BookingFor = $('#ddlbookingFor_multicity').val();
+
+                    sodRequestList.push(obj);
+                }
+            });
+            if (flag == 0) {
+                var sodRequestsList = JSON.stringify({ sodRequestsList: sodRequestList });
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '../user/SodRequestSubmit',
+                    data: sodRequestsList,
+                    beforeSend: function () {
+                        $('.loader').show()
+                    },
+                    complete: function () {
+                        $('.loader').hide();
+                    },
+                    success: function (data) {
+                        TravelResponseMulticity(data);
+                        $("#ddlbookingFor_multicity").prop("disabled", true);
+                        $('input[name="bookingtype"]').prop("disabled", true);//6 Feb 2019
+                        if (window.innerWidth <= 800 && window.innerHeight <= 740) {
+                            mobileviewstatus(data);
+                        }
+                    },
+                    error: function () {
+                        $("#spanfail").html("Searching error..");
+                    }
+                });
+            }
+        }
+        //Get Origin station Name
+        function GetOriginStation(objid, objdest) {
+            $.ajax({
+                type: "POST",
+                url: "../User/GetOriginStation",
+                data: {},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('.loader').show();
+                },
+                complete: function () {
+                    $('.loader').hide();
+                },
+                success: function (data) {
+                    ctyData = JSON.parse(data);
+                    var datalist = [];
+                    for (var prop in ctyData) {
+                        datalist.push(ctyData[prop]);
+                    }
+                    $("#" + objid).autocomplete({
+                        source: datalist,
+                        minLength: 0,
+                        autoFocus: true,
+                        select: function (event, ui) {
+                            destinationlist = [];
+                            $("#" + objdest).val('');
+                            var arrcode = ui.item.value.split('-')[1];
+                            GetDestStation(arrcode, objdest)
+                            $("#" + objdest).focus();
+                        }
+                    }).focus(function () {
+                        $(this).data("autocomplete").search($(this).val());
+                    });
+                },
+                failure: function (response) {
+                    alert(response);
+                },
+                error: function (xhr, status, exception) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err.Message);
+                }
+            });
+        }
+        //Get Destination Station Name
+        var destinationlist = [];
+        function GetDestStation(objDest, objid) {
+            var JSONObject = { "objArr": objDest };
+            var jsonData = JSON.stringify(JSONObject)
+            $.ajax({
+                type: "POST",
+                url: "../User/GetArrivalStation",
+                data: jsonData,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('.loader').show();
+                },
+                complete: function () {
+                    $('.loader').hide();
+                },
+                success: function (data) {
+                    jdestination = JSON.parse(data);
+                    for (var prop in jdestination) {
+                        destinationlist.push(jdestination[prop]);
+                    }
+                    $("#" + objid).autocomplete({
+                        source: destinationlist,
+                        minLength: 0,
+                        select: function (event, ui) {
+                            $("#txtddate").focus();
+                            if ($("#rarrivaldt") != 'undefined' || $("#rarrivaldt") == null)
+                                $("#rarrivaldt").focus();
+                        }
+                    }).focus(function () {
+                        $(this).data("autocomplete").search($(this).val());
+                    });
+                    $("#" + objid).focus();
+                },
+                failure: function (response) {
+                    alert(response);
+                },
+                error: function (xhr, status, exception) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err.Message);
+                }
+            });
+        }
+        //Application DropDown View
+        function ApplicationDropDownData() {
+            $.ajax({
+                url: '../User/GetApplicationView',
+                type: 'post',
+                success: function (dt) {
+                    $('#ddlbookingtype option').filter(() => { return parseInt(this.value) > 3 }).remove();
+                    if (dt != null && dt.length > 0) {
+                        for (var i = 0; i < dt.length; i++) {
+                            $('#ddlbookingtype').append($('<option></option>').attr('value', dt[i].ApplicationId).text(dt[i].ApplicationName));
+                        }
+                    }
+                    $('#ddlbookingtype').css('text-transform', 'uppercase');
+                },
+                error: function () {
+                }
+            });
+        }
+        //One way
+        GetOriginStation('txt-pickup', 'txt-destination');
+        //Round Trip
+        GetOriginStation('txt-pickup-rt', 'txt-destination-rt');
+        //MultiCity
+        GetOriginStation('textboxorigin1', 'textboxdest1');
+    </script>
+    <script>
+        //Response for Oneway and Round Trip
+        function TravelResponse(response) {
+            var xmlDoc = $.parseXML(response);
+            var xml = $(xmlDoc);
+            var min = parseInt(xml.find("PageCount").eq(0).find("Min").text());
+            var max = parseInt(xml.find("PageCount").eq(0).find("Max").text());
+            var flights = xml.find("flights");
+            var table = $("#dvgo div").eq(0).clone(true);
+            if(flights.length>0)  {
+                $("#flightHeaderSector").text('');
+                $("#dvgo div").remove();
+            }
+            //Return Flights
+            var rflights = xml.find("Rflights");
+            var rtable ="";
+            if(rflights.length>0)
+            {
+                $("#header-returning-part").css('display','block');
+                $("#dvreturn div").show();
+                rtable = $("#dvreturn div").eq(0).clone(true);
+                $("#dvreturn div").remove();
+            }
+            else
+            {
+                $("#header-returning-part").css('display','none');
+                $("#dvreturn div").hide();
+            }
+
+            //Flight details
+            flights.each(function () {
+                var flight = $(this);
+                var ftype = flight.find("FlightTypes").text()
+                $('.noflight', table).parents('div.row.NStru_flight_box').find('div:gt(0)').show();
+                $(".noflight", table).html('');//-----
+                $(".depflightNo", table).html((flight.find("FlightNo").text()));
+                $("#chkradiodept", table).val(flight.find("FlightNo").text());
+                $(".arrDate", table).html(flight.find("ShortDate").text());
+                $(".depcity", table).html(flight.find("From").text());
+                $(".arrcity", table).html(flight.find("To").text());
+                $(".deptime", table).html(flight.find("STD").text().substr(11));
+                $(".arrtime", table).html(flight.find("STA").text().substr(11));
+                $(".deptimeduration", table).html(flight.find("TimeDuration").text());
+                $(".planeName", table).html(flight.find("FlightName").text());
+                $(".depflighttype", table).html(flight.find("FlightTypes").text());
+                if(ftype==1){
+                    $(".ftype", table).attr("src","../img/Red_img.png");
+                    $(".wrapper .tooltip", table).html(flight.find("FlightInfos").text());
+                }
+                else if(ftype==2){
+                    $(".ftype", table).attr("src","../img/Orange_img.png");
+                    $(".wrapper .tooltip", table).html(flight.find("FlightInfos").text());
+                }
+                else if(ftype==3){
+                    $(".ftype", table).attr("src","../img/Blue_img.png");
+                    $(".wrapper .tooltip", table).html(flight.find("FlightInfos").text());
+                }
+                $("#dvgo").append(table);
+                table = $("#dvgo div").eq(0).clone(true);
+            });
+            //Return Flights details
+            rflights.each(function () {
+                var rflight = $(this);
+                var ftypes=rflight.find("FlightTypes").text()
+                $(".retFlightNo", rtable).html(rflight.find("FlightNo").text());
+                $("#chkradioreturn", table).val(rflight.find("FlightNo").text());
+                $(".ret_arrDate", rtable).html(rflight.find("ShortDate").text());
+                $(".retCity", rtable).html(rflight.find("From").text());
+                $(".ret_arrcity", rtable).html(rflight.find("To").text());
+                $(".rettime", rtable).html(rflight.find("STD").text().substr(11));
+                $(".ret_arrtime", rtable).html(rflight.find("STA").text().substr(11));
+                $(".retDuration", rtable).html(rflight.find("TimeDuration").text());
+                $(".planeName", rtable).html(rflight.find("FlightName").text());
+                $(".retflighttype", rtable).html(rflight.find("FlightTypes").text());
+                $("#dvreturn").append(rtable);
+                if(ftypes==1)
+                {
+                    $(".ftype", rtable).attr("src","../img/Red_img.png");
+                    $(".wrapper .tooltip", rtable).html(rflight.find("FlightInfos").text());
+                }
+                else if(ftypes==2){
+                    $(".ftype", rtable).attr("src","../img/Orange_img.png");
+                    $(".wrapper .tooltip", rtable).html(rflight.find("FlightInfos").text());
+                }
+                else if(ftypes==3){
+                    $(".ftype", rtable).attr("src","../img/Blue_img.png");
+                    $(".wrapper .tooltip", rtable).html(rflight.find("FlightInfos").text());
+                }
+                rtable = $("#dvreturn div").eq(0).clone(true);
+            });
+            if(flights.length>0){
+                hideshowFlightDiv('1');
+                $('#dvMsg').hide();
+            }
+            else
+            {
+                hideshowFlightDiv('0');
+                $('#dvMsg').html('Sorry : Flight not available.');
+                $('#dvMsg').show();
+            }
+            $('html, body').animate({
+                scrollTop: $("#dvMainRowContainer").offset().top
+            }, 2000, 'easeOutExpo');
+        }
+        //Travel Response Multicity
+        function TravelResponseMulticity(response) {
+            $('#dvgo').children('div:gt(0)').remove();
+            $("#header-returning-part").css('display','none');
+            $("#dvreturn div").css('display', 'none');
+            var flights="";
+            var xmlDoc = $.parseXML(response);
+            var status = false;
+            var xml = $(xmlDoc);
+            var min = parseInt(xml.find("PageCount").eq(0).find("Min").text());
+            var max = parseInt(xml.find("PageCount").eq(0).find("Max").text());
+            var dtsector = parseInt(xml.find("dtsector").eq(0).find("SectorCount").text());
+            var tablesector = $("#dvMainRowContainer div").eq(0).clone(true);
+            $("#dvMainRowContainer div").remove();
+            for (var i = 1; i <= dtsector; i++) {
+                flights = xml.find("flights" + i);
+                var tablinner = $("#dvInnerContainer div", tablesector).eq(0).clone(true);
+                if (flights.length == 0) {
+                    $('.flightdisplayheader', tablinner).hide();
+                    $("#flightHeaderSector", tablinner).html("(" + $('#textboxorigin' + i + '').val().split('-')[1] + "-" + $('#textboxdest' + i + '').val().split('-')[1] + ")");
+                    $(".noflight", tablinner).html('<p style=" font-weight:bold;text-align:center;">No flights availabe!!!</p>');
+                    $('.noflight', tablinner).parents('div.row.NStru_flight_box').find('div:gt(0)').hide();
+                    $("#dvInnerContainer", tablesector).empty().append(tablinner);
+                    tablinner = $("#dvInnerContainer  #dvgo", tablesector).eq(0).clone(true);
+                }
+                if (flights.length > 0) {
+                   $("#dvInnerContainer div", tablesector).remove();
+                    //Flight details
+                    flights.each(function () {
+                        var flight = $(this);
+                        if (window.innerWidth <= 800 && window.innerHeight <= 740) { $('.flightdisplayheader', tablinner).hide(); }
+                        else { $('.flightdisplayheader', tablinner).show(); }
+                        $('.noflight', tablinner).parents('div.row.NStru_flight_box').find('div:gt(0)').show();
+                        //Show Fligh on Header
+                        $("#flightHeaderSector", tablinner).html("(" + flight.find("From").text() + "-" + flight.find("To").text() + ")");
+                        $(".noflight", tablinner).html('');
+                        var ftypes = flight.find("FlightTypes").text()
+                        $(".depflightNo", tablinner).html(flight.find("FlightNo").text());
+                        $("#chkradiodept", tablinner).val(flight.find("FlightNo").text());
+                        $("#chkradiodept", tablinner).attr('name', i);
+                        $(".arrDate", tablinner).html(flight.find("ShortDate").text());
+                        $(".depcity", tablinner).html(flight.find("From").text());
+                        $(".arrcity", tablinner).html(flight.find("To").text());
+                        $(".deptime", tablinner).html(flight.find("STD").text().substr(11));
+                        $(".arrtime", tablinner).html(flight.find("STA").text().substr(11));
+                        $(".deptimeduration", tablinner).html(flight.find("TimeDuration").text());
+                        $(".depflighttype", tablinner).html(flight.find("FlightTypes").text());
+                        $(".planeName", tablinner).html(flight.find("FlightName").text());
+                        $("#dvInnerContainer", tablesector).append(tablinner);
+                        if (ftypes == 1) {
+                            $(".ftype", tablinner).attr("src", "../img/Red_img.png");
+                            $(".wrapper .tooltip", tablinner).html(flight.find("FlightInfos").text());
+                        }
+                        else if (ftypes == 2) {
+                            $(".ftype", tablinner).attr("src", "../img/Orange_img.png");
+                            $(".wrapper .tooltip", tablinner).html(flight.find("FlightInfos").text());
+                        }
+                        else if (ftypes == 3) {
+                            $(".ftype", tablinner).attr("src", "../img/Blue_img.png");
+                            $(".wrapper .tooltip", tablinner).html(flight.find("FlightInfos").text());
+                        }
+                        tablinner = $("#dvInnerContainer  #dvgo", tablesector).eq(0).clone(true);
+                    });
+                    status = true;
+                }
+                $("#dvMainRowContainer").append(tablesector);
+                tablesector = $("#dvMainRowContainer div").eq(0).clone(true);
+            }
+            if (status){
+                hideshowFlightDiv('1');
+                $('#dvMsg').hide();
+            }
+            else{
+                hideshowFlightDiv('0');
+                $('#dvMsg').html('Sorry : Flight not available.');
+                $('#dvMsg').show();
+            }
+            $('html, body').animate({
+                scrollTop: $("#dvMainRowContainer").offset().top
+            }, 2000, 'easeOutExpo');
+        }
+        //Get Get Flight Info
+        function GetFlightInfo()
+        {
+            var sodRequestList = new Array();
+            if (travelRequestTypeIdG == "3")
+            {
+                //For Multicity
+                var mlist = $("#dvInnerContainer input");
+                mlist.each(function() {
+                    if ($(this).is(':checked')) {
+                        var mparents = $(this).parent().parent();
+                        var mobj = new Object();
+                        mobj.Sector = $(".depcity", mparents).html() + '-' + $(".arrcity", mparents).html();
+                        mobj.TravelDate = $(".arrDate", mparents).html();
+                        mobj.FlightNo = $(".depflightNo", mparents).html();
+                        mobj.DepartureTime = $(".deptime", mparents).html();
+                        mobj.ArrivalTime = $(".arrtime", mparents).html();
+                        mobj.FlightName = $(".planeName", mparents).text();
+                        mobj.FlightTypes = $(".depflighttype", mparents).text();
+                        sodRequestList.push(mobj);
+                    }
+                });
+            }
+            else
+            {
+                //For One Way and Round Trip
+                var alist = $("#dvgo input");
+                //for Arrival List
+                alist.each(function() {
+                    if ($(this).is(':checked')) {
+                        var parents = $(this).parent().parent();
+                        var obj = new Object();
+                        obj.Sector = $(".depcity", parents).html() + '-' + $(".arrcity", parents).html();
+                        obj.TravelDate = $(".arrDate", parents).html();
+                        obj.FlightNo = $(".depflightNo", parents).html();
+                        obj.DepartureTime = $(".deptime", parents).html();
+                        obj.ArrivalTime = $(".arrtime", parents).html();
+                        obj.FlightName = $(".planeName", parents).text();
+                        obj.FlightTypes = $(".depflighttype", parents).text();
+                        sodRequestList.push(obj);
+                    }
+                });
+
+                //for Return List
+                var rlist = $("#dvreturn input");
+                rlist.each(function() {
+                    if ($(this).is(':checked')) {
+                        var rparents = $(this).parent().parent();
+                        var robj = new Object();
+                        robj.Sector = $(".retCity", rparents).html() + '-' + $(".ret_arrcity", rparents).html();
+                        robj.TravelDate = $(".ret_arrDate", rparents).html();
+                        robj.FlightNo = $(".retFlightNo", rparents).html();
+                        robj.DepartureTime = $(".rettime", rparents).html();
+                        robj.ArrivalTime = $(".ret_arrtime", rparents).html();
+                        robj.FlightName = $(".planeName", rparents).text();
+                        robj.FlightTypes = $(".retflighttype", rparents).text();
+                        sodRequestList.push(robj);
+                    }
+                });
+            }
+            if (sodRequestList.length == 0) {
+                $('#MobforShow').find('a:eq(0)').parent().hasClass('active') ? alert('Please select flight.') : alert('Please select flights.');//Feb 28 2019
+                return false;
+            }
+            //Round Trip validation
+            else {
+                if ($('#tab_default_2').is(':visible')) {
+                    if ($('#dvgo input:checked').length == 0 || $('#dvreturn input:checked').length == 0) {
+                        $('#dvgo input:checked').length == 0 ? alert('Please select onward flight.') : alert('Please select return flight.');
+                        return false;
+                    }
+                    if ($('#rarrivaldt').val() == $('#rdepartdt').val()) {
+                        mlist = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                        var start=ConvertTime($('#dvgo input:checked').parents('div.row.NStru_flight_box').find('.deptime').text());
+                        var end = ConvertTime($('#dvreturn input:checked').parents('div.row.NStru_flight_box').find('.rettime').text());
+                        if (Date.parse(mlist[$('#rarrivaldt').val().split('/')[1] - 1] + " " + $('#rarrivaldt').val().split('/')[0] + "," + $('#rarrivaldt').val().split('/')[2] + " " + start) >= Date.parse(mlist[$('#rdepartdt').val().split('/')[1] - 1] + " " + $('#rdepartdt').val().split('/')[0] + "," + $('#rdepartdt').val().split('/')[2] + " " + end)) {
+                            alert('This flight could not be possible');
+                            return false;
+                        }
+                    }
+                }
+                if ($('#tab_default_3').is(':visible')) {
+                    var status = false;
+                    var found = 0;
+                    var count = 0;
+                    window.indexdiv = "";
+                    for (var i = 0; i < $('#dvgo input:checked').parents('div.row.NStru_flight_box').length; i++) {
+                        for (var j = 0; j < $('#dvgo input:checked').parents('div.row.NStru_flight_box').length; j++) {
+                            var ival = $('#dvgo input:checked').parents('div.row.NStru_flight_box:eq(' + i + ')').find('.arrcity').text();
+                            var jval = $('#dvgo input:checked').parents('div.row.NStru_flight_box:eq(' + j + ')').find('.arrcity').text();
+                            var itime = $('#dvgo input:checked').parents('div.row.NStru_flight_box:eq(' + i + ')').find('.arrDate').text();
+                            var jtime = $('#dvgo input:checked').parents('div.row.NStru_flight_box:eq(' + j + ')').find('.arrDate').text();
+                            if (ival == jval && itime == jtime && i!=j) {
+                                count++;
+                                window.indexdiv += i + ",";
+                                break;
+                            }
+                        }
+                    }
+                    $.each($('#dvgo input:checked').parents('div.row.NStru_flight_box'), function (i, v) {
+                        $.each($('#dvgo input:checked').parents('div.row.NStru_flight_box'), function (j, k) {
+                            if ($('#dvgo input:checked').parents('div.row.NStru_flight_box:eq(' + i + ')').find('.arrDate').text() == $('#dvgo input:checked').parents('div.row.NStru_flight_box:eq(' + j + ')').find('.arrDate').text() && j > i) {
+                                var st = new Date($('#dvgo input:checked').parents('div.row.NStru_flight_box:eq(' + i + ')').find('.arrDate').text() + " " + $('#dvgo input:checked').parents('div.row.NStru_flight_box:eq(' + i + ')').find('.deptime').text());
+                                var et = new Date($('#dvgo input:checked').parents('div.row.NStru_flight_box:eq(' + j + ')').find('.arrDate').text() + " " + $('#dvgo input:checked').parents('div.row.NStru_flight_box:eq(' + j + ')').find('.deptime').text())
+                                var mm = Math.floor(Math.abs(st - et) / 60000);
+                                if (mm < 90) {
+                                    found = 1;
+                                    return false;
+                                }
+                            }
+                        });
+                        if (found==1) {
+                            status = true;
+                            return false;
+                        }
+                    });
+                    if (status) {
+                        alert('Flight time difference must be greater than 90 mins.');
+                        return false;
+                    }
+                    if (count > 1) {
+                        alert('Please re-check the flights selected by you. There are identical sectors. Select only one flight for further proceed.');
+                        return false;
+                    }
+                }
+            }
+            var sodRequestsList = JSON.stringify({ sodRequestsList: sodRequestList });
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '../SJSCFlightBooking/SubmitFlightInfo',
+                data: sodRequestsList,
+                beforeSend: function(){
+                    $('.loader').show()
+                },
+                complete: function(){
+                    $('.loader').hide();
+                },
+                success: function (data) {
+                    var url = '@Url.Action("SJSCFlightBooking", "SJSCFlightBooking")';
+                    window.location.href = url;
+                },
+                error: function () {
+                    $("#spanfail").html("Error on Save data.");
+                }
+            });
+        }
+        function ConvertTime(time) {
+            var AMPM = time.split(' ')[1];
+            var hrs = time.split(' ')[0].split(':')[0];
+            var minutes = time.split(' ')[0].split(':')[1];
+            if (AMPM == "PM") {
+                if (hrs != '12')
+                    hrs =hrs*1 + 12;
+            }
+            else if (AMPM == "AM" && hrs == '12')
+                hrs -= 12;
+            else
+                hrs = hrs;
+            return hrs + ":" + minutes;
+        }
+    </script>
+    <script>
+        function mobDisplayTwoPanel333() {
+            document.getElementById('mob_modify_part').style.display = "block";
+            document.getElementById('mob_footer_panel').style.display = "block";
+            document.getElementById('MobforShow').style.display = "none";
+        }
+
+        function mob_serchPanleShow() {
+            document.getElementById('MobforShow').style.display = "block";
+            document.getElementById('mob_modify_part').style.display = "none";
+            document.getElementById('dvMainRowContainer').style.display = "none";
+            document.getElementById('imgFlyteType').style.display = "none";
+            $('.three_D3 a').css('display', 'none');
+            $('input[name="bookingtype"]').prop("disabled", false);
+        }
+    </script>
+    <script>
+        function detectmob(status) {
+            if (window.innerWidth <= 800 && window.innerHeight <= 740) {
+                var lll = $('.loader').is(':hidden');
+                var che = $('#dvMainRowContainer').is(':visible');
+                //if(!$('.loader').is(':hidden'))
+                if (status == 1) {
+                    document.getElementById('mob_modify_part').style.display = "block";
+                    document.getElementById('mob_footer_panel').style.display = "block";
+                    document.getElementById('MobforShow').style.display = "none";
+                }
+                return true;
+            } else {
+                document.getElementById('mob_modify_part').style.display = "none";
+                document.getElementById('mob_footer_panel').style.display = "none";
+                document.getElementById('MobforShow').style.display = "block";
+                return false;
+            }
+        }
+    </script>
+</head>
+<body onload="hideshowFlightDiv('0');">
+    <div>
+        <div class="New_tmp_lyer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bookingtype ">
+                            <div class="col-md-2 col-xs-4"><div class="bookingtypetxt boktyphotl">BOOKING TYPE :</div> </div>
+                            <div class="col-md-5 col-xs-8">
+                                <div>
+                                    <select class="bookingtyp" id="ddlbookingtype" style="display:none">
+                                        <option value="1">Sod</option>
+                                    </select>
+                                    <input type="radio" name="bookingtype" checked="checked" value="1" /><label class="bookingtypetxt txtfont_normal radiosod_align"> SOD SJSC Booking</label>
+                                    <input type="radio" name="bookingtype" value="3" /><label class="bookingtypetxt txtfont_normal radiosod_align"> Hotel Booking</label>
+                                </div>
+                                <table style="display:none;">
+                                    <tr>
+                                        <td style="padding-left:5px;"><input type="radio" style="height:17px; " name="radio" value="sod" checked="checked" id="rdoSod" onchange="Sod_NonSodChange();" /></td>
+                                        <td class="bookingtypetxt">SOD</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-5">
+                                <table class="bktype_mob_nd_left">
+                                    <tr id="trsodtype"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*-----------------------------FLIGHT SERACH PART --------------------------------------*@
+        <div id="mob_modify_part" class="Mob_FlightmodifyDV">
+            <div class="Mob_innermodify"><a onclick="mob_serchPanleShow();">Modify Search <i><img src="~/New_images/icon/edit_icon.png" /></i></a></div>
+        </div>
+        <div id="MobforShow">
+            <section class="home-content-top">
+                <div class="container">
+                    <!--our-quality-shadow-->
+                    <div class="tabbable-panel margin-tops4 ">
+                        <div class="tabbable-line">
+                            <ul class="nav nav-tabs tabtop ">
+                                <li class="active"> <a href="#tab_default_1" data-toggle="tab" onclick="ClearContentsFilghts(this)"> One Way </a> </li>
+                                <li> <a href="#tab_default_2" data-toggle="tab" onclick="ClearContentsFilghts(this)"> Round Trip</a> </li>
+                                <li> <a href="#tab_default_3" data-toggle="tab" onclick="ClearContentsFilghts(this)"> MultiCity </a> </li>
+                            </ul>
+                            <div class="tab-content margin-tops">
+                                <div class="tab-pane active fade in" id="tab_default_1">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <div>
+                                                <i class="flighticon_destination"></i>
+                                                <input id="txt-pickup" type="text" value="" placeholder="Leaving from.." class="form-control">
+                                                <label>Origin</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <div>
+                                                <i class="flighticon_origin"></i>
+                                                <input id="txt-destination" type="text" value="" placeholder="Going to.." class="form-control ">
+                                                <label>Destination</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div id="txtddateD">
+                                                <i class="calender_common_all" onclick="document.getElementById('txtddate').focus();"></i>
+                                                <input id="txtddate" type="text" placeholder="Departure Date" autocomplete="off" class="form-control">
+                                                <label>Date of Travel</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div id="txtadateD">
+                                                <i onclick="document.getElementById('txtadate').focus();"></i>
+                                                <select class="form-control" id="ddlbookingFor" placeholder="StandBy" >
+                                                    <option>StandBy</option>
+                                                    <option>Confirm</option>
+                                                </select>
+                                                <label>Booking for</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <div id="txtadateD">
+                                                <i onclick="document.getElementById('ddpassenger').focus();"></i>
+                                                <select class="form-control" id="ddpassenger" placeholder="StandBy" disabled>
+                                                    <option>1</option>
+                                                </select>
+                                                <label>Passenger</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <div>
+
+                                                <button type="submit" value="Search" id="OnewaySubmit" onclick="OnewaySubmit(); detectmob(); " class="btn btn-primary btn-block btncolor_spicejt">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="tab_default_2">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div>
+                                                <i class="flighticon_destination"></i>
+                                                <input id="txt-pickup-rt" type="text" value="" placeholder="Leaving from.." class="form-control">
+                                                <label>Origin</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div>
+                                                <i class="flighticon_origin"></i>
+                                                <input id="txt-destination-rt" type="text" value="" placeholder="Going to.." class="form-control ">
+                                                <label>Destination</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div>
+                                                <i class="calender_common_all" onclick="document.getElementById('rarrivaldt').focus();"></i>
+                                                <input id="rarrivaldt" type="text" placeholder="Departure Date" autocomplete="off" class="form-control">
+                                                <label>Date of Travel</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div>
+                                                <i class="calender_common_all" onclick="document.getElementById('rdepartdt').focus();"></i>
+                                                <input id="rdepartdt" type="text" placeholder="Arrival Date" autocomplete="off" class="form-control">
+                                                <label>Return Date</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div id="txtadateD">
+                                                <i onclick="document.getElementById('txtadate').focus();"></i>
+                                                <select class="form-control" id="ddlbookingFor_roundtrip" placeholder="StandBy">
+                                                    <option>Standby</option>
+                                                    <option>Confirm</option>
+                                                </select>
+                                                <label>Booking for</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <div id="txtadateD">
+                                                <i onclick="document.getElementById('txtadate').focus();"></i>
+                                                <select class="form-control" id="ddpassenger_roundtrip" placeholder="StandBy" disabled>
+                                                    <option>1</option>
+                                                </select>
+                                                <label>Passenger</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <div>
+                                                <button type="submit" id="btnRoundTrip" value="Search" onclick="RoundTripSubmit();detectmob();" class="btn btn-primary btncolor_spicejt">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab_default_3">
+
+                                    @*------------------ NEW MULTICITY-------------*@
+                                    <div id="TextBoxesGroup">
+                                        <div class="dynamiccontroltbl">
+                                            <div style="display: table;border: solid 1px #b33; width: 100%;border-radius: 5px;margin-bottom: 20px;padding: 10px 7px 10px 5px;">
+                                                <div style="font-size:16px; color:#b33; margin-left:15px; padding-top:0px;">City #1&nbsp;:</div>
+                                                <div class="col-md-3">
+                                                    <div>
+                                                        <input id="textboxorigin1" type="text" value="" placeholder="Leaving from..." class="form-control" />
+                                                    </div>
+                                                    <label>Origin</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input id="textboxdest1" type="text" value="" placeholder="Going to..." class="form-control" />
+                                                    <label>Destination</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div id="Div4">
+                                                        <i class="fa fa-calendar" onclick="document.getElementById('txtddate').focus();"></i>
+                                                        <input id="txttraveldt1" autocomplete="off" type="text" placeholder="Departure Date " class="form-control" />
+                                                    </div>
+                                                    <label>Date of Travel</label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div>
+                                                        <div id="txtadateD">
+                                                            <i onclick="document.getElementById('txtadate').focus();"></i>
+                                                            <div>
+                                                                <select class="form-control" id="ddlbookingFor_multicity"><option>Standby</option><option>Confirm</option></select>
+                                                                <label>Booking for</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div id="txtadateD">
+                                                        <i onclick="document.getElementById('txtadate').focus();"></i>
+                                                        <div>
+                                                            <select class="form-control" id="ddpassenger_multicity" disabled>
+                                                                <option>1</option>
+                                                            </select>
+                                                            <label>Passengers</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="">
+                                            <div class="">
+                                                <div class="col-md-2 col-xs-6">
+                                                    <div class="NStru_multiSection_btn_margin">
+                                                        <input style="width:140px;" id="addButtonnew" type="button" value="Add Flight +" class="btn btn-primary btncolor_spicejt" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-xs-6">
+                                                    <div class="NStru_multiSection_btn_margin">
+                                                        <input type='button' value='Remove Flight -' id='removeButton' class="btn btn-primary btncolor_spicejt multictsubmit_romovebtn">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-xs-8">
+                                                    <div class="NStru_multiSection_btn_margin">
+                                                        <input type='button' class="btn btn-primary btncolor_spicejt multictsubmitbtn" value='Submit' id='btnMulCity' onclick="MulticitySubmit();detectmob(); ">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    @*----------------- NEW MULTICITY END------------*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        @*-----------------------------END FLIGHT SERACH PART --------------------------------------*@
+        @*=================================== NEW TEMPLATE STRUCTURE=======================*@
+        <div class="tabtopgap">
+            <div class="container">
+                <div id="dvMainRowContainer" title="" style="display:none;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="detailsflight_border" id="dvInnerContainer">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="NStru_selectflightheadtxt"> <span><i><img src="../img/plane.png" /></i> Select Onward Flight </span><span id="flightHeaderSector"></span> </div>
+                                        <div class="row">
+                                            <div class="flightdisplayheader">
+                                                <div class="col-md-1">#</div>
+                                                <div class="col-md-1">
+                                                    <div>Flight No.</div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div>
+                                                        Departure
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div>Dep. Time</div>
+                                                </div>
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <div>
+                                                        Arrival
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div>Arr. Time</div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div>
+                                                        Duration
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div id="dvgo">
+                                            <div class="row NStru_flight_box">
+                                                <div><span class="noflight"></span></div><!--Today-->
+                                                <div class="col-md-1 col-xs-1"><input type="radio" id="chkradiodept" name="chkradiodept" /></div>
+                                                <div class="col-md-1 col-xs-10">
+                                                    <div class="mob-flight-name"><span class="depflightNo">SG160</span> <input type="hidden" class="depflighttype" /></div>
+                                                </div>
+
+                                                <div class="col-md-2 col-xs-11">
+                                                    <div class="mob-flight-depcity">
+                                                        <span class="depcity">Delhi</span>
+                                                    </div>
+                                                    <div class="mob-flight-depDate"><span class="arrDate"> (Thu 25, Feb 2016) </span></div>
+                                                </div>
+
+                                                <div class="col-md-2 col-xs-4">
+                                                    <div class="mob-flight-depTime"><span class="deptime">6:50 AM</span></div>
+                                                </div>
+
+                                                <div class="col-md-1 col-xs-12">
+                                                    <div class="mob-flight-arrowhide">
+                                                        <img src="../img/arrow_icon.png" style="text-align:left;display:none;" />
+                                                        <input type="hidden" class="planeName"><!--15 Feb 2019 filght name-->
+                                                    </div>
+                                                    <div class="mob-flight-directiobarow">
+                                                        <div class="wrapper"><img class="ftype" /><div class="tooltip"></div></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-xs-8">
+                                                    <div class="mob-flight-arrcity">
+                                                        <span class="arrcity">Mumbai</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-xs-4">
+                                                    <div>
+                                                        <span class="arrtime">6:50 AM</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-1 col-xs-4">
+                                                    <div class="mob-flight-duration"><span class="deptimeduration">2h 10m</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div id="header-returning-part" style="display:none">
+                                            <div class="NStru_selectflightheadtxt"><i><img src="../img/plane_return.png" /></i> Select Returning Flight</div>
+                                            <div class="row">
+                                                <div class="flightdisplayheader">
+                                                    <div class="col-md-1">#</div>
+                                                    <div class="col-md-1">
+                                                        <div>Flight No.</div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div>
+                                                            Departure
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div>Dep. Time</div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">
+                                                        <div>
+                                                            Arrival
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div>Arr. Time</div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div>
+                                                            Duration
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div id="dvreturn">
+
+                                                <div class="row NStru_flight_box">
+                                                    <div class="col-md-1 col-xs-1"><input type="radio" name="chkradioreturn" /></div>
+                                                    <div class="col-md-1 col-xs-10">
+                                                        <div class="mob-flight-name">
+                                                            <span class="retFlightNo">SG160</span> <input type="hidden" class="retflighttype" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-xs-11">
+                                                        <div class="mob-flight-depcity">
+                                                            <span class="retCity">Mumbai</span>
+                                                        </div>
+                                                        <div class="mob-flight-depDate">
+                                                            <span class="ret_arrDate">Thu 25, feb 2016</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-xs-4">
+                                                        <div class="mob-flight-depTime"><span class="rettime">6:50 AM</span></div>
+                                                    </div>
+                                                    <div><input type="hidden" class="planeName"></div><!--15 Feb 2019 Filght Name-->
+                                                    <div class="col-md-1 col-xs-12">
+
+                                                        <div class="mob-flight-directiobarow">
+                                                            <div class="wrapper"><img class="ftype" /><div class="tooltip"></div></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-xs-8">
+                                                        <div class="mob-flight-arrcity">
+                                                            <span class="ret_arrcity">Delhi</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-xs-4">
+                                                        <div>
+                                                            <span class="ret_arrtime">6:50 AM</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1 col-xs-4">
+                                                        <div class="mob-flight-duration">
+                                                            <span class="retDuration"> 2h 10m</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="dvMsg" style="font-size:14px;color: red; margin-top: 50px;margin-left:40%"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mention-direction-arw" id="imgFlyteType" style="display:none;">
+                            <span><img src="../img/Red_img.png"> -Direct    &nbsp; </span>
+                            <span><img src="../img/Orange_img.png"> -Hopping(Same Aircraft)     &nbsp;</span>
+                            <span><img src="../img/Blue_img.png"> -Hopping(Change of Aircraft)   </span>
+                        </div>
+                        <div style="margin-top:20px; margin-bottom:20px; text-align:center;">
+                            <div class="mob_btn_bttom">
+                                <a class="btn btn-danger red_common_btn_spicejt mob_Nstru_ContinueBtn" href="#" id="lnkContinue" onclick="return GetFlightInfo();" style="display:none;"> Continue >></a>&nbsp;
+                                <a class="btn btn-danger red_common_btn_spicejt mob_Nstru_RefreshBtn " href="#" id="lnkRefresh" onclick="location.reload();" style="display:none;"> Refresh  </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding-top:100px;"></div>
+        <footer class="essfooter">
+            <div class="container">
+            </div>
+        </footer>
+    </div>
+    <div id="mob_footer_panel" class="mob_NStru_mainDv" style="display:none;">
+        <div class="mob_NStru_left_part"></div>
+        <div class="mob_NStru_right_part"></div>
+    </div>
+
+    <div class="loader">
+        <center>
+            <img class="loading-image1" src="../images/loading1.gif" alt="loading..">
+        </center>
+    </div>
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                var win = window.open("about:blank", "_self");
+                win.close();
+            };
+        </script>
+    }
+</body>
+</html>

@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "TrDetail";
+    Layout = null;
+}
+<html>
+<head>
+    <title>File Upload</title>
+    <script>
+
+    function fileLoad()
+    {
+        if(@ViewBag.userList!="")
+            {
+             alert(@ViewBag.userList);
+            }
+        }
+    </script>
+</head>
+
+
+<body>
+   @using (Html.BeginForm("Upload", "Testflupload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+   {
+    <table>
+        <tr>
+            <td>File:</td>
+            <td>
+                <input type="file" name="UploadedFile" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" name="Submit" value="Submit" />
+            </td>
+        </tr>
+
+        <tr><td><table id="tblUser"></table></td></tr>
+    </table>
+   }
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Spd | Approver";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+@*<link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />*@
+    <title>Sod | Approver</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../Assest/js/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../Assest/css/bootstrap.min.css">
+    <script type="text/javascript" src="../Assest/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link href="../css/responsive.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+            $("#tooltip-ex a").tooltip({
+                placement: 'top'
+            });
+        });
+    </script>
+
+<div>SOD Request</div>
+<div class="travelMain">
+    <div class="approvedtl">
+        <table width="100%">
+            <tr><td>Req. ID</td><td>Name</td><td>Designation</td><td>Department</td><td>Travel Date</td><td>Sector</td><td>Purpose</td><td>Past Travel</td><td>Action</td></tr>
+            <tr>
+                <td><a href="SOD_View_Details.html">1148</a></td>
+                <td id="tooltip-ex">
+                    <a href="#" data-toggle="tooltip"
+                       data-original-title="Traveller Name">Rajiv Kumar</a>
+                </td>
+                <td>Soft Engr.</td>
+                <td>IT.</td>
+                <td>25 feb, 2016</td>
+                <td>Mum- Del</td>
+                <td>Official</td>
+                <td><a href="SOD_View_Details.html">View</a></td>
+                <td><a href="#"> Approve/Reject</a></td>
+            </tr>
+            <tr>
+                <td><a href="SOD_View_Details.html">1142</a></td>
+                <td id="tooltip-ex">
+                    <a href="#" data-toggle="tooltip"
+                       data-original-title="Traveller Name">Ashish Gupta</a>
+                </td>
+                <td>Accountant</td>
+                <td>Accounts</td>
+                <td>27 feb, 2016</td>
+                <td>Mum- Goa</td>
+                <td>Official</td>
+                <td><a href="SOD_View_Details.html">View</a></td>
+                <td><a href="#"> Approve/Reject</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+

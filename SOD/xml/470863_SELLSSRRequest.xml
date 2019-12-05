@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>xJGeIrU2DpI=|Y/X6Ly1QrDESlGL/SFAhFQLfAJrp3ZKvq2d/WiF7W/Y/r6/Joc6ekH4fnwIADQcPFhp1S6toIPhNrEytHV9+IYNSD3t9Uxu1LQ1uFwWuMGU4+vRm9VETziK2w7rplMBEsJ50uy19HVU=</Signature>
+  <SellRequestData>
+    <SellBy>SSR</SellBy>
+    <SellSSR>
+      <SSRRequest>
+        <SegmentSSRRequests>
+          <SegmentSSRRequest>
+            <FlightDesignator>
+              <ExtensionData />
+              <CarrierCode>SG</CarrierCode>
+              <FlightNumber>8473</FlightNumber>
+              <OpSuffix> </OpSuffix>
+            </FlightDesignator>
+            <STD>2019-08-23T05:40:00</STD>
+            <DepartureStation>DEL</DepartureStation>
+            <ArrivalStation>STV</ArrivalStation>
+            <PaxSSRs>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>LL</ActionStatusCode>
+                <ArrivalStation>STV</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>0</PassengerNumber>
+                <SSRCode>VGSW</SSRCode>
+                <SSRNumber>0</SSRNumber>
+                <SSRValue>0</SSRValue>
+              </PaxSSR>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>LL</ActionStatusCode>
+                <ArrivalStation>STV</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>1</PassengerNumber>
+                <SSRCode>VGSW</SSRCode>
+                <SSRNumber>1</SSRNumber>
+                <SSRValue>1</SSRValue>
+              </PaxSSR>
+              <PaxSSR>
+                <State>New</State>
+                <ActionStatusCode>LL</ActionStatusCode>
+                <ArrivalStation>STV</ArrivalStation>
+                <DepartureStation>DEL</DepartureStation>
+                <PassengerNumber>2</PassengerNumber>
+                <SSRCode>VGSW</SSRCode>
+                <SSRNumber>2</SSRNumber>
+                <SSRValue>2</SSRValue>
+              </PaxSSR>
+            </PaxSSRs>
+          </SegmentSSRRequest>
+        </SegmentSSRRequests>
+        <CurrencyCode>INR</CurrencyCode>
+        <CancelFirstSSR>false</CancelFirstSSR>
+        <SSRFeeForceWaiveOnSell>false</SSRFeeForceWaiveOnSell>
+      </SSRRequest>
+    </SellSSR>
+  </SellRequestData>
+</SellRequest>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SpiceJetDynamicSectors" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SpiceJetDynamicSectors" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfOriginStations">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OriginStations" nillable="true" type="tns:OriginStations" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOriginStations" nillable="true" type="tns:ArrayOfOriginStations" />
+  <xs:complexType name="OriginStations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CityCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Interline" type="xs:int" />
+      <xs:element minOccurs="0" name="Origin" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StationType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OriginStations" nillable="true" type="tns:OriginStations" />
+  <xs:complexType name="ServiceDataGetOriginStations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorDetail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Result" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceDataGetOriginStations" nillable="true" type="tns:ServiceDataGetOriginStations" />
+  <xs:complexType name="ArrayOfArrivalStations">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArrivalStations" nillable="true" type="tns:ArrivalStations" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfArrivalStations" nillable="true" type="tns:ArrayOfArrivalStations" />
+  <xs:complexType name="ArrivalStations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ArrivalStationName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DepartureStationName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DomesticFlag" type="xs:int" />
+      <xs:element minOccurs="0" name="Interline" type="xs:int" />
+      <xs:element minOccurs="0" name="InternationalFlag" type="xs:int" />
+      <xs:element minOccurs="0" name="JourneyArrivalStation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="JourneyDepartureStation" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrivalStations" nillable="true" type="tns:ArrivalStations" />
+  <xs:complexType name="ServiceDataGetArrivalStations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorDetail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Result" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceDataGetArrivalStations" nillable="true" type="tns:ServiceDataGetArrivalStations" />
+</xs:schema>

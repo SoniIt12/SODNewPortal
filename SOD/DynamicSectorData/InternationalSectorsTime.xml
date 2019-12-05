@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Sectors>
+
+  <BKK>
+  <UTC>-420</UTC>
+  </BKK>
+
+  <CMB>
+    <UTC>-330</UTC>
+  </CMB>
+  
+  <DXB>
+   <UTC>-240</UTC> 
+ </DXB>
+
+  <KBL>
+    <UTC>-270</UTC>
+  </KBL>
+
+  <MLE>
+    <UTC>-300</UTC>
+  </MLE>
+  
+  <MCT>
+    <UTC>-240</UTC>
+  </MCT>
+  
+  <RUH>
+    <UTC>-180</UTC>
+  </RUH>
+</Sectors>

@@ -1,0 +1,879 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <title>SOD Change Request</title>
+
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/usertravelhistory.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../css/SODstyle.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/responsive.css" rel="stylesheet" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+
+
+    <style>
+        .radiotextsty {
+            color: #A5A4BF;
+            font-size: 18px;
+        }
+
+        .customradio {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 0px;
+            cursor: pointer;
+            font-size: 18px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+
+            .customradio input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 22px;
+            width: 22px;
+            background-color: white;
+            border-radius: 50%;
+            border: 1px solid #BEBEBE;
+        }
+
+
+        .customradio:hover input ~ .checkmark {
+            background-color: transparent;
+        }
+
+
+        .customradio input:checked ~ .checkmark {
+            background-color: white;
+            border: 1px solid #BEBEBE;
+        }
+
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+
+        .customradio input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .customradio .checkmark:after {
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #428bcacc;
+        }
+    </style>
+
+    <style>
+        /* The radio */
+        .radio {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            /* Hide the browser's default radio button */
+            .radio input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+        /* Create a custom radio button */
+        .checkround {
+            position: absolute;
+            top: 2px;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #fff;
+            border-color: #f8204f;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 50%;
+        }
+
+
+        /* When the radio button is checked, add a blue background */
+        .radio input:checked ~ .checkround {
+            background-color: #fff;
+        }
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .checkround:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        .radio input:checked ~ .checkround:after {
+            display: block;
+        }
+
+        /* Style the indicator (dot/circle) */
+        .radio .checkround:after {
+            left: 2px;
+            top: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #f8204f;
+        }
+
+        /* The check */
+        .check {
+            display: block;
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            padding-right: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            /* Hide the browser's default checkbox */
+            .check input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 3px;
+            left: 0;
+            height: 18px;
+            width: 18px;
+            background-color: #fff;
+            border-color: #f8204f;
+            border-style: solid;
+            border-width: 2px;
+        }
+
+
+
+        /* When the checkbox is checked, add a blue background */
+        .check input:checked ~ .checkmark {
+            background-color: #fff;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .check input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .check .checkmark:after {
+            left: 5px;
+            top: 1px;
+            width: 5px;
+            height: 10px;
+            border: solid;
+            border-color: #f8204f;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        .cust-btn {
+            margin-bottom: 10px;
+            background-color: #f8204f;
+            border-width: 2px;
+            border-color: #f8204f;
+            color: #fff;
+        }
+
+            .cust-btn:hover {
+                border-color: #f8204f;
+                background-color: #fff;
+                color: #f8204f;
+                border-radius: 20px;
+                transform-style: 2s;
+            }
+
+        #personaldetails {
+            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+            -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+            -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+            width: 100%;
+            display: table;
+            padding-bottom: 30px;
+        }
+
+        .contentboxdisplayStru {
+            padding-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+            line-height: 35px;
+        }
+
+        .Stru_radio_margin {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+            .Stru_radio_margin table td {
+                padding-left: 25px;
+            }
+
+        .Stru_details_heading {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #EE1D23;
+            padding-left: 10px;
+            color: #fff;
+            margin-bottom: 10px;
+            height: 35px;
+        }
+
+        .personal_new_stru {
+            border: solid 1px #c2c2c2;
+            padding: 10px;
+            line-height: 35px;
+            border-radius: 5px;
+        }
+
+        .Stru_radio_margin label {
+            font-size: 16px;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div class="bookingheadr">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"><div class="logoheader"><img src="../img/logo_spicejet.png" /> </div></div>
+                <div class="col-md-4"><div class="txtSODNSOD">SOD/NON-SOD BOOKING SYSTEM</div></div>
+                @*<div class="col-md-6"><div class="usrdtlsdiaplay"> <div>@Session["UserInfo"] </div></div> </div>*@
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="Stru_radio_margin">
+                    <table>
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" checked="checked" name="details" onclick="choice('rdb1',this)" value="1"> Personal Details
+                                </label>
+                            </td>
+                            <td>
+                                <label style="font-size:16px;">
+                                    <input type="radio" name="details" onclick="choice('rdb2',this)" value="2">  HOD Detail
+                                </label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div>
+                    <div class="personal_new_stru">
+                        <div>
+                            <div id="perdetails">
+                                <div class="Stru_details_heading">Personal Details</div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-4">
+                                            <label for="lblempid">Employee ID:</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @*<label id="lblempid">@Session["EmpCode"]</label>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-4">
+                                            <label for="lblname">Name:</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @*<label id="lblname" class="col-form-label">@(Session["FirstName"].ToString() + " " + Session["LastName"].ToString())</label>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-4">
+                                            <label for="lbldesignation" class="col-form-label">Designation:</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @*<label id="lbldesignation" class="col-form-label">@Session["Designation"]</label>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                               <div class="row" id="divpersonalvalidate" style="display:none">
+                                   <div class="col-md-4 col-xs-8">
+                                       <div class="alert alert-danger" style="text-align:center;background-color:#f3aca3 !important;border:0px;">
+                                           <span id="alertpersonalvalidate"></span>
+                                       </div>
+                               </div>
+
+
+
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-4">
+                                            <label for="txtemail" class="col-form-label">Email</label>
+                                        </div>
+                                        <div class="col-md-4 col-xs-8">
+                                            @*<input type="text" class="form-control" id="txtemail" value="@Session["Email"]" />*@
+                                            <input type="text" class="form-control" id="txtemail" />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-4">
+                                            <label for="txtphn" class="col-form-label">Phone No</label>
+                                        </div>
+                                        <div class="col-md-4 col-xs-8">
+                                            @*<input type="text" class="form-control" id="txtphn" value="@Session["Phone"]" />*@
+                                            <input type="text" class="form-control" id="txtphn"  />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div style="text-align:center;">
+                                            <input type="button" id="btnpersonal" value="Submit" class="btn btn-success btn-danger" onclick="SaveDB()" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                            <div id="hoddetails" style="display:none;">
+                                <div>
+                                    <div class="Stru_details_heading">HOD Details</div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-xs-4">
+                                                <label for="lblhodempid">Employee ID:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                @*<label id="lblhodempid">@Session["EmpCode"]</label>*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-xs-4">
+                                                <label for="lblhodname">HOD Name:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                @*<label id="lblhodname" class="col-form-label">@(Session["FirstName"].ToString() + " " + Session["LastName"].ToString())</label>*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-xs-4">
+                                                <label for="lblhoddesignation" class="col-form-label">Designation:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                @*<label id="lblhoddesignation" class="col-form-label">@Session["Designation"]</label>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                @*<div style="border:solid 1px #efefef; margin-top:10px; padding:10px;border-radius:5px;display:none" id="HoDcheckdisplay">
+
+                                        <div class="row" id="divmsg" style="display:none">
+                                            <div class="col-md-12">
+                                                <div class="alert alert-danger" style="text-align:center;background-color:#f3aca3 !important;border:0px;">
+                                                    <span id="alertmsg"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="hoddetailsdisplay" style="display:none">
+
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-3 col-xs-4">
+                                                        <label for="lblhod2empid">Employee ID:</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <label id="lblhod2empid"></label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div style="margin-top:20px; border:solid 1px #c2c2c2; padding:10px;border-radius:5px;display:none" class="" id="hodoption">
+
+                        <div class="row">
+                            <div style="padding-bottom:30px;">
+                                <div class="">
+                                    <div class="col-md-3">
+                                        <div style="font-weight:bold;font-size:15px; padding-top:5px;">Do you want to change HOD:</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div><select style="width:100%;" class="form-control" id="ddloption"><option value="1" selected="selected">No</option> <option value="2">Yes</option></select></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="padding:10px; border:solid 1px #c2c2c2; margin-top:20px; line-height:30px;border-radius:5px;display:none" id="Empid_showDiv">
+
+                        <div class="row" id="hodempid">
+                            <div class="form-group">
+                                <div class="col-md-3 col-xs-4">
+                                    <label for="txthod" class="col-form-label">HOD Employee ID</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="txthod" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="button" id="btnsubmit2" value="Check" class="btn btn-success " onclick="validate();" />
+                                </div>
+
+                            </div>
+                            <div style="text-align:right; padding-top:25px; margin-right:20px;">
+
+                            </div>
+
+                        </div>
+
+                        <div id="displayhoddetials" style="display:none;">
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-3 col-xs-4">
+                                        <label for="lblhod2name">HOD Name:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <label id="lblhod2name" class="col-form-label"></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-3 col-xs-4">
+                                        <label for="lblhod2designation" class="col-form-label">Designation:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <label id="lblhod2designation" class="col-form-label"></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:10px; padding:10px;border-radius:5px;">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div style="text-align:center;">
+                                            <input type="button" id="btnsubmit" value="Submit" class="btn btn-success btn-danger" onclick="SaveDB()" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="divmsg" style="display:none">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-danger" style="text-align:center;background-color:#f3aca3 !important;border:0px;">
+                                        <span id="alertmsg"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="container"></div>*@
+        @*<div class="container"></div>*@
+            </div>
+        </div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        debugger;
+        //var email = $('#txtemail').val();
+        //var phone;
+        //if ($('#txtemail').val() != "" && $('#txtphn').val() != "") {
+        //    $('#txtemail').attr('readonly',true);
+        //    $('#txtphn').attr('readonly',true);
+        //    $('#btnsubmit').hide();
+        //}
+        //else {
+        //    if ($('#txtemail').val() == "") {
+        //        $('#txtemail').removeAttr('readonly');
+        //        //$('#btnsubmit').show();
+        //    }
+        //    else if ($('#txtphn').val()=="")
+        //    {
+        //        $('#txtphn').removeAttr('readonly');
+        //    }
+        //    else {
+        //        $('#txtemail').removeAttr('readonly');
+        //        $('#txtphn').removeAttr('readonly');
+        //        //$('#btnsubmit').show();
+
+        //    }
+        //    $('#btnsubmit').show();
+        //}
+
+        checktext();
+
+        $('#ddloption').on('change', function () {
+            if ($('#ddloption').val() == "2") {
+                $('#Empid_showDiv').css('display', 'block');
+                $('#displayhoddetials').css('display', 'none');
+
+
+
+            }
+            else {
+                $('#Empid_showDiv').css('display', 'none');
+                //$('#hodempid').css('display', 'none');
+                //$('#HoDcheckdisplay').css('display', 'none');
+                $('#txthod').val('');
+                document.getElementById('txthod').style.border = '';
+
+            }
+        });
+
+
+        //$('#btnpersonal').click(function () {
+        //    SaveDB();
+        //});
+
+        //$('#btnsubmit').click(function () {
+        //    SaveDB();
+        //});
+
+
+
+
+    });
+
+
+    function dbvalidate(){
+        if(checkpersonalfields()==true){
+            SaveDB();
+        }
+    }
+
+
+    function validate() {
+        if (checkhodfield() == true) {
+            gethoddetials();
+        }
+    }
+
+
+    function checkpersonalfields() {
+        var status = true;
+        var email_regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        var mobile_regex=/^\d+$/
+        if ($('#txtemail').val() == "")
+        {
+            $('#txtemail').css('border','1px solid red');
+            status=false;
+        }
+    
+        else{
+        
+            if(!email_regex.test($('#txtemail').val()))
+            {
+                status=false;
+                setTimeout(function(){
+                    $('#divpersonalvalidate').css('display','block');
+                    $('#alertpersonalvalidate').text('Please insert valid Email ID');
+                },5000);
+            }
+            else{
+                $('#txtemail').css('border','');
+            }
+            
+               
+    }
+
+        if($('#txtphn').val() == ""){
+            $('#txtphn').css('border','1px solid red');
+            status=false;
+        }
+        else{
+            if(!mobile_regex.test($('#txtphn').val()))
+            {
+                status=false;
+                setTimeout(function(){
+                    $('#divpersonalvalidate').css('display','block');
+                    $('#alertpersonalvalidate').text('Non numeric or alphabets not allowed');
+                },5000);
+                
+            }
+            else if($('#txtphn').val().length>20){
+
+                status=false;
+                setTimeout(function(){
+                    $('#divpersonalvalidate').css('display','block');
+                    $('#alertpersonalvalidate').text('Please insert Mobile no upto 20 characters');
+                },5000);
+            }
+            else
+                $('#txtphn').css('border','');
+        }
+      
+        return status;
+    
+
+    }
+
+
+    function checkhodfield() {
+
+        var status = true;
+        var texthod = document.getElementById('txthod');
+        if (texthod.value == "") {
+            document.getElementById('txthod').style.border = '1px solid red';
+            status = false;
+        }
+        else {
+            document.getElementById('txthod').style.border = '';
+        }
+        return status;
+
+    }
+
+
+    function gethoddetials() {
+        $.ajax({
+            url: '/ChangeReq/HodDetails',
+            type: 'post',
+            data: { idd: $('#txthod').val() },
+            success: function (dt) {
+                //console.log(dt);
+                //document.getElementById('lblhod2empid').textContent = dt[0].EmpId;
+                if (dt != null && dt.length > 0) {
+
+                    // $('#HoDcheckdisplay').css('display', 'block');
+                    $('#divmsg').css('display', 'none');
+                    $('#displayhoddetials').css('display', 'block');
+                    $('#lblhod2empid').text(dt[0].EmpId);
+                    $('#lblhod2name').text(dt[0].EmpName);
+                    $('#lblhod2designation').text(dt[0].Designation);
+                }
+                else {
+                   // $('#HoDcheckdisplay').css('display', 'block');
+                    //$('#hoddetailsdisplay').css('display', 'none');
+                    $('#displayhoddetials').css('display', 'none');
+                    $('#divmsg').css('display', 'block');
+                    $('#alertmsg').text('No data found!!');
+                    setTimeout(function () {
+                       // $('#HoDcheckdisplay').css('display', 'none');
+                        $('#divmsg').css('display', 'none');
+                        $('#alertmsg').text('');
+                    }, 4000);
+
+                }
+
+
+
+
+            },
+            error: function () { }
+
+        });
+    }
+
+
+    function checktext() {
+        if ($('#txtemail').val() == "") {
+            $('#txtemail').removeAttr('readonly');
+            //$('#btnsubmit').show();
+        }
+        else {
+            $('#txtemail').attr('readonly', true);
+            // $('#btnsubmit').hide();
+        }
+
+        if ($('#txtphn').val() == "") {
+            $('#txtphn').removeAttr('readonly');
+            // $('#btnsubmit').show();
+        }
+        else {
+            $('#txtphn').attr('readonly', true);
+            // $('#btnsubmit').hide();
+        }
+    }
+
+
+    function choice(status, ref) {
+        if (status == 'rdb1') {
+            if ($(ref).prop('checked')) {
+                $('#perdetails').css('display', 'block');
+                $('#hodoption').css('display', 'none');
+                $('#Empid_showDiv').css('display', 'none');
+                $('#hoddetails').css('display', 'none');
+
+                $('#ddloption').val('1');
+               // $('#hodempid').css('display', 'none');
+                $('#txthod').val('');
+                document.getElementById('txthod').style.border = '';
+                //$('#HoDcheckdisplay').css('display', 'none');
+
+            }
+        }
+        else {
+            if ($(ref).prop('checked')) {
+                $('#perdetails').css('display', 'none');
+                $('#hoddetails').css('display', 'block');
+                $('#hodoption').css('display', 'block');
+                //$('[for=lblhodname]').val('HOD Name:');
+            }
+        }
+    }
+
+
+
+
+
+    function SaveDB() {
+
+
+        var option = $("input[name='details']:checked").val();
+        //var text = document.getElementById('lblempid').innerHTML;
+        //console.log(text);
+
+        var sodChangeMaster = {
+            RequestedEmpId: $('#lblempid').text(), RequestedEmpName: $('#lblname').text(), DesignationId: 1,
+            DesignationName: $('#lbldesignation').text(), EmailID: $('#txtemail').val(),
+            PhoneNo: $('#txtphn').val(), RequestedDate: new Date().toLocaleString(),
+            RequestStatus: option, RequestStatusCloseDate: new Date().toLocaleString()
+        };
+        var sodChangeDetails = {
+            RequestTypeId: option, RequestTypeName: $('input[name="country"]:checked').parent().text(),
+            CRUpdatet1: $('#txthod').val(), CRUpdatet2: $('#txtemail').val(),
+            CRUpdatet3: $('#txtphn').val(), HRApprovalStatus: 1,
+            HRApprovalRemarks: 'pending'
+        };
+        $.ajax({
+            url: '/ChangeReq/SaveChangeRequestMaster',
+            type: 'post',
+            data: { sodChangeMaster, sodChangeDetails },
+            success: function () {
+
+                window.location.href='@Url.Action("SuccessPage","ChangeReq")';
+            },
+            error: function () { }
+
+        });
+
+    }
+
+
+
+
+    //function SaveToDb() {
+    //    var option = $("input[name='details']:checked").val();
+    //    var sod = {
+    //        RequestTypeId: option, RequestTypeName: $('input[name="country"]:checked').parent().text(),
+    //        CRUpdatet1: $('#txthod').val(), CRUpdatet2: $('#lblhod2name').val(),
+    //        CRUpdatet3: $('#lblhod2designation').text(), HRApprovalStatus: 1,
+    //        HRApprovalRemarks: option
+    //    };
+    //    $.ajax({
+    //        url: '/ChangeReq/SaveChangeRequestDetails',
+    //        type: 'post',
+    //        data: { sod },
+    //        success: function (msg) {
+    //            alert(msg);
+
+    //        },
+    //        error: function () { }
+
+    //    });
+
+
+    //}
+
+</script>

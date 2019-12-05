@@ -1,0 +1,73 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="../css/fontawesome_all.css" rel="stylesheet" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />*@
+    <script type="text/javascript">
+        var counter = 1;
+        function loadurl() {
+            $.ajax({
+                type: "GET",
+                url: "../Admin/GetAdminUrl",
+                data: {},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+                success: function (data) {
+                    var adminlist = [];
+                    if (data == 'Nul') {
+                        window.location.replace("../Login/UserAccount")
+                        return;
+                    }
+                    else if (data == '0') {
+                        return;
+                    }
+                    else {
+                        jadmin = JSON.parse(data);
+                        var conName = window.location.pathname;
+                        var trhotel = "";
+                        for (var prop in jadmin) {
+                            var full = (jadmin[prop]).toString().split(':');
+                            var key = full[0];
+                            var value = full[1];
+                            var src = full[2];
+                            if (key.substr(2).trim() == conName)
+                            {
+                                trhotel += "<li><a class='active' href='" + key + "'><i class='" + src + "' style='padding-right: 12px;'></i>" + value + "</a></li>";
+                            }
+                            else
+                            {
+                                trhotel += "<li><a href='" + key + "'><i class='" + src + "'style='padding-right: 12px;'></i>" + value + "</a></li>";
+                            }
+                        }
+                        $('#listview').append(trhotel);
+                    }
+                },
+                failure: function (response) {
+                    alert(response);
+                },
+                error: function (xhr, status, exception) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err.Message);
+                }
+            });
+        }
+    </script>
+    <style>
+        .sticky-top {
+            margin-left: 0px !important ;
+            padding-right: 0px !important;
+        }
+    </style>
+</head>
+
+
+<body onload="loadurl();" class="sticky-top">
+    <ul class="nav-main" id="listview" style="font-size:14px;">
+    </ul>
+</body>
+</html>

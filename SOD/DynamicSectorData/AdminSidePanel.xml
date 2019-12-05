@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Admin>
+     ["../Admin/Index:Dashboard:fa fa-tachometer-alt",
+    "../Admin/SodApproverList:Approvers List:fa fa-list-ul",
+    "../Admin/SodBlanketApproverList:Blanket List:fa fa-list-alt",
+    "../Admin/Cxodeptmapping:CXO Dept. Mapping:fa fa-folder",
+    "../Admin/employeeDetails:Employee API List:fa fa-list-alt",
+    "../Admin/AssignRole:Assign User Role:fa fa-list-alt",
+    "../Admin/MenuRights:User Menu Rights:fa fa-database",
+    "../Admin/sinkDataemdmapi:Sync EMDM Data:fa fa-database",
+    "../Admin/syncDynamicSecapi:Sync Dynamic Sector:fa fa-folder",
+    "../login/ChangePassword:Change Password:fa fa-lock"]
+
+
+  </Admin>
+
+  <Revenue>
+  ["../Revenue/BookingList:View Booking List:fa fa-list-ul","../login/ChangePassword:Change Password :fa fa-lock"]
+ </Revenue>
+  
+  <Helpdesk>
+    ["../hd/bklist:Booking List:fa fa-list-ul","../hd/bulkbList:Bulk Booking List:fa fa-list-ul",
+	"../hd/dwnlist:Download:fa fa-download",
+    <!--"../OAT/oatDisplayDetails:Employee Details", "../OAT/oatDisplayDetails:OAT Details",-->
+    <!--"../nsvd/vendorhd:Add Vendor:fa fa-plus", -->
+    "../login/ChangePassword:Change Password:fa fa-lock"]
+  </Helpdesk>
+  
+   <Traveldesk>
+     ["../trns/hotelList:Hotel Alignment:fa fa-user","../bulk/bulkhotelList:Bulk Hotel Alignment:fa fa-users",
+     "../OAT/OAThotelList:OAT Hotel Alignment:fa fa-users",
+     "../city/viewcitymaster: City Master :fa fa-building",  
+     "../trns/HotelDetailsData:View Hotel Report:fa fa-file-text",
+     "../InclusionMaster/viewhotelmaster :View Hotel Master :fa fa-hotel",
+     "../InclusionMaster/viewinclusionmaster:Inclusion Master :fa fa-cubes",
+     "../login/ChangePassword:Change Password :fa fa-lock"]
+   </Traveldesk>
+
+  <TraveldeskAdmin>
+    ["../trns/hotelList:Hotel Alignment:fa fa-user","../bulk/bulkhotelList:Bulk Hotel Alignment:fa fa-users",
+    "../InclusionMaster/HotelMaster:Hotel Master:fa fa-hotel","../InclusionMaster/InclusionMaster:Inclusion Master:fa fa-cubes",
+    "../trns/HotelDetailsData:View Hotel Report:fa fa-file-text","../trns/vdrlist:Allocate Vendor:fa fa-list-alt",
+    "../city/cityMaster: City Master:fa fa-building",
+    "../login/ChangePassword:Change Password:fa fa-lock"]
+  </TraveldeskAdmin>
+  
+  <Billingdesk>
+    ["../billing/blist:View List:fa fa-list-alt", "../login/ChangePassword:Change Password:fa fa-lock"]
+  </Billingdesk>
+  
+  <Financedesk>
+    ["../finance/finlist:View List:fa fa-list-alt","../login/ChangePassword:Change Password:fa fa-lock"]
+  </Financedesk>
+
+  <OATTraveldesk>
+    ["../oat/flist:View List:fa fa-list-alt","../oatdesk/NoShowReport:NoShow Report:fa fa-list-alt","../login/ChangePassword:Change Password:fa fa-lock"]
+  </OATTraveldesk>
+  
+</Root>

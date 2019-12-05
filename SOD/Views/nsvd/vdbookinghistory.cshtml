@@ -1,0 +1,476 @@
+﻿@{
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sod | View Travel List</title>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="../New_Calender/src/calender_jquery.daterange.js"></script>
+    <link href="../New_Calender/calender.css" rel="stylesheet" />
+    <script src="../Dropdownmenu/jquery-1.9.1.js"></script>
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="../js/timerpickerJS.js"></script>
+    <link href="../css/timepicker.css" rel="stylesheet" />
+    <link href="../css/responsive.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+    <link href="../css/select2/select2.min.css" rel="stylesheet" />
+    <script src="../js/select2/select2.min.js"></script>
+    <script src="../js/angular/NONSODusertravelhistory.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.timepicker').wickedpicker({
+                twentyFour: false, title:
+                    'Select our Time', showSeconds: false
+            });
+        });
+
+        $(function () {
+            $("#txtCheckInDate").datepicker({
+                numberOfMonths: 2,
+                defaultDate: new Date(),
+                minDate: new Date(),
+                maxDate: "+10M +00D",
+                dateFormat: "dd/mm/yy",
+            });
+        });
+
+        $(function () {
+            $("#txtCheckOutDate").datepicker({
+                numberOfMonths: 2,
+                dateFormat: "dd/mm/yy",
+                defaultDate: new Date(),
+                minDate: new Date(),
+                maxDate: "+10M +00D",
+                dateFormat: "dd/mm/yy",
+            });
+        });
+
+        $(function () {
+            $("#fltCabSubmit").click(function () {
+                alert('Cab submit button clicked.');
+                CabPickupL1 = document.getElementById("txtCabPickupL1").value;
+                CabPickupT1 = document.getElementById("txtCabPickupT1").value;
+                CabDropL1 = document.getElementById("txtCabDropL1").value;
+                CabDropT1 = document.getElementById("txtCabDropT1").value;
+                CabPickupL2 = document.getElementById("txtCabPickupL2").value;
+                CabPickupT2 = document.getElementById("txtCabPickupT2").value;
+                CabDropL2 = document.getElementById("txtCabDropL2").value;
+                CabDropT2 = document.getElementById("txtCabDropT2").value;
+
+                //Required field validation
+                if (CabPickupL1.trim() == null || CabPickupL1.trim() == "") {
+                    alert("Please fill cab pickup location 1 for cab booking");
+                    return false;
+                }
+                if (CabPickupT1.trim() == null || CabPickupT1.trim() == "") {
+                    alert("Please fill cab pickup timing 1 for cab booking");
+                    return false;
+                }
+                if (CabDropL1.trim() == null || CabDropL1.trim() == "") {
+                    alert("Please fill cab drop location 1 for cab booking");
+                    return false;
+                }
+                if (CabDropT1.trim() == null || CabDropT1.trim() == "") {
+                    alert("Please fill cab drop timing 1 for cab booking");
+                    return false;
+                }
+                //
+                if (CabPickupL2.trim() == null || CabPickupL1.trim() == "") {
+                    alert("Please fill cab pickup location 2 for cab booking");
+                    return false;
+                }
+
+                if (CabPickupT2.trim() == null || CabPickupL1.trim() == "") {
+                    alert("Please fill cab pickup timing 2 for cab booking");
+                    return false;
+                }
+
+                if (CabDropL2.trim() == null || CabPickupL1.trim() == "") {
+                    alert("Please fill cab drop location 2 for cab booking");
+                    return false;
+                }
+
+                if (CabDropT2.trim() == null || CabPickupL1.trim() == "") {
+                    alert("Please fill cab drop timing 2 for cab booking");
+                    return false;
+                }
+            });
+        })
+    </script>
+    <!--Model popup-->
+    <script>
+        $(".modal-wide").on("show.bs.modal", function () {
+            var height = $(window).height() - 0;
+            $(this).find(".modal-body").css("max-height", height);
+        });
+    </script>
+    <style>
+        .disabledLink {
+            cursor: not-allowed;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="content_header_txt">
+        <div> View Booking Status and Travel History </div>
+    </div>
+    <div ng-app="NONsodUserTrHistory" ng-controller="TravelHistory" ng-cloak>
+        <!--------------------------------------------Content---------------->
+        <div class="container">
+            <div id="maindiv" class="mob_padding_allside">
+                <div class="row">
+                    <div class="content_search_structure_box">
+                        <div class="col-md-6">
+                            <div class="pull-left">Search</div>
+                            <div><input type="text" placeholder="please type here for filter" ng-model="search" ng-change="filter()" class="form-control input-sm"></div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="txtfiltered">Filtered {{ filtered.length }} of {{ totalItems}} Total Records</div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="pull-left">Page Size</div>
+                            <div>
+                                <select class="form-control input-sm" ng-model="entryLimit">
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>20</option>
+                                    <option>50</option>
+                                    <option>100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 content_inner_box_topborder">
+                        <div class="" style="width:100%" ng-show="filteredItems > 0">
+
+                            <div class=" VBlistpadding">
+                                <div>
+                                    <table class="table table-striped table-bordered ancher_color" style="width:100%;" id="tbldetail">
+                                        <tr class="popheadcolor">
+                                            <th>S. No.</th>
+                                            <th>
+                                                Req. ID &nbsp;<a ng-click="sort_by('TravelRequestId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                            </th>
+                                            <th>
+                                                Request Date &nbsp;<a ng-click="sort_by('BookingRequestDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                            </th>
+                                            <th>
+                                                Booking For &nbsp;<a ng-click="sort_by('BookingFor');"><i class="glyphicon glyphicon-sort"></i></a>
+                                            </th>
+                                            <th>
+                                                Travel Date &nbsp;<a ng-click="sort_by('TravelDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                            </th>
+                                            <th>
+                                                Sector &nbsp;<a ng-click="sort_by('Sector');"><i class="glyphicon glyphicon-sort"></i></a>
+                                            </th>
+                                            <th>
+                                                Flight-No. &nbsp;<a ng-click="sort_by('FlightNo');"><i class="glyphicon glyphicon-sort"></i></a>
+                                            </th>
+                                            <th>
+                                                PNR &nbsp;<a ng-click="sort_by('Pnr');"><i class="glyphicon glyphicon-sort"></i></a>
+                                            </th>
+                                            <th>Purpose</th>
+                                            <th>Must Trav.</th>
+                                            <th>Status </th>
+                                            @*<th>Cab</th>*@
+                                            @*<th>Hotel</th>*@
+                                        </tr>
+                                        <tr ng-repeat="list in filtered = (trlist | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                            <td>{{$index+1}}</td>
+                                            <td ng-if="list.TravelRequestTypeId != 5"><a data-toggle=modal href="#viewdetailModal" class="csod" ng-click="viewdetail(list.TravelRequestId)">{{list.SodBookingType==1 ? "SOD" :"NON-SOD"}}-{{list.TravelRequestId}}</a></td>
+                                            <td ng-if="list.TravelRequestTypeId == 5"><a data-toggle=modal href="#viewdetailModal" class="csod" ng-click="viewdetail(list.TravelRequestId)">SJSC-{{list.TravelRequestId}}</a></td>
+                                            <td>{{list.BookingRequestDate}}</td>
+                                            <td>{{list.BookingFor}}</td>
+                                            <td>{{list.TravelDate}}</td>
+                                            <td>{{list.Sector}}</td>
+                                            <td>{{list.FlightNo}}</td>
+                                            <td>{{list.Pnr}}</td>
+                                            <td>{{list.ReasonForTravel}}</td>
+                                            <td>{{list.IsMandatoryTravel=="1" ? "Yes" :"No"}}</td>
+                                            <td width="8%" ng-if="list.BookingStatus=='Close'" ng-mouseover="showstatus(list.TravelRequestId)">
+                                                {{list.BookingStatus}}
+                                                <div class="tooltip1" ng-if="list.BookingFor !='Only Hotel'">&nbsp;<img src="../img/right.jpg" height="15" width="15" title="Status" /><span class="tooltiptext" ng-bind-html="bstatus | nlfilter"></span></div>
+                                            </td>
+                                            <td width="8%" ng-if="list.BookingStatus=='Pending'" ng-mouseover="showstatus(list.TravelRequestId)">
+                                                {{list.BookingStatus}}
+                                                <div class="tooltip1" ng-if="list.BookingFor!='Only Hotel'">&nbsp;<img src="../img/pend.jpg" height="15" width="15" title="Status" /><span class="tooltiptext" ng-bind-html="bstatus | nlfilter"></span></div>
+                                            </td>
+                                            <td width="9%" ng-if="list.BookingStatus=='Rejected' || list.BookingStatus=='Error'" ng-mouseover="showstatus(list.TravelRequestId)">
+                                                {{list.BookingStatus}}
+                                                <div class="tooltip1" ng-if="list.BookingFor!='Only Hotel'">&nbsp;<img src="../img/rejected.png" height="15" width="15" title="Status" /><span class="tooltiptext" ng-bind-html="bstatus | nlfilter"></span></div>
+                                            </td>
+                                            <td style="width:11%;display:none;">
+                                                <a ng-if="list.HotelStatus!='' && list.SodBookingType==1" data-toggle=modal href="#viewhoteldetailModal" class="csod hoteldetails_bg_btn" ng-click="viewhoteldetail(list.TravelRequestId,list.Sector)">Hotel Details</a>
+                                                <a ng-if="list.HotelStatus=='' && list.SodBookingType==1" data-toggle=modal href="#viewhoteldetailModal" class="csod green_bookhotel_btn " ng-class="{disabledLink: list.BookingStatus=='Close'}" ng-click="viewhoteldetail(list.TravelRequestId,list.Sector)">Book Hotel</a>
+                                                <br /><span class="canclled_showmsg" ng-if="list.CancellationStatus=='Cancelled by User' || list.CancellationStatus=='Cancelled'">Cancelled</span>
+                                                <span class="open_confirm_showmsg" ng-if="list.CancellationStatus!='Cancelled by User' && list.CancellationStatus!='Cancelled'">{{list.HotelStatus}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--If No Record Found-->
+                    <div class="col-md-12" ng-show="filteredItems == 0" >
+                        <div class="col-md-12">
+                            <div><span style="text-align:center; font-size:14px;margin-top:100px;color:#ff0000">Sorry ! No record found. </span></div>
+                        </div>
+                    </div>
+                    <!--Pagination-->
+                    <div class="col-md-12" ng-show="filteredItems > 0">
+                        <div pagination="" page="currentPage" on-select-page="setPage(page)" max-size="10" boundary-links="true" total-items="filteredItems" rotate="false" items-per-page="entryLimit" class="pagination-small" previous-text="Back" next-text="next"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--------------------View Detail Model popup------------------------------------->
+        <div id="viewdetailModal" class="modal modal-wide fade newmdpop">
+            <div class="modal-dialog newmodelpopwidth70">
+                <div class="modal-content">
+                    <div class="modal-header popupmodalheader_redcolor">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs headertxt_whitecolortxt">View Booking Request Details</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="popuphdtxt mobtxtheading" ng-if="arrbooking[0].TravelRequestTypeId != 5">Booking Information   (Request Id : {{arrbooking[0].SodBookingTypeId==1 ? "SOD" :"NON-SOD"}}-{{trequestId}}) {{customerpaid}}</h4>
+                        <h4 class="popuphdtxt mobtxtheading" ng-if="arrbooking[0].TravelRequestTypeId == 5">Booking Information   (Request Id : SJSC - {{trequestId}}) {{customerpaid}}</h4>
+                        <table id="tblbookinginfo" class=" table table-striped table-bordered">
+                            <tr class="popheadcolor">
+                                <th>Reason For Travel </th>
+                                <th>Booking Type</th>
+                                <th>No. of Passenger</th>
+                                <th>Booking For</th>
+                                <th>Is Must Travel</th>
+                            </tr>
+                            <tr ng-repeat="blist in arrbooking">
+                                <td>{{blist.ReasonForTravel}}</td>
+                                <td>{{blist.SodBookingTypeId==1 ? "SOD" :"NON-SOD"}}</td>
+                                <td>{{blist.Passengers}}</td>
+                                <td>{{blist.BookingFor}}</td>
+                                <td>{{blist.IsMandatoryTravel=="1" ? "Yes" :"No"}}</td>
+                            </tr>
+                        </table>
+                        <h4 class="popuphdtxt mobtxtheading">Travel Information</h4>
+                        <table class=" table table-striped table-bordered" id="tblviewFlight">
+                            <tr class="popheadcolor">
+                                <th>Sector</th>
+                                <th>Travel Date</th>
+                                <th>Flight No.</th>
+                                <th>Departure Time</th>
+                                <th>Arrival Time</th>
+                                <th ng-if="arrbooking[0].SodBookingTypeId==1">Meals</th>
+                            </tr>
+                            <tr ng-repeat="flist in arrFlight">
+                                <td>{{flist.OriginPlace}}-{{flist.DestinationPlace}}</td>
+                                <td>{{ToJavaScriptDateMMM(flist.TravelDate)}}</td>
+                                <td>{{flist.FlightNo}}</td>
+                                <td>{{flist.DepartureTime}}</td>
+                                <td>{{flist.ArrivalTime}}</td>
+                                <td ng-if="arrbooking[0].SodBookingTypeId==1">{{flist.Meals}}</td>
+                            </tr>
+                        </table>
+                        <h4 class="popuphdtxt mobtxtheading" id="passH">Passenger(s) Information</h4>
+                        <table class="table table-striped table-bordered " id="tblviewPassInfo"></table>
+                        <h4 ng-hide="arrHotel.length<1" class="popuphdtxt mobtxtheading" id="hotelH">Hotel(s) Information</h4>
+                        <table ng-hide="arrHotel.length<1" class=" table table-striped table-bordered" id="tblviewHotel">
+                            <tr class="popheadcolor">
+                                <th>City</th>
+                                <th>Check-In Date</th>
+                                <th>Check-Out Date</th>
+                                <th>Status</th>
+                                <th>Hotel Details</th>
+                                <th>Remarks</th>
+                            </tr>
+                            <tr ng-repeat="hlist in arrHotel">
+                                <td>{{hlist.City}}</td>
+                                <td>{{ToJavaScriptDateMMM(hlist.CheckInDate)}}</td>
+                                <td>{{ToJavaScriptDateMMM(hlist.CheckOutDate)}}</td>
+                                <td>{{hlist.IsAllocated == 1 ? "Allocated" : "Not Allocated"}}</td>
+                                <td>
+                                    Confirmation No.: {{hlist.HotelConfirmationNo}}<br />
+                                    Name: {{hlist.HotelName}}<br />
+                                    Address: {{hlist.HotelAddress}}<br />
+                                    Phone: {{hlist.HotelPhoneNo}}
+                                </td>
+                                <td>{{hlist.Remarks_Status}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!--------------------View Car Detail Model popup------------------------------------->
+        <div id="viewcabdetailModal" class="modal modal-wide fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">Cab Booking Request Details</span></h4>
+                    </div>
+                    <div id="dvCabBookingDataShow" class="modal-body">
+                        <!-- First cab details-->
+                        <h4>First Cab Details</h4>
+                        <table class="flighdtl" id="tblviewToCab"></table>
+                        <!-- Second cab details -->
+                        <h4>Second Cab Details</h4>
+                        <table class="flighdtl" id="tblviewFromCab"></table>
+                    </div>
+                    <!-- To submit the cab details-->
+                    <div id="dvCabBookingDataFill" class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span style="font-size:12px;font-weight:normal;padding-left:10px;color:red; float:left;">#Cab can be pre-booked upto 6:00 hours prior to the flight departure.</span>
+                            </div>
+                        </div>
+                        <div style="border-top:solid 1px #b33; height:auto; padding-top:10px;" id="dvcab">
+                            <div class="row">
+                                <div class="col-md-12" id="dvpickup1">
+                                    <div class="form-group">
+                                        <p class="loationheading">Pick Up Location 1</p>
+                                    </div>
+                                    <div class="pickupcss">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div><span>Pick Up Location</span></div>
+                                                <div> <input id="txtCabPickupL1" type="text" class="form-control input-sm" /></div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div><span>Pick Up Timing</span></div>
+                                                <div> <input id="txtCabPickupT1" type="text" class="timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%; z-index:999;" /></div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div><span>Drop Location</span></div>
+                                                <div> <input id="txtCabDropL1" type="text" class="form-control input-sm" /></div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div><span>Drop Timing</span></div>
+                                                <div> <input id="txtCabDropT1" type="text" class="timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%; z-index:999;" /></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" id="dvpickup2">
+                                    <div class="form-group">
+                                        <p class="loationheading">Pick Up Location 2</p>
+                                    </div>
+                                    <div class="pickupcss">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div><span>Pick Up Location</span></div>
+                                                <div><input id="txtCabPickupL2" type="text" class="form-control input-sm" /></div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div><span>Pick Up Timing</span></div>
+                                                <div> <input id="txtCabPickupT2" type="text" class="timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%;z-index:999;" /></div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div><span>Drop Location</span></div>
+                                                <div> <input id="txtCabDropL2" type="text" class="form-control input-sm" /></div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div><span>Drop Timing</span></div>
+                                                <div> <input id="txtCabDropT2" type="text" class="timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%;z-index:999;" /></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="three_D2" style="padding-top:20px; padding-bottom:10px; text-align:center"><input type="button" id="fltCabSubmit" value="Submit" style="width:150px; height:35px; background-color:#b33; border:0px;color:#fff; font-size:16px;" /></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!--------------------View Detail Model popup------------------------------------->
+        <div id="viewhoteldetailModal" class="modal modal-wide fade newmdpop">
+            <div class="modal-dialog newmodelpopwidth70" style="overflow-y: initial !important;">
+                <div class="modal-content">
+                    <div id="dvHotelBookingDataShow">
+                        <div class="modal-header popupmodalheader_redcolor">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                            <h4 class="popuphdtxt mobtxtheading" ng-if="arrbooking[0].TravelRequestTypeId != 5"><span class="viewlistcs headertxt_whitecolortxt">Booking Information (Request Id : {{arrbooking[0].SodBookingTypeId==1 ? "SOD" :"NON-SOD"}}-{{trequestId}}) {{customerpaid}} </span></h4>
+                            <h4 class="popuphdtxt mobtxtheading" ng-if="arrbooking[0].TravelRequestTypeId == 5"><span class="viewlistcs headertxt_whitecolortxt">Booking Information   (Request Id : SJSC - {{trequestId}}) {{customerpaid}} </span></h4>
+                            <input type="hidden" id="hddnEmpCode" value="{{empCode}}" />
+                        </div>
+                        <div class="modal-body" style="overflow-x:hidden;">
+                            <h4 ng-if="hotelData.length != 0" class="popuphdtxt" id="hotelH">Hotel(s) Information</h4>
+                            <div>
+                                <table class="flighdtl table table-striped table-bordered" id="tblHotelDet"></table>
+                            </div>
+                            <div>
+                                <span style="font-size:12px;font-weight:normal;padding-left:10px;color:red; float:left;">#Hotel can be pre-booked upto 24:00 hours prior to the flight departure.</span>
+                                <span><button type="button" class="btn btn-default pull-right" data-dismiss="modal" aria-hidden="true">close</button></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- To submit the hotel details-->
+                    <div id="dvHotelBookingDataFill">
+                        <div class="modal-header popupmodalheader_redcolor">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                            <h4 class="modal-title"><span class="bookHotelHeader headertxt_whitecolortxt ">Hotel Booking Request - Booking ID ({{trequestId}})</span></h4>
+                        </div>
+                        <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;">
+                            <div id="dvfillHotel">
+                                <div id="dvhotel">
+                                    <div class="col-md-12" id="dvPlaceToVisit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" id="SubmitBtn">
+
+                        </div>
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="loader">
+        <center>
+            <img class="loading-image" src="../images/loading.gif" alt="loading..">
+        </center>
+    </div>
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            var dv = document.getElementById("maindiv");
+            dv.style.display = "none";
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.close();
+            };
+        </script>
+    }
+</body>
+</html>

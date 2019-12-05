@@ -1,0 +1,552 @@
+﻿@{
+    ViewBag.Title = "HotelMaster";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<html>
+<head>
+    <title>View Hotel Master</title>
+
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <script src="../New_Calender/src/calender_jquery.daterange.js"></script>
+    <link href="../New_Calender/calender.css" rel="stylesheet" />
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    <script src="../js/angular/angular.min.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+   
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+    <script src="../js/select2/select2.min.js"></script>
+    <link href="../css/select2/select2.min.css" rel="stylesheet" />
+    <script src="../js/angular/hotelMasterJS.js"></script>
+
+
+    <style type="text/css">
+        .modal.modal-wide .modal-dialog {
+            width: 72%;
+        }
+
+        .fh_inputtxt2 {
+            width: 100%;
+            height: 40px;
+            padding-left: 5px;
+            text-indent: 5px;
+            color: #000000;
+            font-size: 15px;
+            font-weight: 400;
+            border: solid 1px #e4e4e4;
+            font-family: Arial;
+            border-radius: 3px;
+        }
+
+        /*ul > li, a {cursor: pointer;}*/
+        .ui-widget-content {
+            width: 18%;
+            font-size: 14px;
+            border: 1px solid #aaaaaa;
+            color: #222222;
+        }
+
+        .modal-wide .modal-body {
+            overflow-y: auto;
+        }
+        /* irrelevant styling */
+        .modal-dialog {
+            left: 5px;
+        }
+
+            .modal-dialog div {
+                text-align: center;
+            }
+        /*.modal-dialog div  p { max-width: 400px;margin: 20px auto;}*/
+        .modal-body table tr th {
+            text-align: Center;
+            padding: 10px;
+        }
+
+        ul > li, a {
+            cursor: pointer;
+        }
+
+        img {
+            cursor: pointer;
+        }
+
+        .popuphdtxt {
+            font-size: 18px;
+            font-family: Swis721 Cn BT,Sans-Serif;
+            padding-bottom: 1px;
+            padding-top: 1px;
+            text-align:left;
+        }
+
+        .flighdtl {
+            width: 100%;
+            border: 1px solid #c2c2c2;
+        }
+
+        /*.popheadcolor {
+            background-color: #EE1D23;
+            color: #fff;
+            font-family: Swis721 Cn BT,Sans-Serif;
+        }*/
+
+        .inputremark {
+            width: 99%;
+            height: 30px;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            /*text-align: center;*/
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .radio_space {
+            padding-left: 5px;
+        }
+
+        .pop_left_space {
+            margin-left: -12px;
+        }
+
+        .header_white_color {
+            color: #fff;
+        }
+
+        .flighdtl_Bk_request {
+            width: 100%;
+        }
+
+            .flighdtl_Bk_request td {
+                border: solid 1px #c2c2c2;
+                padding: 6px;
+            }
+
+        .tbwidth100 {
+            width: 100%;
+        }
+
+        .tabletextleft td {
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .modal.modal-wide .htmastermodepwidth {
+            width: 90%;
+        }
+
+        .innerhideborder table tr td {
+            border: solid 1px transparent;
+        }
+    </style>
+</head>
+<body>
+    <div ng-app="MasterApp" ng-controller="MasterCtrl" ng-init="paginit('')" ng-cloak>
+
+        <div>
+            <div class="admin_content_txtheading">View Hotel Master</div>
+        </div>
+        <section class="content">
+            <div class="Alladmin_content_box">
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="search-title-master"> Search :</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="master-search-control-gap"> <input class="form-control" type="text" ng-model="search" ng-change="filter();" placeholder="Filter" /></div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>
+                            S.No. &nbsp;<a ng-click="sort_by('ID');"><i class="glyphicon glyphicon-sort"></i></a>
+                        </th>
+                        <th>
+                            Hotel Code &nbsp;<a ng-click="sort_by('HotelCode');"><i class="glyphicon glyphicon-sort"></i></a>
+                        </th>
+                        <th>
+                            Hotel Name &nbsp;<a ng-click="sort_by('HotelName');"><i class="glyphicon glyphicon-sort"></i></a>
+                        </th>
+                        <th>
+                            City Code &nbsp;<a ng-click="sort_by('StationCode');"><i class="glyphicon glyphicon-sort"></i></a>
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                    <tr ng-repeat="list in filtered= (hotelList | filter: search| orderBy : predicate :reverse)| startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit ">
+                        <td>{{list.ID}}</td>
+                        <td>{{list.HotelCode}}</td>
+                        <td>{{list.HotelName}}</td>
+                        <td>{{list.StationCode}}</td>
+                        <td style="width:400px;">{{list.Address}}</td>
+                        <td><a data-toggle="modal" href="#viewdetailModal" class="csod" ng-click="viewdetail(list.ID)">View Detail</a></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div pagination total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+        </section>
+
+
+        <div id="viewdetailModal" class="modal modal-wide fade">
+            <div class="modal-dialog htmastermodepwidth">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">Contractual Hotel Details</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tblbookinginfo" class="flighdtl table table-striped table-bordered">
+                            <tr class="popheadcolor">
+                                <th>Hotel Name</th>
+                                <th>Hotel Code</th>
+                                <th>City Code</th>
+                                <th>City Name</th>
+                            </tr>
+                            <tr id="txtHeader1" ng-repeat="blist in hotelIncList" style="text-align:left;padding:2px;">
+                                <td>{{blist.HotelName}}</td>
+                                <td>{{blist.HotelCode}}</td>
+                                <td>{{blist.StationCode}}</td>
+                                <td>{{blist.City}}</td>
+                            </tr>
+                            <tr hidden="hidden" id="txtRow1" ng-repeat="blist in hotelIncList" style="text-align:left;padding:2px;">
+                                <td><input type="text" value="{{blist.HotelName}}" id="txtname" class="inputremark" onkeypress="return blockSpecialChar(event)" maxlength="50" ng-required="true"></td>
+                                <td><input type="text" value="{{blist.HotelCode}}" id="txtcode" class="inputremark" onkeypress="return blockSpecialChar(event)" maxlength="20" ng-required="true" readonly /></td>
+                                <td><input type="text" value="{{blist.StationCode}}" id="txtcitycode" class="inputremark" onkeypress="return blockSpecialChar(event)" maxlength="20" ng-required="true"></td>
+                                <td><input type="text" value="{{blist.City}}" id="txtcity" class="inputremark" onkeypress="return blockSpecialChar(event)" maxlength="50" ng-required="true"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7"></td>
+                            </tr>
+                            <tr class="popheadcolor">
+                                <th colspan="2">Hotel Address</th>
+                                <th colspan="2">Hotel Phone</th>
+
+                            </tr>
+                            <tr id="txtHeader2" ng-repeat="blist in hotelIncList" style="text-align:left;padding:2px;">
+                                <td colspan="2">{{blist.Address}}</td>
+                                <td colspan="2">{{blist.Phone}}</td>
+                            </tr>
+                            <tr hidden="hidden" id="txtRow2" ng-repeat="blist in hotelIncList" style="text-align:left;padding:2px;">
+                                <td colspan="2"><input type="text" id="txtadd" value="{{blist.Address}}" class="inputremark" maxlength="200" ng-required="true" /></td>
+                                <td colspan="2"><input type="text" id="txtphn" value="{{blist.Phone}}" class="inputremark" maxlength="30" ng-required="true"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7"></td>
+                            </tr>
+                            <tr class="popheadcolor">
+                                <th colspan="2">Primary Email</th>
+                                <th colspan="2">Secondary Email</th>
+                            </tr>
+                            <tr id="txtHeader5" ng-repeat="blist in hotelIncList" style="text-align:left;padding:2px;">
+                                <td colspan="2">{{blist.PrimaryEmail}}</td>
+                                <td colspan="2">{{blist.SecondaryEmail}}</td>
+                            </tr>
+                            <tr hidden="hidden" id="txtRow5" ng-repeat="blist in hotelIncList" style="text-align:left;padding:2px;">
+                                <td colspan="2"><input type="text" id="txtpemail" value="{{blist.PrimaryEmail}}" class="inputremark" maxlength="150" ng-required="true"></td>
+                                <td colspan="2"><input type="text" id="txtsemail" value="{{blist.SecondaryEmail}}" class="inputremark" maxlength="500"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7"></td>
+                            </tr>
+                            <tr class="popheadcolor">
+                                <th colspan="1">Meal Type</th>
+                                <th colspan="1">Single Price</th>
+                                <th colspan="1">Double Price</th>
+                                <th colspan="1">Currency Code </th>
+                            </tr>
+
+                            <tr class="txtHeader3" ng-repeat="blist in hotelPriceList" style="text-align:left;padding:2px;">
+                                <td ng-if="blist.TCId=='1'" colspan="1">APAI</td>
+                                <td ng-if="blist.TCId=='2'" colspan="1">MAP</td>
+                                <td ng-if="blist.TCId=='3'" colspan="1">CPAI</td>
+                                <td colspan="1">{{blist.SinglePrice}}</td>
+                                <td colspan="1">{{blist.DoublePrice}}</td>
+                                <td colspan="1" ng-if="blist.HotelCurrencyCode">{{blist.HotelCurrencyCode}}</td>
+                                <td colspan="1" ng-if="!blist.HotelCurrencyCode"> INR</td>
+                            </tr>
+                            <tr hidden="hidden" id="txtRow3a" @*ng-repeat="blist in hotelPriceList"*@ style="text-align:left;padding:2px;">
+                                <td colspan="1"><input type="checkbox" id="chkmeal1" onchange="clickcheckboxmeal1();" /><span id="mealprice1"></span></td>
+                                <td colspan="1" class="innerhideborder">
+                                    <input type="text" class="inputremark form-control" id="txtSingle1" maxlength="6" pattern="[0-9]{6}">
+                                </td>
+                                <td colspan="1" class="innerhideborder">
+                                    <input type="text" class="inputremark" id="txtDouble1" maxlength="6" pattern="[0-9]{6}">
+                                </td>
+                                <td colspan="1">
+                                    <select class="form-control" id="selecttxtCurrency1" name="CurrList">
+                                        <option value="Null" hidden>-- Please select --</option>
+                                        <option value="{{x.CurrencyCode}}" ng-repeat="x in CurrencyList">{{x.CurrencyName}}-{{x.CurrencyCode}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr hidden="hidden" id="txtRow3b" @*ng-repeat="blist in hotelPriceList"*@ style="text-align:left;padding:2px;">
+                                <td colspan="1"><input type="checkbox" id="chkmeal2" onchange="clickcheckboxmeal2();" /><span id="mealprice2"></span></td>
+                                <td colspan="1" class="innerhideborder">
+                                    <input type="text" class="inputremark" id="txtSingle2" maxlength="6" pattern="[0-9]{6}">
+                                </td>
+                                <td colspan="1" class="innerhideborder">
+                                    <input type="text" class="inputremark" id="txtDouble2" maxlength="6" pattern="[0-9]{6}">
+                                </td>
+                                <td>
+                                    <select class="form-control" id="selecttxtCurrency2" name="CurrList">
+                                        <option value="Null" hidden>-- Please select --</option>
+                                        <option value="{{x.CurrencyCode}}" ng-repeat="x in CurrencyList">{{x.CurrencyName}}-{{x.CurrencyCode}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr hidden="hidden" id="txtRow3c" @*ng-repeat="blist in hotelPriceList"*@ style="text-align:left;padding:2px;">
+                                <td colspan="1"><input type="checkbox" id="chkmeal3" onchange="clickcheckboxmeal3();" /><span id="mealprice3"></span></td>
+                                <td colspan="1" class="innerhideborder">
+                                    <input type="text" class="inputremark" id="txtSingle3" maxlength="6" pattern="[0-9]{6}">
+                                </td>
+                                <td colspan="1" class="innerhideborder">
+                                    <input type="text" class="inputremark" id="txtDouble3" maxlength="6" pattern="[0-9]{6}">
+                                </td>
+                                <td colspan="1">
+                                    <select class="form-control" id="selecttxtCurrency3" name="CurrList">
+                                        <option value="Null" hidden>-- Please select --</option>
+                                        <option value="{{x.CurrencyCode}}" ng-repeat="x in CurrencyList">{{x.CurrencyName}}-{{x.CurrencyCode}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="7"></td>
+                            </tr>
+                            <tr class="popheadcolor">
+                                <th>Tax included?</th>
+                                <th>GM Name & Contact Details</th>
+                                <th>Contract Start Date (dd/mm/yyyy)</th>
+                                <th>Contract End Date (dd/mm/yyyy)</th>
+                            </tr>
+                            <tr id="txtHeader4" ng-repeat="blist in hotelIncList" style="text-align:left;padding:2px;">
+                                <td><span id="taxvalue">{{blist.IsTaxIncluded==1 ? "Yes":"No"}}</span></td>
+                                <td>{{blist.GMname}}</td>
+                                <td>{{ToJavaScriptDate(blist.ContractStartDate)}}</td>
+                                <td>{{ToJavaScriptDate(blist.ContractEndDate)}}</td>
+                            </tr>
+                            <tr hidden="hidden" id="txtRow4" ng-repeat="blist in hotelIncList" style="text-align:left;padding:2px;">
+                                <td>
+                                    <input type="radio" style="height:17px; width:17px;" ng-model="radiobtn" name="radiobtn" value="yes" id="rdotaxyes" />&nbsp; Yes
+                                    &nbsp;&nbsp;&nbsp; <input type="radio" style="height:17px; width:17px;" ng-model="radiobtn" name="radiobtn" value="no" id="rdotaxno" />&nbsp; No
+                                </td>
+                                <td><input type="text" value="{{blist.GMname}}" id="txtgm" class="inputremark"></td>
+                                <td>
+
+                                    <i class="" onclick="document.getElementById('txtstart').focus();"></i>
+                                    <input type="text" id="txtstart" placeholder="From Date" class="fh_inputtxt2" maxlength="10" value="{{ToJavaScriptDate(blist.ContractStartDate)}}">
+
+                                </td>
+                                <td>
+                                    <i class="" onclick="document.getElementById('txtend').focus();"></i>
+                                    <input type="text" id="txtend" placeholder="To Date" class="fh_inputtxt2" maxlength="10" value="{{ToJavaScriptDate(blist.ContractEndDate)}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" id="editbtntd">
+                                    <input type="button" value="Edit" class="btn btn-warning btn-sm" ng-click="editRow();" style="background-color: #EE1D23; border-color: #EE1D23; width:70px;visibility:hidden;" /> &nbsp; &nbsp;
+                                </td>
+                                <td hidden="hidden" id="updatebtntd" colspan="7">
+                                    <input type="button" id="btnupdate" value="Update" class="btn btn-warning btn-sm" ng-click="updateRow(hotelIncList[0].ID);" style="background-color: #EE1D23; border-color: #EE1D23;" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    @*<div class="modal-footer">
+                        <button type="button" data-dismiss="modal">Close</button>
+                    </div>*@
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <div id="viewdetailModalIncHotel" class="modal modal-wide fade">
+            <div class="modal-dialog htmastermodepwidth">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">Add New Hotel (Contractual Hotel)</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="flighdtl_Bk_request" id="tblhotelincNew">
+                            <tr>
+                                <td colspan="1">Hotel Code:</td>
+                                <td colspan="2">
+                                    <input type="text" class="inputremark" ng-model="txthotelcode" id="txthotelcode" required onkeypress="return blockSpecialChar(event)" maxlength="20" />
+                                </td>
+                                <td colspan="1">Hotel Name:</td>
+                                <td colspan="2">
+                                    <input type="text" class="inputremark" ng-model="txthotelname" id="txthotelname" onkeypress="return blockSpecialChar(event)" maxlength="50" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">City Code:</td>
+                                <td colspan="2">
+                                    <input type="text" class="inputremark" ng-model="txtcitycode" id="txtcitycode" onkeypress="return blockSpecialChar(event)" required maxlength="4" />
+                                </td>
+                                <td colspan="1">City Name:</td>
+                                <td colspan="2">
+                                    <input type="text" class="inputremark" ng-model="txtcityname" id="txtcityname" onkeypress="return blockSpecialChar(event)" maxlength="50" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">Hotel Address:</td>
+                                <td colspan="2">
+                                    <input type="text" class="inputremark" ng-model="txtaddress" id="txtaddress" required maxlength="200" />
+                                </td>
+                                <td colspan="1">Hotel Phone No.:</td>
+                                <td colspan="2">
+                                    <input type="text" class="inputremark" ng-model="txtphone" id="txtphone" maxlength="30" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">Primary Email:</td>
+                                <td colspan="2">
+                                    <input type="text" class="inputremark" ng-model="txtprimary" id="txtprimary" required maxlength="150" />
+                                </td>
+                                <td colspan="1">Currency Code:</td>
+                                <td colspan="4">
+                                    <select class="form-control" id="selectAddCurrency" name="CurrList">
+                                        <option value="Null" hidden>-choose currency code -</option>
+                                        <option value="{{x.CurrencyCode}}" ng-repeat="x in CurrencyList">{{x.CurrencyName}}-{{x.CurrencyCode}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">Secondary Email:</td>
+                                <td colspan="5">
+                                    <input type="text" class="inputremark" ng-model="txtsecondary" id="txtsecondary" maxlength="500" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" rowspan="3">Meal Type:</td>
+                                <td colspan="2">
+                                    <input type="checkbox" id="apaiMeal" onchange="changeMeal1();" /> APAI
+                                </td>
+                                <td colspan="3">
+                                    <div id="mealdiv1" hidden>
+                                        Single Price : <input type="text" id="txtsingleprice1" required maxlength="6" />&nbsp;&nbsp;
+                                        Double Price :<input type="text" id="txtdoubleprice1" maxlength="6" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="checkbox" id="mapmeal" onchange="changeMeal2();" /> MAP
+                                </td>
+                                <td colspan="3">
+                                    <div id="mealdiv2" hidden>
+                                        Single Price : <input type="text" id="txtsingleprice2" required maxlength="6" />&nbsp;&nbsp;
+                                        Double Price :<input type="text" id="txtdoubleprice2" maxlength="6" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type="checkbox" id="cpaimeal" onchange="changeMeal3();" /> CPAI</td>
+                                <td colspan="3">
+                                    <div id="mealdiv3" hidden>
+                                        Single Price : <input type="text" id="txtsingleprice3" required maxlength="6" />&nbsp;&nbsp;
+                                        Double Price :<input type="text" id="txtdoubleprice3" maxlength="6" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">Is Tax Included?</td>
+                                <td colspan="2">
+                                    <input type="radio" style="height:17px; width:17px;" ng-model="radio" name="radio" value="yes" ng-checked="true" id="rdoyes" />&nbsp; Yes
+                                    &nbsp;&nbsp;&nbsp; <input type="radio" style="height:17px; width:17px;" ng-model="radio" name="radio" value="no" id="rdono" />&nbsp; No
+                                </td>
+                                <td colspan="1">GM Name & Contact Details :</td>
+                                <td colspan="2">
+                                    <input type="text" class="inputremark" ng-model="txtgmname" id="txtgmname" maxlength="200" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">Contract Start Date:</td>
+                                <td colspan="2">
+                                    @*<input id="txtstartdate" type="text"   placeholder="dd/mm/yyyy" class="inputremark" />*@
+
+                                    <i class="" onclick="document.getElementById('txtstartdate').focus();"></i>
+                                    <input id="txtstartdate" type="text" placeholder="From Date" class="fh_inputtxt2" maxlength="10" readonly>
+
+                                </td>
+                                <td colspan="1">Contract End Date:</td>
+                                <td colspan="2">
+                                    @*<input type="text" class="inputremark" id="txtenddate" placeholder="dd/MM/yyyy" />*@
+
+                                    <i class="" onclick="document.getElementById('txtenddate').focus();"></i>
+                                    <input id="txtenddate" type="text" placeholder="To Date" class="fh_inputtxt2" maxlength="10" readonly>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">Upload Contract (Pdf) :</td>
+                                <td colspan="3" align="center">
+                                    <input type="file" id="FileUpload1" />
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6">
+                                    <input type="button" id="btnAddInc" value="Add Hotel" class="btn btn-warning btn-sm" ng-click="addRow();" style="background-color: #EE1D23; border-color: #EE1D23;" />
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="viewdetailModalUpload" class="modal modal-wide fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h4 class="modal-title"><span class="viewlistcs">Contract: Hotel Code- {{trhotelcode}}</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tblbookinginfo" class="flighdtl">
+                            <tr class="popheadcolor">
+                                <th colspan="2">Upload</th>
+                            </tr>
+                            <tr style="text-align:left;padding:2px;">
+                                <td>Choose file: (PDF)</td>
+                                <td align="center"><input type="file" id="FileUpload2" /></td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="button" id="btnUploadEdit" value="Upload" class="btn btn-warning btn-sm" ng-click="UploadContractEdit(trhotelcode);" style="background-color: #EE1D23; border-color: #EE1D23;" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    </div>
+</body>
+</html>
+

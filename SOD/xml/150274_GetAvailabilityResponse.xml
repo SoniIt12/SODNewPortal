@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GetAvailabilityResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GetTripAvailabilityResponse>
+    <ExtensionData />
+    <OtherServiceInfoList />
+    <Schedules>
+      <ArrayOfJourneyDateMarket>
+        <JourneyDateMarket>
+          <ExtensionData />
+          <DepartureDate>2018-07-24T00:00:00</DepartureDate>
+          <DepartureStation>DEL</DepartureStation>
+          <ArrivalStation>MAA</ArrivalStation>
+          <Journeys>
+            <Journey>
+              <ExtensionData />
+              <State>New</State>
+              <NotForGeneralUse>false</NotForGeneralUse>
+              <Segments>
+                <Segment>
+                  <ExtensionData />
+                  <State>Clean</State>
+                  <ActionStatusCode>KK</ActionStatusCode>
+                  <ArrivalStation>MAA</ArrivalStation>
+                  <CabinOfService> </CabinOfService>
+                  <ChangeReasonCode />
+                  <DepartureStation>DEL</DepartureStation>
+                  <PriorityCode />
+                  <SegmentType />
+                  <STA>2018-07-24T14:00:00</STA>
+                  <STD>2018-07-24T13:00:00</STD>
+                  <International>false</International>
+                  <FlightDesignator>
+                    <ExtensionData />
+                    <CarrierCode>SG</CarrierCode>
+                    <FlightNumber> 107</FlightNumber>
+                    <OpSuffix> </OpSuffix>
+                  </FlightDesignator>
+                  <Fares>
+                    <Fare xsi:type="AvailableFare">
+                      <ExtensionData />
+                      <State>New</State>
+                      <ClassOfService>Z</ClassOfService>
+                      <ClassType />
+                      <RuleTariff />
+                      <CarrierCode>SG</CarrierCode>
+                      <RuleNumber>9922</RuleNumber>
+                      <FareBasisCode>ZSOD</FareBasisCode>
+                      <FareSequence>6</FareSequence>
+                      <FareClassOfService>Z</FareClassOfService>
+                      <FareStatus>Default</FareStatus>
+                      <FareApplicationType>Route</FareApplicationType>
+                      <OriginalClassOfService>Z</OriginalClassOfService>
+                      <XrefClassOfService />
+                      <PaxFares>
+                        <PaxFare>
+                          <ExtensionData />
+                          <State>New</State>
+                          <PaxType>ADT</PaxType>
+                          <PaxDiscountCode />
+                          <FareDiscountCode />
+                          <ServiceCharges>
+                            <BookingServiceCharge>
+                              <ExtensionData />
+                              <State>New</State>
+                              <ChargeType>FarePrice</ChargeType>
+                              <CollectType>SellerChargeable</CollectType>
+                              <ChargeCode />
+                              <TicketCode />
+                              <CurrencyCode>INR</CurrencyCode>
+                              <Amount>0</Amount>
+                              <ChargeDetail />
+                              <ForeignCurrencyCode>INR</ForeignCurrencyCode>
+                              <ForeignAmount>0</ForeignAmount>
+                            </BookingServiceCharge>
+                          </ServiceCharges>
+                        </PaxFare>
+                      </PaxFares>
+                      <ProductClass>ZD</ProductClass>
+                      <IsAllotmentMarketFare>false</IsAllotmentMarketFare>
+                      <TravelClassCode> </TravelClassCode>
+                      <FareSellKey>0~Z~~ZSOD~9922~~6~X</FareSellKey>
+                      <InboundOutbound>None</InboundOutbound>
+                      <AvailableCount>0</AvailableCount>
+                      <Status>Active</Status>
+                      <SSRIndexes />
+                    </Fare>
+                  </Fares>
+                  <Legs>
+                    <Leg>
+                      <ExtensionData />
+                      <State>Clean</State>
+                      <ArrivalStation>MAA</ArrivalStation>
+                      <DepartureStation>DEL</DepartureStation>
+                      <STA>2018-07-24T14:00:00</STA>
+                      <STD>2018-07-24T13:00:00</STD>
+                      <FlightDesignator>
+                        <ExtensionData />
+                        <CarrierCode>SG</CarrierCode>
+                        <FlightNumber> 107</FlightNumber>
+                        <OpSuffix> </OpSuffix>
+                      </FlightDesignator>
+                      <LegInfo>
+                        <ExtensionData />
+                        <State>Clean</State>
+                        <AdjustedCapacity>212</AdjustedCapacity>
+                        <EquipmentType>737</EquipmentType>
+                        <EquipmentTypeSuffix>212</EquipmentTypeSuffix>
+                        <ArrivalTerminal />
+                        <ArrvLTV>330</ArrvLTV>
+                        <Capacity>212</Capacity>
+                        <CodeShareIndicator> </CodeShareIndicator>
+                        <DepartureTerminal>1D</DepartureTerminal>
+                        <DeptLTV>330</DeptLTV>
+                        <ETicket>true</ETicket>
+                        <FlifoUpdated>false</FlifoUpdated>
+                        <IROP>false</IROP>
+                        <Status>Normal</Status>
+                        <Lid>212</Lid>
+                        <OnTime> </OnTime>
+                        <PaxSTA>2018-07-24T14:00:00</PaxSTA>
+                        <PaxSTD>2018-07-24T13:00:00</PaxSTD>
+                        <PRBCCode>737900</PRBCCode>
+                        <ScheduleServiceType>J</ScheduleServiceType>
+                        <Sold>1</Sold>
+                        <OutMoveDays>0</OutMoveDays>
+                        <BackMoveDays>0</BackMoveDays>
+                        <LegNests />
+                        <LegSSRs />
+                        <OperatingFlightNumber>    </OperatingFlightNumber>
+                        <OperatedByText />
+                        <OperatingCarrier />
+                        <OperatingOpSuffix> </OperatingOpSuffix>
+                        <SubjectToGovtApproval>false</SubjectToGovtApproval>
+                        <MarketingCode />
+                        <ChangeOfDirection>false</ChangeOfDirection>
+                        <MarketingOverride>false</MarketingOverride>
+                      </LegInfo>
+                      <InventoryLegID>1326762</InventoryLegID>
+                    </Leg>
+                  </Legs>
+                  <PaxBags />
+                  <PaxSeats />
+                  <PaxSSRs />
+                  <PaxSegments />
+                  <PaxTickets />
+                  <SalesDate>9999-12-31T00:00:00Z</SalesDate>
+                  <SegmentSellKey>SG~ 107~ ~~DEL~07/24/2018 13:00~MAA~07/24/2018 14:00~</SegmentSellKey>
+                  <PaxScores />
+                  <ChannelType>Default</ChannelType>
+                </Segment>
+              </Segments>
+              <JourneySellKey>SG~ 107~ ~~DEL~07/24/2018 13:00~MAA~07/24/2018 14:00~</JourneySellKey>
+            </Journey>
+          </Journeys>
+          <IncludesTaxesAndFees>false</IncludesTaxesAndFees>
+        </JourneyDateMarket>
+      </ArrayOfJourneyDateMarket>
+    </Schedules>
+  </GetTripAvailabilityResponse>
+</GetAvailabilityResponse>

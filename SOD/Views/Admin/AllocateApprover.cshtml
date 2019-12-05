@@ -1,0 +1,353 @@
+﻿@model IEnumerable<SOD.Model.DepartmentModels>
+@{
+    ViewBag.Title = "Admin | Allocate Approver";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<script src="../Scripts/jquery-1.10.2.min.js"></script>
+
+
+<script>$("#ddlDepartment option:selected").prop("selected", false)
+    $(document).ready(function () {
+       // bindVerticals();
+        bindDepartment();
+        $("#displayList").hide();
+        clearConrol();
+        $("#ddlDepartment").change(function () {
+            var str = "";
+            $('#spn_selected_dept').empty();
+            $("#ddlDepartment option:selected").each(function () {
+                str += "<img src='../img/right.png' style='height:16px;width:16px;'/> " + $(this).text() + "<br>";
+            });
+            $('#spn_selected_dept').append(str);
+        });
+
+        $("#Department").change(function () {
+           // var str = "";
+            $('#spn_selected_dept').empty();
+            //$("#ddlDepartment option:selected").each(function () {
+            //    str += "<img src='../img/right.png' style='height:16px;width:16px;'/> " + $(this).text() + "<br>";
+            //});
+            //$('#spn_selected_dept').append(str);
+        });
+
+        $("#Department").change(function () {
+            var str = "";
+            $("#Department option:selected").each(function () {
+                str += $(this).text() + '|';
+            });
+
+            var deptArray = str.split('|');
+            var obj = [];
+            for (var j = 0; j < deptArray.length; j++) {
+                if (obj.indexOf(deptArray[j]) === -1) {
+                    obj.push(deptArray[j]);
+                }
+            }
+
+            var Temp = new Array();
+            Temp = localStorage.getItem("temp");
+            var allVerticals = new Array();
+            allVerticals = JSON.parse(Temp);
+            var verticleArray = new Array();
+            for (var i = 0; i < obj.length - 1; i++) {
+                for (var j = 0; j < allVerticals.length; j++) {
+                    if (obj[i] == allVerticals[j].dept_name) {
+                        verticleArray.push(allVerticals[j]);
+                    }
+                }
+            }
+            $("#ddlDepartment").empty();
+            $("#ddlDepartment option:selected").prop("selected", false);
+            debugger;
+            if (verticleArray.length) {
+                var ddldpt = $("[id*=ddlDepartment]");
+                $.each(verticleArray, function (val, text) {
+                    var newOption = $('<option value="' + text.id + '">' + text.vertical_name + '</option>');
+                    ddldpt.append(newOption);
+                });
+            }
+        });
+    });
+
+    //Bind Department
+    function bindDepartment() {
+        $.getJSON("../Admin/BindDepartmentVerticals",
+            function (json2) {
+                localStorage.setItem("temp", JSON.stringify(json2));
+                var Temp = new Array();
+                Temp = localStorage.getItem("temp");
+                debugger;
+                var deptArray = new Array();
+                var jsonArray = new Array();
+                for (var j = 0; j < json2.length; j++) {
+                    deptArray[j] = json2[j].dept_name;
+                }
+
+                var obj = [];
+                for (var j = 0; j < deptArray.length; j++) {
+                    if (obj.indexOf(deptArray[j]) === -1) {
+                        obj.push(deptArray[j]);
+                        jsonArray.push(json2[j]);
+                    }
+                }
+                $.each(jsonArray, function (key, value) {
+                    $("#Department").append("<option value='" + value.id + "'>" + value.dept_name + "</option>")
+                });
+                //SodApproverList();
+            });
+    }
+
+    function bindDept() {
+        // $.getJSON("../Admin/BindDepartment",
+        //function (json)
+        //{
+        //    if (json.length)
+        //    {
+        //        var ddldpt = $("[id*=ddlDepartment]");
+        //        $.each(json, function (val,text) {
+        //            var newOption = $('<option value="' + text.id + '">' + text.dept_name + '</option>');
+        //            ddldpt.append(newOption);
+        //        });
+        //    }
+        //});
+    }
+
+
+    //Bind Verticals
+    function bindVerticals() {
+        debugger;
+        $.getJSON("../Admin/BindDeptVerticals",
+        function (json) {
+            if (json.length) {
+                var ddldpt = $("[id*=ddlDepartment]");
+                $.each(json, function (val, text) {
+                    var newOption = $('<option value="' + text.VerticalID + '">' + text.VerticalName + '</option>');
+                    ddldpt.append(newOption);
+                });
+            }
+        });
+    }
+
+    //Bind Employee Common Info List
+    function getEmployee() {
+        var empcode = document.getElementById("txtEmpId").value;
+        if (empcode == "") {
+            alert('Please Enter Employee Id.');
+            document.getElementById("txtEmpId").focus();
+            return false;
+        }
+        $.getJSON("../Admin/GetEmployeeInfo?empcode=" + empcode,
+            function (json) {
+                if (json.length) {
+                    clearConrol();
+                    $("#displayList").show();
+                    $('#tblAllocate tr:not(:first)').remove();
+                    var tr;
+                    $('#hdEmpId').val(json[0].EmpId);
+                    $('#hddesigId').val(json[0].DesignationId);
+                    $('#hdverticalId').val(json[0].EmployeeVertical);
+                    $('#hdDeptId').val(json[0].DepartmentId);
+                    $('#hdEmail').val(json[0].Email);
+
+                    tr = $('<tr/>');
+                    tr.append("<td> Employee Code : " + json[0].EmpCode + "</td>");
+                    tr.append("<td> Employee Name : " + json[0].EmpName + "</td>");
+                    $('#tblAllocate').append(tr);
+
+                    tr = $('<tr/>');
+                    tr.append("<td> Department : " + json[0].Department + "</td>");
+                    tr.append("<td> Designation : " + json[0].Designation + "</td>");
+                    $('#tblAllocate').append(tr);
+
+                    tr = $('<tr/>');
+                    tr.append("<td> Vertical ID : " + json[0].EmployeeVertical + "</td>");
+                    tr.append("<td> Vertical Name : " + json[0].EmployeeVerticleName + "</td>");
+                    $('#tblAllocate').append(tr);
+                }
+                else {
+                    $("#displayList").hide();
+                    clearConrol();
+                    alert('Sorry ! Information not available.');
+                }
+            });
+    }
+
+
+    //Bind Designation List
+    function bindDesignation() {
+        var ddl = $('#Department').val();
+        $.getJSON("../Admin/GetDesignationList/?ddl=" + ddl,
+            function (json) {
+                $('#tblAllocate tr:not(:first)').remove();
+                var tr;
+                if (json.length == 0) {
+                    $('#btnSave').hide();
+                    alert('Designation not available for the selected department.');
+                    return;
+                }
+                $('#btnSave').show();
+                //Append each row to html table
+                var c = 0;
+                for (var i = 0; i < json.length; i++) {
+                    tr = $('<tr/>');
+                    c++;
+                    tr.append("<td>" + c + "</td>");
+                    tr.append("<td>" + json[i].designation_name + "</td>");
+                    tr.append("<td>" + json[i].designation_level + "</td>");
+                    tr.append("<td>" + "<input type=checkbox />" + "</td>");
+                    tr.append("<td style='visibility:hidden'>" + json[i].id + "</td>");
+                    $('#tblAllocate').append(tr);
+                }
+            });
+    }
+
+    //Allocate Approver
+    function allocate() {
+        var result = confirm("Are you sure! to allocate this selected department(s) ?");
+        if (result) {
+            var counter = 0;
+            $("#Department option:selected").each(function () {
+            var sodApproverList = new Array();
+               var Temp = new Array();
+                Temp = localStorage.getItem("temp");
+            var tempData = new Array();
+            tempData = JSON.parse(Temp);
+            var count = 0;
+            $("#ddlDepartment option:selected").each(function () {
+                for (var i = 0; i < tempData.length; i++) {
+                    if ($("#ddlDepartment option:selected")[count].text == tempData[i].vertical_name && $("#ddlDepartment option:selected")[count].value == tempData[i].id ) {
+                    var obj = new Object();
+                    obj.SodApproverId = 1;
+                    obj.DesignationId = parseInt($('#hddesigId').val());
+                    obj.DepartmentId = $("#Department option:selected")[counter].value;
+                    obj.EmployeeId = parseInt($('#hdEmpId').val());
+                    obj.VerticleId = tempData[i].vertical_id;
+                    obj.IsActive = 1;
+                    obj.EmailId = $('#hdEmail').val();
+                    sodApproverList.push(obj);
+                    }
+                }
+                count++;
+            });
+
+            var approvalList = JSON.stringify({ sodApproverList: sodApproverList });
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '../Admin/SaveApprover',
+                data: approvalList,
+                success: function (result) {
+                    $('#spanSuccess').html(result);
+                },
+                error: function () {
+                    $("#spanfail").html("Error occured during saving the records.");
+                }
+                });
+
+                counter++;
+            });
+        }
+    }
+
+    //View Approver List
+    function viewApproverList() {
+        var url = "../Admin/SodApproverList";
+        window.location.href = url;
+    }
+
+    //Clear Control
+    function clearConrol() {
+        $('#spanSuccess').html("");
+        $("#spanfail").html("");
+    }
+
+</script>
+
+<div style="padding-left: 50px">
+    <h3>Allocate Approver</h3>
+
+    <div class="main_partadm">
+        <section class="section_part">
+            <div class="part_left_adm">
+                <div style="margin-top: 20px;">
+                    <span class="part_txt">Employee Code   :</span>
+                    <span class="txtinput"><input type="text" id="txtEmpId" maxlength="8" style="height:30px;width:150px;border:1px solid groove" /> </span>
+                    <span class="getbtn"><input type="button" value="Get Employee " onclick="getEmployee();" /></span>
+                    <span class="appbtn"><input type="button" value="View Approver List" onclick="viewApproverList();" /></span>
+                </div>
+                <hr />
+            </div>
+            <div id="displayList" style="margin-right:20px;padding-left:10px;padding-bottom:50px;">
+                <table style="width: 80%; line-height: 30px; border: 0; margin-top: 10px;" id="tblAllocate">
+                    <tr><th colspan="2" style="background-color:#f6f0f0">Employee Details</th></tr>
+                </table>
+                <input type="hidden" id="hdEmpId" />
+                <input type="hidden" id="hddesigId" />
+                <input type="hidden" id="hdverticalId" />
+                <input type="hidden" id="hdDeptId" />
+                <input type="hidden" id="hdEmail" />
+
+                <table style="width: 80%; line-height: 30px; border: 0; margin-top: 10px; height : 290px;" id="tbldept">
+                    <tr>
+                        <th colspan="1" style="background-color:#f6f0f0"><span style="margin-left:10px;"> Departments </span></th>
+                        <th colspan="1" style="background-color:#f6f0f0"><span style="margin-left:10px;"> Vertical </span></th>
+                        <th colspan="1" style="background-color:#f6f0f0"><span style="margin-left:10px;">Selected Verticals </span></th>
+                    </tr>
+                    <tr>
+                        <td colspan="1" style="vertical-align:top;margin-top:2px;width:33%;"><select id="Department" multiple="multiple" style="width:100%;height:265px;padding-left:10px;"></select></td>
+                        <td colspan="1" style="vertical-align:top;margin-top:2px;width:33%;"><select id="ddlDepartment" multiple="multiple" style="width:100%;height:265px;padding-left:10px;"></select></td>
+                        <td colspan="1" style="vertical-align:top;margin-top:2px;width:33%;"><div style="height:265px; overflow:auto;"><span id="spn_selected_dept" style="width:100%;height:265px;"></span></div></td>
+                    </tr>
+                    </table>
+                   
+                    <div style="margin-left: 200px; margin-top: 10px; margin-bottom: 15px;">
+                        <div id="spanSuccess" style="color: green; font-weight: bold;"></div>
+                        <span id="spanfail" style="color: red; font-weight: bold;"></span>
+                    </div>
+                    <hr />
+
+                    <div class="savebtn" style="padding-left: 50px; margin-top: 20px;">
+                        <span class="appbtn"> <input type="button" id="btnSave" value=" Save " onclick="allocate();" /></span>
+                    </div>
+</div>
+        </section>
+    </div>
+
+</div>
+
+<style>
+    .sodapprvlist {
+        width: 95%;
+        line-height: 40px;
+        margin-top: 10px;
+    }
+        .sodapprvlist th {
+padding-left:10px;
+border: solid 1px #c2c2c2;
+        }
+    .sodapprvlist td {
+            border: solid 1px #c2c2c2;
+            height: 35px;
+            padding-left: 10px;
+        }
+
+    .appbtn {
+        margin-left: 100px;
+    }
+
+   .appbtn input {
+            margin-left: 100px;
+            background-color: #EE1D23;
+            height: 35px;
+            width: 150px;
+            color: #fff;
+            border: 0px;
+        }
+
+    .ddlapprove select {
+        height: 30px;
+        width: 70%;
+    }
+</style>

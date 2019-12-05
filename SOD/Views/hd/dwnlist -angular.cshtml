@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Sod | Download";
+    //Layout = null;
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<script src="../js/angular/angular.min.js"></script>
+<script src="../js/angular/hdusertravelhistory.js"></script>
+<link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+<link href="../css/finalsodstyle.css" rel="stylesheet" />
+<script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+<script src="../js/angular/sanitize.js"></script>
+
+<script>
+    //$.ajax({
+    //    type: 'POST',
+    //    url: '/hd/DownloadExl',
+    //    data: '{ "dataprop1": "test", "dataprop2" : "test2" }',
+    //    contentType: 'application/json; charset=utf-8',
+    //    dataType: 'json',
+    //    success: function (returnValue) {
+    //        window.location = '/Reports/Download?file=' + returnValue;
+    //    }
+    //});
+</script>
+
+
+
+<div ng-app="UserTrHistory" ng-controller="hdController">
+    <div class="container" style="width:1350px;margin-top:-40px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div style="text-align:center; font-size:18px;margin-top:5px; margin-bottom:10px;"> Download Travel History </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="searchDvv">
+                        From Date :<input type="text" ng-model="search" />
+                        To Date  :<input type="text" ng-model="search" />
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div style="text-align:left;" class="searchDvPagesize_right">
+                        Type  :
+                        <select ng-model="ddlsodname" ng-options="obj.name for obj in list_sodname.data" style="width:100px;">
+                            <option value="">-- All --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button id="btnSearch"   ng-click="downloadData1();" >Search</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

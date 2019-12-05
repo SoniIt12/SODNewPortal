@@ -1,0 +1,562 @@
+﻿@{
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml";    
+    ViewBag.Title = "Only Hotels |Booking";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SOD-SJSC | Only Hotels Booking</title>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../New_Calender/src/calender_jquery.daterange.js"></script>
+    <link href="../New_Calender/calender.css" rel="stylesheet" />
+    <script src="../Dropdownmenu/jquery-1.9.1.js"></script>
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <script src="../js/jsvalidation.js"></script>
+    <link href="../3D_button/3dbtn.css" rel="stylesheet" />
+    <script src="../js/timerpickerJS.js"></script>
+    <link href="../css/timepicker.css" rel="stylesheet" />
+    <link href="../css/radiobtn.css" rel="stylesheet" />
+    <link href="../css/responsive.css" rel="stylesheet" />
+    <link href="../css/Login.css" rel="stylesheet" />
+    <script src="../js/select2/select2.min.js"></script>
+    <link href="../css/select2/select2.min.css" rel="stylesheet" />   
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/sanitize.js"></script>
+    <script src="../js/SJCons.js"></script>
+   
+    <link href="../css/bootstrap-glyphicons.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+
+            $('.timepicker').wickedpicker({
+                twentyFour: false, title:
+                    'Select Time', showSeconds: false
+            });
+        });
+    </script>
+    <script>
+        function showimage() {
+            $('#place-image').show();
+        };
+        function hideimage() {
+            $('#place-image').hide();
+        };
+    </script>
+    <style>
+
+        .headcolor td {
+            text-align: center;
+            border-left: solid 1px #c2c2c2;
+            background-color: #EE1D23;
+            color: #fff;
+            height: 35px;
+        }
+
+        .rowcolor {
+            text-align: center;
+            border-left: solid 1px #c2c2c2;
+            border-bottom: solid 1px #c2c2c2;
+            line-height: 22px;
+            height: 30px;
+        }
+
+        .submitbtn {
+            background-color: #EE1D23;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background: #fff;
+        }
+
+        tr:nth-child(odd) { /*background: #f9f9f9;*/
+        }
+
+        .selected {
+            background-color: #A1DCF2;
+        }
+
+        #ddlacType {
+            border-radius: 0;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+            color: #666;
+            font-size: 12px;
+            height: 30px;
+            padding: 0px 0px 0px 0px;
+            text-indent: 0px;
+            border: solid 1px #e0e0e0;
+        }
+
+        .warning-label {
+            font-size: 12px;
+            font-weight: normal;
+            padding-left: 10px;
+            color: red;
+        }
+
+        .ui-menu-item {
+            width: 25% !important;
+            float: left;
+        }
+
+        .button {
+            background-color: #EB1217;
+            border: none;
+            color: white;
+            padding: 10px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button2 {
+            border-radius: 4px;
+        }
+
+        #errmsg {
+            color: red;
+        }
+
+        #errtxt-pickup {
+            color: red;
+        }
+
+        .helpimg {
+            text-align: center;
+            display: none;
+            position: absolute;
+            z-index: 9999;
+            right: 5%;
+        }
+
+        .madatoryImg {
+            color: red;
+        }
+
+        .updateCustBtn {
+            text-align: left;
+            padding: 10Px;
+            background-color: #f99f24;
+            color: white;
+        }
+        .UnderLineOnHover:hover {
+            text-decoration: underline !important;
+        }
+    </style>
+</head>
+<body ng-app="SjsisIndex" ng-controller="SjsisIndexCtrl" ng-cloak>
+    <div class="content_header_txt">
+        <div> Only Hotel Booking  </div>
+    </div>
+        <div id="dvrecord">       
+        <div class="container" style="padding-top:30px;">
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="text-align:right; padding-bottom:7px ;color:red">*Kindly ensure all details should be correct, norms applicable as per company policy</div>
+                    </div>
+                </div>
+                <div id='hoteldivdetails' class="moblineheight shadowboxCs" >
+                    <div class='row' style="margin-bottom:10px">
+                        <div class='col-md-4'><div><span>ECN (Employee ID/Code)</span></div><div><input id='txtEcn' type='text' value="{{userInfo.EmpCode}}" ng-disabled="userInfo.EmpCode" class='form-control input-sm' style="width:100%;"></div></div>
+                        <div class='col-md-4'><div><span> First Name</span></div><div> <input id='txtFName' type='text' class='form-control input-sm' value="{{userInfo.FirstName}}" ng-disabled="userInfo.FirstName" /></div></div>
+                        <div class='col-md-4'>
+                            <div>  <span> Last Name</span></div>
+                            <div> <input id='txtLName' type='text' class='form-control input-sm' value="{{userInfo.LastName}}" ng-disabled="userInfo.LastName" /></div>
+
+                        </div>
+                    </div>
+                    <div class='row' style="margin-bottom:10px">
+                        <div class='col-md-4'><div><span>Designation</span></div><div><input id='txtDesignation' type='text' class='form-control input-sm' value="{{userInfo.Designation}}" ng-disabled="userInfo.Designation" /></div></div>
+                        <div class='col-md-4'><div><span>Department</span></div><div><input id='txtDepartment' type='text' class='form-control input-sm' value="{{userInfo.Department}}" ng-disabled="userInfo.Department" /></div></div>
+                        <div class='col-md-4'>
+                            <div><span>Gender</span></div><div>
+                                <input id='txtGender' type='text' class='form-control input-sm' ng-disabled="userInfo.Title" value="{{Title}}" />
+                                <select id='txtGender' type='text' class='form-control input-sm' ng-if="!userInfo.Title"><option>Female</option><option>Male</option></select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-4'><div><span>Mobile No</span></div><div><input id='txtMobileNo' type='text' class='form-control input-sm' value="{{userInfo.MobileNo}}" ng-disabled="userInfo.MobileNo" maxlength="10" onkeydown="validateNumber(event);" /></div></div>
+                        <div class='col-md-4'><div><span>Email ID </span></div><div><input id='txtEmails' type='text' class='form-control input-sm' value="{{userInfo.EmailID}}" ng-disabled="userInfo.EmailID" /></div></div>
+                        <div class='col-md-4'><div><span>Reason for hotel booking</span><span class="madatoryImg">*</span></div><div><input id='reasontxt' type='text' class='form-control input-sm' autocomplete="off" /></div></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-md-12" style=" margin-top:10px;">                      
+                        <div style="text-align:right;padding-bottom:4px; color:red">*Please fill all the details for hotel booking</div>
+                    </div>
+                </div>
+                <div hidden="hidden" id="place-image" class="helpimg">
+                    <img style="width: 130px; height:300px; width:auto;" src="../img/citycodes.png">
+                </div>
+                <div id='hoteldivdetails' class="moblineheight shadowboxCs">
+                    <div class='row'>
+                        <div class='col-md-4'><div><span>City Code</span><span class="madatoryImg">*</span></div><div><select id='txtCity' type='text' class='form-control input-sm select3' style="width:100%;"></select></div></div>
+                        <div class='col-md-4'><div><span>Check-In Date</span><span class="madatoryImg">*</span></div><div> <input id='txtCheckInDate' type='text' placeholder='dd/mm/yyyy' class='form-control input-sm' maxlength="10" /><i class='img_i_indt' onclick="document.getElementById('txtCheckInDate').focus();"></i></div></div>
+                        <div class='col-md-4'><div><span>Check-Out Date</span><span class="madatoryImg">*</span></div><div> <input id='txtCheckOutDate' type='text' placeholder='dd/mm/yyyy' class='form-control input-sm' maxlength="10" /><i class='img_i_odt' onclick="document.getElementById('txtCheckOutDate').focus();"></i></div></div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='col-md-4'><div><span>Check-In Time</span><span class="madatoryImg">*</span></div><div><input id='txtCheckintime' type='text' class="timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%;" maxlength="10" /></div></div>
+                        <div class='col-md-4'><div><span>Check-Out Time</span><span class="madatoryImg">*</span></div><div> <input id='txtCheckouttime' type='text' class="timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%;" maxlength="10" /></div></div>
+                        <div class='col-md-4'><div><span>Occupancy</span></div><div> <select class='form-control input-sm' id='entitlement'> <option>Single</option> <option>Sharing</option></select></div></div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='col-md-4'><div><span>Travel Type</span></div><div><select class='form-control input-sm' id='traveltype' onchange="TravelSelect();"> <option>Surface/ Transport</option> <option>Other Airlines Booking</option><option>Hotel Extension </option><option>Train</option><option>SJ</option></select></div></div>
+                        <div class='col-md-4'>
+                            <div><span id="txtFlight">Flight No. (Optional)</span><span id="txtFlightMand" hidden>Flight No <span class="madatoryImg">*</span></span><span id="txtTrain" hidden>Train No. (Optional)</span></div>
+                            <div><input id='flightno' type='text' class='form-control input-sm' maxlength="20" /></div>
+                        </div>
+                        <div class='col-md-4'><div><span id="txtPnr">PNR (Optional)</span><span id="txtPnrMand" hidden>PNR<span class="madatoryImg">*</span></span></div><div><input id='pnrinfo' type='text' class='form-control input-sm' minlength="6" maxlength="6" /></div><input id='trainInfo' type='text' class='form-control input-sm' maxlength="10" hidden /></div>
+                    </div>
+
+                    <div class='row'>
+                        <div class="col-md-4">
+                            <span id="txtApt">Is Airport</span><span id="txtTrainP" hidden>Train Platform</span><span> Transport Required</span>
+                            <select id="airtransport" class='form-control input-sm' onchange="toggleAirTransport();"><option>No</option><option>Yes</option></select>
+                        </div>
+                        <div class="col-md-4" id="CabRequiredDiv" hidden="hidden">
+                            <div><span>Is Cab required  as per ETA? </span></div>
+                            <div>
+                                <input type="radio" name="radio" value="cabyes" id="cabyes" checked="checked" onchange="changeCabResponse();" /><span>Yes</span> &nbsp;&nbsp;
+                                <input type="radio" name="radio" value="cabno" id="cabno" onchange="changeCabResponse();" /><span>No</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="cabTimingSpan" hidden>
+                            <div>
+                                <span id="ETANo" hidden>If No, suggest Cab pickup timing </span>
+                                <span id="ETAYes">If Yes, Please suggest ETA Cab pickup timing </span>
+                            </div>
+                            <div>
+                                <input id="txtCabPickupTime" type="text" class="timepicker" style="border:solid 1px #c2c2c2; border-radius:3px; padding-left:8px; height:30px;width:100%;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="margin-top:15px; margin-bottom:10px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="text-align:right; padding-bottom:7px; color:red">*Kindly ensure all Hod details should be correct as per company policy</div>
+                    </div>
+                </div>
+                <div id='hoteldivdetails'  class="moblineheight shadowboxCs">
+                    <div class='row'>
+                        <div class='col-md-4'><div><span>HOD Name</span></div><div><input id='txtHodName' type='text' class='form-control input-sm' style="width:100%;" value="{{HodTitleWithName}}" ng-disabled="userInfo.HodName"></div></div>
+                        <div class='col-md-4'><div><span>HOD Email ID</span></div><div> <input id='txtHodEmail' type='text' class='form-control input-sm' value="{{userInfo.HodEmailId}}" ng-disabled="userInfo.HodEmailId" /></div></div>
+                        <div class='col-md-4'><div><span>HOD PhoneNo.</span></div><div> <input id='txtHodPhone' type='text' class='form-control input-sm' value="{{userInfo.HodMobileNo}}" ng-disabled="userInfo.HodEmailId" /></div></div>
+                    </div>
+                </div>
+            </div>
+            <div id="addContainers"></div>
+            <div hidden style="text-align:left; margin-top:10px;" id="divaddcontainers">
+                <input type="button" id="addButtonnew" value="" name="add"
+                       style="background: url('../img/button.png') no-repeat; height:34px; width:34px;border:0px;" />
+                <input type="button" id="removeButton" value="" name="remove"
+                       style="background: url('../img/remove.png') no-repeat; height:34px; width:34px;border:0px;" />
+            </div>
+            <div style="margin-bottom:50px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="submit-hotel-btn-mob"><input type="button" id="hotelsubmit" value="Submit" class="btn btn-danger" onclick="SubmitHotelData();" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div>
+            @*<footer class="essfooter">
+                <div class="container"></div>
+            </footer>*@
+        </div>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style=" background-color: #EE1D23;">
+                        <button type="reset" class="close" data-dismiss="modal" ng-click="resetForm()">&times;</button>
+                        <div class="modal-title" style="color:#fff;font-size:25px;">Registration Form</div>
+                    </div>
+                    <div class="modal-body">
+                        <div style="line-height:35px;" id="accordion">
+                            <div class="=row">
+                                <div class="col-12" style="margin-bottom:15Px;">
+                                    <a href="#personalInfoDiv" class="btn updateCustBtn btn-block" data-toggle="collapse" data-parent="#accordion" ng-click="show = 1"> <span style="padding: 10Px;"><i class="glyphicon glyphicon-plus"></i></span> Edit Personal Details</a>
+                                    <div id="personalInfoDiv" style="margin-top:10px" ng-show="show==1">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <form name="PersonalInfoForm" novalidate>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group" ng-class="{ 'has-error' : PersonalInfoForm.EmpCode.$invalid && submitPersonalInfo }">
+                                                                    Employee Code/ID
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                                        <input type="text" name="EmpCode" class="form-control" placeholder="Please fill employee id" ng-model="userInfo.EmpCode" value="" required>
+                                                                    </div>
+                                                                    <p ng-show="PersonalInfoForm.EmpCode.$error.required && submitPersonalInfo" class="help-block">This field is required.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group" ng-class="{ 'has-error' : PersonalInfoForm.verticals.$invalid && submitPersonalInfo  }">
+                                                                    SJSC Vertical Code/ID
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+                                                                        <select class="form-control" ng-model="userInfo.SJSCVerticalID" name="verticals" required>
+                                                                            <option value="">-- Please select --</option>
+                                                                            <option value="{{x.VerticalID}}" ng-repeat="x in VList">{{x.VerticalName}}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <p ng-show="PersonalInfoForm.verticals.$invalid && submitPersonalInfo " class="help-block">This field is required.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group" ng-class="{ 'has-error' : PersonalInfoForm.fName.$invalid && submitPersonalInfo  }">
+                                                                    First Name
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                                        <span style="display: flex;">
+                                                                            <select class="form-control" ng-model="userInfo.Title" name="title" style="width:43%" required>
+                                                                                <option value="Mr">Mr</option>
+                                                                                <option value="Ms">Ms</option>
+                                                                            </select>
+                                                                            <input type="text" class="form-control" name="fName" placeholder="Please fill First Name" ng-model="userInfo.FirstName" value="" required />
+                                                                        </span>
+                                                                    </div>
+                                                                    <p ng-show="PersonalInfoForm.fName.$invalid && submitPersonalInfo " class="help-block">This field is required.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group" ng-class="{ 'has-error' : PersonalInfoForm.lName.$invalid && submitPersonalInfo  }">
+                                                                    Last Name
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                                        <input type="text" class="form-control" name="lName" value="" placeholder="Please fill Last Name" ng-model="userInfo.LastName" required />
+                                                                    </div>
+                                                                    <p ng-show="PersonalInfoForm.lName.$invalid && submitPersonalInfo " class="help-block">This field is required.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group" ng-class="{ 'has-error' : PersonalInfoForm.designation.$invalid && submitPersonalInfo  }">
+                                                                    Designation
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+                                                                        <input type="text" class="form-control" name="designation" value="" placeholder="Please fill Designation" ng-model="userInfo.Designation" required />
+                                                                    </div>
+                                                                    <p ng-show="PersonalInfoForm.designation.$invalid && submitPersonalInfo " class="help-block">This field is required.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group" ng-class="{ 'has-error' : PersonalInfoForm.Deprt.$invalid && submitPersonalInfo  }">
+                                                                    Department
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-certificate"></i></span>
+                                                                        <input type="text" class="form-control" name="Deprt" value="" placeholder="Please fill Department" ng-model="userInfo.Department" required />
+                                                                    </div>
+                                                                    <p ng-show="PersonalInfoForm.Deprt.$invalid && submitPersonalInfo " class="help-block">This field is required.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group" ng-class="{ 'has-error' : (PersonalInfoForm.email.$invalid  || PersonalInfoForm.email.$error.pattern )&& submitPersonalInfo }">
+                                                                    Email ID
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                                                        <input type="text" class="form-control" name="email" value="" placeholder="Please fill Email" ng-disabled="userInfo.EmailID" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*&#64;[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" ng-model="userInfo.EmailID" required />
+                                                                    </div>
+                                                                    <p ng-if="PersonalInfoForm.email.$error.pattern && submitPersonalInfo" class="help-block">Please enter valid Email ID</p>
+                                                                    <p ng-if="PersonalInfoForm.email.$error.required && submitPersonalInfo" class="help-block">This field is required.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group" ng-class="{'has-error' : (PersonalInfoForm.phNo.$invalid ||PersonalInfoForm.phNo.$error.pattern) && submitPersonalInfo }">
+                                                                    Mobile No.
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                                                        <input type="text" class="form-control" name="phNo" maxlength="10" value="" placeholder="Please fill Mobile No." ng-pattern="/^[7-9][0-9]{9}$/" onkeydown="validateNumber(event);" ng-model="userInfo.MobileNo" required />
+                                                                    </div>
+                                                                    <p ng-if="PersonalInfoForm.phNo.$error.pattern && submitPersonalInfo" class="help-block">Please enter valid number!</p>
+                                                                    <p ng-if="PersonalInfoForm.phNo.$error.required && submitPersonalInfo" class="help-block">This field is required.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div style="text-align:right">
+                                                        <button type="submit" href="#" class="btn btn-danger " ng-click="PersonalInfoUpdate(userInfo)"><i class="glyphicon glyphicon-log-in"></i> Update</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12" style="margin-bottom:15Px;">
+                                <a href="#HodInfoDiv" class="btn updateCustBtn btn-block" data-toggle="collapse" data-parent="#accordion" ng-click="show = 2"> <span style="padding: 10Px;"><i class="glyphicon glyphicon-plus"></i></span>Edit Hod Details</a>
+                                <div id="HodInfoDiv" ng-show="show==2">
+                                    <div class="panel panel-default" style="margin-top:10px">
+                                        <div class="panel-body">
+                                            <form name="HodInfoForm" novalidate>
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group" ng-class="{ 'has-error' : HodInfoForm.HName.$invalid && submitHodInfo  }">
+                                                                HOD Name
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                                    <span style="display: flex;">
+                                                                        <select class="form-control" ng-model="userInfo.HodTitle" name="HodTitle" style="width:43%" required>
+                                                                            <option value="Mr">Mr</option>
+                                                                            <option value="Ms">Ms</option>
+                                                                        </select>
+                                                                        <input type="text" class="form-control" name="HName" value="" placeholder="Please fill Hod Name" ng-model="userInfo.HodName" required />
+                                                                    </span>
+                                                                </div>
+                                                                <p ng-show="HodInfoForm.HName.$invalid && submitHodInfo " class="help-block">This field is required.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group" ng-class="{ 'has-error' : (HodInfoForm.Hemail.$invalid  || HodInfoForm.Hemail.$error.pattern )&& submitHodInfo }">
+                                                                HOD Email ID
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                                                    <input type="text" class="form-control" name="Hemail" value="" placeholder="Please fill Hod Email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*&#64;[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" ng-model="userInfo.HodEmailId" required />
+                                                                </div>
+                                                                <p ng-if="HodInfoForm.Hemail.$error.pattern && submitHodInfo" class="help-block">Please enter valid Hod Email ID</p>
+                                                                <p ng-if="HodInfoForm.Hemail.$error.required && submitHodInfo" class="help-block">This field is required.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="text-align:right">
+                                                    <button type="submit" href="#" class="btn btn-danger " ng-click="HodInfoUpdate(userInfo)"><i class="glyphicon glyphicon-log-in"></i> Update</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12" style="margin-bottom:15Px;">
+                                <a href="#PasswordInfoDiv" class="btn updateCustBtn btn-block" data-toggle="collapse" data-parent="#accordion" ng-click="show = 3"> <span style="padding: 10Px;"><i class="glyphicon glyphicon-plus"></i></span> Change Password</a>
+                                <div id="PasswordInfoDiv" ng-show="show==3">
+                                    <div class="panel panel-default" style="margin-top:10px">
+                                        <div class="panel-body">
+                                            <form name="PasswordInfoForm" novalidate>
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group" ng-class="{ 'has-error' : PasswordInfoForm.OldPassword.$invalid && submitted }">
+                                                                Current Password
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                                    <input type="password" class="form-control" name="OldPassword" value="" placeholder="Please fill the Password" autocomplete="off" ng-model="Pwd.OldPwd" required />
+                                                                </div>
+                                                                <p ng-show="PasswordInfoForm.OldPassword.$invalid && submitted" class="help-block">This field is required.</p>
+                                                                <p ng-if="wrongCurPssword" style="color:red">{{wrongCurPsswordtxt}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group" ng-class="{ 'has-error' : PasswordInfoForm.NewPassword.$invalid && submitted }">
+                                                                New Password
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                                    <input type="password" class="form-control" name=" NewPassword" value="" placeholder="Please fill the Password" autocomplete="off" ng-model="Pwd.NewPwd" required />
+                                                                </div>
+                                                                <p ng-show="PasswordInfoForm.password.$invalid && submitted" class="help-block">This field is required.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group" ng-class="{ 'has-error' :( PasswordInfoForm.confPassword.$invalid || (Pwd.NewPwd != Pwd.ConfirmPwd) ) && submitted}">
+                                                                Confirm New Password
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                                    <input type="password" class="form-control" name="confPassword" ng-model="Pwd.ConfirmPwd" autocomplete="off" placeholder="Please re-enter your Password." required password-verify="{{userInfo.Pwd}}" />
+                                                                </div>
+                                                                <p ng-if="submitted && (Pwd.NewPwd != Pwd.ConfirmPwd) && !PasswordInfoForm.confPassword.$error.required" class="help-block">Password not Match</p>
+                                                                <p ng-if="PasswordInfoForm.confPassword.$error.required && submitted" class="help-block">This field is required.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p ng-if="samePassword" style="color:red ; padding-left:15px">{{samePasswordtxt}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="text-align:right">
+                                                    <button type="submit" href="#" class="btn btn-danger " ng-click="PasswordInfoUpdate(Pwd)"><i class="glyphicon glyphicon-log-in"></i> Update</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="modal-footer" style="background-color: #EE1D23 ; "></div>*@
+                </div>
+            </div>
+        </div>
+        <div class="loader" >
+            <center>
+                <img class="loading-image" src="../images/loading.gif" alt="loading..">
+            </center>
+        </div>
+
+    <div class="mob-app-look">
+        <div class="mob-footer-bg">
+
+        </div>
+    </div>
+  
+        @if (ViewBag.Message != null)
+        {
+            <script type="text/javascript">
+                var dv = document.getElementById("dvrecord");
+                dv.style.display = "none";
+                window.onload = function () {
+
+                    alert("@ViewBag.Message");
+                    window.close();
+                    return;
+                };
+
+            </script>
+        }
+    @*<script type="text/javascript">
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () { null };
+        </script>*@
+</body>
+</html>
+

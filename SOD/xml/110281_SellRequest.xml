@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SellRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>ji+BssR9/xI=|ZD6zkdOmgIvNIs/d5//4P86K/UwHrjjO6af5HGyuZcSmemyamS2+vcH1kU8Spd60sFf4V9PJyHlT38LiXOac375V8DwrA2vbNVJHh7yBXqHMj4rF8xoDyM4U9R1tZBkCwO0N1Y4n8Fw=</Signature>
+  <SellRequestData>
+    <SellBy>JourneyBySellKey</SellBy>
+    <SellJourneyByKeyRequest>
+      <SellJourneyByKeyRequestData>
+        <ActionStatusCode>LL</ActionStatusCode>
+        <JourneySellKeys>
+          <SellKeyList>
+            <JourneySellKey>SG~ 123~ ~~DEL~04/03/2018 06:00~HYD~04/03/2018 08:10~</JourneySellKey>
+            <FareSellKey>0~Z~~ZSOD~9922~~6~X</FareSellKey>
+            <StandbyPriorityCode>NR</StandbyPriorityCode>
+          </SellKeyList>
+          <SellKeyList>
+            <JourneySellKey>SG~3706~ ~~HYD~04/05/2018 05:55~MAA~04/05/2018 07:15~</JourneySellKey>
+            <FareSellKey>0~Z~~ZSOD~9922~~6~X</FareSellKey>
+            <StandbyPriorityCode>NR</StandbyPriorityCode>
+          </SellKeyList>
+          <SellKeyList>
+            <JourneySellKey>SG~3073~ ~~MAA~04/10/2018 10:00~COK~04/10/2018 11:20~^SG~  91~ ~~COK~04/10/2018 12:35~MLE~04/10/2018 13:55~</JourneySellKey>
+            <FareSellKey>0~Z~~ZSOD~9922~~12~X^0~Z~~ZSOD~9922~~12~X</FareSellKey>
+            <StandbyPriorityCode>NR</StandbyPriorityCode>
+          </SellKeyList>
+        </JourneySellKeys>
+        <PaxPriceType>
+          <PaxPriceType>
+            <PaxType>ADT</PaxType>
+            <PaxDiscountCode />
+          </PaxPriceType>
+        </PaxPriceType>
+        <CurrencyCode>INR</CurrencyCode>
+        <SourcePOS>
+          <State>New</State>
+          <AgentCode>SDFINANCED</AgentCode>
+          <OrganizationCode>SDFINANCED</OrganizationCode>
+          <DomainCode>WWWW</DomainCode>
+          <LocationCode>WWW</LocationCode>
+        </SourcePOS>
+        <PaxCount>1</PaxCount>
+        <LoyaltyFilter>MonetaryOnly</LoyaltyFilter>
+        <IsAllotmentMarketFare>false</IsAllotmentMarketFare>
+        <PreventOverLap>false</PreventOverLap>
+      </SellJourneyByKeyRequestData>
+    </SellJourneyByKeyRequest>
+  </SellRequestData>
+</SellRequest>

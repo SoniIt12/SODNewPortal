@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery UI Daterange demo page</title>
+   <!-- <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">-->
+    <link href="calender.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        body {
+            font: 12px Arial, sans-serif;
+            line-height: 1.4;
+        }
+        
+    </style>
+</head>
+<body>
+
+    
+    <div class="form">
+        <input id="datepicker" >
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="src/calender_jquery.daterange.js"></script>
+
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                numberOfMonths: 2,
+                minDate: new Date(),
+                maxDate: new Date(2020, 12, 31),
+               
+                
+                //showButtonPanel: true
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "Admin | Sod Approver List";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<link href="~/Assest/css/AdminNew.css" rel="stylesheet" />
+<script src="../Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/JavaScript">
+    $(document).ready(function () {
+        bindDepartment();
+    });
+
+    //Bind Department
+    function bindDepartment() {
+        $.getJSON("../Admin/BindDepartment",
+            function (json) {
+                $("#Department").append("<option value='0'>All</option>")
+                $.each(json, function (key, value) {
+                    $("#Department").append("<option value='" + value.id + "'>" + value.dept_name + "</option>")
+                });
+                SodApproverList();
+            });
+    }
+
+    function getCount(arr, deparment) {
+        var count = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].Department == deparment) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    function SodApproverList() {
+        var ddl = $('#Department').val();
+        $.getJSON("../Admin/SodApproverLists?dept=" + ddl,
+            function (json) {
+                $('#tblAllocate').empty();
+                var tr;
+                if (json.length == 0) {
+                    alert('No record found for the selected department.');
+                    return;
+                }
+                tr = "<tr><th>Emp Code </th><th>EmpId</th><th>Emp Name</th><th>Department</th><th>Vertical Name & Code</th></tr>";
+                $('#tblAllocate').append(tr);
+                var deptJson = new Array();
+                var obj = [];
+                for (var j = 0; j < json.length; j++) {
+                    if (obj.indexOf(json[j].EmpId) === -1) {
+                        obj.push(json[j].EmpId);
+                        deptJson.push(json[j]);
+                    }
+                }
+                for (var i = 0; i < deptJson.length; i++) {
+                    tr = $('<tr/>');
+                    tr.append("<td style='padding-left:10px;'>" + deptJson[i].EmpCode + "</td>");
+                    tr.append("<td style='padding-left:10px;'>" + deptJson[i].EmpId + "</td>");
+                    tr.append("<td style='padding-left:10px;'>" + deptJson[i].EmpName + "</td>");
+                    debugger;
+                    var vlist = json.filter(function (obj) {
+                        return (obj.EmpId == deptJson[i].EmpId);
+                    });
+
+                    var lookup = {};
+                    var items = vlist;
+                    var result = [];
+                    for (var item, p = 0; item = items[p++];) {
+                        var name = item.Department;
+
+                        if (!(name in lookup)) {
+                            lookup[name] = 1;
+                            result.push(name);
+                        }
+                    }
+                    var trA = $("<td/>");
+                    var trB = $("<table class='table table-striped table-bordered' style='width:100%;height:100%;'>");
+                    var tr1 = $("<td/>");
+                    var tr2 = $("<table class='table table-striped table-bordered' style='width:100%;height:100%;'>");
+                    for (var k = 0; k < result.length; k++) {
+                        var count = getCount(vlist, result[k]);
+                        var rowCount = vlist.length;
+                        var rowHeight = (100 / (rowCount)) * count;
+                        rowHeightPercentage = rowHeight + '%';
+                        var trC = $("<tr/>");
+                        trC.append("<td style='width:100%;padding-left:10px;border-right:0px solid transparent;height:" + rowHeightPercentage + "';>" + result[k] + "</td>");
+                        trB.append(trC);
+                    }
+                    for (var j = 0; j < vlist.length; j++) {
+                        var tr3 = $("<tr/>");
+                        var verdetails = vlist[j].EmployeeVerticleName + " -  (" + vlist[j].EmployeeVertical + ")";
+                        tr3.append("<td style='width:60%;padding-left:10px'>" + verdetails + "</td>");
+                        if (vlist[j].Active)
+                            tr3.append("<td style='width:20%;padding-left:10px;border-right:0px solid transparent'>" + 'Allocated <img src=../img/right.jpg style=width:16px;height:16px;/>' + "</td>");
+                        else
+                            tr3.append("<td style='width:20%;padding-left:10px;border-right:0px solid transparent'>" + 'Not-Allocated' + "</td>");
+                        var did = vlist[j].SodApproverID;
+                        tr3.append("<td style='width:15%;padding-left:10px;border ;border-right:0px solid transparent'>" + "<a href='#' onclick=removeList('" + did + "');>Remove </a>" + "</td>");
+                        tr2.append(tr3);
+                    }
+                    trA.append(trB);
+                    tr.append(trA);
+                    tr1.append(tr2);
+                    tr.append(tr1);
+                    $('#tblAllocate').append(tr);
+                }
+            });
+    }
+    //Go to Add Sod Approver Link
+    function addSodApprover() {
+        var url = "../Admin/AllocateApprover";
+        window.location.href = url;
+    }
+    //Update allocation Status
+    function updateStatus(obj) {
+        //alert('hi');
+        var tr = $(obj).parent().parent();
+        var jdata = { "EmpId": $(tr).find('td')[0].innerText.trim() };
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: '../Admin/UpdateStatus',
+            data: JSON.stringify(jdata),
+            success: function (data) {
+                $("#spanfail").html("Updated Successfully");
+            },
+            error: function () {
+                $("#spanfail").html("Error on Save data.");
+            }
+        });
+
+
+    }
+    //Remove List
+    function removeList(did) {
+        var result = confirm("Are you sure! to remove this approval right?");
+        if (result) {
+            $.getJSON("../Admin/RemoveApproverRight/?did=" + did,
+                function (json) {
+                    if (json.length > 0) {
+                        alert('Approval right has been removed successfully.');
+                        SodApproverList();
+                        return false;
+                    }
+                    else {
+                        alert('ERROR :Approval Rights error.Please contact to system admin.');
+                        return false;
+                    }
+                });
+        }
+    }
+</script>
+
+
+<div>
+    <div class="admin_content_txtheading">  View Sod Approver List</div>
+</div>
+<section id="admin-container" class="content">
+    <div class="Alladmin_content_box ">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="paddingtop5">Select Department </div>
+            </div>
+            <div class="col-md-8">
+                <div> <select class="form-control" id="Department" onchange="SodApproverList();"></select></div>
+            </div>
+            <div class="col-md-2">
+                <div><input class="btn btn-danger" type="button" value="Add Sod Approver " onclick="addSodApprover();" /></div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <table class="table table-striped table-bordered" id="tblAllocate"></table>
+    </div>
+</section>
+
+
+
+
+
+
+
+

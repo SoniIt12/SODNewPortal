@@ -1,0 +1,255 @@
+﻿
+@{
+    ViewBag.Title = "AssignRole";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+
+<style>
+    #tblroles tr th{ background-color:#EE1D23;color:#fff;line-height:0px;text-transform:capitalize;}
+     #tblroles tr td{ padding: 5px 10px;}
+</style>
+
+<div>
+    <div class="admin_content_txtheading">Assign Role</div>
+</div>
+
+<section class="content">
+    <div style="display:none;" id="alertmsg">
+        <div class="alert alert-danger">
+            <span id="spanmsg" style="color: red; font-weight: bold;"></span>
+        </div>
+    </div>
+    <div class="Alladmin_content_box assignboxpadding">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="paddingtop5">Employee Code :</div>
+            </div>
+            <div class="col-md-6">
+                <div><input type="text" id="txtEmpId" maxlength="8" class="form-control" /></div>
+            </div>
+            <div class="col-md-3">
+                <div class="mob-getbtn"><input type="button" value="Get Employee " onclick="getEmployee();" class="btn btn-danger" /></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div style="border:solid 0px #b33">
+
+        <div id="displaysection" style="display:none;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="background-color:#EE1D23; color:#fff; padding:5px;">Employee Details</div>
+                    <div id="displayList" style="display:none;">
+                        <table id="tblAllocate" class="table table-striped table-bordered"></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="Alladmin_content_box">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tblroles" class="table table-striped table-bordered">
+                            <tr><th>Role Id</th><th>Role Name</th><th>Status</th><th>Action</th></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="savebtn" style="text-align:center;">
+                            <span class="appbtn" > <input class="btn btn-danger" type="button" id="btnSave" value="Save" onclick="UpdateInfoInDB()" /></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div> 
+    <div class="main_partadm">
+        <section class="section_part">
+            <div>
+                <div>          
+                </div>
+            </div>
+        </section>
+    </div>
+  </div>
+
+
+<script src="../Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+       
+    });
+    
+    //Bind Employee Common Info List
+    function getEmployee() {
+        if (validation())
+        {
+            $.getJSON("../Admin/GetEmployeeInfo?empcode=" + document.getElementById('txtEmpId').value, function (data) {
+                if (data != null && data.length > 0 && data != undefined) {
+                    $('#tblAllocate').find('tr:gt(0)').remove();
+                    var tr;
+                    tr = $('<tr/>');
+                    tr.append("<td><b> Employee Code :</b> " + data[0].EmpCode + "</td>");
+                    tr.append("<td><b>  Employee Name :</b>  " + data[0].EmpName + "</td>");
+                    $('#tblAllocate').append(tr);
+                    tr = $('<tr/>');
+                    tr.append("<td><b>  Department : </b>" + data[0].Department + "</td>");
+                    tr.append("<td> <b> Designation : </b>" + data[0].Designation + "</td>");
+                    $('#tblAllocate').append(tr);
+                    tr = $('<tr/>');
+                    tr.append("<td><b> Vertical ID : </b>" + data[0].EmployeeVertical + "</td>");
+                    tr.append("<td><b> Vertical Name : </b>" + data[0].EmployeeVerticleName + "</td>");
+                    $('#tblAllocate').append(tr);
+                    $('#displaysection').css('display', 'block');
+                    $('#displayList').css('display', 'block');
+                    ViewRoles(document.getElementById('txtEmpId').value);
+                }
+                else {
+                    $('#displaysection').css('display', 'none');
+                    $('#displayList').css('display', 'none');
+                    document.getElementById('alertmsg').style.display = "block";
+                    document.getElementById('spanmsg').textContent = "Sorry ! Information not available.";
+                    setTimeout(function () {
+                        document.getElementById('alertmsg').style.display = "none";
+                        document.getElementById('spanmsg').textContent = "";
+                    }, 5000);
+                }
+            });
+        }
+    }
+
+    //Validations
+    function validation() {
+        var status = true;
+        if (document.getElementById('txtEmpId').value == "") {
+            document.getElementById('txtEmpId').style.border = "1px solid red";
+            status = false;
+        }
+        else {
+            document.getElementById('txtEmpId').style.border = "";
+        }
+        return status;
+    }
+
+    //View Role
+    function ViewRoles(Empcode) {
+        $.ajax({
+            url: '../Admin/ViewUserRoles',
+            type:'get',
+            data: {Empcode:Empcode},
+            success: function (data) {
+                if (data != null)
+                {
+                    $('#tblroles').find('tr:gt(0)').remove();
+                    var roles = data.TotalRoles;
+                     window.existingroles = data.ExistingRoles.split(',');
+                    for(var i=0;i<roles.length;i++)
+                    {
+                        $('#tblroles').append('<tr><td>' + roles[i].RoleId + '</td><td>' + roles[i].RoleName + '</td><td><span class="isallocated"></span></td><td><input type="checkbox" class="dynamiccheck" value=' + roles[i].RoleId + ' onchange="dynamiccontrolvalidation(this)"></tr>');
+                        for (var j = 0; j <existingroles.length; j++)
+                        {
+                            if (roles[i].RoleId == existingroles[j])
+                            {
+                                document.getElementsByClassName('dynamiccheck')[i].checked = true;
+                                document.getElementsByClassName('isallocated')[i].innerHTML = '<img src="../img/right.jpg" style="width:16px;height:16px;/"><label>Allocated</label>';
+                                 break;
+                            }
+                        }
+                    }
+                }
+            },
+            error: function () { }
+        });
+    }
+    
+    //Validations
+    function dynamiccontrolvalidation(element) {
+        if (element.value.split(',')[0] == "1" && !element.checked)
+        {
+            document.getElementById('alertmsg').style.display = "block";
+            document.getElementById('spanmsg').textContent = "Sorry this role is set by default";
+            for (var i = 0; i < document.getElementsByClassName('dynamiccheck').length; i++) {
+                if (document.getElementsByClassName('dynamiccheck')[i].value == element.value) {
+                    element.checked = true;
+                    break;
+                }
+            }
+            setTimeout(function () {
+                document.getElementById('alertmsg').style.display = "none";
+                document.getElementById('spanmsg').textContent = "";
+            }, 5000);
+        }
+    }
+
+    //Delete Emp Role
+    function UpdateDeleteEmpRole(newroles) {
+        $.ajax({
+            url: '../Admin/UpdateEmpRoleInfo',
+            type: 'post',
+            data: { empcode: $('#txtEmpId').val(), newroles: newroles },
+            success: function (msg_data) {
+                if (msg_data == 1) {
+                    ViewRoles($('#txtEmpId').val());
+                    document.getElementById('alertmsg').style.display = "block";
+                    document.getElementById('spanmsg').textContent = "Saved Successfully!";
+                    setTimeout(function () {
+                        document.getElementById('alertmsg').style.display = "none";
+                        document.getElementById('spanmsg').textContent = "";
+                    }, 5000);
+                }
+                else {
+                    document.getElementById('alertmsg').style.display = "block";
+                    document.getElementById('spanmsg').textContent = "Failed To Save!!";
+                    setTimeout(function () {
+                        document.getElementById('alertmsg').style.display = "none";
+                        document.getElementById('spanmsg').textContent = "";
+                    }, 5000);
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+    //Update Info in database
+    function UpdateInfoInDB() {
+        var newroles = $('input[class="dynamiccheck"]:checked').map(function () {
+           return $(this).val()!=1?$(this).val():null;
+        }).get().toString();
+        var oldroles = window.existingroles.filter(x=>x != "1");
+        if (newroles != "") {
+            if (newroles == oldroles && oldroles != "") {
+                document.getElementById('alertmsg').style.display = "block";
+                document.getElementById('spanmsg').textContent = "Role has been already assigned.";
+                setTimeout(function () {
+                    document.getElementById('alertmsg').style.display = "none";
+                    document.getElementById('spanmsg').textContent = "";
+                }, 5000);
+            }
+            else {
+                UpdateDeleteEmpRole(newroles);
+            }
+        }
+        else {
+            if (oldroles != "" && newroles == "") {
+                UpdateDeleteEmpRole(newroles);
+            }
+            else {
+                document.getElementById('alertmsg').style.display = "block";
+                document.getElementById('spanmsg').textContent = "Please tick alteast one role other than User for update";
+                setTimeout(function () 
+                {
+                    document.getElementById('alertmsg').style.display = "none";
+                    document.getElementById('spanmsg').textContent = "";
+                }, 5000);
+            }
+        }
+    }
+
+</script>

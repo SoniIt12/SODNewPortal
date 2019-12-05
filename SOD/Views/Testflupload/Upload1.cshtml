@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "TrDetail";
+    Layout = null;
+}
+<head>
+    <title>Test Excel Upload </title>
+        <script src="~/js/bulk-upload-js.js"></script>
+        <script src="~/Scripts/jquery-1.10.2.js"></script>
+   
+</head>
+<h1>Post File to Controller</h1>
+<div class="clear"><br /></div>
+<form method="post" enctype="multipart/form-data">
+    <label for="file">Filename:</label>
+    <input type="file" name="file" id="file" />
+    <input type="submit" id="submitbtn" onclick="uploadFile();" />
+</form>
+ 
+
+
+<script type="text/javascript">
+    //$(function () {
+    //    $('#submitbtn').click(function () {
+    //        debugger;
+    //        var data = new FormData();
+    //        var files = $("#file").get(0).files;
+
+    //        if (files.length > 0) { data.append("bulkfile", files[0]); }
+    //        else {
+    //            common.showNotification('warning', 'Please select file to upload.', 'top', 'right');
+    //            return false;
+    //        }
+    //        var extension = $("#file").val().split('.').pop().toUpperCase();
+    //        if (extension == "PNG" && extension == "JPG" && extension == "GIF" && extension == "JPEG") {
+    //            common.showNotification('warning', 'Imvalid image file format.', 'top', 'right');
+    //            return false;
+    //        }
+    //        $.ajax({
+    //            url: '../Testflupload/SaveFile', type: "POST", processData: false,
+    //            data: data, dataType: 'json',
+    //            contentType: false,
+    //            success: function (response) {
+    //                if (response != null || response != '')
+    //                    alert(response);
+    //                    $("#file").val('');
+    //            },
+    //            error: function (er) { }
+
+    //        });
+    //        return false;
+    //    });
+
+    //});
+</script>

@@ -1,0 +1,98 @@
+﻿body {
+}
+  @media screen and (max-width: 670px) {
+    .bannerimgg img{ background-image:url(../images/login_banner.png); background-repeat:no-repeat; height:600px; width:100%;}
+    .login_form {
+    background-color: #c9252c;height: 235px;margin: 20px 0 0 0px;width: 100%;
+}
+    .logintxtbx input {
+    background-color: #c9252c;
+    border: 1px solid #fff;
+    color: #fff;
+    height: 35px;
+    margin:20px 0 0 10px;   
+    text-indent: 40px;
+    width: 95%;
+}
+    .sjsismobtoggle{ margin-top:2px;font-size:12px;}
+    .sjscheadertxt{font-size:12px;}
+    .moblineheight{border:solid 1px #c2c2c2; padding:10px;line-height:35px;}
+   .rounttriponeway {width:100%; margin:auto;   margin-top:50px;}
+    .logocelebration { display:none; }
+    .headingtxtall2 { color: #fff; font-size: 30px; font-weight: 400; padding-top: 5px;text-align: center;}
+    .oneway {padding-left:5px;  }
+    .Twoway {padding-left:11px;  }
+    .multicity {padding-left:20px;  }
+    .BookingWay { text-align:center; font-size:14px; color:#fff; font-weight:400;}
+    .empmaindv {border:solid 1px #fff; margin:30px 0 0 0;}
+    .flightdtlshow { border: 1px solid #fff;color: #fff; font-size: 14px;margin: 30px 0 0 0; padding: 0px;}
+    .empdtldv {    color: #fff;    font-size: 14px;    height: 200px;    margin-left: 30px;    margin-top: 20px;    width: 100%;}
+    .submitbtncs {text-align:center; margin-top:20px; margin-bottom:20px;}
+    .Traveldtldv { color: #fff;font-size: 17px;height: 200px; margin-left: 13px; margin-top: 20px;    width: 100%;}
+    .empdtldv { color: #fff; font-size: 14px; height: 200px; margin-left: 13px; margin-top: 20px;width: 100%;}
+    .Traveldtldv input {  border:solid 1px #fff; background-color:#C9252C; color:#fff; padding-left:10px; width:90%;   }
+    .viewdetailsdv { color: #fff; font-size: 19px;  font-weight: 400; margin: auto;width: 100%;}
+    .rectanglebox {    border: 0 solid #fff;    margin: 0;
+}
+    .username_icon {
+    background-image: url("../images/user_icon.png");
+    background-repeat: no-repeat;
+    height: 20px;
+    margin: 27px 0 0 20px;
+    position: absolute;
+    width: 20px;
+    z-index: 2;
+}
+    .password_icon {
+    background-image: url("../images/pwd_icon.png");
+    background-repeat: no-repeat;
+    height: 20px;
+    margin: 27px 0 0 20px;
+    position: absolute;
+    width: 20px;
+    z-index: 2;
+}
+    .origindrop select {
+    -moz-appearance: none;
+    background: #c9252c url("../Images/drop_icon.png") no-repeat scroll 95% center;
+    border: 1px solid #fff;
+    border-radius: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    color: #fff;
+    font-size: 15px;
+    height: 35px;
+    padding: 6px;
+    text-indent: 0;
+    text-overflow: "";
+    width: 100%;
+}
+   .dateoftravel input {
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    height: 35px;
+    padding-left: 10px;
+    width: 100%;
+}
+   table {
+		overflow-x: auto;
+		display: block;
+	}
+   .ui-widget-content{ width:45%;}
+   .Mob_Stru_content{width:100%; overflow:auto;}
+   .Mob_Stru_content table th td{ font-size:11px;}
+   .header_strip th{ font-size:11px;}
+   .table-striped>tbody>tr:nth-child(odd)>td{ font-size:11px;}
+   .table-striped>tbody>tr:nth-child(even)>td{ font-size:11px;}
+   .Stru_details_heading{font-size:16px;}
+   .Stru_viewAll {
+    font-size: 12px;
+    float: right;
+    margin-right: 20px;
+}
+   .mob_top_margin_btn{margin-top:10px;}
+}
+
+
+
+  

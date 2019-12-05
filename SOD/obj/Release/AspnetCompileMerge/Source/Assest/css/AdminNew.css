@@ -1,0 +1,728 @@
+
+/*==========================OAT TRAVEL DESK CSS========*/
+.fonts-oat{font-size:16px; font-weight:bold;}
+.oat-search-box {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    border: 1px solid transparent;
+    padding: 15px;
+}
+
+.req-sev-provider-btn {
+    margin-top: 10px;
+    text-align: right;
+    margin-bottom: 5px;
+}
+#tb-header-space th{ padding:5px;}
+#tb-header-space td {
+    padding: 5px;
+}
+.headerfont12 th{ font-size:13px!important;}
+.headerfont12 td {
+    font-size: 13px !important;
+}
+.city-info-title{ font-weight:bold; font-size:16px;}
+.oatpaddingtop10{ padding-top:5px;}
+.revert-provider{ font-size:11px; padding:8px 5px;}
+.confrn-send-user {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.paddingtop3-btn{ position:relative; top:3px;}
+.note-info{ margin-top:10px; margin-bottom:10px;}
+.note-info a {
+    text-decoration: none;
+    color: #000;
+    padding-right: 10px;
+}
+.pointer-cursor{ cursor:pointer;}
+.view-history {
+    color: #000;
+    width: 100%;
+    text-align: left;
+    padding-left: 7px;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    background-color: #e4e4e4;
+}
+.cancellation-oat {
+    color: #EE1D23;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:12px;
+    margin:4px;
+}
+.graystrip-oat {
+    background-color: #e4e4e4;
+    padding: 0px 5px 0px 10px;
+    margin-bottom: 10px;
+}
+.travelgraystrip-oat {
+    background-color: #e4e4e4;
+    padding: 10px 5px 10px 10px;
+    margin-bottom:10px;
+    width: 100%;
+}
+.controlgraystrip-oat {
+    background-color: #e4e4e4;
+    padding: 10px 5px 10px 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    margin-top: 5px;
+}
+/*==========================END OAT TRAVEL DESK CSS========*/
+/*body{}*/
+.table-striped > tbody > tr:nth-child(odd) > th {
+    text-transform: capitalize !important;
+}
+
+.admin-logout {
+    color: #fff;
+    background-color: blue;
+    padding: 8px 30px 8px 30px;
+    margin-left: 0px;
+    margin-right: 10px;
+    width: 100%;
+}
+.search-box-hotel-aligment{ padding-top:5px; padding-bottom:5px;}
+.saerch-hotel-align-radiobtn{margin-top:5px;}
+.mob-width-scroll{width:100%; overflow:auto;}
+.search-title{padding-top:5px; padding-left:5px;}
+.search-title b{font-size:12px;}
+    .search-gap {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+.searchtxt-btn-red {
+    margin-top: 0px;
+    float: left;
+}
+#dvtabledata table th{
+    padding: 3px;
+}
+#dvtabledata table td {
+    padding: 4px;
+}
+#dvtabledata .table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: #e4e4e4;
+    color: #000;
+    font-size: 12px;
+}
+.search-title-master{ padding-top:15px; padding-left:5px;}
+.master-search-control-gap{margin-top:10px; margin-bottom:10px;}
+#tbldetail .tbl-header-background th {
+    background-color: #e4e4e4;
+    font-size: 11.5px;
+    padding: 3px;
+}
+#tbldetail .tbl-row-padding td {
+    padding: 3px;
+    font-size: 12px;
+}
+
+#tbldetailEx .tbl-header-background th {
+    background-color: #e4e4e4;
+    font-size: 12px;
+    padding: 3px;
+}
+#tbldetailEx .tbl-row-padding td {
+    padding: 3px;
+    font-size: 12px;
+}
+#tbldetailTime .tbl-header-background th {
+    background-color: #e4e4e4;
+    font-size: 12px;
+    padding: 3px;
+}
+#tbldetailTime .tbl-row-padding td {
+    padding: 3px;
+    font-size: 12px;
+}
+.newpopup .newpopupwidth75{ width:80%;left:0;}
+.newpopup .newpopupwidth98 {
+    width: 98%;
+    left: 0;
+}
+#tblbookinginfo th {
+    /*font-size: 11px;*/
+    font-size: 12px;
+}
+#tblviewFlight th {
+    font-size: 11px;
+}
+ #tblviewPassInfo
+ th {
+    font-size: 11px;
+}
+#tblviewHotel th{ font-size:11px;}
+.city-code-title{ text-align:center; padding-top:5px;}
+.page-search-title {
+    text-align: center;
+    padding-top: 5px;
+}
+#space-hr hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+.glyphicon glyphicon-sort{cursor:pointer;}
+.table-striped > tbody > tr:nth-child(odd) > th i{
+    cursor: pointer !important;
+}
+.pagination-sm > li > a, .pagination-sm > li > span{ cursor:pointer!important;}
+/*-------------------------------------- New css add-----*/
+.admin_header_txtheading {
+    text-align: center;
+    margin-top: 10px;
+    color: #fff;
+    font-size: 20px;
+    text-shadow: 0px 1px #efefef;
+}
+.admin_logo_txt {
+    font-style: italic;
+    color: #fff;
+    font-size:25px;
+}
+.admin_content_txtheading {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    border: 1px solid transparent;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    padding: 10px;
+    background-color: #efefef;
+}
+.admin_content_box {
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    /*box-shadow: 0 1px 1px rgba(0,0,0,0.7);*/
+    box-shadow: 0 1px 2px rgba(194,194,194,0.7);
+    margin: 0px;
+    padding: 5px;
+    margin-bottom: 50px;
+}
+.Alladmin_content_box {
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 2px rgba(194,194,194,0.7);
+    margin:0px;
+    margin-top:-20px;
+    padding:5px;
+    margin-bottom:10px;
+}
+
+.admin-serach-filter_box2 {
+    margin-bottom: 15px;
+  
+    margin: 10px;
+    display: table;
+    width: 100%;
+}
+.box-inner-margin{ margin:20px;}
+.search_txtpaddingTop {
+    padding-top: 10px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.popheadcolor_red {
+    background-color: #e4e4e4;
+    color: #000;
+   
+    font-family: Swis721 Cn BT,Sans-Serif;
+}
+.popheadcolor_red th {
+        border: solid 1px #c2c2c2;
+  }
+.flighdtl_tb {
+    width: 100%;
+    border: 1px solid #b33;
+}
+
+.flighdtl_tb td {
+        border: 1px solid #e4e4e4;
+        height: 35px;
+        padding-left: 10px;
+    }
+
+ .flighdtl_tb td a {
+            color: #FF3B00;
+        }
+.viewlistcs{font-size:20px;color:#fff;}
+
+.admin-serach-filter {
+    margin-bottom: 15px;
+    border-bottom: solid 0px #c2c2c2;
+    margin: 10px;
+    display: table;
+    width: 100%;
+}
+.exportbtn-margintop {
+    text-align: center;
+    margin-top: 0px;
+}
+.dwn_calender_icon {
+    position: absolute;
+    right: 0px;
+    top: 30px;
+    margin-right: 25px;
+}
+
+.bulklist_searchbox .ui-widget-content {
+    width: 18%;
+    font-size: 14px;
+    border: 1px solid #aaaaaa;
+    color: #222222;
+}
+.pull-right {
+    float: right;
+    padding-right: 2%;
+}  
+
+.assignboxpadding{ padding-top:15px; padding-bottom:15px; padding-left:10px;}
+.paddingtop5{padding-top:5px;}
+
+
+/* Create a custom radio button */
+.checkround {
+
+    position: absolute;
+    top: 6px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff ;
+    border-color:#f8204f;
+    border-style:solid;
+    border-width:2px;
+     border-radius: 50%;
+}
+
+
+/* When the radio button is checked, add a blue background */
+.radio input:checked ~ .checkround {
+    background-color: #fff;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkround:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radio input:checked ~ .checkround:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radio .checkround:after {
+     left: 2px;
+    top: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background:#f8204f;  
+ 
+}
+/* The check */
+.check {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    padding-right: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.check input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #fff ;
+    border-color:#f8204f;
+    border-style:solid;
+    border-width:2px;
+}
+
+/* When the checkbox is checked, add a blue background */
+.check input:checked ~ .checkmark {
+    background-color: #fff  ;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.check input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.check .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid ;
+    border-color:#f8204f;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.cust-btn{
+	margin-bottom: 10px;
+	background-color: #f8204f;
+	border-width: 2px;
+	border-color: #f8204f;
+	color: #fff;
+}
+.cust-btn:hover{
+	
+	border-color: #f8204f;
+	background-color: #fff;
+	color: #f8204f;
+	border-radius: 20px;
+	transform-style: 2s;
+
+}
+.loader {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0%;
+    left: 0;
+    text-align: center;
+    z-index: 99999;
+    overflow: hidden;
+    opacity: 0.5;
+    background-color: #FFFCFA;
+}
+    .loader img{ position:absolute; top:50%;}
+.box-contractual-non-contractual {
+    padding-bottom: 10px;
+    background-color: #efefef;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-top: 20px;
+}
+#radio-section-bulk{ margin-top:-20px;}
+#radio-section-bulk .checkround {
+    position: absolute;
+    top: 0px;
+    left: -5px;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border-color: #f8204f;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 50%;
+}
+#radio-section-bulk label{ font-size:16px; padding-right:20px; font-weight:normal;}
+#radio-section-bulk span{  position:relative; float:left;}
+.bulklistbox-space{ margin-top:10px; padding-left:10px;}
+#imgcalender {
+    position: absolute;
+    top: 30px;
+    right: 25px;
+}
+.export-box input{ height:34px; border-radius:4px;}
+.export-box select {
+    height: 34px;
+    border-radius: 4px;
+}
+.radio-dwnlist input{ position:relative; top:2px;}
+.radio-dwnlist span{ padding-left:15px; }
+/*---------- Radio button-----------*/
+#trsodtype .radio {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: normal;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+    /* Hide the browser's default radio button */
+    .radio input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+/* Create a custom radio button */
+#trsodtype .checkround {
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border-color: #f8204f;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 50%;
+}
+
+
+/* When the radio button is checked, add a blue background */
+#trsodtype .radio input:checked ~ .checkround {
+    background-color: #fff;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+#trsodtype .checkround:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+#trsodtype .radio input:checked ~ .checkround:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+#trsodtype .radio .checkround:after {
+    left: 2px;
+    top: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #EE1D23;
+}
+
+/* The check */
+#trsodtype .check {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    padding-right: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    /* Hide the browser's default checkbox */
+    #trsodtype .check input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+/* Create a custom checkbox */
+#trsodtype .checkmark {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #fff;
+    border-color: #EE1D23;
+    border-style: solid;
+    border-width: 2px;
+}
+
+
+
+/* When the checkbox is checked, add a blue background */
+#trsodtype .check input:checked ~ .checkmark {
+    background-color: #fff;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+#trsodtype .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+#trsodtype .check input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+#trsodtype .check .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid;
+    border-color: #f8204f;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#trsodtype .cust-btn {
+    margin-bottom: 10px;
+    background-color: #f8204f;
+    border-width: 2px;
+    border-color: #f8204f;
+    color: #fff;
+}
+
+    #trsodtype .cust-btn:hover {
+        border-color: #f8204f;
+        background-color: #fff;
+        color: #f8204f;
+        border-radius: 20px;
+        transform-style: 2s;
+    }
+
+
+/*----------------- End radio Button----*/
+
+/*----------- adding new css------*/
+.Bulkbooing-list select {
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    border: solid 1px #c2c2c2;
+    webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.Bulkbooing-list input {
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    border: solid 1px #c2c2c2;
+    webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+/*-----------End  adding new css------*/
+
+/*------------------- MEDIA QUERY -------------*/
+@media (min-width: 481px) and (max-width: 767px) {
+    .mob-display_dt {
+            overflow: auto;
+        }
+
+        .admin_content_box {
+            margin: 0px;
+        }
+       
+    }
+    /* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+    @media (min-width: 320px) and (max-width: 480px) {
+
+        .mob-display_dt {
+            overflow: auto;
+            font-size: 11px;
+        }
+
+        .admin_content_box {
+            margin: 0px;
+        }
+
+        .admin_header_txtheading {
+            font-size: 13px;
+        }
+
+        .admin_content_txtheading {
+            font-size: 15px;
+            margin-top: 15px;
+        }
+
+        .admin-serach-filter {
+            margin: 0px;
+            padding-bottom: 10px;
+            border-bottom: solid 0px #c2c2c2;
+        }
+
+        .search_txtpaddingTop {
+            text-align: left;
+        }
+
+        .ui-widget-content {
+            width: 53%;
+            font-size: 14px;
+            border: 1px solid #aaaaaa;
+            color: #222222;
+        }
+        .ui-datepicker {
+            width: 55%;
+        }
+        .pull-right {
+            float: right;
+            padding-right: 0%;
+        }
+        .exportbtn-margintop {
+            text-align: center;
+            margin-top: 20px;
+        }
+         .mob-getbtn{margin-top:10px; text-align:center;}
+        .newpopup .newpopupwidth75 {
+            width: 100%;
+            left: 0;
+            margin: auto;
+        }
+        .newpopup .newpopupwidth98 {
+            width: 100%;
+            left: 0;
+            margin: auto;
+        }
+       
+        #trsodtype .radio{font-size:11px;}
+        .viewlistcs{ font-size:17px;}
+        .Alladmin_content_box{ margin-top:-9px;}
+        .Bulkbooing-list select {
+            width: 150px;
+        }
+        .Bulkbooing-list input {
+            width: 150px;
+        }
+        }

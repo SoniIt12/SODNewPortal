@@ -1,0 +1,1802 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{120151CB-1016-4A34-8AA6-B1E0F3801D38}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SOD</RootNamespace>
+    <AssemblyName>SOD</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <IncludeIisSettings>false</IncludeIisSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Quartz, Version=2.6.1.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.6.1\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=__MvcPagesVersion__, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AppScheduler.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\JobClass.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SmsScheduler.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommonWebMethod\CipherURL.cs" />
+    <Compile Include="CommonWebMethod\NavitaireServicesBulkBooking.cs" />
+    <Compile Include="CommonWebMethod\OKToBoard.cs" />
+    <Compile Include="CommonWebMethod\Cipher.cs" />
+    <Compile Include="CommonWebMethod\CommonWebMethods.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommonWebMethod\NavitaireServices.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommonWebMethod\SessionOutFilter.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\billingController.cs" />
+    <Compile Include="Controllers\bkmailController.cs" />
+    <Compile Include="Controllers\bulkController.cs" />
+    <Compile Include="Controllers\ChangeReqController.cs" />
+    <Compile Include="Controllers\cityController.cs" />
+    <Compile Include="Controllers\cxoappController.cs" />
+    <Compile Include="Controllers\FileAttachmentApiController.cs" />
+    <Compile Include="Controllers\ReminderNotificationController.cs" />
+    <Compile Include="Controllers\ResendMailController.cs" />
+    <Compile Include="Controllers\SJSCFlightBookingController.cs" />
+    <Compile Include="Controllers\VDBookingDetailController.cs" />
+    <Compile Include="Controllers\EmployeeBookingDetailController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FileApiController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\financeController.cs" />
+    <Compile Include="Controllers\hdController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HotelOnlyController.cs" />
+    <Compile Include="Controllers\InclusionMasterController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\mailController.cs" />
+    <Compile Include="Controllers\mailHotelController.cs" />
+    <Compile Include="Controllers\mailITHController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\nsvdappController.cs" />
+    <Compile Include="Controllers\nsvdController.cs" />
+    <Compile Include="Controllers\nsvdflightbookingController.cs" />
+    <Compile Include="Controllers\OatApproverController.cs" />
+    <Compile Include="Controllers\OatController.cs" />
+    <Compile Include="Controllers\OatDeskController.cs" />
+    <Compile Include="Controllers\oatmailController.cs" />
+    <Compile Include="Controllers\RevenueController.cs" />
+    <Compile Include="Controllers\SJSisBookingController.cs" />
+    <Compile Include="Controllers\SodApproverController.cs" />
+    <Compile Include="Controllers\SoniApiController.cs" />
+    <Compile Include="Controllers\TestfluploadController.cs" />
+    <Compile Include="Controllers\TravelDetailController.cs" />
+    <Compile Include="Controllers\TravelSelectionController.cs" />
+    <Compile Include="Controllers\trnsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="EmailNotification\EmailNotifications.cs" />
+    <Compile Include="fl\flightload.aspx.cs">
+      <DependentUpon>flightload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="fl\flightload.aspx.designer.cs">
+      <DependentUpon>flightload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorLog\Logging.cs" />
+    <Compile Include="Migrations\201607130752358_InitialBaseline.cs" />
+    <Compile Include="Migrations\201607130752358_InitialBaseline.Designer.cs">
+      <DependentUpon>201607130752358_InitialBaseline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Scheduler\AppJob.cs" />
+    <Compile Include="Scheduler\ReminderTimeLog.cs" />
+    <Compile Include="Scheduler\SyncData.cs" />
+    <Compile Include="Service References\BookingManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SessionManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SmsNotification\SmsNotifications.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Web References\FlightLoadCapacity\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\SpiceDynamicSector\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="3D_button\3dbtn.css" />
+    <Content Include="Assest\css\AdminNew.css" />
+    <Content Include="Assest\css\bootstrap-theme.css" />
+    <Content Include="Assest\css\bootstrap-theme.min.css" />
+    <Content Include="Assest\css\bootstrap.css" />
+    <Content Include="Assest\css\bootstrap.min.css" />
+    <Content Include="Assest\css\bootstrap_inner.min.css" />
+    <Content Include="Assest\css\bootstrap_inner2.min.css" />
+    <Content Include="Assest\css\oneui.css" />
+    <Content Include="Assest\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assest\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assest\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Assest\fonts\Simple-Line-Icons.svg" />
+    <Content Include="Assest\img\avatars\avatar1.jpg" />
+    <Content Include="Assest\img\avatars\avatar10.jpg" />
+    <Content Include="Assest\img\avatars\avatar11.jpg" />
+    <Content Include="Assest\img\avatars\avatar12.jpg" />
+    <Content Include="Assest\img\avatars\avatar13.jpg" />
+    <Content Include="Assest\img\avatars\avatar14.jpg" />
+    <Content Include="Assest\img\avatars\avatar15.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %281%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %2810%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %2811%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %2812%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %2813%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %2814%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %2815%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %282%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %283%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %284%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %285%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %286%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %287%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %288%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16-old %289%29.jpg" />
+    <Content Include="Assest\img\avatars\avatar16.jpg" />
+    <Content Include="Assest\img\avatars\avatar2.jpg" />
+    <Content Include="Assest\img\avatars\avatar3.jpg" />
+    <Content Include="Assest\img\avatars\avatar4.jpg" />
+    <Content Include="Assest\img\avatars\avatar5.jpg" />
+    <Content Include="Assest\img\avatars\avatar6.jpg" />
+    <Content Include="Assest\img\avatars\avatar7.jpg" />
+    <Content Include="Assest\img\avatars\avatar8.jpg" />
+    <Content Include="Assest\img\avatars\avatar9.jpg" />
+    <Content Include="Assest\img\avatars\readme.txt" />
+    <Content Include="Assest\img\favicons\apple-touch-icon-114x114.png" />
+    <Content Include="Assest\img\favicons\apple-touch-icon-120x120.png" />
+    <Content Include="Assest\img\favicons\apple-touch-icon-144x144.png" />
+    <Content Include="Assest\img\favicons\apple-touch-icon-152x152.png" />
+    <Content Include="Assest\img\favicons\apple-touch-icon-180x180.png" />
+    <Content Include="Assest\img\favicons\apple-touch-icon-57x57.png" />
+    <Content Include="Assest\img\favicons\apple-touch-icon-60x60.png" />
+    <Content Include="Assest\img\favicons\apple-touch-icon-72x72.png" />
+    <Content Include="Assest\img\favicons\apple-touch-icon-76x76.png" />
+    <Content Include="Assest\img\favicons\favicon-160x160.png" />
+    <Content Include="Assest\img\favicons\favicon-16x16.png" />
+    <Content Include="Assest\img\favicons\favicon-192x192.png" />
+    <Content Include="Assest\img\favicons\favicon-32x32.png" />
+    <Content Include="Assest\img\favicons\favicon-96x96.png" />
+    <Content Include="Assest\img\favicons\favicon.png" />
+    <Content Include="Assest\img\favicons\plane7.png" />
+    <Content Include="Assest\img\various\hero1.jpg" />
+    <Content Include="Assest\img\various\little-monster.png" />
+    <Content Include="Assest\img\various\promo1.jpg" />
+    <Content Include="Assest\img\various\promo2.jpg" />
+    <Content Include="Assest\img\various\promo3.jpg" />
+    <Content Include="Assest\js\app.js" />
+    <Content Include="Assest\js\bootstrap.min.js" />
+    <Content Include="Assest\js\core\bootstrap.min.js" />
+    <Content Include="Assest\js\core\jquery.appear.min.js" />
+    <Content Include="Assest\js\core\jquery.countTo.min.js" />
+    <Content Include="Assest\js\core\jquery.min.js" />
+    <Content Include="Assest\js\core\jquery.placeholder.min.js" />
+    <Content Include="Assest\js\core\jquery.scrollLock.min.js" />
+    <Content Include="Assest\js\core\jquery.slimscroll.min.js" />
+    <Content Include="Assest\js\core\js.cookie.min.js" />
+    <Content Include="Assest\js\jquery-2.1.1.min.js" />
+    <Content Include="Assest\js\pages\base_comp_animations.js" />
+    <Content Include="Assest\js\pages\base_comp_calendar.js" />
+    <Content Include="Assest\js\pages\base_comp_charts.js" />
+    <Content Include="Assest\js\pages\base_comp_maps.js" />
+    <Content Include="Assest\js\pages\base_forms_validation.js" />
+    <Content Include="Assest\js\pages\base_forms_wizard.js" />
+    <Content Include="Assest\js\pages\base_pages_coming_soon.js" />
+    <Content Include="Assest\js\pages\base_pages_dashboard.js" />
+    <Content Include="Assest\js\pages\base_pages_lock.js" />
+    <Content Include="Assest\js\pages\base_pages_login.js" />
+    <Content Include="Assest\js\pages\base_pages_register.js" />
+    <Content Include="Assest\js\pages\base_pages_reminder.js" />
+    <Content Include="Assest\js\pages\base_tables_datatables.js" />
+    <Content Include="Assest\js\pages\base_ui_activity.js" />
+    <Content Include="Assest\js\pages\base_ui_icons.js" />
+    <Content Include="Assest\js\pages\base_ui_widgets.js" />
+    <Content Include="Assest\js\pages\frontend_contact.js" />
+    <Content Include="Assest\js\pages\frontend_features.js" />
+    <Content Include="Assest\js\plugins\bootstrap-colorpicker\bootstrap-colorpicker.min.js" />
+    <Content Include="Assest\js\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
+    <Content Include="Assest\js\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha-horizontal.png" />
+    <Content Include="Assest\js\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha.png" />
+    <Content Include="Assest\js\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\hue-horizontal.png" />
+    <Content Include="Assest\js\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\hue.png" />
+    <Content Include="Assest\js\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\saturation.png" />
+    <Content Include="Assest\js\plugins\bootstrap-datepicker\bootstrap-datepicker.min.js" />
+    <Content Include="Assest\js\plugins\bootstrap-datepicker\bootstrap-datepicker3.min.css" />
+    <Content Include="Assest\js\plugins\bootstrap-notify\bootstrap-notify.min.js" />
+    <Content Include="Assest\js\plugins\bootstrap-wizard\jquery.bootstrap.wizard.min.js" />
+    <Content Include="Assest\js\plugins\chartjs\Chart.min.js" />
+    <Content Include="Assest\js\plugins\ckeditor\adapters\jquery.js" />
+    <Content Include="Assest\js\plugins\ckeditor\build-config.js" />
+    <Content Include="Assest\js\plugins\ckeditor\ckeditor.js" />
+    <Content Include="Assest\js\plugins\ckeditor\config.js" />
+    <Content Include="Assest\js\plugins\ckeditor\contents.css" />
+    <Content Include="Assest\js\plugins\ckeditor\lang\en.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\af.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\en-gb.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\tt.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\about\dialogs\about.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\colordialog\dialogs\colordialog.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\div\dialogs\div.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\find\dialogs\find.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\flash\dialogs\flash.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\flash\images\placeholder.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\forms\dialogs\button.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\forms\dialogs\checkbox.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\forms\dialogs\form.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\forms\dialogs\hiddenfield.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\forms\dialogs\radio.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\forms\dialogs\select.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\forms\dialogs\textarea.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\forms\dialogs\textfield.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\forms\images\hiddenfield.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\icons.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\iframe\dialogs\iframe.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\iframe\images\placeholder.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\image\dialogs\image.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\link\dialogs\link.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\link\images\anchor.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\liststyle\dialogs\liststyle.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\magicline\images\hidpi\icon-rtl.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\magicline\images\icon-rtl.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\pagebreak\images\pagebreak.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\preview\preview.html" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_address.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_blockquote.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_div.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_h1.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_h2.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_h3.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_h4.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_h5.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_h6.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_p.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\showblocks\images\block_pre.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\dialogs\smiley.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\angel_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\angel_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\angry_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\angry_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\broken_heart.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\broken_heart.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\confused_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\confused_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\cry_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\cry_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\devil_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\devil_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\embaressed_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\embarrassed_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\embarrassed_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\envelope.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\envelope.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\heart.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\heart.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\kiss.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\kiss.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\lightbulb.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\lightbulb.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\omg_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\omg_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\regular_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\regular_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\sad_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\sad_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\shades_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\shades_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\teeth_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\teeth_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\thumbs_down.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\thumbs_down.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\thumbs_up.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\thumbs_up.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\tongue_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\tongue_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\tounge_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\wink_smile.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\smiley\images\wink_smile.png" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\af.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\da.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\en-gb.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\lt.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\tt.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\zh.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\table\dialogs\table.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\templates\dialogs\templates.css" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\templates\dialogs\templates.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\templates\templates\default.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\templates\templates\images\template1.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\templates\templates\images\template2.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\templates\templates\images\template3.gif" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\ajax.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\api.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\appendto.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\assets\inlineall\logo.png" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\assets\outputxhtml\outputxhtml.css" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\assets\sample.jpg" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\assets\uilanguages\languages.js" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\datafiltering.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\divreplace.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\index.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\inlineall.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\inlinebycode.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\inlinetextarea.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\jquery.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\dialog\assets\my_dialog.js" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\dialog\dialog.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\enterkey\enterkey.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.swf" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\swfobject.js" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\htmlwriter\outputforflash.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\htmlwriter\outputhtml.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\magicline\magicline.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\toolbar\toolbar.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\wysiwygarea\fullpage.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\readonly.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\replacebyclass.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\replacebycode.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\sample.css" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\sample.js" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\tabindex.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\uicolor.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\uilanguages.html" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\xhtmlstyle.html" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog_ie.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog_ie7.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog_ie8.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog_iequirks.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog_opera.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor_gecko.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor_ie.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor_ie7.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor_ie8.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor_iequirks.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\dialog.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\dialog_ie.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\dialog_ie7.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\dialog_ie8.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\dialog_iequirks.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\dialog_opera.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\editor.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\editor_gecko.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\editor_ie.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\editor_ie7.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\editor_ie8.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\editor_iequirks.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\icons.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\icons_hidpi.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\images\arrow.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\images\close.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\images\hidpi\close.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\images\hidpi\lock-open.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\images\hidpi\lock.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\images\hidpi\refresh.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\images\lock-open.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\images\lock.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\images\refresh.png" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\sample\bootstrapck-sample.html" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\sample\css\bootstrapck-sample.css" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\sample\js\analytics.js" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\sample\js\jquery-1.11.0.min.js" />
+    <Content Include="Assest\js\plugins\ckeditor\styles.js" />
+    <Content Include="Assest\js\plugins\datatables\jquery.dataTables.min.css" />
+    <Content Include="Assest\js\plugins\datatables\jquery.dataTables.min.js" />
+    <Content Include="Assest\js\plugins\dropzonejs\dropzone.min.css" />
+    <Content Include="Assest\js\plugins\dropzonejs\dropzone.min.js" />
+    <Content Include="Assest\js\plugins\easy-pie-chart\jquery.easypiechart.min.js" />
+    <Content Include="Assest\js\plugins\flot\jquery.flot.min.js" />
+    <Content Include="Assest\js\plugins\flot\jquery.flot.pie.min.js" />
+    <Content Include="Assest\js\plugins\flot\jquery.flot.resize.min.js" />
+    <Content Include="Assest\js\plugins\flot\jquery.flot.stack.min.js" />
+    <Content Include="Assest\js\plugins\fullcalendar\fullcalendar.min.css" />
+    <Content Include="Assest\js\plugins\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Assest\js\plugins\fullcalendar\gcal.min.js" />
+    <Content Include="Assest\js\plugins\fullcalendar\moment.min.js" />
+    <Content Include="Assest\js\plugins\gmapsjs\gmaps.min.js" />
+    <Content Include="Assest\js\plugins\highlightjs\github-gist.min.css" />
+    <Content Include="Assest\js\plugins\highlightjs\highlight.pack.js" />
+    <Content Include="Assest\js\plugins\jquery-countdown\jquery.countdown.min.js" />
+    <Content Include="Assest\js\plugins\jquery-tags-input\jquery.tagsinput.min.css" />
+    <Content Include="Assest\js\plugins\jquery-tags-input\jquery.tagsinput.min.js" />
+    <Content Include="Assest\js\plugins\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Assest\js\plugins\jquery-validation\jquery.validate.min.js" />
+    <Content Include="Assest\js\plugins\magnific-popup\magnific-popup.min.css" />
+    <Content Include="Assest\js\plugins\magnific-popup\magnific-popup.min.js" />
+    <Content Include="Assest\js\plugins\masked-inputs\jquery.maskedinput.min.js" />
+    <Content Include="Assest\js\plugins\select2\select2-bootstrap.css" />
+    <Content Include="Assest\js\plugins\select2\select2.full.min.js" />
+    <Content Include="Assest\js\plugins\select2\select2.min.css" />
+    <Content Include="Assest\js\plugins\slick\ajax-loader.gif" />
+    <Content Include="Assest\js\plugins\slick\fonts\slick.svg" />
+    <Content Include="Assest\js\plugins\slick\slick-theme.min.css" />
+    <Content Include="Assest\js\plugins\slick\slick.min.css" />
+    <Content Include="Assest\js\plugins\slick\slick.min.js" />
+    <Content Include="Assest\js\plugins\sparkline\jquery.sparkline.min.js" />
+    <Content Include="Assest\js\plugins\summernote\summernote-bs3.min.css" />
+    <Content Include="Assest\js\plugins\summernote\summernote.min.css" />
+    <Content Include="Assest\js\plugins\summernote\summernote.min.js" />
+    <Content Include="asset\css\bootstrap.min.css" />
+    <Content Include="asset\css\bootstrap_inner.min.css" />
+    <Content Include="asset\css\bootstrap_inner2.min.css" />
+    <Content Include="asset\js\bootstrap.min.js" />
+    <Content Include="CalenderControl\foundation-datepicker.css" />
+    <Content Include="CalenderControl\foundation-datepicker.js" />
+    <Content Include="Calender\css\foundation-datepicker.css" />
+    <Content Include="Calender\css\foundation.min.css" />
+    <Content Include="Calender\js\foundation-datepicker.js" />
+    <Content Include="Calender\js\foundation.min.js" />
+    <Content Include="Calender\js\jquery-1.11.3.min.js" />
+    <Content Include="commandFile.txt" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\XData\UserXml.xml" />
+    <Content Include="css\bootstrap-glyphicons.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\colors\red.css" />
+    <Content Include="css\finalsodstyle.css" />
+    <Content Include="css\font-awesome.css" />
+    <Content Include="css\fontawesome_all.css" />
+    <Content Include="css\glyphicon.css" />
+    <Content Include="css\jquery-confirm.min.css" />
+    <Content Include="css\Login.css" />
+    <Content Include="css\main.css" />
+    <Content Include="css\MenuHeader.css" />
+    <Content Include="css\OALStyle.css" />
+    <Content Include="css\progress.css" />
+    <Content Include="css\radiobtn.css" />
+    <Content Include="css\responsive.css" />
+    <Content Include="css\select2\select2.min.css" />
+    <Content Include="css\select2\selectize.default.css" />
+    <Content Include="css\SODstyl33e.css" />
+    <Content Include="css\SODstyle.css" />
+    <Content Include="css\timepicker.css" />
+    <Content Include="Dropdownmenu\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Dropdownmenu\images\ui-icons_222222_256x240.png" />
+    <Content Include="Dropdownmenu\images\ui-icons_454545_256x240.png" />
+    <Content Include="Dropdownmenu\images\ui-icons_888888_256x240.png" />
+    <Content Include="Dropdownmenu\jquery-1.9.1.js" />
+    <Content Include="Dropdownmenu\jquery-1.9.1_old.js" />
+    <Content Include="Dropdownmenu\jquery-ui.css" />
+    <Content Include="Dropdownmenu\jquery-ui.js" />
+    <Content Include="Dropdownmenu\jquery-ui_old.js" />
+    <Content Include="Dropdownmenu\togetherjs.js" />
+    <Content Include="DynamicSectorData\AdminSidePanel.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="DynamicSectorData\DynamicSectorArrival.xml" />
+    <Content Include="DynamicSectorData\DynamicSectorSource.txt" />
+    <Content Include="DynamicSectorData\DynamicSectorDateLog.txt" />
+    <Content Include="DynamicSectorData\InternationalSectorsTime.xml" />
+    <Content Include="DynamicSectorData\OKtoBoardSectorsList.xml" />
+    <Content Include="DynamicSectorData\DynamicSectorStates.xml" />
+    <Content Include="ErrorLog\ReminderErroLog.txt" />
+    <Content Include="ErrorLog\FinancialApprovalReminderLogg.txt" />
+    <Content Include="ErrorLog\HodApprovalReminderLogg.txt" />
+    <Content Include="favicon.ico" />
+    <Content Include="fl\flightload.aspx" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="images\10yrs-1.png" />
+    <Content Include="images\10yrs.png" />
+    <Content Include="images\12yrlogo.png" />
+    <Content Include="images\arrow_icon.png" />
+    <Content Include="images\blog_icon.gif" />
+    <Content Include="images\calender_icon.png" />
+    <Content Include="images\discuss_forum.png" />
+    <Content Include="images\drop_icon.png" />
+    <Content Include="images\dwl_Excel.png" />
+    <Content Include="images\event_calender.png" />
+    <Content Include="images\excel.jpg" />
+    <Content Include="images\exp_excel.jpg" />
+    <Content Include="images\facebook_icon.gif" />
+    <Content Include="images\favicon.ico" />
+    <Content Include="images\finfingway_icon.png" />
+    <Content Include="images\img_spcie2.png" />
+    <Content Include="images\innovation_icon.png" />
+    <Content Include="images\loading1.gif" />
+    <Content Include="images\loading.gif" />
+    <Content Include="images\login_banner.png" />
+    <Content Include="images\logo - Copy.png" />
+    <Content Include="images\logo-spicevacation.png" />
+    <Content Include="images\logo.gif" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\logo_celebration.png" />
+    <Content Include="images\logo_round_spicejet.png" />
+    <Content Include="images\logo_spicejet.jpg" />
+    <Content Include="images\logo_spicejet.png" />
+    <Content Include="images\logo_spicejet_rr.png" />
+    <Content Include="images\media_icon.png" />
+    <Content Include="images\minus.gif" />
+    <Content Include="images\myprofile_icon.png" />
+    <Content Include="images\myprofile_pic.png" />
+    <Content Include="images\plane_icon.png" />
+    <Content Include="images\plus.gif" />
+    <Content Include="images\pwd_icon.png" />
+    <Content Include="images\screen_bg.jpg" />
+    <Content Include="images\select-arrow_red.png" />
+    <Content Include="images\slider_new2.jpg" />
+    <Content Include="images\source-img.png" />
+    <Content Include="images\spicevacation-pre.png" />
+    <Content Include="images\twitter_icon.gif" />
+    <Content Include="images\user_icon.png" />
+    <Content Include="images\youtube_icon.gif" />
+    <Content Include="img\arrow_icon.png" />
+    <Content Include="img\banner_login.jpg" />
+    <Content Include="img\Blue_img.png" />
+    <Content Include="img\button.png" />
+    <Content Include="img\citycodes.png" />
+    <Content Include="img\comment.png" />
+    <Content Include="img\Departure_Date.png" />
+    <Content Include="img\dwl_Excel.png" />
+    <Content Include="img\error.png" />
+    <Content Include="img\excel.jpg" />
+    <Content Include="img\excel_format.png" />
+    <Content Include="img\favicon.ico" />
+    <Content Include="img\img_spcie2.png" />
+    <Content Include="img\lgout.png" />
+    <Content Include="img\login_banner.jpg" />
+    <Content Include="img\login_banner.png" />
+    <Content Include="img\login_banner_ol.png" />
+    <Content Include="img\logo_spicejet.jpg" />
+    <Content Include="img\logo_spicejet.png" />
+    <Content Include="img\logo_spicejet_rr.png" />
+    <Content Include="img\logo_spicejet_rr_old.png" />
+    <Content Include="img\Orange_img.png" />
+    <Content Include="img\pend.jpg" />
+    <Content Include="img\pendingflickering.gif" />
+    <Content Include="img\plane.png" />
+    <Content Include="img\plane_icon.png" />
+    <Content Include="img\plane_old.png" />
+    <Content Include="img\plane_return.png" />
+    <Content Include="img\progloader.gif" />
+    <Content Include="img\progress-loader.gif" />
+    <Content Include="img\pwd_icon.png" />
+    <Content Include="img\Red_img.png" />
+    <Content Include="img\rejected.png" />
+    <Content Include="img\rejected1.png" />
+    <Content Include="img\remove.png" />
+    <Content Include="img\right.jpg" />
+    <Content Include="img\right.png" />
+    <Content Include="img\select-arrow_red.png" />
+    <Content Include="img\Under Construction.png" />
+    <Content Include="img\underconstruction.jpg" />
+    <Content Include="img\user_icon.png" />
+    <Content Include="js\abScriptHotel.js" />
+    <Content Include="js\angular\admin_cxo_dept.js" />
+    <Content Include="js\angular\angular.js" />
+    <Content Include="js\angular\angular.min.js" />
+    <Content Include="js\angular\billing.js" />
+    <Content Include="js\angular\bulk-upload-ang.js" />
+    <Content Include="js\angular\bulkbooking.js" />
+    <Content Include="js\angular\bulkhotel.js" />
+    <Content Include="js\angular\cityMaster.js" />
+    <Content Include="js\angular\finalBookingForm.js" />
+    <Content Include="js\angular\financechangerequest.js" />
+    <Content Include="js\angular\hotelJS.js" />
+    <Content Include="js\angular\hotelMasterJS.js" />
+    <Content Include="js\angular\hotelReport.js" />
+    <Content Include="js\angular\hrchangeRequestJS.js" />
+    <Content Include="js\angular\InclusionJS.js" />
+    <Content Include="js\angular\Ithresponse.js" />
+    <Content Include="js\angular\NONSODusertravelhistory.js" />
+    <Content Include="js\angular\oatdisplay.js" />
+    <Content Include="js\angular\OAtTravelDesk.js" />
+    <Content Include="js\angular\OatTravelHistory.js" />
+    <Content Include="js\angular\SjSisBooking.js" />
+    <Content Include="js\angular\transportJS.js" />
+    <Content Include="js\angular\sanitize.js" />
+    <Content Include="js\angular\ui-bootstrap-tpls-0.10.0.min.js" />
+    <Content Include="js\angular\hdusertravelhistory.js" />
+    <Content Include="js\angular\usertravelhistory.js" />
+    <Content Include="js\angular\VendorJS.js" />
+    <Content Include="js\angular\VendorApprovalJS.js" />
+    <Content Include="js\bulk-upload-js.js" />
+    <Content Include="js\dynamic-sector-api-sync.js" />
+    <Content Include="js\emdm-api-sink.js" />
+    <Content Include="js\angular\hdemployeeviewdetails.js" />
+    <Content Include="js\handleCounter.js" />
+    <Content Include="js\jquery-2.1.1.min.js" />
+    <Content Include="js\jquery.js" />
+    <Content Include="js\jsvalidation.js" />
+    <Content Include="ErrorLog\Log.txt" />
+    <Content Include="js\oalScript.js" />
+    <Content Include="js\OnlyHotelJS.js" />
+    <Content Include="js\searchflight.js" />
+    <Content Include="js\select2\select2.min.js" />
+    <Content Include="js\select2\selectize.js" />
+    <Content Include="js\SJCons.js" />
+    <Content Include="js\handle-counter.css" />
+    <Content Include="js\timerpickerJS.js" />
+    <Content Include="New_Calender\calender.css" />
+    <Content Include="New_Calender\index.html" />
+    <Content Include="New_Calender\src\Calender_jquery-ui.js" />
+    <Content Include="New_Calender\src\calender_jquery.daterange.js" />
+    <Content Include="New_images\arrow_down.png" />
+    <Content Include="New_images\arrow_up.png" />
+    <Content Include="New_images\Dubai.jpg" />
+    <Content Include="New_images\dubai3.jpg" />
+    <Content Include="New_images\dubai5.jpg" />
+    <Content Include="New_images\dubai6.jpg" />
+    <Content Include="New_images\dubai7.jpg" />
+    <Content Include="New_images\dubai8.jpg" />
+    <Content Include="New_images\dumbbell.png" />
+    <Content Include="New_images\facebook.png" />
+    <Content Include="New_images\fl\bc.png" />
+    <Content Include="New_images\fl\freeint.png" />
+    <Content Include="New_images\fl\gym.png" />
+    <Content Include="New_images\fl\int.png" />
+    <Content Include="New_images\fl\nobc.png" />
+    <Content Include="New_images\fl\nofreeint.png" />
+    <Content Include="New_images\fl\nogym.png" />
+    <Content Include="New_images\fl\noint.png" />
+    <Content Include="New_images\fl\norest.png" />
+    <Content Include="New_images\fl\nosp.png" />
+    <Content Include="New_images\fl\rest.png" />
+    <Content Include="New_images\fl\sp.png" />
+    <Content Include="New_images\fnal.jpg" />
+    <Content Include="New_images\goa_2.jpg" />
+    <Content Include="New_images\goa_3.jpg" />
+    <Content Include="New_images\gpsimgg_icon.png" />
+    <Content Include="New_images\Icons-tel-01.png" />
+    <Content Include="New_images\icon\arrow_ht.png" />
+    <Content Include="New_images\icon\cleaness_icon.png" />
+    <Content Include="New_images\icon\gps_icon_h.png" />
+    <Content Include="New_images\icon\hot drink_icon.png" />
+    <Content Include="New_images\icon\hotel_icon.png" />
+    <Content Include="New_images\icon\process bar.png" />
+    <Content Include="New_images\icon\rupee_icon.png" />
+    <Content Include="New_images\icon\tool_icon.png" />
+    <Content Include="New_images\icon\working3.png" />
+    <Content Include="New_images\imggreen.png" />
+    <Content Include="New_images\imgred.jpg" />
+    <Content Include="New_images\imgred.png" />
+    <Content Include="New_images\kerala.jpg" />
+    <Content Include="New_images\kerala2.jpg" />
+    <Content Include="New_images\kerala4.jpg" />
+    <Content Include="New_images\Kerela3.jpg" />
+    <Content Include="New_images\lg-gitf.jpg" />
+    <Content Include="New_images\Loading_img.gif" />
+    <Content Include="New_images\mainbg.jpg" />
+    <Content Include="New_images\mainbg_old.jpg" />
+    <Content Include="New_images\meal.png" />
+    <Content Include="New_images\meruarrow.png" />
+    <Content Include="New_images\multicity_icon.png" />
+    <Content Include="New_images\multicity_icon2.png" />
+    <Content Include="New_images\multicity_icon_old.png" />
+    <Content Include="New_images\nohotel.png" />
+    <Content Include="New_images\noImage.png" />
+    <Content Include="New_images\offer_img.png" />
+    <Content Include="New_images\oneway.png" />
+    <Content Include="New_images\oneway_old.png" />
+    <Content Include="New_images\part_1.png" />
+    <Content Include="New_images\part_2.png" />
+    <Content Include="New_images\part_233.png" />
+    <Content Include="New_images\restaurant.png" />
+    <Content Include="New_images\roundicon.png" />
+    <Content Include="New_images\roundicon_old.png" />
+    <Content Include="New_images\round_image.png" />
+    <Content Include="New_images\swim.png" />
+    <Content Include="New_images\test_img.jpg" />
+    <Content Include="New_images\Thumbs.db" />
+    <Content Include="New_images\travewith_img.png" />
+    <Content Include="New_images\twitter.png" />
+    <Content Include="New_images\white_bed.png" />
+    <Content Include="New_images\wifi111.png" />
+    <Content Include="New_images\yellow_bag.png" />
+    <Content Include="New_images\yellow_bed.png" />
+    <Content Include="New_images\yellow_bed2.png" />
+    <Content Include="New_images\yellow_plane.png" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Assest\css\bootstrap-theme.css.map" />
+    <Content Include="Assest\css\bootstrap-theme.min.css.map" />
+    <Content Include="Assest\css\bootstrap.css.map" />
+    <Content Include="Assest\css\bootstrap.min.css.map" />
+    <Content Include="Assest\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Assest\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Assest\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Assest\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="js\ajax-js-lib\googleapis-ajax-jquery1.8.3.min.js" />
+    <Content Include="help\BulkUpload_HelpSheet_Ver1.xlsx" />
+    <Content Include="Assest\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assest\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assest\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assest\fonts\FontAwesome.otf" />
+    <Content Include="Assest\fonts\Simple-Line-Icons.eot" />
+    <Content Include="Assest\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="Assest\fonts\Simple-Line-Icons.woff" />
+    <Content Include="Assest\js\plugins\ckeditor\CHANGES.md" />
+    <Content Include="Assest\js\plugins\ckeditor\LICENSE.md" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\scayt\LICENSE.md" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\scayt\README.md" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\wsc\LICENSE.md" />
+    <Content Include="Assest\js\plugins\ckeditor\plugins\wsc\README.md" />
+    <Content Include="Assest\js\plugins\ckeditor\README.md" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\assets\posteddata.php" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
+    <Content Include="Assest\js\plugins\ckeditor\samples\sample_posteddata.php" />
+    <Content Include="Assest\js\plugins\ckeditor\skins\bootstrapck\readme.md" />
+    <Content Include="Assest\js\plugins\slick\fonts\slick.eot" />
+    <Content Include="Assest\js\plugins\slick\fonts\slick.ttf" />
+    <Content Include="Assest\js\plugins\slick\fonts\slick.woff" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\Sod.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager1.wsdl" />
+    <None Include="Service References\BookingManager\BookingManager10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager12.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager13.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager14.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager15.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager16.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager17.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager18.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager19.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BookingManager\BookingManager1.disco" />
+    <None Include="Service References\SessionManager\SessionManager1.disco" />
+    <Content Include="Scripts\jquery-confirm.min.js" />
+    <Content Include="Template\ApiMailTemplate\bookingRequest_approvalNotificationToAllHOD.html" />
+    <Content Include="Template\BulkTemplate\HotelAccomodationUpdationTemplate.html" />
+    <Content Include="Template\BulkTemplate\SodBulkBookingRequestApprovalNotificationTemplate_User.html" />
+    <Content Include="Template\BulkTemplate\SodBulkBookingRequest_Rejection_User.html" />
+    <Content Include="Template\BulkTemplate\SodBulkBookingRequestNotificationTemplate_HOD.html" />
+    <Content Include="Template\BulkTemplate\SodBulkBookingRequestNotificationTemplate_User.html" />
+    <Content Include="Template\Hotels\CancellationApprovalHotelTemplate.html" />
+    <Content Include="Template\Hotels\HotelApprovalNotificationTemplateForCC_TravelDesk.html" />
+    <Content Include="Template\Hotels\HotelBookingRequestNotificationTemplateFor_Contractual.html" />
+    <Content Include="Template\Hotels\HotelBookingRequestNotificationTemplate_Cancellation.html" />
+    <Content Include="Template\Hotels\HotelBookingRequest_Approval_User.html" />
+    <Content Include="Template\Hotels\HotelHODApprovalNotificationTemplateFor_NonContractual.html" />
+    <Content Include="Template\Hotels\HotelNotificationUpdateCNoFor_TravelDesk.html" />
+    <Content Include="Template\Hotels\HotelResponsiveMailTemplateFor_Checkin_CheckoutTime.html" />
+    <Content Include="Template\Hotels\OnlyhotelBookingRejection_user.html" />
+    <Content Include="Template\Hotels\OnlyHotelBookingRequestFor_User.html" />
+    <Content Include="Template\Hotels\SodHotelBookingRequestFor_HodHotelApproval.html" />
+    <Content Include="Template\HR\closed.png" />
+    <Content Include="Template\HR\cross.png" />
+    <Content Include="Template\HR\pending.png" />
+    <Content Include="Template\HR\pendingfin.png" />
+    <Content Include="Template\HR\SodChangeRequestConfirmationFromHR.html" />
+    <Content Include="Template\HR\SODHRChangeRequest_Approval_Rejection.html" />
+    <Content Include="Template\HR\SodUserChangeRequest.html" />
+    <Content Include="Template\SodBookingRequest_HotelApproval_User.html" />
+    <Content Include="Template\OAT\ITHResponsiveMailTemplateFromOatDesk.html" />
+    <Content Include="Template\OAT\OatBookingRequest_Approval_User.html" />
+    <Content Include="Template\OAT\OatBookingRequest_PnrGeneration_User.html" />
+    <Content Include="Template\OAT\OatBookingRequest_Rejection_User.html" />
+    <Content Include="Template\OAT\OATHotelApprovalNotificatio_HOD.html" />
+    <Content Include="Template\OAT\OatRequestNotificationTemplateFor_ITH.html" />
+    <Content Include="Template\OAT\OatRequestNotificationTemplateHodApproval_ITH.html" />
+    <Content Include="Template\OAT\OATRequestNotificationTemplate_HOD.html" />
+    <Content Include="Template\OAT\OATRequestNotificationTemplate_User.html" />
+    <Content Include="Template\OAT\SodHotelBookingRequestNotificationTemplateFor_TravelDesk.html" />
+    <Content Include="Template\SJSC\SJSCUserForgotPassword.html" />
+    <Content Include="Template\SJSC\SJSCUserRegistrationConfirmation.html" />
+    <Content Include="Template\SodCabBookingRequestNotificationTemplateFor_TravelDesk.html" />
+    <Content Include="Template\SodHotelBookingRequestFor_UserTravelHistory.html" />
+    <Content Include="Template\SodHotelBookingRequestConfirmationNotificationTemplateFor_Hotel.html" />
+    <Content Include="Template\SodHotelBookingRequestNotificationTemplateFor_TravelDesk.html" />
+    <Content Include="Template\SodBookingRequestNotificationTemplateFor_HOD_Booking.html" />
+    <Content Include="Template\SodBookingRequestNotificationTemplate_HOD.html" />
+    <Content Include="Template\SodBookingRequest_Approval_User.html" />
+    <Content Include="Template\SodConfirm_Acceptance through CXO-Level.html" />
+    <Content Include="Template\SodConfirm_Acceptance through Revenue and Itinerary.html" />
+    <Content Include="Template\SodBookingRequest_Rejection_User.html" />
+    <Content Include="Template\SodConfirm_Rejection through CXO-Level.html" />
+    <Content Include="Template\SodConfirm_Rejection through Revenue and Itinerary_User.html" />
+    <Content Include="Template\SodStandbyBookingRequestNotificationTemplate_User.html" />
+    <Content Include="Template\SodConfirmBookingRequestNotificationTemplate_User.html" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Service References\BookingManager\SOD.BookingManager.AcceptScheduleChangesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.AddBookingCommentsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.AddInProcessPaymentToBookingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.AddPaymentToBookingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.AddPaymentToBookingResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.ApplyPromotionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.AssignSeatsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.AvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.Booking.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.BookingCommitResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.BookingUpdateResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.CalculateGuestValuesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.CancelInProcessPaymentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.CancelResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.CaptureBaggageEventResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.CaptureBaggageEventResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.ChangeSourcePointOfSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.ClearResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.CommitResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.DCCPaymentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.DCCQueryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.DivideResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.DowngradeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.EquipmentListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.FareOverrideResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.FindBaggageEventResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.FindBaggageEventResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.FindBookingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.FindBookingResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingBaggageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingFromStateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingHistoryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingHistoryResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingPaymentResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingPaymentsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetEquipmentPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetLowFareAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetLowFareTripAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetMoveAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetMoveFeePriceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetPaymentFeePriceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetPostCommitResultsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetRecordLocatorListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetSeatAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetSSRAvailabilityForBookingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetSSRAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetUpgradeAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.LowFareTripAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.MoveAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.MoveFeePriceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.MoveJourneyBookingsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.MoveJourneyBookingsResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.MoveJourneyByKeyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.OverrideFeeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.PassengerBag.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.PassengerScoresResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.Payment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.PaymentFeePriceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.PriceItineraryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.ResellSSRResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.ScorePassengersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.SeatAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.SellResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.SendItineraryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.SeparateSegmentByEquipmentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.SeparateSegmentByEquipmentResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.SSRAvailabilityForBookingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.SSRAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.TripAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.UnassignSeatsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.UpdateContactsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.UpdateFeeStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.UpdatePassengersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.UpdatePriceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.UpdateSSRResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.UpdateTicketsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.UpgradeAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.UpgradeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.ValidationPayment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.AssignedSeatInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.CancelSegmentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingFromStateFilteredResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingFromStateFilteredResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingStatelessFilteredResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetBookingStatelessFilteredResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetLowFareAVSMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetStandByAvailabilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.GetTripAvailabilityWithSSRResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.LowFareAVSMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.RemovePaymentFromBookingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.TravelCommerceCancelServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.TravelCommerceSellResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.TripAvailabilityWithSSRResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BookingManager\SOD.BookingManager.UpdateBookingComponentDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\SessionManager\configuration91.svcinfo" />
+    <None Include="Service References\SessionManager\configuration.svcinfo" />
+    <None Include="Service References\SessionManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\BookingManager\configuration91.svcinfo" />
+    <None Include="Service References\BookingManager\configuration.svcinfo" />
+    <None Include="Service References\BookingManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Template\SodBookingEmailTemplate.html" />
+    <Content Include="Template\Vendor\VendorApprovalEmailTemplate.html" />
+    <Content Include="Template\Vendor\VendorRequestEmailTemplate.html" />
+    <Content Include="Template\Vendor\VendorResponseEmailTemplate.html" />
+    <Content Include="TimeLog\Log.txt" />
+    <Content Include="Views\SJSisBooking\SJSCUserForgotPassword.html" />
+    <Content Include="Views\nsvd\GetVDBookingReport.cshtml" />
+    <Content Include="Views\TravelSelection\JsTravelSelection.js" />
+    <Content Include="Views\city\citymaster.cshtml" />
+    <Content Include="Views\bulk\bbkSelective.cshtml" />
+    <Content Include="Views\SJSisBooking\Index.cshtml" />
+    <Content Include="Views\SJSisBooking\Index1.cshtml" />
+    <Content Include="Views\SJSisBooking\Login.cshtml" />
+    <Content Include="Views\SJSisBooking\Loginregister.cshtml" />
+    <Content Include="Views\SJSisBooking\verify.cshtml" />
+    <Content Include="Views\SJSisBooking\ResetPassword.cshtml" />
+    <Content Include="Views\ChangeReq\ChangeRequest - backup.cshtml" />
+    <Content Include="Views\ChangeReq\ChangeRequest.cshtml" />
+    <Content Include="Views\ChangeReq\ChangeRequestHistoryFinance - Copy.cshtml" />
+    <Content Include="Views\ChangeReq\ChangeRequestHistoryFinance.cshtml" />
+    <Content Include="Views\ChangeReq\ChangeRequestHistoryHR - Copy.cshtml" />
+    <Content Include="Views\ChangeReq\ChangeRequestHistoryHR.cshtml" />
+    <Content Include="Views\ChangeReq\confirmationMail.cshtml" />
+    <Content Include="Views\ChangeReq\SendMailToFinance.cshtml" />
+    <Content Include="Views\ChangeReq\SuccessPage.cshtml" />
+    <Content Include="Views\Shared\_Admin1.cshtml" />
+    <Content Include="Views\Shared\_ApplicationLayout.cshtml" />
+    <Content Include="Views\Shared\ApplicationHeaderPartial.cshtml" />
+    <Content Include="Views\Admin\AssignRole.cshtml" />
+    <Content Include="Views\Admin\MenuRights.cshtml" />
+    <Content Include="Views\InclusionMaster\viewinclusionmaster.cshtml" />
+    <Content Include="Views\InclusionMaster\viewhotelmaster.cshtml" />
+    <Content Include="Views\city\viewcitymaster.cshtml" />
+    <Content Include="Views\Shared\_SjscHeaderBar.cshtml" />
+    <Content Include="Views\SJSisBooking\UserProfile.cshtml" />
+    <Content Include="Views\SJSisBooking\ViewProfile.cshtml" />
+    <Content Include="Template\OAT\OatBookingRequestNotification_user.cshtml" />
+    <Content Include="Views\nsvd\vendor.cshtml" />
+    <Content Include="Views\nsvd\vendorhd.cshtml" />
+    <Content Include="Views\nsvdapp\vendorlist.cshtml" />
+    <Content Include="Views\OAT\flist.cshtml" />
+    <Content Include="Views\OAT\OAThotelList.cshtml" />
+    <Content Include="Views\OatDesk\IthResponseForm.cshtml" />
+    <Content Include="Views\nsvdflightbooking\searchflight.cshtml" />
+    <Content Include="Views\VDBookingDetail\VDBookingDetail.cshtml" />
+    <Content Include="Views\VDBookingDetail\BookingResponse.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\nsvdapp\vdapplist.cshtml" />
+    <Content Include="Views\nsvdapp\appvendor.cshtml" />
+    <Content Include="Views\nsvd\vdbookinghistory.cshtml" />
+    <Content Include="Views\SodApprover\GetBookingReport.cshtml" />
+    <Content Include="Views\OatDesk\FinalBookingForm.cshtml" />
+    <Content Include="Views\SJSCFlightBooking\BookingResponse.cshtml" />
+    <Content Include="Views\SJSCFlightBooking\SJSCFlightBooking.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\SJSisBooking\flight.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+=======
+>>>>>>> 510c7c4e64da43ee267948154942d863f04d1ba0
+    <None Include="Web References\FlightLoadCapacity\FlightLoadCapacity.disco" />
+    <Content Include="Web References\SpiceDynamicSector\ArrivalStations.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Views\SodApprover\GetBookingList.cshtml" />
+    <Content Include="Views\Revenue\BookingList.cshtml" />
+    <Content Include="Views\EmployeeBookingDetail\BookingResponse.cshtml" />
+    <Content Include="Views\User\SearchFlight_Dev.cshtml" />
+    <Content Include="Views\Error\Error11.cshtml" />
+    <Content Include="Views\cxoapp\GetBookingList.cshtml" />
+    <Content Include="Views\mail\app.cshtml" />
+    <Content Include="Views\SodApprover\ViewTravelList.cshtml" />
+    <Content Include="Views\Error\HttpError404.cshtml" />
+    <Content Include="Views\Error\HttpError500.cshtml" />
+    <Content Include="Views\hd\bklist.cshtml" />
+    <Content Include="Views\Admin\Cxodeptmapping.cshtml" />
+    <Content Include="Views\hd\dwnlist.cshtml" />
+    <Content Include="Views\hd\dwnlist -angular.cshtml" />
+    <Content Include="Views\bulk\blkbooking.cshtml" />
+    <None Include="Service References\SessionManager\SessionManager1.wsdl" />
+    <None Include="Service References\SessionManager\SessionManager5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionManager\SessionManager6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionManager\SessionManager7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionManager\SessionManager8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionManager\SessionManager9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Service References\SessionManager\SOD.SessionManager.ChangePasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SessionManager\SOD.SessionManager.KeepAliveResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SessionManager\SOD.SessionManager.LogonResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SessionManager\SOD.SessionManager.LogoutResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SessionManager\SOD.SessionManager.TransferSessionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SessionManager\SOD.SessionManager.TransferSessionResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Views\Testflupload\fileUploads.cshtml" />
+    <Content Include="Views\Testflupload\Upload1.cshtml" />
+    <Content Include="Views\Admin\sinkDataemdmapi.cshtml" />
+    <Content Include="Views\trns\trlist.cshtml" />
+    <Content Include="Views\trns\vdrlist.cshtml" />
+    <Content Include="Views\Admin\AllocateApprover - Copy.cshtml" />
+    <Content Include="Views\bulk\viewbbkList.cshtml" />
+    <Content Include="Views\hd\bulkbList.cshtml" />
+    <Content Include="Views\Admin\syncDynamicSecapi.cshtml" />
+    <Content Include="Views\bulk\bulkresponse.cshtml" />
+    <Content Include="Views\bkmail\bapp.cshtml" />
+    <Content Include="Views\bulk\bulkappList.cshtml" />
+    <Content Include="Views\hd\dwnlist_backup.cshtml" />
+    <Content Include="Views\hd\employeeDetails.cshtml" />
+    <Content Include="Views\Admin\employeeDetails.cshtml" />
+    <Content Include="Views\trns\hotelList.cshtml" />
+    <Content Include="Views\OAT\oatbooking.cshtml" />
+    <Content Include="Views\OAT\oatDisplayDetails.cshtml" />
+    <Content Include="Views\OAT\oatTraveldesk.cshtml" />
+    <Content Include="Views\OAT\oatTravelHistory.cshtml" />
+    <Content Include="Views\OatApprover\GetOatApproverList.cshtml" />
+    <Content Include="Views\oatmail\Index.cshtml" />
+    <Content Include="Views\OAT\oatbkresponse.cshtml" />
+    <Content Include="Views\Shared\PartialAdmin.cshtml" />
+    <Content Include="Views\mailHotel\Index.cshtml" />
+    <Content Include="Views\mailHotel\IndexHotelCode.cshtml" />
+    <Content Include="Views\mailHotel\Result.cshtml" />
+    <Content Include="Views\bulk\bulkhotelList.cshtml" />
+    <Content Include="Views\mailITH\ApproveRejectHod.cshtml" />
+    <Content Include="Views\mailITH\Index.cshtml" />
+    <Content Include="Views\mailITH\IndexITHResponse.cshtml" />
+    <Content Include="Views\mailITH\Response.cshtml" />
+    <Content Include="Views\billing\blist.cshtml" />
+    <Content Include="Views\finance\finlist.cshtml" />
+    <Content Include="Views\mailHotel\HodApproval.cshtml" />
+    <Content Include="Views\mailHotel\hotelconfirmationresponse.cshtml" />
+    <Content Include="Views\mailHotel\HotelResponsive.cshtml" />
+    <Content Include="Views\mailHotel\UserResponsive.cshtml" />
+    <Content Include="Views\mailHotel\UserCancellation.cshtml" />
+    <Content Include="Views\InclusionMaster\HotelMaster.cshtml" />
+    <Content Include="Views\InclusionMaster\InclusionMaster.cshtml" />
+    <Content Include="Views\InclusionMaster\hotelList.cshtml" />
+    <Content Include="Views\trns\HotelDetailsData.cshtml" />
+    <Content Include="Views\mail\apphotel.cshtml" />
+    <Content Include="Views\mail\OnlyHotelApproval.cshtml" />
+    <Content Include="Views\HotelOnly\BookingResponse.cshtml" />
+    <Content Include="Views\HotelOnly\HotelIndex.cshtml" />
+    <Content Include="Views\User\SearchFlight.cshtml" />
+    <None Include="Web References\FlightLoadCapacity\FlightLoadCapacity.wsdl" />
+    <Content Include="Web References\FlightLoadCapacity\LoadAndCapacity.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\FlightLoadCapacity\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <None Include="Web References\SpiceDynamicSector\DynamicSectors.disco" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Login\UserAccount.cshtml" />
+    <Content Include="Views\TravelSelection\TrSelection.cshtml" />
+    <Content Include="Views\EmployeeBookingDetail\EmpBookingDetail.cshtml" />
+    <Content Include="Views\TravelDetail\TrDetail.cshtml" />
+    <Content Include="Views\SodApprover\Approver.cshtml" />
+    <Content Include="Views\Shared\_Admin.cshtml" />
+    <Content Include="Views\SodApprover\BlanketBooking.cshtml" />
+    <Content Include="Views\SodApprover\AllocateApprover.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\User\TrRequest.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\AllocateApprover.cshtml" />
+    <Content Include="Views\Admin\AllocateBlanketApprover.cshtml" />
+    <Content Include="Views\Admin\SodBlanketApproverList.cshtml" />
+    <Content Include="Views\Admin\SodApproverList.cshtml" />
+    <Content Include="Views\Login\ChangePassword.cshtml" />
+    <None Include="Web References\SpiceDynamicSector\DynamicSectors.wsdl" />
+    <None Include="Web References\SpiceDynamicSector\DynamicSectors.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\SpiceDynamicSector\DynamicSectors0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\SpiceDynamicSector\DynamicSectors1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Web References\SpiceDynamicSector\OriginStations.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\SpiceDynamicSector\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Assest\img\photos\" />
+    <Folder Include="DownLoad\hd\" />
+    <Folder Include="HotelContracts\" />
+    <Folder Include="OATPdf\" />
+    <Folder Include="OatUploadAttachments\Cancellation\holding mail_201908011516.png\" />
+    <Folder Include="OatUploadAttachments\Cancellation\holding mail_201908011545.png\" />
+    <Folder Include="UploadFile\" />
+    <Folder Include="Views\ReminderNotification\" />
+    <Folder Include="Views\ResendMail\" />
+    <Folder Include="xml\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://121.242.92.173/SpicejetDynamicSectors/DynamicSectors.svc">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\SpiceDynamicSector\</RelPath>
+      <UpdateFromURL>http://121.242.92.173/SpicejetDynamicSectors/DynamicSectors.svc</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SOD_SpiceDynamicSector_DynamicSectors</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://172.30.47.13/SpiceJetFlightLoadAPI/FlightLoadCapacity.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\FlightLoadCapacity\</RelPath>
+      <UpdateFromURL>http://172.30.47.13/SpiceJetFlightLoadAPI/FlightLoadCapacity.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SOD_FlightLoadCapacity_FlightLoadCapacity</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\BookingManager\" />
+    <WCFMetadataStorage Include="Service References\SessionManager\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201607130752358_InitialBaseline.resx">
+      <DependentUpon>201607130752358_InitialBaseline.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SOD.Model\SOD.Model.csproj">
+      <Project>{42a0fa88-d4fa-4021-a904-309f621fa939}</Project>
+      <Name>SOD.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SOD.Services\SOD.Services.csproj">
+      <Project>{0bc32eb1-d228-46e0-8d61-566dd521ce51}</Project>
+      <Name>SOD.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52809</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:52809/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

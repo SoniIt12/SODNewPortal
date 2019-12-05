@@ -1,0 +1,43 @@
+Select * from SodEmployeeCommonDetails where Phone='9899281901'
+
+Select * from SodTravelRequestMaster where TravelRequestId=18
+Select * from SodTravelRequestFlightDetail where TravelRequestId=18
+
+Update SodTravelRequestMaster Set Phno='9899281901',RequestedEmpCode='00115994'  where TravelRequestId=18
+
+Update SodTravelRequestFlightDetail Set TravelDate='09/07/2018',ArrivalTime='14:25 PM',IsSendSms=0
+where TravelRequestId=18
+
+
+
+
+9810777941 -----
+
+-----------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
+
+Select * from SodEmployeeCommonDetails where Phone='9899281901'
+
+Select * from SodTravelRequestMaster where TravelRequestId=117
+Select * from SodTravelRequestFlightDetail where TravelRequestId=117
+
+Update SodTravelRequestMaster Set Phno='9899281901',pnr='DAT179',RequestedEmpCode='00115994'  where TravelRequestId=117
+
+Update SodTravelRequestFlightDetail Set TravelDate='09/17/2018',ArrivalTime='11:47',IsSendSms=0
+where TravelRequestId=117
+
+--117
+--158
+
+
+
+--9810777941 -----00112768
+Select * from SodEmployeeCommonDetails where Phone='9810777941' 
+Select * from SodTravelRequestMaster where TravelRequestId=158
+Select * from SodTravelRequestFlightDetail where TravelRequestId=158
+
+Update SodTravelRequestMaster Set Phno='9810777941',RequestedEmpCode='00112768'  where TravelRequestId=158
+
+Update SodTravelRequestFlightDetail Set TravelDate='09/17/2018',ArrivalTime='11:47',IsSendSms=0
+where TravelRequestId=158

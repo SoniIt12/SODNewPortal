@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AddBookingCommentsResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BookingUpdateResponseData>
+    <ExtensionData />
+    <Success>
+      <ExtensionData />
+      <RecordLocator>X3J68Y</RecordLocator>
+    </Success>
+  </BookingUpdateResponseData>
+</AddBookingCommentsResponse>

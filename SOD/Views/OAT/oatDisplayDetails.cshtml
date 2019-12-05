@@ -1,0 +1,302 @@
+﻿
+@{
+    ViewBag.Title = "OAT | Oat Details";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>OAT | Details</title>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/oatdisplay.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+    </head>
+    @*<script src="../js/jquery-2.1.1.min.js"></script>
+        <script src="../asset/js/bootstrap.min.js"></script>*@
+
+    <style type="text/css">
+        .modal.modal-wide .modal-dialog {
+            width: 72%;
+        }
+
+        .modal-wide .modal-body {
+            overflow-y: auto;
+        }
+        /* irrelevant styling */
+        .modal-dialog {
+            left: 5px;
+        }
+
+            .modal-dialog div {
+                text-align: center;
+            }
+        /*.modal-dialog div  p { max-width: 400px;margin: 20px auto;}*/
+        .modal-body table tr th {
+            text-align: Center;
+            padding: 10px;
+        }
+
+        ul > li, a {
+            cursor: pointer;
+        }
+
+        img {
+            cursor: pointer;
+        }
+
+        .popuphdtxt {
+            font-size: 18px;
+            font-family: Swis721 Cn BT,Sans-Serif;
+            padding-bottom: 1px;
+            padding-top: 1px;
+        }
+
+        .flighdtl {
+            width: 100%;
+            border: 1px solid #c2c2c2;
+        }
+
+        .popheadcolor {
+            background-color: #EE1D23;
+            color: #fff;
+            font-family: Swis721 Cn BT,Sans-Serif;
+        }
+
+        .button {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            padding: 6px 28px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button2 {
+            border-radius: 4px;
+        }
+
+        #tbldetail th {
+            font-size: 12px;
+        }
+    </style>
+
+  
+
+
+    <div ng-app="OatViewDetails" ng-controller="OatView">
+        <div class="container" style="width:100%;margin-top:-40px;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div style="text-align:center; font-size:18px;margin-top:10px; "> View OAT Details </div>
+                    </div>
+                </div>
+            </div>
+            
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="searchDvv">
+                            <input type="text" ng-model="search" ng-change="filter()" placeholder="Filter">
+                            <span style="text-align:center; font-size:12px;margin-top:10px; margin-bottom:20px;">Filtered {{ filtered.length }} Records from {{ filtered.length }} Total Records</span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div style="text-align:left;" class="searchDvPagesize_right">
+                            Page Size :
+                            <select ng-model="entryLimit">
+                                @*<option>5</option>*@
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+               
+            </div>
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12" ng-show="filteredItems > 0">
+                        <div style="overflow:auto">
+                            <table class="table table-striped table-bordered" style="width:100%;" id="tbldetail">
+                                <tr class="popheadcolor">
+                                    <th>S.N.</th>
+
+                                    <th>
+                                        TravelRequestCode &nbsp;<a ng-click="sort_by('TravelRequestId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        RequestDate &nbsp;<a ng-click="sort_by('RequestDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        ReasonForTravel
+                                    </th>
+                                    <th>
+                                        RequestedEmpId &nbsp;<a ng-click="sort_by('RequestedEmpId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    @*<th>
+                                        RequestedEmpCode &nbsp;<a ng-click="sort_by('RequestedEmpCode');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>*@
+                                    @*<th>
+                                        Gender
+                                    </th>*@
+                                    <th>
+                                        RequestedEmpName &nbsp;<a ng-click="sort_by('RequestedEmpName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        RequestedEmpDesignation &nbsp;<a ng-click="sort_by('RequestedEmpDesignation');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        RequestedEmpDept &nbsp;<a ng-click="sort_by('RequestedEmpDept');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>EmailId</th>
+                                    <th>Phone</th>
+                                    <th>
+                                        Passengers
+                                    </th>
+                                    @*<th>Meals</th>*@
+                                    <th>Pnr</th>
+                                    @*<th>PnrAmount</th>*@
+                                    <th>BookingStatus</th>
+                                    @*<th>StatusDate</th>*@
+                                    @*<th>Address</th>
+                                    <th>City</th>*@
+                                    <th>IsCabRequired</th>
+                                    <th>IsHotelRequired</th>
+                                    @*<th>Origin Place</th>
+                                    <th>Destination Place</th>*@
+                                    <th>FlightInfo</th>
+                                    <th>FlightNo</th>
+                                    <th>TravelDate</th>
+                                </tr>
+
+                                <tr ng-repeat="list in filtered = (trlist | filter: search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                    <td>{{$index+1}}</td>
+
+                                    @*<td>{{list.EntryID}}</td>*@
+                                    <td><a data-toggle="modal" href="#viewdetailModals" class="csod" ng-click="viewOATAppList(list.TravelRequestCode)">{{list.TravelRequestCode}}</a></td>
+                                    <td>{{ToJavaScriptDate(list.RequestDate)}}</td>
+                                    <td>{{list.ReasonForTravel}}</td>
+                                    <td>{{list.RequestedEmpId}}</td>
+                                    @*<td>{{list.RequestedEmpCode}}</td>*@
+                                    @*<td>{{list.Gender}}</td>*@
+                                    <td>{{list.RequestedEmpName}}</td>
+                                    <td>{{list.RequestedEmpDesignation}}</td>
+                                    <td>{{list.RequestedEmpDept}}</td>
+                                    <td>{{list.EmailId}}</td>
+                                    <td>{{list.Phno}}</td>
+                                    <td>{{list.Passengers}}</td>
+                                    @*<td>{{list.Meals}}</td>*@
+                                    <td>{{list.Pnr}}</td>
+                                    @*<td>{{list.PnrAmount}}</td>*@
+                                    <td>{{list.BookingStatus}}</td>
+                                    @*<td>{{ToJavaScriptDate(list.StatusDate)}}</td>*@
+                                    @*<td>{{list.address}}</td>
+                                    <td>{{list.city}}</td>*@
+                                    <td>{{list.IsCabRequired}}</td>
+                                    <td>{{list.IsHotelRequired}}</td>
+                                    @*<td>{{list.OriginPlace}}</td>
+                                    <td>{{list.DestinationPlace}}</td>*@
+                                    <td>{{list.FlightInfo}}</td>
+                                    <td>{{list.FlightNo}}</td>
+                                    <td>{{ToJavaScriptDate(list.TravelDate)}}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--If No Record Found-->
+                    <div id="notFoundDiv" ng-show="(trlist).length==0"><h4>&emsp;No Records Found</h4></div>
+
+                    <!--If No Record Found-->
+                    @*<div class="col-md-12" ng-show="filteredItems == 0">
+                    <div class="col-md-12">
+                        <h4>No Record found</h4>
+                    </div>
+                </div>*@
+
+                    <!--------------------View Detail Model popup------------------------------------->
+                    <div id="viewdetailModals" class="modal modal-wide fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                    <h4><span class="viewlistcs">Flight & Passenger Details: {{trn}}</span></h4>
+                                    <input type="hidden" id="hdTrid" @*value="{{trn}}"*@ />
+                                </div>
+
+                                <div class="modal-body">                                    
+                                    <h4 class="modal-title"><span class="viewlistcs">Flight Details</span></h4>
+
+                                    <table id="tblbookinginfo" class="flighdtl">
+                                        <tr class="popheadcolor">
+                                            <th>SNo. </th>
+                                            <th>Origin Place</th>
+                                            <th>Destination Place</th>
+                                            <th>Travel Date</th>
+                                            <th>Flight Info</th>
+                                            <th>Flight No.</th>
+                                            
+                                        </tr>
+                                        <tr ng-repeat="dlist in trdlist">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{dlist.OriginPlace}}</td>
+                                            <td>{{dlist.DestinationPlace}}</td>
+                                            <td>{{ToJavaScriptDate(dlist.DepartureDate)}}</td>
+                                            <td>{{dlist.DepFlightInfo}}</td>
+                                            <td>{{dlist.DepFlightNumber}}</td>
+                                            
+                                        </tr>
+                                    </table>
+                                    <h4 class="modal-title" style="color:white;">.</h4>
+                                        <h4 class="modal-title"><span class="viewlistcs">Passenger Details</span></h4>
+                                    
+                                    <table id="tblbookinginfo" class="flighdtl">
+                                        <tr class="popheadcolor">
+                                            <th>SNo. </th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Gender</th>                                            
+                                        </tr>
+                                        <tr ng-repeat="dlist in plists">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{dlist.FirstName}}</td>
+                                            <td>{{dlist.LastName}}</td>
+                                            <td>{{dlist.Gender}}</td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" data-dismiss="modal"> Close </button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
+
+                    <!--Pagination-->
+                    <div class="col-md-12" ng-show="filteredItems > 0">
+                        <div pagination total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

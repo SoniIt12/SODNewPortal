@@ -1,0 +1,54 @@
+﻿@*@model System.Web.Mvc.HandleErrorInfo*@
+@{
+    ViewBag.Title = "Error";
+   
+}
+ 
+
+    <style type="text/css">
+        .succesmsg {
+            text-align: center;
+            font-size: 25px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <div>
+        <div class="bookingheadr" style="display:none">
+            <div class="headerimg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3"><div class="logoheader"><img src="../img/logo_spicejet.png" /></div> </div>
+                        <div class="col-md-9"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--------------------------------------------Content---------------->
+        <div class="container">
+            <div style="padding-top:10%;text-align:center;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <h2 class="text-danger">An error occurred while processing your request.</h2>
+                            <h3>@TempData["ErrorMessage"]</h3>
+                            <div style="margin-top:30px">
+                               Please try again....
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------------------------------Footer---------------->
+        <div style="padding-top:70px;"></div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+        <!-- ------------------------------------------END Footer---------------->
+    </div>
+

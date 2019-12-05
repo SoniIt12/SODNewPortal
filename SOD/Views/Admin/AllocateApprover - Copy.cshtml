@@ -1,0 +1,187 @@
+﻿@model IEnumerable<SOD.Model.DepartmentModels>
+@{
+    ViewBag.Title = "Admin | Allocate Approver";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<script src="../Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    //Dom Loading
+    $(document).ready(function () {
+        var dept = document.getElementById("Department");
+        bindDesignation(dept.options[dept.selectedIndex].value);
+        //text box id for searching
+        $('#search').keyup(function () {
+            searchTable($(this).val());
+        });
+    });
+
+    //Searching in Table 
+    function searchTable(inputVal) {
+        var cunter = 0;
+        var table = $('#tblAllocate');
+        table.find('tr').each(function (index, row) {
+            var allCells = $(row).find('td');
+            if (allCells.length > 0) {
+                var found = false;
+                allCells.each(function (index, td) {
+                    var regExp = new RegExp(inputVal, 'i');
+                    if (regExp.test($(td).text())) {
+                        found = true;
+                        return false;
+                    }
+                });
+                if (found == true) { $(row).show(); cunter++; }
+                else{ $(row).hide();  }
+            }
+        });
+        
+        if (cunter > 0)
+            $("#btnSave").show();
+        else
+            $("#btnSave").hide();
+    }
+
+    //Bind Designation List
+    function bindDesignation() {
+        var ddl = $('#Department').val();
+        $.getJSON("../Admin/GetDesignationList/?ddl=" + ddl,
+            function (json) {
+                $('#tblAllocate tr:not(:first)').remove();
+                var tr;
+                if (json.length == 0) {
+                    $('#btnSave').hide();
+                    alert('Designation not available for the selected department.');
+                    return;
+                }
+                $('#btnSave').show();
+
+                //Append each row to html table
+                var c = 0;
+                for (var i = 0; i < json.length; i++) {
+                    tr = $('<tr/>');
+                    c++;
+                    tr.append("<td>" + c + "</td>");
+                    tr.append("<td>" + json[i].designation_name + "</td>");
+                    tr.append("<td>" + json[i].designation_level + "</td>");
+                    tr.append("<td>" + "<input type=checkbox />" + "</td>");
+                    tr.append("<td style='visibility:hidden'>" + json[i].id + "</td>");
+                    $('#tblAllocate').append(tr);
+                }
+            });
+    }
+
+    //Allocate Approver
+    function allocate() {
+        var dept = document.getElementById("Department");
+        var sodApproverList = new Array();
+        debugger;
+        $('table tr').each(function () {
+            var obj = new Object();
+            var tds = $('td', this);
+            var chk = tds.find('input[type="checkbox"]');
+            if (chk.prop("checked")) {
+                obj.SodApproverId = 1;
+                obj.DesignationId =parseInt($(this).closest('tr').find('td:eq(4)').text());
+                obj.DepartmentId = parseInt(dept.options[dept.selectedIndex].value);
+                obj.DesignationName = $(this).closest('tr').find('td:eq(1)').text();
+                obj.IsActive = 1;// true; 29.08.2016
+                sodApproverList.push(obj);
+            }
+        });
+        var approvalList = JSON.stringify({ sodApproverList: sodApproverList });
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: '/Admin/SaveApprover',
+            data: approvalList,
+            success: function (result) {
+                $('#spanSuccess').html(result);
+            },
+            error: function () {
+                $("#spanfail").html("Error occured during saving the records.");
+            }
+        });
+    }
+
+    //View Approver List
+    function viewApproverList() {
+        var url = "../Admin/SodApproverList";
+        window.location.href = url;
+    }
+
+</script>
+
+<div style="padding-left: 50px">
+    <h3>Allocate Approver</h3>
+    <div class="main_partadm">
+        <section class="section_part">
+            <div class="part_left_adm">
+                <div style="margin-top: 20px;">
+                    <span class="part_txt">Select Department</span> 
+                    <span class="ddlapprove">
+                         @Html.DropDownList("Department", new SelectList((System.Collections.IEnumerable)ViewData["DepartmentList"], "id", "dept_name"),
+                          new { onchange = "javascript:bindDesignation();" })
+                    </span>
+                    <span> Search &nbsp;&nbsp;<input type="text" id="search" style="width:200px;" maxlength="20"></span>
+                    <span class="appbtn"><input type="button" value="View Approver List" onclick="viewApproverList();" /></span>
+                </div>
+            </div>
+            <hr style="width: 100%; margin-right: 100px;" />
+            <table style="width:80%; line-height:40px; border:1px; margin-top: 10px;" id="tblAllocate" class="sodapprvlist">
+                <tr style='background-color:#EE1D23; color:#fff;'>
+                    <th>Sr.No.</th>
+                    <th>Designation</th>
+                    <th>Designation Level</th>
+                    <th>Select</th>
+                    <th style='visibility:hidden'>Designation Id</th>
+                </tr>
+            </table>
+            <br />
+
+            <div style="margin-top: 10px; margin-bottom: 15px;">
+                <div id="spanSuccess" style="color: green; font-weight: bold;"></div>
+                <span id="spanfail" style="color: red; font-weight: bold;"></span>
+            </div>
+
+          <span class="appbtn">   <input id="btnSave" type="button" value=" Save " onclick="allocate();" /></span>
+        
+        </section>
+    </div>
+</div>
+
+<style>
+    .sodapprvlist {
+        width: 95%;
+        line-height: 40px;
+        margin-top: 10px;
+    }
+        .sodapprvlist th {
+padding-left:10px;
+border: solid 1px #c2c2c2;
+        }
+    .sodapprvlist td {
+            border: solid 1px #c2c2c2;
+            height: 35px;
+            padding-left: 10px;
+        }
+
+    .appbtn {
+        margin-left: 100px;
+    }
+
+   .appbtn input {
+            margin-left: 100px;
+            background-color: #EE1D23;
+            height: 35px;
+            width: 150px;
+            color: #fff;
+            border: 0px;
+        }
+
+    .ddlapprove select {
+        height: 30px;
+        width: 70%;
+    }
+</style>

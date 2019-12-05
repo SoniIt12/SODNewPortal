@@ -1,0 +1,946 @@
+﻿@{
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <title>SOD Change Request</title>
+
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/financechangerequest.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <!--Alert Box-->
+    <link href="../css/jquery-confirm.min.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-confirm.min.js"></script>
+
+    <style>
+        .radiotextsty {
+            color: #A5A4BF;
+            font-size: 18px;
+        }
+
+        .customradio {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 0px;
+            cursor: pointer;
+            font-size: 18px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+
+            .customradio input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 22px;
+            width: 22px;
+            background-color: white;
+            border-radius: 50%;
+            border: 1px solid #BEBEBE;
+        }
+
+        .customradio:hover input ~ .checkmark {
+            background-color: transparent;
+        }
+
+        .customradio input:checked ~ .checkmark {
+            background-color: white;
+            border: 1px solid #BEBEBE;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .customradio input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .customradio .checkmark:after {
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #428bca;
+        }
+
+
+        .disabledLink {
+            cursor: not-allowed;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    </style>
+
+    <style>
+        /* The radio */
+        .radio {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+            /* Hide the browser's default radio button */
+            .radio input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+        /* Create a custom radio button */
+        .checkround {
+            position: absolute;
+            top: 2px;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #fff;
+            border-color: #f8204f;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 50%;
+        }
+
+
+        /* When the radio button is checked, add a blue background */
+        .radio input:checked ~ .checkround {
+            background-color: #fff;
+        }
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .checkround:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        .radio input:checked ~ .checkround:after {
+            display: block;
+        }
+        /* Style the indicator (dot/circle) */
+        .radio .checkround:after {
+            left: 2px;
+            top: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #f8204f;
+        }
+
+        /* The check */
+        .check {
+            display: block;
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            padding-right: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            /* Hide the browser's default checkbox */
+            .check input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 3px;
+            left: 0;
+            height: 18px;
+            width: 18px;
+            background-color: #fff;
+            border-color: #f8204f;
+            border-style: solid;
+            border-width: 2px;
+        }
+        /* When the checkbox is checked, add a blue background */
+        .check input:checked ~ .checkmark {
+            background-color: #fff;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .check input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .check .checkmark:after {
+            left: 5px;
+            top: 1px;
+            width: 5px;
+            height: 10px;
+            border: solid;
+            border-color: #f8204f;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        .cust-btn {
+            margin-bottom: 10px;
+            background-color: #f8204f;
+            border-width: 2px;
+            border-color: #f8204f;
+            color: #fff;
+        }
+
+            .cust-btn:hover {
+                border-color: #f8204f;
+                background-color: #fff;
+                color: #f8204f;
+                border-radius: 20px;
+                transform-style: 2s;
+            }
+
+        .table-striped > tbody > tr:nth-child(odd) > td {
+            background-color: #fff;
+            border-left: solid 1px #c2c2c2;
+        }
+
+        .table-striped > tbody > tr:nth-child(even) > td {
+            background-color: #f9f9f9;
+            border-left: solid 1px #c2c2c2;
+        }
+
+        .Stru_modelpop_width {
+            width: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div id="newpart">
+        <div class="container" style="padding-top:30px;display:none;" id="personalvalidate">
+            <div class="alert alert-danger" style="text-align:center;background-color:#f3aca3 !important;border:0px;">
+                <span id="alertpersonalvalidate"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="Stru_radio_margin">
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>
+                                        <input type="radio" checked="checked" name="details" onclick="choice('rdb1',this)" value="1"> Personal Details
+                                    </label>
+                                </td>
+                                <td>
+                                    <label style="display:none">
+                                        <input type="radio" name="details" onclick="choice('rdb2',this)" value="2">  HOD Detail
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div>
+                        <div class="personal_new_stru">
+                            <div>
+                                <div id="perdetails">
+
+                                    <div class="Stru_details_heading"> <span>Personal Details</span>  <span class="Stru_viewAll"><a href="#" data-target="#changeReqHistory" data-toggle="modal">View History</a></span> </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-xs-5">
+                                                <label for="lblempid">Employee ID:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <label id="lblempid" class="personNm_leftmargin txtnormalfont">@Session["EmpCode"]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-xs-5">
+                                                <label for="lblname">Name:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <label id="lblname" class="col-form-label personNm_leftmargin txtnormalfont">@(Session["FirstName"].ToString() + " " + Session["LastName"].ToString())</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-xs-4">
+                                                <label for="lbldesignation" class="col-form-label">Designation:</label>
+                                            </div>
+                                            <div class="col-md-9 col-xs-8">
+                                                <label id="lbldesignation" class="col-form-label txtnormalfont">@Session["Designation"]</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-xs-4">
+                                                <label for="txtemail" class="col-form-label">Email ID:</label>
+                                            </div>
+                                            <div class="col-md-4 col-xs-8">
+                                                <input type="text" class="form-control " id="txtemail" value="@Session["Email"]" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-xs-4">
+                                                <label for="txtphn" class="col-form-label">Phone No.:</label>
+                                            </div>
+                                            <div class="col-md-4 col-xs-8">
+                                                <input type="text" class="form-control" id="txtphn" value="@Session["Phone"]" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-xs-4">
+                                                <label for="personalremarks" class="col-form-label">Remarks:</label>
+                                            </div>
+                                            <div class="col-md-4 col-xs-8">
+                                                <textarea rows="2" maxlength="400" id="personalremarks" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="personaDt_btn">
+                                                <input type="button" id="btnpersonal" value="Submit" class="btn btn-success btn-danger" onclick="dbvalidate()" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div id="hoddetails" style="display:none;">
+                                    <div>
+                                        <div class="Stru_details_heading"><span>Current HOD Details </span>  <span class="Stru_viewAll"><a href="#" data-target="#changeReqHistory" data-toggle="modal">View History</a></span></div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-md-3 col-xs-5">
+                                                    <label for="lblhodempid">Employee ID:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <label id="lblhodempid" class="personNm_leftmargin txtnormalfont">@ViewBag.HodEmployeeCode</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-md-3 col-xs-5">
+                                                    <label for="lblhodname">HOD Name:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <label id="lblhodname" class="col-form-label personNm_leftmargin txtnormalfont">@ViewBag.HodName</label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-md-3 col-xs-4">
+                                                    <label for="lblhoddesignation" class="col-form-label">Designation:</label>
+                                                </div>
+                                                <div class="col-md-9 col-xs-8">
+                                                    <label id="lblhoddesignation" class="col-form-label txtnormalfont">@ViewBag.HodDesignation</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div style="margin-top:20px; border:solid 1px #c2c2c2; padding:10px;border-radius:5px;display:none" class="" id="hodoption">
+                            <div class="row">
+                                <div style="padding-bottom:30px;">
+                                    <div class="">
+                                        <div class="col-md-3">
+                                            <div style="font-weight:bold;font-size:15px; padding-top:5px;">Do you want to change HOD:</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div><select style="width:100%;" class="form-control" id="ddloption"><option value="1" selected="selected">No</option> <option value="2">Yes</option></select></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hodDetailsSerch" id="Empid_showDiv">
+                            <div class="row" id="hodempid">
+                                <div class="form-group">
+                                    <div class="col-md-3 col-xs-8">
+                                        <label for="txthod" class="col-form-label">HOD Employee ID:</label>
+                                    </div>
+                                    <div class="col-md-4 col-xs-8">
+                                        <input type="text" class="form-control" id="txthod" />
+                                    </div>
+                                    <div class="col-md-3 col-xs-3">
+                                        <div class="mob_top_margin_btn mob_topmargin10_btn">
+                                            <input type="button" id="btnsubmit2" value="Check" class="btn btn-success mobbtn_margin " onclick="validate();" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div style="text-align:right; padding-top:25px; margin-right:20px;">
+
+                                </div>
+
+                            </div>
+
+                            <div id="displayhoddetials" style="display:none;">
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-5">
+                                            <label for="lblhod2name">HOD Name:</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <label id="lblhod2name" class="col-form-label personNm_leftmargin"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-4">
+                                            <label for="lblhod2designation" class="col-form-label">Designation:</label>
+                                        </div>
+                                        <div class="col-md-9 col-xs-8">
+                                            <label id="lblhod2designation" class="col-form-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-4">
+                                            <label for="hodremarks" class="col-form-label">Remarks</label>
+                                        </div>
+                                        <div class="col-md-4 col-xs-8">
+                                            <textarea rows="2" maxlength="400" id="hodremarks" class="form-control"></textarea>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div style="margin-top:10px; padding:10px;border-radius:5px;">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div style="text-align:center;">
+                                                <input type="button" id="btnsubmit" value="Submit" class="btn btn-success btn-danger" onclick="dbvalidate()" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="divmsg" style="display:none">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger" style="text-align:center;background-color:#f3aca3 !important;border:0px;">
+                                            <span id="alertmsg"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Modal Change History-->
+    <div id="changeReqHistory" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg Stru_modelpop_width">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title Stru_pop_header_color">Change Request History</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="Mob_Stru_content_new">
+                        <table id="tblchangerequest" class="table table-striped header_strip table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Req.ID</th>
+                                    <th>Name</th>
+                                    <th>Request Date</th>
+                                    <th>Request Type</th>
+                                    <th colspan="3">Request Details</th>
+                                    <th style="width:15%">Remarks</th>
+                                    <th>Status</th>
+                                    <th>Resend Mail</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <!--If No Record Found-->
+                    <div class="col-md-12" id="noShowRecord" style="display:none;">
+                        <div class="col-md-12">
+                            <div class="content_inner_box Mob_grid_scrollWidth" style="text-align:left; font-size:17px;margin-top:0px;color:red">No record found.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="margin-top: 40px;">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            var dv = document.getElementById("dvrecord");
+            dv.style.display = "none";
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.close();
+                return;
+            };
+        </script>
+    }
+</body>
+</html>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@Session["cxo"]' != '1') {
+            $('.Stru_radio_margin').find('label:eq(1)').css('display','block');
+        }
+
+        //new code submit button disbale
+        $('#btnpersonal, #btnsubmit').attr('disabled', 'true');
+        $('#personalremarks').keyup(function () {
+            if ($(this).val().length != 0)
+                $('#btnpersonal').attr('disabled', false);
+            else
+                $('#btnpersonal').attr('disabled', true);
+        });
+
+        $('#hodremarks').keyup(function () {
+            if ($(this).val().length != 0)
+                $('#btnsubmit').attr('disabled', false);
+            else
+                $('#btnsubmit').attr('disabled', true);
+
+        });
+
+        checktext();
+        changeRequestHistory();
+
+        $('#ddloption').on('change', function () {
+            if ($('#ddloption').val() == "2") {
+                var error_msg="";
+                if ($('#txtemail').val() == "")
+                    error_msg = "Please first update Your EmailID"+"<br />";
+                else
+                    error_msg="";
+                if ($('#txtphn').val() == "")
+                {
+                    error_msg += "Please first update your phone"+"<br />";
+                }
+                else
+                    error_msg="";
+                if(error_msg=="")
+                {
+                    $('#Empid_showDiv').css('display', 'block');
+                    $('#displayhoddetials').css('display', 'none');
+                }
+                else
+                {
+                    $('#ddloption').val("1");
+                    document.getElementById('personalvalidate').style.display = "block";
+                    document.getElementById('alertpersonalvalidate').innerHTML = error_msg;
+
+                    status = false;
+                    setTimeout(function () {
+                        document.getElementById('personalvalidate').style.display = "none";
+                        document.getElementById('alertpersonalvalidate').textContent = "";
+                    }, 5000);
+                }
+            }
+            else {
+                $('#Empid_showDiv').css('display', 'none');
+                $('#txthod').val('');
+                document.getElementById('txthod').style.border = '';
+            }
+        });
+    });
+
+
+    function showtooltip(data, ref) {
+        var text = "";
+        if ($(ref).attr('src') == "../Template/HR/closed.png") {
+            text = data.IsRejectHR == true && data.FinanceStatus == false ? "Rejected By HR" : data.FinanceApprovalRemarks != null && data.IsRejectHR == false && data.FinanceStatus == false ? "Approved by HR <br> Rejected By Finance" : data.IsRejectHR == false && data.FinanceStatus == true ? "Approved by both HR and finace " : "Approved by both HR <br> Pending from Finance";
+        }
+        else {
+            text = data.ISAccept == true && data.FinanceStatus == false ? "Approved by HR" + "<br/>" + "Pending from Finance" : "Pending from HR<br> Pending from Finance";
+        }
+        $(ref).next().css('visibility', 'visible');
+        $(ref).next().html(text);
+    }
+
+    function hidetooltip(ref) {
+        $(ref).next().css('visibility', 'hidden');
+        $(ref).next().html('');
+    }
+
+    function dbvalidate() {
+        var role = "";
+        $.ajax({
+            url: '../ChangeReq/checkRole',
+            type: 'Get',
+            success: function (response) {
+                if (response == "user") {
+                    role = "Do you want to send request to HR";
+                }
+                else if (response == "hr") {
+                    role = "Do you want to send request to Finance";
+                }
+                else {
+                    role = "Do you want to get mail to change your details";
+                }
+                if (checkfields() == true) {
+                    $.confirm({
+                        title: 'Confirmation',
+                        content: role,
+                        buttons: {
+                            ok: function () {
+                                SaveDB();
+                            },
+                            cancel: function () { }
+                        }
+                    });
+                }
+            },
+            error: function () { }
+        });
+
+    }
+
+    function validate() {
+        if (checkhodfield() == true) {
+            gethoddetials();
+        }
+    }
+
+    function checkfields() {
+        var option = $("input[name='details']:checked").val();
+        var status = true;
+
+        var reg = /^\d+$/;
+        if (option == 1) {
+            var email = document.getElementById('txtemail');
+            var phone = document.getElementById('txtphn');
+            if (email.value == "") {
+                document.getElementById('txtemail').style.border = "1px solid red";
+                status = false;
+            }
+            else {
+                document.getElementById('txtemail').style.border = "";
+            }
+            if (phone.value == "") {
+                document.getElementById('txtphn').style.border = "1px solid red";
+                status = false;
+            }
+            else {
+                if (phone.value.length > 20) {
+                    document.getElementById('personalvalidate').style.display = "block";
+                    document.getElementById('alertpersonalvalidate').textContent = "Mobile no exceeds 20 characters";
+
+                    status = false;
+                    setTimeout(function () {
+                        document.getElementById('personalvalidate').style.display = "none";
+                        document.getElementById('alertpersonalvalidate').textContent = "";
+                    }, 5000);
+                }
+
+                else if (!reg.test(phone.value)) {
+                    document.getElementById('personalvalidate').style.display = "block";
+                    document.getElementById('alertpersonalvalidate').textContent = "only numeric is allowed in phone no";
+
+                    status = false;
+                    setTimeout(function () {
+                        document.getElementById('personalvalidate').style.display = "none";
+                        document.getElementById('alertpersonalvalidate').textContent = "";
+                    }, 5000);
+                }
+
+                else {
+                    document.getElementById('txtphn').style.border = "";
+                }
+            }
+        }
+        else {
+            if ('@ViewBag.HodEmployeeCode' != null) {
+                var texthod = document.getElementById('txthod');
+                var ExixtsHod=@ViewBag.HodEmployeeCode;
+                if(texthod.value==ExixtsHod)
+                {
+                    document.getElementById('personalvalidate').style.display = "block";
+                    document.getElementById('alertpersonalvalidate').textContent = "You cannot apply for the same existing HOD.";
+                    status = false;
+                    setTimeout(function () {
+                        document.getElementById('personalvalidate').style.display = "none";
+                        document.getElementById('alertpersonalvalidate').textContent = "";
+                    }, 5000);
+
+                }
+            }
+        }
+        return status;
+    }
+
+    function clearpersonaldetails() {
+        var email = '@Session["Email"]';
+        var phone='@Session["Phone"]';
+        $('#txtemail').val(email);
+        $('#txtemail').css('border','');
+        $('#txtphn').val(phone);
+        $('#txtphn').css('border', '');
+        $('#personalremarks').val('');
+        $('#hodremarks').val('');
+        $('#personalvalidate').css('display','none');
+    }
+
+    //Check Hod Field
+    function checkhodfield() {
+        var status = true;
+        var texthod = document.getElementById('txthod');
+        if (texthod.value == "") {
+            document.getElementById('txthod').style.border = '1px solid red';
+            status = false;
+        }
+        else {
+            document.getElementById('txthod').style.border = '';
+        }
+        return status;
+    }
+    //Get Hotel Details
+    function gethoddetials() {
+        var empcode = document.getElementById("txthod").value;
+        var checkzero_empcode = empcode.substring(0, 2);
+        empcode = checkzero_empcode == 00 ? empcode :"00"+empcode;
+
+        $.getJSON("../Admin/GetEmployeeInfo?empcode=" + empcode,
+           function (json) {
+               if (json.length) {
+                   //clearConrol();
+                   $('#divmsg').css('display', 'none');
+                   $('#displayhoddetials').css('display', 'block');
+                   //$('#lblhod2empid').text(json[0].EmpId);
+                   $('#lblhod2name').text(json[0].EmpName);
+                   $('#lblhod2designation').text(json[0].Designation);
+               }
+               else {
+
+                   $('#displayhoddetials').css('display', 'none');
+                   $('#divmsg').css('display', 'block');
+                   $('#alertmsg').text('No data found!!');
+                   setTimeout(function () {
+                       $('#divmsg').css('display', 'none');
+                       $('#alertmsg').text('');
+                   }, 6000);
+               }
+           });
+
+    }
+    //Check Text
+    function checktext() {
+        if ($('#txtemail').val() == "") {
+            $('#txtemail').removeAttr('readonly');
+        }
+        else {
+            $('#txtemail').attr('readonly', true);
+        }
+
+        if ($('#txtphn').val() == "") {
+            $('#txtphn').removeAttr('readonly');
+        }
+        else {
+            $('#txtphn').attr('readonly', true);
+        }
+    }
+    //Choice hide/show
+    function choice(status, ref) {
+        if (status == 'rdb1') {
+            if ($(ref).prop('checked')) {
+                $('#perdetails').css('display', 'block');
+                $('#hodoption').css('display', 'none');
+                $('#Empid_showDiv').css('display', 'none');
+                $('#hoddetails').css('display', 'none');
+                $('#ddloption').val('1');
+                $('#txthod').val('');
+                document.getElementById('txthod').style.border = '';
+                clearpersonaldetails();
+            }
+        }
+        else {
+            if ($(ref).prop('checked')) {
+                $('#perdetails').css('display', 'none');
+                $('#hoddetails').css('display', 'block');
+                $('#hodoption').css('display', 'block');
+                clearpersonaldetails();
+            }
+        }
+    }
+    //Save image in DB
+    function SaveDB() {
+        var option = $("input[name='details']:checked").val();
+        var requestname = option == 1 ? "Personal Details" : "Hod Details";
+        var remarks = option == 1 ? $('#personalremarks').val() : $('#hodremarks').val();
+
+        var sodChangeMaster = {
+            RequestedEmpId: $('#lblempid').text(), RequestedEmpName: $('#lblname').text(), DesignationId:'@Session["DesigIdM"]',
+            DesignationName: $('#lbldesignation').text(), EmailID: $('#txtemail').val(),
+            PhoneNo: $('#txtphn').val(), RequestedDate: '01/01/1900',
+            RequestStatus: option, RequestStatusCloseDate: '01/01/1900',
+            DeptId:@Session["DeptCR"],DepartmentName:'@Session["UserInfo"]'.split('|')[2]
+        };
+        var sodChangeDetails = {
+            RequestTypeId: option, RequestTypeName: requestname, CRUpdatet1: $('#txthod').val(),
+            CRUpdatet2: $('#lblhod2name').text(), CRUpdatet3: $('#lblhod2designation').text(),
+            UserRemarks:remarks, HRApprovalStatus: false,
+            HRApprovalRemarks: 'Pending from HR'
+        };
+        $.ajax({
+            url: '../ChangeReq/SaveChangeRequestMaster',
+            type: 'post',
+            data: { sodChangeMaster, sodChangeDetails },
+            success: function () {
+                window.location.href='@Url.Action("SuccessPage","ChangeReq")';
+            },
+            error: function () { }
+        });
+    }
+
+    //Resend Email To HOD
+    function ResendMailtoHR(ReqID) {
+        $('#resendMail' + ReqID).addClass("disabledLink");
+        $.confirm({
+            title:'Confirmation',
+            content:'Do you want to continue',
+            buttons:{
+                ok: function () {
+
+                    $.ajax({
+                        url:'../ChangeReq/ResendMailtoHRConfirmation',
+                        type:'post',
+                        data:{ReqId:ReqID},
+                        beforeSend: function() {
+
+                            $('.loader').show();
+                        },
+                        success:function(msg){
+                            $.alert({
+                                title: 'Email sent Confirmation',
+                                content: msg,
+                            });
+                        },
+                        complete: function() {
+                            $('.loader').hide();
+                        },
+                        error:function(){}
+                    });
+                },
+                cancel:function(){
+                }
+            }
+        });
+    }
+
+    //Change Request History
+    function changeRequestHistory() {
+        $.ajax({
+            url: '../ChangeReq/changeRequestHistory',
+            type: 'post',
+            success: function (dt) {
+                if (dt != null && dt.length > 0) {                   
+                    $('#tblchangerequest').find('tr:gt(0)').remove();
+                    for (var i = 0; i < dt.length; i++) {
+                        var ResendToHR = dt[i].HRApprovalStatus == true ? "" : "<a class='rsendmail' id='resendMail" + dt[i].ReqId + "' href='#' onclick='ResendMailtoHR(" + dt[i].ReqId + ")'>Resend Mail to HR</a>";
+                        var status = dt[i].ISAccept == true && dt[i].FinanceStatus == true ?
+                            "Closed<div style='position:relative;display:inline-block;padding-left: 2px;'><img src = '../Template/HR/closed.png' style = 'height:15px;width:15px' onmouseenter = 'showtooltip(" + JSON.stringify(dt[i]) + ",this)' onmouseleave = 'hidetooltip(this)' /><span id='tooltext1' class='ttext' style='visibility:hidden;width:225px;background-color:#EE1D23;color:#fff;text-align:center;border-radius:6px;padding:5px 0;position:absolute;z-index:1;top:-5px;right:105%;'></span></div>"
+                            : dt[i].IsRejectHR == true && dt[i].FinanceStatus == false && dt[i].FinanceApprovalRemarks != null ?
+                                "Closed<div style='position:relative;display:inline-block; padding-left: 2px;'><img src = '../Template/HR/closed.png' style = 'height:15px;width:15px' onmouseenter = 'showtooltip(" + JSON.stringify(dt[i]) + ",this)' onmouseleave = 'hidetooltip(this)' /><span id='tooltext2' class='ttext' style='visibility:hidden;width:225px;background-color:#EE1D23;color:#fff;text-align:center;border-radius:6px;padding:5px 0;position:absolute;z-index:1;top:-5px;right:105%;'></span></div>"
+                                : dt[i].IsRejectHR == true && dt[i].FinanceStatus == false && dt[i].FinanceApprovalRemarks == null ?
+                                    "Closed<div style='position:relative;display:inline-block; padding-left: 2px;'><img src = '../Template/HR/closed.png' style = 'height:15px;width:15px' onmouseenter = 'showtooltip(" + JSON.stringify(dt[i]) + ",this)' onmouseleave = 'hidetooltip(this)' /><span id='tooltext2' class='ttext' style='visibility:hidden;width:225px;background-color:#EE1D23;color:#fff;text-align:center;border-radius:6px;padding:5px 0;position:absolute;z-index:1;top:-5px;right:105%;'></span></div>"
+                                    : dt[i].ISAccept == true && dt[i].FinanceStatus == false && dt[i].FinanceApprovalRemarks != null ? "Closed <div style='position:relative;display:inline-block;padding-left: 2px;'><img src = '../Template/HR/closed.png' style = 'height:15px;width:15px' onmouseenter = 'showtooltip(" + JSON.stringify(dt[i]) + ",this)' onmouseleave = 'hidetooltip(this)' /><span id='tooltext3' class='ttext' style='visibility:hidden;width:225px;background-color:#EE1D23;color:#fff;text-align:center;border-radius:6px;padding:5px 0;position:absolute;z-index:1;top:-5px;right:105%;'></span></div>"
+                                        : "Pending <div style='position:relative;display:inline-block;border-bottom:1px ;    padding-left: 2px;'><img src = '../Template/HR/pending.png' style = 'height:15px;width:15px' onmouseenter = 'showtooltip(" + JSON.stringify(dt[i]) + ",this)' onmouseleave = 'hidetooltip(this)' /><span id='tooltext' class='ttext' style='visibility:hidden;width:225px;background-color:#EE1D23;color:#fff;text-align:center;border-radius:6px;padding:5px 0;position:absolute;z-index:1;top:-5px;right:105%;'></span></div>";
+
+
+                        if (dt[i].RequestTypeId == 1) {
+                            $('#tblchangerequest').append('<tr><td>' + dt[i].ReqId + '</td><td>' + dt[i].RequestedEmpName + '</td><td>' + dt[i].RequestDate + '</td><td>' + dt[i].RequestType + '</td><td colspan="3"><span><b>Email :</b></span><span> </span><span>' + dt[i].EmailID + '</span><br><span><b>Phone :</b></span><span> </span><span>' + dt[i].Phone + '</span></td><td>' + dt[i].UserRemarks + '</td><td><div><span>' + status + '</span></div></td><td>' + ResendToHR + '</td></tr>');
+                        }
+                        else {
+                            $('#tblchangerequest').append('<tr><td>' + dt[i].ReqId + '</td><td>' + dt[i].RequestedEmpName + '</td><td>' + dt[i].RequestDate + '</td><td>' + dt[i].RequestType + '</td><td colspan="3"><span><b>Emp Code :</b></span><span> </span><span>' + dt[i].CR1Update + '</span><br><span><b>HOD Name :</b><span> </span></span><span>' + dt[i].CR2Update + '</span><br><span><b>HOD Designation :</b></span><span> </span><span>' + dt[i].CR3Update + '</span></td><td>' + dt[i].UserRemarks + '</td><td><div><span>' + status + '</span></div></td><td>' + ResendToHR + '</td></tr>');
+                        }
+                    }
+                }
+                else {
+                    $("#tblchangerequest").hide();
+                    $("#noShowRecord").show();
+                }
+            },
+            error: function () { }
+        });
+    }
+</script>

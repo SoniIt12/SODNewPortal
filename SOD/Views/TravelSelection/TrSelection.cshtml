@@ -1,0 +1,377 @@
+﻿
+@{
+    ViewBag.Title = "TrSelection";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../Assest/js/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../Assest/css/bootstrap.min.css">
+    <script type="text/javascript" src="../Assest/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link href="../css/responsive.css" rel="stylesheet"/>
+
+    <script>
+        $(document).ready(function() {
+            //alert('hi');
+            GetTravelRequest();
+        });
+
+        //Get Flight info Response
+        function GetTravelRequest() {
+            $.getJSON("../TravelSelection/GetTravelRequest/",
+           function (json) {
+               if(@ViewBag.TravelRequestTypeId != "3")
+                        TravelResponse(json);
+                    else {
+                        TravelResponseMulticity(json);
+                    }
+                });
+        }
+
+
+        //Response for Oneway and Round Trip
+        function TravelResponse(response) {
+            $('#dvmulticityHeader').empty();
+            var xmlDoc = $.parseXML(response);
+            var xml = $(xmlDoc);
+            var min = parseInt(xml.find("PageCount").eq(0).find("Min").text());
+            var max = parseInt(xml.find("PageCount").eq(0).find("Max").text());
+            var flights = xml.find("flights");
+            //$("#dvmain table").eq(0).show();
+            var table = $("#dvmain div").eq(0).clone(true);
+            $("#dvmain div").remove();
+            //Return Flights
+            var rflights = xml.find("Rflights");
+            var rtable = $("#dvreturn div").eq(0).clone(true);
+            $("#dvreturn div").remove();
+            //Hide Return Flight
+            $("#arr_header").parent().hide();
+
+            //Flight details
+            flights.each(function() {
+                var flight = $(this);
+
+                $(".depflightNo", table).html("SG" + flight.find("FlightNo").text());
+                $("#chkradiodept", table).val(flight.find("FlightNo").text());
+
+                //$("#hdflightno", table).val(flight.find("FlightNo").text());
+                //$("#hdTotalFares", table).val(flight.find("TotalFare").text());
+                $(".arrDate", table).html(flight.find("ShortDate").text());
+                $(".depcity", table).html(flight.find("From").text());
+                $(".arrcity", table).html(flight.find("To").text());
+
+                //$("#origin", table).html(sourcecode);
+                //$("#destination", table).html(destinationcode);
+
+                $(".deptime", table).html(flight.find("STD").text().substr(11));
+                $(".arrtime", table).html(flight.find("STA").text().substr(11));
+
+                //$("#sector", table).html(flight.find("From").text() + ' - ' + flight.find("To").text());
+                $(".deptimeduration", table).html(flight.find("TimeDuration").text());
+
+                //var a = 'chgFlight(' + flight.find("FlightNo").text() + ',"' + flight.find("hc").text() + '","' + flight.find("RFlightNo").text() + '",' + '""' + ' );';
+                ////var a = 'chgFlight(' + flight.find("FlightNo").text() + ',"' + flight.find("hc").text() + '");';
+                //$("#changeflight", table).attr("onclick", a);
+                $("#dvmain").append(table);
+                table = $("#dvmain div").eq(0).clone(true);
+            });
+
+            //Return Flights details
+            rflights.each(function() {
+                $("#arr_header").parent().show();
+                var rflight = $(this);
+
+                $(".retFlightNo", rtable).html("SG" + rflight.find("FlightNo").text());
+                //$("#hdflightno", table).val(flight.find("FlightNo").text());
+                //$("#hdTotalFares", table).val(flight.find("TotalFare").text());
+                $(".ret_arrDate", rtable).html(rflight.find("ShortDate").text());
+                $(".retCity", rtable).html(rflight.find("From").text());
+                $(".ret_arrcity", rtable).html(rflight.find("To").text());
+                debugger;
+                //$("#origin", table).html(sourcecode);
+                //$("#destination", table).html(destinationcode);
+
+                $(".rettime", rtable).html(rflight.find("STD").text().substr(11));
+                $(".ret_arrtime", rtable).html(rflight.find("STA").text().substr(11));
+
+                //$("#sector", table).html(flight.find("From").text() + ' - ' + flight.find("To").text());
+                $(".retDuration", rtable).html(rflight.find("TimeDuration").text());
+
+                //var a = 'chgFlight(' + flight.find("FlightNo").text() + ',"' + flight.find("hc").text() + '","' + flight.find("RFlightNo").text() + '",' + '""' + ' );';
+                ////var a = 'chgFlight(' + flight.find("FlightNo").text() + ',"' + flight.find("hc").text() + '");';
+                //$("#changeflight", table).attr("onclick", a);
+                $("#dvreturn").append(rtable);
+                rtable = $("#dvreturn div").eq(0).clone(true);
+            });
+        }
+
+        // Response for multicity 
+        function TravelResponseMulticity(response) {
+            $('#divoneway_roundtripContainer').empty();
+            debugger;
+            var xmlDoc = $.parseXML(response);
+            var xml = $(xmlDoc);
+            var min = parseInt(xml.find("PageCount").eq(0).find("Min").text());
+            var max = parseInt(xml.find("PageCount").eq(0).find("Max").text());
+            var dtsector = parseInt(xml.find("dtsector").eq(0).find("SectorCount").text());
+            var tablesector = $("#dvmulticityHeader div").eq(0).clone(true);
+            $("#dvmulticityHeader div").remove();
+
+            for (var i = 1; i <= dtsector; i++) {
+                var flights = xml.find("flights" + i);
+                var tablinner = $("#dvmulticityInner div", tablesector).eq(0).clone(true);
+                $("#dep_headerMul", tablesector).html($(flights[0]).find("From").text() + '-' + $(flights[0]).find("To").text());
+                $("#dvmulticityInner div", tablesector).remove();
+
+                //Flight details
+                flights.each(function() {
+                    var flight = $(this);
+                    $(".depflightNoMul", tablinner).html("SG" + flight.find("FlightNo").text());
+                    $("#chkradiodeptMul", tablinner).val(flight.find("FlightNo").text());
+                    $("#chkradiodeptMul", tablinner).attr('name', i);
+
+                    $(".arrDateMul", tablinner).html(flight.find("ShortDate").text());
+                    $(".depcityMul", tablinner).html(flight.find("From").text());
+                    $(".arrcityMul", tablinner).html(flight.find("To").text());
+                    $(".deptimeMul", tablinner).html(flight.find("STD").text().substr(11));
+                    $(".arrtimeMul", tablinner).html(flight.find("STA").text().substr(11));
+                    $(".deptimedurationMul", tablinner).html(flight.find("TimeDuration").text());
+                    $("#dvmulticityInner", tablesector).append(tablinner);
+                    tablinner = $("#dvmulticityInner  div", tablesector).eq(0).clone(true);
+                });
+
+                $("#dvmulticityHeader").append(tablesector);
+                tablesector = $("#dvmulticityHeader div").eq(0).clone(true);
+            }
+        }
+
+        //Get Travel Data
+        function GetFlightInfo() {
+            debugger;
+          var sodRequestList = new Array();
+          if (@ViewBag.TravelRequestTypeId == "3") 
+          {
+              //For Multicity
+              var mlist = $("#dvmulticityInner input");
+              mlist.each(function() {
+                  if ($(this).is(':checked')) {
+                      debugger;
+                      var mparents = $(this).parent().parent().parent();
+                      var mobj = new Object();
+                      mobj.Sector = $(".depcityMul", mparents).html() + '-' + $(".arrcityMul", mparents).html();
+                      mobj.TravelDate = $(".arrDateMul", mparents).html();
+                      mobj.FlightNo = $(".depflightNoMul", mparents).html();
+                      mobj.DepartureTime = $(".deptimeMul", mparents).html();
+                      mobj.ArrivalTime = $(".arrtimeMul", mparents).html();
+                      sodRequestList.push(mobj);
+                  }
+              });
+          }   
+          else
+          {
+                //For One Way and Round Trip
+                var alist = $("#dvmain input");
+                //for Arrival List
+                alist.each(function() {
+                    if ($(this).is(':checked')) {
+                        debugger;
+                        //alert($(this).val());
+                        var parents = $(this).parent().parent().parent();
+                        var obj = new Object();
+                        obj.Sector = $(".depcity", parents).html() + '-' + $(".arrcity", parents).html();
+                        obj.TravelDate = $(".arrDate", parents).html();
+                        obj.FlightNo = $(".depflightNo", parents).html();
+                        obj.DepartureTime = $(".deptime", parents).html();
+                        obj.ArrivalTime = $(".arrtime", parents).html();
+                        sodRequestList.push(obj);
+                    }
+                });
+
+                //for Return List
+                var rlist = $("#dvreturn input");
+                rlist.each(function() {
+                    if ($(this).is(':checked')) {
+                        debugger;
+                        var rparents = $(this).parent().parent().parent();
+                        var robj = new Object();
+                        robj.Sector = $(".retCity", rparents).html() + '-' + $(".ret_arrcity", rparents).html();
+                        robj.TravelDate = $(".ret_arrDate", rparents).html();
+                        robj.FlightNo = $(".retFlightNo", rparents).html();
+                        robj.DepartureTime = $(".rettime", rparents).html();
+                        robj.ArrivalTime = $(".ret_arrtime", rparents).html();
+                        sodRequestList.push(robj);
+                    }
+                });
+            }
+            
+            if (sodRequestList.length==0) {
+                alert('Please select flight.');
+                return false;
+            }
+            var sodRequestsList = JSON.stringify({ sodRequestsList: sodRequestList });
+
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '../EmployeeBookingDetail/SubmitFlightInfo',
+                    data: sodRequestsList,
+                    success: function (data) {
+                        var url = '@Url.Action("EmpBookingDetail", "EmployeeBookingDetail")';
+                        window.location.href = url;
+                    },
+                    error: function () {
+                        $("#spanfail").html("Error on Save data.");
+                    }
+                });
+            }
+
+    </script>
+</head>
+<body>
+    <div class="travelMain">
+
+        <header class="container">
+            <div class="row">
+                <div class="col-md-3"><div class="mainlogo"><img src="~/images/logo_round_spicejet.png" /></div></div>
+                <div class="col-md-6"><div class="headingtxtall">ESS Portal</div><div class="headingtxtall2">SOD Travel Request</div></div>
+                <div class="col-md-3"><div class="logocelebration"></div></div>
+            </div>
+        </header>
+
+        <section class="container">
+            <div class="row" id="divoneway_roundtripContainer">
+                @*Request Type :One way*@
+                <div class="col-md-6">
+                    <div style="padding-top: 20px; padding-left: 30px; color: #fff; font-size: 17px; text-align: center">
+                        <img src="~/images/plane_icon.png" /> <span id="dep_header">@ViewBag.OriginPlace</span>
+                    </div>
+                    <div id="dvmain">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div style="margin-top: 50px;">
+                                    <input style="width: 20px; height: 20px;" id="chkradiodept" name="chkradiodept" type="radio" value="" />
+                                </div>
+                            </div>
+                            <div class="col-md-11">
+                                <div class="flightselctbookingbox">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div><span class="deptime">6:50 AM</span></div>
+                                            <div><span class="depcity">Delhi</span></div>
+                                            <div><span class="depflightNo">Flight SG 160</span></div>
+                                            <div><span class="deptimeduration">Total Duration : 2h 10m</span>  </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <img src="~/images/arrow_icon.png" />
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div><span class="arrtime">6:50 AM</span></div>
+                                            <div><span class="arrcity">Mumbai</span></div>
+                                            <div style="padding-top: 20px;"><span class="arrDate">  Thu 25, feb 2016</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Request Type :Round Trip*@
+                <div class="col-md-6">
+                    <div style="padding-top: 20px; padding-left: 30px; color: #fff; font-size: 17px; text-align: center"><img src="~/images/plane_icon.png" /> 
+                    <span id="arr_header">@ViewBag.ReturnPlace</span></div>
+                    <div id="dvreturn">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div style="margin-top: 50px;">
+                                    <input style="width: 20px; height: 20px;" name="chkradioreturn" type="radio" />
+                                </div>
+                            </div>
+                            <div class="col-md-11">
+                                <div class="flightselctbookingbox">
+                                    <div class="row">
+
+                                        <div class="col-md-5">
+                                            <div><span class="rettime">6:50 AM</span></div>
+                                            <div><span class="retCity">Mumbai</span></div>
+                                            <div><span class="retFlightNo">Flight SG 160</span></div>
+                                            <div><span class="retDuration">Total Duration : 2h 10m</span>  </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <img src="~/images/arrow_icon.png" />
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div><span class="ret_arrtime">6:50 AM</span></div>
+                                            <div><span class="ret_arrcity">Delhi</span></div>
+                                            <div style="padding-top: 20px;"><span class="ret_arrDate">  Thu 25, feb 2016</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Request Type :Multicity*@
+            <div id="dvmulticityHeader" style="padding-left: 25px;">
+                <div style="border: 1px solid white; margin-top: 20px; padding: 20px;">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div style="padding-top: 20px; padding-left: 30px; color: #fff; font-size: 17px; text-align: center">
+                                <img src="~/images/plane_icon.png" /> <span id="dep_headerMul"></span>
+                            </div>
+                            <div id="dvmulticityInner" style="margin-left:30px;">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div style="margin-top: 50px;">
+                                            <input style="width: 20px; height: 20px;" id="chkradiodeptMul" name="chkradiodeptMul" type="radio" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <div class="flightselctbookingbox">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div><span class="deptimeMul">6:50 AM</span></div>
+                                                    <div><span class="depcityMul">Delhi</span></div>
+                                                    <div><span class="depflightNoMul">Flight SG 160</span></div>
+                                                    <div><span class="deptimedurationMul">Total Duration : 2h 10m</span>  </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <img src="~/images/arrow_icon.png" />
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div><span class="arrtimeMul">6:50 AM</span></div>
+                                                    <div><span class="arrcityMul">Mumbai</span></div>
+                                                    <div style="padding-top: 20px;"><span class="arrDateMul">  Thu 25, feb 2016</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row"><div class="col-md-12"><div style="margin-top:25px; text-align:center;"><div class="submitbtn"><a href="#" onclick="GetFlightInfo();">Continue</a></div></div><</div></div>
+        </section>
+
+    </div>
+</body>
+</html>
+

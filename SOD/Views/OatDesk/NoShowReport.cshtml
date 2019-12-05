@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "OAT | No Show Report";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<head>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+    <script src="~/js/angular/OAtTravelDesk.js"></script>
+    <link href="~/Assest/css/AdminNew.css" rel="stylesheet" />
+
+
+    <style>
+        .odd {
+            background-color: white;
+        }
+
+        .even {
+            background-color: gray;
+        }
+
+        .pointerCursor {
+            cursor: pointer;
+        }
+
+        .auto-index td:first-child:before {
+            counter-increment: Serial; /* Increment the Serial counter */
+            content: "#" counter(Serial); /* Display the counter */
+        }
+
+        body {
+            counter-reset: Serial; /* Set the Serial counter to 0 */
+        }
+    </style>
+
+</head>
+
+<!--------------------------------------------Content---------------->
+    <div ng-app="OatViewDetails" ng-controller="OatFlightNoShow" class="ng-cloak">
+        <div>
+            <div class="admin_content_txtheading">Flight NoShow Report</div>
+        </div>
+        <div class="content">
+
+            <div class="oat-search-box">
+                <div class="row">
+                    <div class="col-md-4" style="display:flex;">
+                        <span>Search :</span><span><input type="text" ng-model="search" ng-change="filter();" class="form-control" style="margin-left:20px;"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="txtfiltered">Filtered {{ filtered.length }} of {{ totalItems}} Total Records</div>
+                    </div>
+                    <div class="col-md-1">
+                        <span class="pull-left">Page Size</span>
+                        <span>
+                            <select class="form-control" ng-model="entryLimit">
+                                <option>3</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-md-4" ng-show="filteredItems > 0">
+                        <div class="req-sev-provider-btn">
+                            <a id="btnExportRequest"  class="btn btn-warning btn-sm" style="background-color: #EE1D23; border-color: #EE1D23;">
+                                Export Data
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="soddiv" class="margintop_dv">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ng-show="filteredItems > 0">
+                            <div class="mob-width-scroll">
+                                <table class="table-striped table-bordered" id="tbldetail">
+                                    <tr id="tb-header-space">
+                                        <th>S No.</th>
+                                        <th>
+                                            Req.ID &nbsp;<a ng-click="sort_by('OATReqId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Sector &nbsp;<a ng-click="sort_by('Sector');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Airline Name &nbsp;<a ng-click="sort_by('AirlineName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>Flight No.</th>
+                                        <th>
+                                            Travel Date &nbsp;<a ng-click="sort_by('TravelDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Departure Time 
+                                        </th>
+                                        <th>
+                                            Price &nbsp;<a ng-click="sort_by('Price');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            IsInternational 
+                                        </th>
+                                        <th>
+                                            NoOfPassenger 
+                                        </th>
+                                        <th>Entry Date &nbsp;<a ng-click="sort_by('EntryDate');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Entry By </th>
+                                        
+                                    </tr>
+                                    @*</lata>*@
+                                    <tbody ng-repeat="list in filtered = (oatflightNoShowList | filter: search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                        <tr id="tb-header-space">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{list.OATReqId}}</td>
+                                            <td>{{list.Sector}}</td>
+                                            <td>{{list.AirlineName}}</td>
+                                            <td>{{list.FlightNo}}</td>
+                                            <td>{{getAngularDate(list.TravelDate)|  date : "dd/MM/y"}}</td>
+                                            <td>{{list.DepartureTime}}</td>
+                                            <td>{{list.Price}}</td>
+                                            <td>{{list.IsInternational==false?'Domestic':'International'}}</td>
+                                            <td>{{list.NoOfPassengers== null? 0 :list.NoOfPassengers}}</td>
+                                                
+                                            <td>{{getAngularDate(list.EntryDate)|  date : "dd/MM/y"}}
+                                            </td>
+                                            <td>{{list.EntryBy}}
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <div class="col-md-12" ng-show="filteredItems==0">
+                            <div class="col-md-12">
+                                <div><span style="text-align:center; font-size:14px;margin-top:100px;color:#ff0000">Sorry ! No record found. </span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!--Pagination-->
+                    <div class="col-md-12" ng-show="filteredItems > 0" style="z-index:0; margin-bottom:30px;">
+                        <div pagination previous-text="Back" next-text="next" total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" items-per-page="entryLimit" rotate="false"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- --------------------Loader--------------------------------------------------->
+            <div class="loader">
+                <center>
+                    <span class="loading-image" id="loaderMsg" style="font-weight:bold;font-size:22px;color:#ff0000;"></span>
+                    <img class="loading-image" src="../images/loading.gif" alt="loading.."><br />
+                </center>
+            </div>
+            <!-- --------------------End of Loader----------------------------------------->
+        </div>
+        </div>
+<script>
+    jQuery(document).ready(function ($) {
+
+        $('#btnExportRequest').click(function () {
+            
+               
+            window.location = '../OatDesk/ExportListNoShow';
+           
+        });
+     });
+
+
+
+</script>

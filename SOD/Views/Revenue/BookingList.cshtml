@@ -1,0 +1,536 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<html>
+<head>
+   
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="../css/SODstyle.css" rel="stylesheet" />*@
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <title>Booking List</title>
+   
+     <script> 
+    //Dom Loading
+    $(document).ready(function () {
+        bindList();
+        $('.loader').hide();
+    });
+
+    //Bind booking List
+    function bindList() {
+        debugger;
+        $.getJSON("../Revenue/GetBookingData",
+            function (json) {
+                $('#tbldetail tr:not(:first)').remove();
+                if (json.length > 0) { $("#dvrecord").show(); $("#dvna").hide(); } else { $("#dvna").show(); $("#dvrecord").hide(); }
+                var tr;
+                var counter = 0;
+                debugger;
+                //Append each row to html table
+                for (var i = 0; i < json.length; i++) {
+                    counter = counter + 1;
+                    tr = $('<tr/>');
+                    tr.append("<td>" + counter + "</td>");
+                    var trNo = json[i].TravelRequestId;
+                    var btype = "";
+                    if (json[i].TravelRequestCode.split('-')[0]= "SOD SJSC") { btype = "SOD-SJSC" }
+                    else if (json[i].SodBookingType == "SOD") { btype = "SOD" }
+                    else { btype = "NON-SOD" }
+                    btype = btype + "-" + trNo;
+                    tr.append("<td>" + "<a data-toggle=modal href='#viewdetailModal' class='csod'  onclick=viewdetail('" + trNo + "');>" + btype + "</a>" + "</td>");
+                    tr.append("<td>" + json[i].BookingRequestDate + "</td>");
+                    tr.append("<td>" + "<a data-toggle=modal href='#shortModal' class=btn btn-primary onclick=bindBookingHistory('" + json[i].RequestedEmpId + "');>" + json[i].RequestedEmpName + "</a>" + "</td>");
+                    tr.append("<td>" + json[i].RequestedEmpDesignation + "</td>");
+                    tr.append("<td>" + json[i].RequestedEmpDept + "</td>");
+                    tr.append("<td>" + json[i].TravelDate + "</td>");
+                    tr.append("<td>" + json[i].ReasonForTravel + "</td>");
+                    var travelRequestId = json[i].TravelRequestId + ',' + json[i].EmailId + ',' + json[i].SodBookingType + ',' + json[i].BookingFor;
+                    tr.append("<td style='width:135px'><div class=sts>" + "<a class='revne_approve_green' href=# onclick=approve('" + travelRequestId + "');>Approve </a><a  data-toggle=modal href='#commentModal' class='revne_approve_red'   onclick=openRejectpopup('" + travelRequestId + "');> Reject</a>" + "</div></td>"); 
+                    $('#tbldetail').append(tr);
+                }
+            });
+       }
+
+    //Approve Request
+    function approve(travelRequestId) {
+        if (travelRequestId.split(',')[0] == 'undefined') {
+            alert('Invalid record.');
+            return;
+        }
+        var result = confirm("Are you sure to approve this request?");
+        if (result) {
+            var travelReqId = JSON.stringify({ travelReqId: travelRequestId });
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '../Revenue/ApproveSodBookingRequest',
+                data: travelReqId,
+
+                beforeSend: function () {
+                    //$('.loader').show()
+                },
+                complete: function () {
+                   //$('.loader').hide();
+                },
+                success: function (data) {
+                    //alert(data);
+                    updatTableStatus(travelRequestId.split(',')[0], travelRequestId.split(',')[2], 'a', data);
+                },
+                error: function (xhr, status, exception) {
+                    alert('Error: Please Try after some time.');
+                }
+            });
+        }
+    }
+    
+    //Reject Popup
+    function openRejectpopup(travelRequestId) {
+          hddncomments.value = travelRequestId;
+          $("#spanSodId").html(" (Request Id : "+travelRequestId.split(',')[2] +"-" + travelRequestId.split(',')[0] + ") ");
+          $("#txtcomment").val("");
+          $("#txtcomment").focus();
+        }
+    
+    //Reject Request
+    function rejectsave(value) {
+        if ($("#txtcomment").val().replace(/\s+/g, '').length == 0) {
+            alert('Please enter comment.');
+            $("#txtcomment").focus();
+            return false;
+        }        
+        //$("#rejecttype").click(function () {
+        //    rejectsave($(this).val());
+        //});      
+        var travelRequestId = $("#hddncomments").val();
+        if (travelRequestId.split(',')[0] == 'undefined') {alert('Invalid record.');return;}
+        travelRequestId = travelRequestId + "," + $("#txtcomment").val() + "," + value ;
+            var travelReqId = JSON.stringify({ travelReqId: travelRequestId });
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '../Revenue/RejectSodBookingRequest',
+                data: travelReqId,
+                beforeSend: function () {
+                    //$('.loader').show()
+                },
+                complete: function () {
+                    //$('.loader').hide();
+                },
+                success: function (data) {
+                    //alert(data);
+                    updatTableStatus(travelRequestId.split(',')[0], travelRequestId.split(',')[2], 'r', data);
+                },
+                error: function (xhr, status, exception) {
+                    alert('Error: Please Try after some time.');
+                }
+            });
+         }        
+    //View Details 
+    function viewdetail(trId) {
+        //var trId = JSON.stringify({ trId: trId });
+        $.getJSON("../Revenue/GetBookingInfo?trId=" + trId,
+           function (json) {
+               //Declare array
+               var arrFlight = [];
+               var arrbooking = [];
+               var arrpass = [];
+               var mealdata = [];
+               var arrHotel = [];
+
+               //push  value in array
+               arrbooking.push(json["bookingInfo"]);
+               arrFlight.push(json["flightInfo"]);
+               arrpass.push(json["passInfo"]);
+               mealdata.push(json["mealsInfo"]);
+               arrHotel.push(json["hotelInfo"]);
+
+               //Empty tables
+               $("#tblbookinginfo").children().remove();
+               $("#tblviewFlight").children().remove();
+               $("#tblviewPassInfo").children().remove();
+               $("#tblviewHotelInfo").children().remove();
+
+               var tr;
+               var cp=""
+               //Booking info
+               var btype;
+               if (arrbooking[0][0].SodBookingTypeId == "1") { btype = "SOD"; } else { btype = "NON-SOD" }
+             
+               if (arrbooking[0][0].IsAmountPaidByTraveller == true)
+                   cp = " - Passenger Paid Booking";
+
+               $("#spanReqid").html(" (Request ID :" + btype + "-" + trId + ")" + cp);
+
+               tr = "<tr class='popheadcolor'><th>Reason For Travel </th><th>Booking Type</th><th>No. of Passengers</th><th>Booking For</th><th>Is Mandatory Travel</th></tr>";
+               $('#tblbookinginfo').append(tr);
+               tr = $('<tr/>');
+               tr.append("<td>" + arrbooking[0][0].ReasonForTravel + "</td>");
+               tr.append("<td>" + btype + "</td>");
+               tr.append("<td>" + arrbooking[0][0].Passengers + "</td>");
+               tr.append("<td>" + arrbooking[0][0].BookingFor + "</td>");
+               if (arrbooking[0][0].IsMandatoryTravel == "1") { tr.append("<td>Yes</td>"); } else { tr.append("<td>No</td>"); }
+               $('#tblbookinginfo').append(tr);
+
+               //Flight Info tbl
+               if (btype == "SOD")
+                   tr = "<tr class='popheadcolor'><th>Sector</th><th>Travel Date</th><th>Flight No.</th><th>Departure Time</th><th>Arrival Time</th><th>Meals/Beverages</th></tr>";
+               else
+                   tr = "<tr class='popheadcolor'><th>Sector</th><th>Travel Date</th><th>Flight No.</th><th>Departure Time</th><th>Arrival Time</th></tr>";
+
+               $('#tblviewFlight').append(tr);
+               for (var i = 0; i < arrFlight[0].length; i++) {
+                   tr = $('<tr/>');
+                   tr.append("<td>" + arrFlight[0][i].OriginPlace + "-" + arrFlight[0][i].DestinationPlace + "</td>");
+                   tr.append("<td>" + ToJavaScriptDate(arrFlight[0][i].TravelDate) + "</td>");
+                   tr.append("<td>" + arrFlight[0][i].FlightNo + "</td>");
+                   tr.append("<td>" + arrFlight[0][i].DepartureTime + "</td>");
+                   tr.append("<td>" + arrFlight[0][i].ArrivalTime + "</td>");
+                   if (btype == "SOD") tr.append("<td>" + arrFlight[0][i].Meals + "</td>");
+                   $('#tblviewFlight').append(tr);
+               }
+
+               //passenger info tbl
+               if (btype == "SOD") {
+                   tr = "<tr class='popheadcolor'><th>Travel Name</th><th>Designation</th><th>Department</th></tr>";
+                   $('#tblviewPassInfo').append(tr);
+                   tr = $('<tr/>');
+                   tr.append("<td>" + arrpass[0][0].Title + " " + arrpass[0][0].TravelerFirstName + " " + arrpass[0][0].TravelerLastName + "</td>");
+                   tr.append("<td>" + arrbooking[0][0].RequestedEmpDesignation + "</td>");
+                   tr.append("<td>" + arrbooking[0][0].RequestedEmpDept + "</td>");
+                   $('#tblviewPassInfo').append(tr);
+               }
+               else {
+                   var trmeal = $("<tr class='popheadcolor'/>");
+                   trmeal.append("<td>Travel Name</td>");
+                   for (var col = 0; col < arrFlight[0].length; col++) {
+                       trmeal.append("<td>" + arrFlight[0][col].OriginPlace + '-' + arrFlight[0][col].DestinationPlace + "</td>");
+                   }
+                   $('#tblviewPassInfo').append(trmeal);
+
+                   trmeal = "";
+                   var cols = $("#tblviewPassInfo").find("tr:first td");
+                   for (var i = 1; i <= arrbooking[0][0].Passengers; i++) {
+                       trmeal = $('<tr/>');
+                       trmeal.append("<td>" + arrpass[0][i - 1].Title + ". " + arrpass[0][i - 1].TravelerFirstName + " " + arrpass[0][i - 1].TravelerLastName + "</td>");
+                       for (var t = 1; t < cols.length; t++) {
+                           for (var j = 0; j < mealdata[0].length; j++) {
+                               if (cols[t].innerText == mealdata[0][j].Sector && mealdata[0][j].PassengerId == i) {
+                                   trmeal.append("<td>" + mealdata[0][j].MealType + "</td>");
+                               }
+                               else if (cols[t].innerText == mealdata[0][j].Sector && mealdata[0][j].PassengerId == 0) {
+                                   trmeal.append("<td>" + mealdata[0][j].MealType + "</td>");
+                               }
+                           }
+                       }
+                       $('#tblviewPassInfo').append(trmeal);
+                   }
+               }
+
+               if (arrbooking[0][0].IsHotelRequired == '0') { $('#hotelinfotext').hide(); } else { $('#hotelinfotext').show(); }
+
+               //setting hotel booking status
+               if (arrHotel[0][0].IsAllocated == '0') {
+                   arrHotel[0][0].IsAllocated = "Pending";
+               }
+               else
+                   arrHotel[0][0].IsAllocated = "Allocated"
+
+               //hotel information
+               if (btype == "SOD") {
+
+                   tr = "<tr class='popheadcolor'><td>City</td><td>Check In Date</td><td>Check Out Date</td><td>Status</td><td>Remark</td></tr>";
+                   $('#tblviewHotelInfo').append(tr);
+                   tr = $('<tr/>');
+                   tr.append("<td>" + arrHotel[0][0].City + "</td>");
+                   tr.append("<td>" + ToJavaScriptDate(arrHotel[0][0].CheckInDate) + "</td>");
+                   tr.append("<td>" + ToJavaScriptDate(arrHotel[0][0].CheckOutDate) + "</td>");
+                   tr.append("<td>" + arrHotel[0][0].IsAllocated + "</td>");
+                   tr.append("<td>" + arrHotel[0][0].Remarks_Status + "</td>");
+                   $('#tblviewHotelInfo').append(tr);
+
+               }
+           });
+    }
+
+    //Bind booking Histrory
+    function bindBookingHistory(empId) {
+        $("#maindiv").empty();
+        $.getJSON("../Revenue/GetEmployeeBookingHistory?empId=" + empId,
+            function (json) {
+                if (json.length > 0) $("#dvmessage").hide(); else $("#dvmessage").show();
+                var table = $("<table class='flighdtl table table-striped table-bordered' width=100%><tr class='flggridCS'><th style=width:250px>Travel Request Id</th><th>Travel Date</th><th>Sector</th><th>Reason For Travel</th><th>Type</th> </table>");
+                for (var i = 0; i < json.length; i++) {
+                    var btype;
+                    if (json[i].SodBookingType == "1") { btype = "SOD"; } else { btype = "NON-SOD" }
+                    var tr = $('<tr/>');
+                    tr.append("<td style=width:250px>" + json[i].TravelRequestCode + "</td>");
+                    tr.append("<td style=width:200px>" + json[i].TravelDate + "</td>");
+                    tr.append("<td style=width:200px>" + json[i].Sector + "</td>");
+                    tr.append("<td style=width:250px>" + json[i].ReasonForTravel + "</td>");
+                    tr.append("<td style=width:250px>" + btype + "</td>");
+                    table.append(tr);
+                    $("#maindiv").append(table);
+                }
+            });
+    }
+
+    //Date Pase function
+    function ToJavaScriptDate(value) {
+        debugger;
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return (dt.getDate()) + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+    }
+
+    //Update Table Status
+    function updatTableStatus(trRequestId,bts, type, data) {
+        var val = bts + "-" + trRequestId;
+        $('#tbldetail tr').each(function () {
+            var s = $(this).find("td .csod").html()
+            if (s === val && type === 'r') {
+                $(this).css("background-color", "#F5CBA7");
+                var th = $(this);
+                th.find(".sts").replaceWith("<img src='../img/progloader.gif' class='sts1' style='margin-bottom:4px; width:90px;height:15px;'/> ")
+                $.ajax({
+                    url: "../Revenue/sendRejectionNotification",
+                    success: function (result) {
+                        th.find(".sts1").replaceWith("<span style='color:red'>Rejected </span><img  src='../img/rejected1.png' style='margin-bottom:4px; width:20px;height:20px;' alt='Rejected' />");
+                        alert(data);
+                    }
+                });
+                return;
+            }
+            else if (s === val && type === 'a') {
+                $(this).css("background-color", "#81F7BE");
+                var th = $(this);
+                th.find(".sts").replaceWith("<img src='../img/progloader.gif' class='sts1' style='margin-bottom:4px; width:90px;height:15px;'/> ")
+                $.ajax({
+                    url: "../Revenue/BackgroundProcessNotification",
+                    success: function (result) {
+                        th.find(".sts1").replaceWith("<span style='color:green'>Approved </span> <img  src='../img/right.png' style='margin-bottom:4px; width:20px;height:20px;' alt='Approved' />");
+                        alert(result);
+                    },
+                    error:function(){
+                        alert('Invalid operation. Please contact to System Admin.');
+                   }
+                });
+                return;
+            }
+            
+        });
+    }
+  </script>
+
+</head>
+
+<body>
+    <div>
+        <div class="admin_content_txtheading">View Booking List</div>
+    </div>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12" id="dvrecord">
+                <div class="mob_dvrecord">
+                    <table class="table table-striped table-bordered" id="tbldetail">
+                        <tr class="flggridCS"><th>Sr.No.</th><th>Req. ID</th><th>Booking Request Date</th><th>Name</th><th>Designation</th><th>Department</th><th>Travel Date</th><th>Purpose</th><th>Action</th></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12" id="dvna"><div style="text-align:center; font-size:14px;margin-top:50px;color:#ff0000">No record found for approval.</div></div>
+        </div>
+    </section>
+
+    <div class="container" >
+       
+    </div>
+
+
+    @*<div class="reqbooktxt">
+            <h3 class="headtrRBL">Sod Requested Booking List</h3>
+            <div class="main_partadm" id="dvrecord">
+                <section class="section_part">
+                    <table class="flighdtl" style="width:100%;" id="tbldetail">
+                        <tr class="flggridCS"><td>Sr.No.</td><td>Req. ID</td><td>Booking Request Date</td><td>Name</td><td>Designation</td><td>Department</td><td>Travel Date</td><td>Purpose</td><td>Action</td></tr>
+                    </table>
+                </section>
+            </div>
+            <div class="col-md-12" id="dvna"><div style="text-align:center; font-size:14px;margin-top:50px;color:#ff0000">No record found for approval.</div></div>
+        </div>*@
+
+    <!--------------------Model popup for Travel history------------------------------------->
+    <div id="shortModal" class="modal modal-wide fade">
+        <div class="modal-dialog newmodelcs">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><span class="viewlistcs">View Past Travel History </span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="maindiv"> </div>
+                    <div id="dvmessage" style="text-align:center; font-size:14px;margin-top:10px;color:#ff0000">Past Travel record not available.</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--------------------View Detail Model popup------------------------------------->
+    <div id="viewdetailModal" class="modal modal-wide fade">
+        <div class="modal-dialog newmodelcs">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                    <h4 class="modal-title"> <span class="viewlistcs">View Booking Request Details</span></h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mob_dvrecord">
+                        <h4 class="popuphdtxt">Booking Information <span id="spanReqid"></span></h4>
+                        <table id="tblbookinginfo" class="table table-striped table-bordered tbl_textCenter flighdtl"></table>
+                    </div>
+                    
+                    <div class="mob_dvrecord">
+                        <h4 class="popuphdtxt">Travel Information</h4>
+                        <table class="table table-striped table-bordered tbl_textCenter flighdtl" id="tblviewFlight"></table>
+                    </div>
+                   
+                    <div class="mob_dvrecord">
+                        <h4 class="popuphdtxt">Passenger(s) Information </h4>
+                        <table class="table table-striped table-bordered tbl_textCenter flighdtl" id="tblviewPassInfo"></table>
+                    </div>
+                   
+                    <div class="mob_dvrecord">
+                        <h4 class="popuphdtxt" id="hotelinfotext">Hotel Information</h4>
+                        <div class="apptblgrd">
+                            <table class="table table-striped table-bordered tbl_textCenter flighdtl" id="tblviewHotelInfo"></table>
+                        </div>
+                    </div>                   
+                  </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--------------------Comment popup------------------------------------->
+    <div id="commentModal" class="modal modal-wide fade">
+        <div class="modal-dialog newmodelcs">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                    <h5 class="modal-title"><span class="viewlistcs">Write comment<span id="spanSodId"></span></span></h5>
+                </div>
+                <div class="modal-body">
+                    <textarea class="form-control" rows="5" cols="6" id="txtcomment" maxlength="200"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="hddncomments" /> 
+                    <button type="button"  id="rejecttype" data-dismiss="modal" value="1" onclick="rejectsave($(this).val());"> Reject and  eGenerate Standby Booking </button>
+                    <button type="button"  id="rejecttype" data-dismiss="modal" value="2" onclick="rejectsave($(this).val());"> Reject </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!------Div Loader------------------------------------------------------>
+    <div class="loader">
+        <center>
+            <img class="loading-image" src="../images/loading.gif" alt="loading..">
+        </center>
+    </div>
+</body>
+</html>
+<!--Model popup-->
+<script>
+    $(".modal-wide").on("show.bs.modal", function () {
+        var height =$(window).height() - 0;
+        $(this).find(".modal-body").css("max-height", height);
+    });
+</script>
+
+<style>
+    /*.modal.modal-wide .modal-dialog {
+        width: 75%;
+    }
+    .modal.modal-wide .modal-dialog1 {
+        width: 75%;
+        position: absolute;
+        left: 15%;top:5%;
+    }
+
+    .modal.modal-wide .modal-dialog2 {
+        width: 35%;
+        position: absolute;
+        left: 64%;
+        top: 15%;
+    }*/
+    .modal-wide .modal-body {
+        overflow-y: auto;
+    }
+    /* irrelevant styling */
+    body {
+        text-align: center;
+    }
+
+        body p {
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+    #tallModal .modal-body p {
+        margin-bottom: 900px;
+    }
+</style>
+
+<!--Accordian Style-->
+<style>
+    button.accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 13px;
+        transition: 0.4s;
+        line-height: 2px;
+    }
+        button.accordion.active, button.accordion:hover {
+            background-color: #ddd;
+        }
+        button.accordion:after {
+            content: '\02795';
+            font-size: 13px;
+            color: #777;
+            float: right;
+            margin-left: 5px;
+        }
+        button.accordion.active:after {
+            content: "\2796";
+        }
+        div.panel {
+        padding: 0 15px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: 0.6s ease-in-out;
+        opacity: 0;
+    }
+        div.panel.show {
+            opacity: 1;
+            max-height: 400px;
+        }
+       .viewlistcs { font-size:23px;  }
+       .viewlist { font-size:18px; font-family:Swis721 Cn BT,Sans-Serif; }
+</style>

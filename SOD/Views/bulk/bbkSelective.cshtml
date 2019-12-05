@@ -1,0 +1,146 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "SOD Bulk for Approval or Rejection";
+    var dd = TempData["bbkSelective"];
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Bulk | Approval List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    @*<link href="../css/SODstyle.css" rel="stylesheet" />*@
+    <link href="~/css/MenuHeader.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="../js/angular/bulk-upload-ang.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+
+
+
+    <style>
+    </style>
+</head>
+
+<body>
+    <div ng-app="appblk" ng-controller="bulkappCtrl" ng-cloak>
+        <div class="bookingheadr">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-xs-4">
+                        <div id="bbselect"><img src="../img/logo_spicejet.png" /></div>
+                    </div>
+                    <div class="col-md-10">
+                        <h5 class="bulk-title">SOD BULK BOOKING</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content_header_txt">
+            <div>Bulk Booking Request Id - @Convert.ToInt32(Request.QueryString["bbId"]) </div>
+        </div>
+       
+        <!-- --------------------Begining of Loader------------------------------------->
+        <div class="loader" id="popupLoader">
+            <center>
+                <span class="loading-image" id="divloaderMsg" style="font-weight:bold;font-size:22px;color:#ff0000;"></span>
+                <img class="loading-image" src="../images/loading.gif" alt="loading..."><br />
+            </center>
+        </div>
+        <!-- --------------------End of Loader-------------------------------------------->
+        <!--------------------------------------------Content---------------->
+        <div class="container" style="margin-top:20px;">
+            <div class="row">
+                <div class="sDiv-header">
+                    <h4 class="modal-title"><span class="viewlistcs"></span></h4>
+                    <input type="hidden" id="hdTrid" value='@Convert.ToInt32(Request.QueryString["bbId"])' />
+                </div>
+                <div class="col-md-12 bkreqsttxt" ng-show="filteredItems > 0">
+                    <div class="mob_display_tbdata Mob_grid_scrollWidth">
+                        <table id="tblbookinginfo" class="flighdtl table table-striped table-bordered bkinfotxtfont"  ng-init='viewHODAppList(@Convert.ToInt32(Request.QueryString["bbId"]))'>
+                            <tr class="popheadcolor">
+                                <th>S No. </th>
+                                <th>Emp Code </th>
+                                <th>Emp Name</th>
+                                <th>Travel Date</th>
+                                <th>Sector</th>
+                                <th>Flight No.</th>
+                                <th>PNR</th>
+                                <th>Meal</th>
+                                <th>Beverage</th>
+                                <th>Hotel Required</th>
+                                <th>Booking Type</th>
+                                <th> <input type="checkbox" ng-if="allAppOrRejected" id="chkheader" data-ng-model="selectedAll" ng-click="checkAll();" />  Action</th>
+
+                            </tr>
+
+                            <tr ng-repeat="dlist in trdlist">
+                                <td>{{$index+1}}</td>
+                                <td hidden> {{dlist.BReqId}}</td>
+                                <td hidden> {{dlist.AddNo}}</td>
+                                <td>{{dlist.EmpCode}}<div class="tooltip1" ng-if="dlist.IsBookingcancelled"><img style='margin-bottom:4px;margin-left:4px;' src='../img/rejected.png' height="15" width="15" /><span class="tooltiptext">This Booking is Cancelled</span></div></td>
+                                <td>{{dlist.Title}}  {{dlist.FirstName}}  {{dlist.LastName}}</td>
+                                <td>{{dlist.TravelDate}}</td>
+                                <td>{{dlist.Sector}}</td>
+                                <td>{{dlist.FlightNo}}</td>
+                                <td ng-if="dlist.BookingType=='Confirm'">Not Applicable<span id='spnr'></span></td>
+                                <td ng-if="dlist.BookingType=='Standby' ||dlist.BookingType=='standby' ">{{dlist.PNR != ''? dlist.PNR : 'Pending'}}<span id='spnr'></span></td>
+                                <td>{{dlist.Meal}}</td>
+                                <td>{{dlist.Beverage!='' ? dlist.Beverage : 'NA'}}</td>
+                                <td>{{dlist.IsHotelRequired==true?'Yes':'No'}}</td>
+                                <td>{{dlist.BookingType}}</td>
+                                <td ng-if="dlist.BookingType=='Confirm'  &&  dlist.AgencyCode=='SDFINANCED'">NA</td>
+                                <td ng-if="(dlist.BookingType=='Standby'|| dlist.BookingType=='standby') && (dlist.PNR_Status == 0)"><input type="checkbox" ng-if="!dlist.IsBookingcancelled" ng-model="dlist.Selected" ng-checked="selectedAll" /></td>
+                                <td ng-if="(dlist.BookingType=='Standby'|| dlist.BookingType=='standby') && (dlist.PNR_Status == 1)"> Approved &nbsp;<img src="../img/right.jpg" height="15" width="15" title="Pnr : Approved" /></td>
+                                <td ng-if="(dlist.BookingType=='Standby'|| dlist.BookingType=='standby') && (dlist.PNR_Status == 2)">Pnr Error &nbsp;<img src="../img/rejected.png" height="15" width="15" title="Pnr : Rejected" /></td>
+                                <td ng-if="(dlist.BookingType=='Standby'|| dlist.BookingType=='standby') && (dlist.PNR_Status == 3)">Rejected &nbsp;<img src="../img/rejected.png" height="15" width="15" title="Pnr : Rejected" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="sDiv-footer mod-approve-reject" style="text-align:center;" ng-if="allAppOrRejected">
+                        <input type="submit" id="btnGeneratePNR" value="Approve to Generate PNR" onclick="generatePNRSelective();" class="approve_btnmarginbtm btn btn-success" />
+                        <input type="submit" id="btnGeneratePNR" value="Reject to Request PNR" onclick="RejectAppSelective();" class="submitbtn btn btn-danger" />
+                        @*<button type="button" data-dismiss="modal"  onclick="closeRefresh();"> Close -x- </button>*@
+                    </div>
+
+                </div>
+                <!--If No Record Found-->
+                <div class="col-md-12" ng-show="filteredItems == 0">
+                    <div class="col-md-12">
+                        <h4>No Record found</h4>
+                    </div>
+                </div>
+
+                <!--Pagination-->
+                <div class="col-md-12" ng-show="filteredItems > 0">
+                    <div pagination total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- --------------------Begining of Loader------------------------------------->
+        <div class="loader">
+            <center>
+                <span class="loading-image" id="loaderMsg" style="font-weight:bold;font-size:22px;color:#ff0000;"></span>
+                <img class="loading-image" src="../images/loading.gif" alt="loading..."><br />
+            </center>
+        </div>
+        <!-- --------------------End of Loader-------------------------------------------->
+        <!--------------------------------------------Footer------------------------------>
+        <div style="padding-top:70px;"></div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+        <!-- ------------------------------------------END Footer------------------------->
+    </div>
+
+</body>
+</html>

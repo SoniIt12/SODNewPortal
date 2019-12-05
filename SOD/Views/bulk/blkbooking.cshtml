@@ -1,0 +1,320 @@
+﻿@{
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml";
+    ViewBag.Title = "Bulk|Booking";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="../js/bulk-upload-js.js"></script>
+    <script src="../js/ajax-js-lib/googleapis-ajax-jquery1.8.3.min.js"></script>
+    <script type="text/javascript">
+        //Dom Loading
+        $(document).ready(function () {
+            $('.loader').hide();
+            hides();
+        });
+    </script>
+    <script type="text/javascript">
+        $("[id*=chkheader]").live("click", function () {
+            var chkHeader = $(this);
+            var grid = $(this).closest("table");
+            $("input[type=checkbox]", grid).each(function () {
+                if (chkHeader.is(":checked")) {
+                    $(this).attr("checked", "checked");
+                    $("td", $(this).closest("tr")).addClass("selected");
+                } else {
+                    $(this).removeAttr("checked");
+                    $("td", $(this).closest("tr")).removeClass("selected");
+                }
+            });
+        });
+
+        $("[id*=chkRow]").live("click", function () {
+            var grid = $(this).closest("table");
+            var chkHeader = $("[id*=chkheader]", grid);
+            if (!$(this).is(":checked")) {
+                $("td", $(this).closest("tr")).removeClass("selected");
+                chkHeader.removeAttr("checked");
+            } else {
+                $("td", $(this).closest("tr")).addClass("selected");
+                if ($("[id*=chkRow]", grid).length == $("[id*=chkRow]:checked", grid).length) {
+                    chkHeader.attr("checked", "checked");
+                }
+            }
+        });
+
+        function showimage() {
+            $('#place-image').show();
+        };
+        function hideimage() {
+            $('#place-image').hide();
+        };
+
+    </script>
+
+
+
+    <style>
+        .headcolor td {
+            text-align: center;
+            border-left: solid 1px #c2c2c2;
+            background-color: #EE1D23;
+            color: #fff;
+            height: 35px;
+        }
+
+        .rowcolor {
+            text-align: center;
+            border-left: solid 1px #c2c2c2;
+            border-bottom: solid 1px #c2c2c2;
+            line-height: 22px;
+            height: 30px;
+        }
+
+        .submitbtn {
+            background-color: #EE1D23;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background: #fff
+        }
+
+        tr:nth-child(odd) {
+            background: #f9f9f9
+        }
+
+        .selected {
+            background-color: #A1DCF2 !important;
+        }
+
+        #ddlacType {
+            border-radius: 0;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+            color: #666;
+            font-size: 12px;
+            height: 30px;
+            padding: 0px 0px 0px 0px;
+            text-indent: 0px;
+            border: solid 1px #e0e0e0;
+        }
+
+        .warning-label {
+            font-size: 12px;
+            font-weight: normal;
+            padding-left: 10px;
+            color: red;
+        }
+
+        .ui-menu-item {
+            width: 25% !important;
+            float: left;
+        }
+    </style>
+</head>
+<body onload="hides();">
+    <div class="content_header_txt">
+        <div>Bulk Booking </div>
+    </div>
+    <div>
+        <div class="bookingheadr" style="display:none">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="usrdtlsdiaplay">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <nav class="navbar navbar-default navbar-static-top navbar-transparent">
+                                        <div class="container">
+                                            <div class="row">
+                                                <!-- Brand and toggle get grouped for better mobile display -->
+                                                <div class="navbar-header">
+                                                    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                                                        <span class="sr-only">Toggle navigation</span>
+                                                        <span class="icon-bar"></span>
+                                                        <span class="icon-bar"></span>
+                                                        <span class="icon-bar"></span>
+                                                    </button>
+                                                    <a href="#" class="navbar-brand" id="logo"><img src="../img/logo_spicejet.png" /></a>
+                                                    <div class="nav navbar-header headertitle">  <div class="sodHeading"> SOD BULK BOOKING </div></div>
+                                                </div>
+                                                <!-- Collection of nav links and other content for toggling -->
+                                                <div id="navbarCollapse" class="collapse navbar-collapse" style="background:#EE1D23; border:none; padding:3px;">
+                                                    <div class="dropdown" style="padding-bottom:5px;">@Session["UserInfo"]   </div>
+                                                    <span class="logoutpic"> <a href="../bulk/viewbbkList" target="blank" id="lnkbbklist">View Bulk Booking List</a> </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------------------------------Content---------------->
+        <div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 mob_blk_main">
+                        <div class="content_search_structure_box_fixed">
+                            <div class="col-md-3">
+                                <div class="formatexcelTxt">Excel Format </div>
+                                <div class="fileupldCss">
+                                    <input type="file" name="file" id="file" class="text-center well well-sm fileuploadClt" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="formatexcelTxt"> Private Fare  </div>
+                                <select id="ddlacType" class="form-control" style="height:35px;border-radius:3px;"></select>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="formatexcelTxt"> Department  </div>
+                                <select id="ddeptType" onchange="getHodAccorToDepartment();" class="form-control" style="height:35px;border-radius:3px;"></select>
+                            </div>
+                            <div class="col-md-1">
+                                <div style="margin-top:30px"> </div>
+                                <div class="mob_submit_topspace">
+                                    <input type="submit" id="submitbtn" value="Upload" onclick="uploadFile();" class="btn btn-danger mobbtnWidth" />
+                                </div>
+
+                            </div>
+                            <div class="col-md-1">
+                                <div style="margin-top:30px"> </div>
+                                <div class="mob_submit_topspace">
+                                    <input type="submit" id="btnRefresh" value="Refresh" onclick="location.reload();" class="btn btn-danger mobbtnWidth" />
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div style="margin-top:25px"> </div>
+                                <div class="mob_help_part">
+                                    <a @*onmouseover="showimage()"*@ @*onmouseout="hideimage()"*@ href="~/help/BulkUpload_HelpSheet.xlsx" style="font-weight:bold;color:red;font-size:12px;" download="BulkUpload_HelpSheet.xlsx"><img src="../images/help.png" class="dwnld-excel-format"> Download Excel Format </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div hidden="hidden" id="place-image">
+                            <div class="mob_help_display_img">
+                                <img style="max-width: 1300px; height:150px; width:auto;" src="../img/excel_format.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div style="margin-top:10px;" id="dvtabledata">
+                            <div>
+                                <div class="Mob_grid_scrollWidth content_inner_box_topborder_fixed">
+                                    <table id="tblUploaddata" class=" table table-striped table-bordered tbl-font-all">
+                                        <tr class="headcolor bkheader">
+                                            <td class="bkheader">SNo.</td>
+                                            <td class="bkheader">Emp-Code</td>
+                                            <td class="bkheader">Title</td>
+                                            <td class="bkheader">First-Name</td>
+                                            <td class="bkheader">Last-Name</td>
+                                            <td class="bkheader">Mobile.No.</td>
+                                            <td class="bkheader">Email Id</td>
+                                            <td class="bkheader">Travel Date</td>
+                                            <td class="bkheader">Flight-Number</td>
+                                            <td class="bkheader">Sector</td>
+                                            <td class="bkheader">Purpose</td>
+                                            <td class="bkheader">Meal</td>
+                                            <td class="bkheader">Bvg.</td>
+                                            <td class="bkheader">PNR</td>
+                                            <td class="bkheader">Booking Type</td>
+                                            <td class="bkheader">Is Hotel Req.</td>
+                                            <td class="bkheader">Check-In Date</td>
+                                            <td class="bkheader">Check-Out Date</td>
+                                            <td class="bkheader">Check All <input type="checkbox" id="chkheader" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div>
+                                        <div style="margin-left:41px;padding-bottom:10px;padding-top:10px">
+                                            <span style="font-weight:bold;">Note :</span><img src="../img/right.png" style="margin-left:4px;width:16px;height:16px;" /> Verified
+                                            <img src="../img/rejected.png" style="margin-left:4px;width:16px;height:16px;" /> Not-Verified
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="dvuser">
+                                <div class="repectapprove_section">
+                                    <div class="col-md-9">
+                                        <div>
+                                            Respected Approver/HOD Email ID :<span id="spnHODEMail" style="font-weight:bold">@ViewBag.alternateHODEmailId</span>.
+                                            <span style="display:none">If Approver is different, please check and enter Approver Email ID</span> <span style="display:none"><input style="position:relative;top:1px;" type="checkbox" id="chkalternateHODemailId" onchange="diffHODVisibility(this);" /></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div style="margin-top:-6px;">
+                                            <input class="form-control" t type="text" id="txtalternateHODemailId" maxlength="100" style="display:none;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" style="padding-top:10px;text-align:center;">
+                                    <div>
+                                        <input type="submit" id="btnGeneratePNR" value="Generate PNR" onclick="generatePNR();" class="btn btn-danger" />
+                                        <input type="submit" id="btnsendRqtoHOD" value="Send Request to HOD" onclick="sendReqtoHOD();" class="btn btn-danger" />
+                                        <input type="hidden" id="hdnbbr" value="@ViewBag.bbbRight" />
+                                        <span class="warning-label"></span>
+                                        <span style="Margin-left:50px;display:none;">
+                                            <button class="exportExcel" type="button" id="btnExporttoExcel" onclick="window.location = '../bulk/Exportexcel';">
+                                                <i><img src="../images/exp_excel.png" height="16" width="20" /></i> &nbsp;Download
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <!-- --------------------Loader----------------------------------------------->
+        <div class="loader" hidden>
+            <center>
+              
+                <img class="loading-image" src="../images/loading.gif" alt="loading.."><br />
+                <span class="loading-image" id="loaderMsg" ></span>
+            </center>
+        </div>
+        <!-- --------------------End of Loader----------------------------------------->
+
+        <!--------------------------------------------Footer------------------------------>
+        <div style="padding-top:70px;"></div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+        <!-- ------------------------------------------END Footer------------------------->
+</div>
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            var dv = document.getElementById("dvrecord");
+            dv.style.display = "none";
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                window.close();
+                return;
+            };
+        </script>
+    } 
+</body>
+
+</html>

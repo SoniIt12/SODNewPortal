@@ -1,0 +1,185 @@
+﻿@using System.Collections
+@using SOD.Model
+@model IEnumerable<SOD.Model.EmployeeModel>
+
+@{
+    ViewBag.Title = "Admin | Sod Blanket Approver List";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<script src="../Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    //Dom Loading
+    $(document).ready(function () {
+        //text box id for searching
+        $('#search').keyup(function () {
+            searchTable($(this).val());
+        });
+    });
+
+    //Redirect to Blanket Approver List
+    function addBlanketApprover() {
+        var url = "../Admin/AllocateBlanketApprover";
+        window.location.href = url;
+    }
+
+    //Bind Blanket Approver List
+    function bindBlanketList() {
+        $.ajax({
+            type: "POST",
+            url: "../Admin/SodBlanketApproverList",
+            data: param = "",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc
+        });
+        function successFunc(data, status) {
+           // alert(data);
+        }
+        function errorFunc() {
+           // alert('Record not available.');
+        }
+    }
+ 
+    //Remove List
+    function removeList(EmpId)
+    {
+        var result = confirm("Are you sure! to remove this blanket approval right?");
+        if (result)
+        {
+            $.getJSON("../Admin/RemoveBlanketApproverRights/?EmpId=" + EmpId,
+            function (json) {
+                if (json.length > 0) {
+                    alert('Blanket Approval Rights have been removed successfully.');
+                    bindBlanketList();
+                    return false;
+                }
+                else {
+                    alert('ERROR :Blanket Approval Rights error.Please contact to system admin.');
+                    return false;
+                }
+               
+            });
+        }
+    }
+
+    //Searching in Table 
+    function searchTable(inputVal) {
+        debugger;
+        var cunter = 0;
+        var table = $('#tblAllocate');
+        table.find('tr').each(function (index, row) {
+            var allCells = $(row).find('td');
+            if (allCells.length > 0) {
+                var found = false;
+                allCells.each(function (index, td) {
+                    var regExp = new RegExp(inputVal, 'i');
+                    if (regExp.test($(td).text())) {
+                        found = true;
+                        return false;
+                    }
+                });
+                if (found == true) { $(row).show(); cunter++; }
+                else { $(row).hide(); }
+            }
+        });
+
+        if (cunter > 0)
+            $("#btnSave").show();
+        else
+            $("#btnSave").hide();
+    }
+</script>
+<link href="~/Assest/css/AdminNew.css" rel="stylesheet" />
+<div>
+    <div class="admin_content_txtheading"> Blanket Approver List </div>
+</div>
+<section id="admin-container" class="content">
+    <div class="Alladmin_content_box ">
+        <div class="row">
+            <div class="col-md-1"><div class="paddingtopadmin">Search</div> </div>
+            <div class="col-md-7">
+                <div><input type="text" id="search" class="form-control" maxlength="20"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="paddingtopadmin-btn"><input class="btn btn-danger" type="button" value="Add Blanket Approver " onclick="addBlanketApprover();" /></div>
+            </div>
+        </div>
+    </div>   
+</section>
+
+<div id="blanket-approve" style="padding:30px 12px; margin-top:-30px;">
+   
+        <div class="main_partadm">               
+               
+                <table  id="tblAllocate" class="table table-striped table-bordered">
+                    @if (ViewData["SodBlanketList"] != null)
+                    {
+                        <tr style="background-color:#EE1D23; color:#fff;">
+                            <th>EmpId</th>
+                            <th>Emp Code</th>
+                            <th>Emp Name</th>
+                            <th>Emp Department</th>
+                            <th>Satatus </th>
+                            <th>Operation </th>
+                        </tr>
+                    
+                        foreach (var item in (List<EmployeeModel>)ViewData["SodBlanketList"])
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmpId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmpCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmpName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Department)
+                                </td>
+                                <td>
+                                    <img src="../img/right.jpg" style="margin-bottom:5px; width:16px;height:16px;" />
+                                </td>
+                                <td>
+                                    <a href="#" onclick=removeList(@Html.DisplayFor(modelItem => item.EmpId));>Remove</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+
+          
+        </div>
+    </div>
+ 
+
+<style>
+    .sodapprvlist {
+        width: 95%;
+        line-height: 40px;
+        margin-top: 10px;
+    }
+    .sodapprvlist th { padding-left:10px;  border: solid 1px #c2c2c2;    }
+    .sodapprvlist td {
+            border: solid 1px #c2c2c2;
+            height: 35px;
+            padding-left: 10px;
+        }
+    .appbtn {
+        margin-left: 100px;
+    }
+    .appbtn input {
+            margin-left: 100px;
+            background-color:#EE1D23;
+            height: 35px;
+            width: 160px;
+            color: #fff;
+            border: 0px;
+        }
+    .ddlapprove select {
+        height: 30px;
+        width: 70%;
+    }
+</style>

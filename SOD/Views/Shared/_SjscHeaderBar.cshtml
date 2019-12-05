@@ -1,0 +1,265 @@
+﻿
+<div class="bookingheadr">
+    <div class="container">
+        <div class="MHeader_main">
+            <div class="row">
+                <div class="col-md-2 col-xs-4"><a id="logomain" href="../sjsisBooking/Index" style="cursor:pointer"><img src="../img/logo_spicejet.png" /></a></div>
+                <div class="col-md-4 col-xs-6">
+                    <div class="SodHeadingTxt"><span class="sjscheadertxt">SOD-SJSC BOOKING SYSTEM </span></div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <div id="navbar">
+                            <nav class="" role="navigation">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle sjsismobtoggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+                                <div class="collapse navbar-collapse Menusodright" id="navbar-collapse-1">
+                                    <ul class="nav navbar-nav" id="menu_ul"></ul>
+                                    <ul id="usrimgtop" class="nav navbar-nav navbar-right">
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="userpic" /> </a>
+                                            <ul class="dropdown-menu" style="padding: 15px;min-width: 300px;">
+                                                <li>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <img id="userimage" class="userpic" src="../New_images/icon/user_icon.png" />
+                                                                    <select class="ddloption dropprofileedit" id="ddlphoto"><option selected="selected" value="">--Select--</option><option value="1">Change Photo</option><option value="2">Remove photo</option></select>
+                                                                    <input type="file" id="userfileupload" style="display:none" />
+                                                                </div>
+                                                                @*<div class="col-md-8">
+                                                                    <div><b>@(Session["FirstName"].ToString() + " " + Session["LastName"].ToString())</b> </div>
+                                                                    <div> @Session["Designation"]</div>
+                                                                </div>*@
+                                                                <div class="col-md-8">
+                                                                    <div><b>@(Session["FirstName"].ToString() + " " + Session["LastName"].ToString())</b> </div>
+                                                                    <div> @Session["Designation"].ToString()</div>
+                                                                    <div> @Session["Department"].ToString()</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li>
+                                                    <input class="btn btn-primary btn-block" type="button" id="sign-out" value="Sign Out" onclick="window.location.href = '../SJSisBooking/Login'">
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div><!-- /.navbar-collapse -->
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        Menu();
+        //Sign out functionality
+        function disableBack() {
+            window.history.forward();
+        }
+        window.onload = disableBack();
+        window.onpageshow = function (evt) {
+            if (evt.persisted) disableBack()
+        }
+
+        ///////ChangeRequest
+        $("#lnkchangeRequest").click(function () {
+            $("#lnkchangeRequest").attr("href", "../ChangeReq/ChangeRequest");
+        });
+
+        //Get change Request HR Approval
+        $("#lnkchangeRequestapproval").click(function () {
+            $("#lnkchangeRequestapproval").attr("href", "../ChangeReq/ChangeRequestHistoryHR");
+        });
+        //Get Change Request Finance Approval
+        $("#lnkchangefinance").click(function () {
+            $("#lnkchangefinance").attr("href", "../ChangeReq/ChangeRequestHistoryFinance");
+        });
+        //Preview DP
+        PreviewDp();
+        $('#userimage').click(() => {
+            var defaultfile = "../New_images/icon/user_icon.png";
+        var file = $('#userimage').attr('src');
+        if (file == defaultfile) {
+            $('#userfileupload').trigger('click');
+        }
+        else {
+            $('.ddloption').toggle();
+        }
+    });
+    //var file = document.getElementById("userfileupload").getAttribute('src');
+    //-----------------------------------------
+     $('#ddlphoto').on('change', () => {
+     if (document.getElementById('ddlphoto').value == 1) {
+            $('#userfileupload').trigger('click');
+    $('#userfileupload').on('change', () => {
+        var file = $('#userfileupload').get(0).files;
+    var data = new FormData;
+    data.append("ImageFile", file[0]);
+    $.ajax({
+        url: "../ChangeReq/SetDp",
+        type: "post",
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function (msg) {
+            PreviewDp();
+        },
+        error: function () { }
+    });
+    });
+    }
+    else {
+        $.ajax({
+            url: "../ChangeReq/DeleteDP",
+            type: "post",
+            data: { EmpCode: '@Session["EmpCode"]' },
+            success: function () {
+                alert('Dp Removed');
+                $('.userpic').each(function () {
+                    $(this).attr('src', '../New_images/icon/user_icon.png');
+                });
+                PreviewDp();
+            },
+            error: function () { }
+        });
+    }
+    $('#ddlphoto').css('display', 'none');
+    $('#ddlphoto').val('');
+    });
+
+    //Function to validate file
+    function filevalidation() {
+        var filename = document.getElementById('userfileupload');
+        //var extension = filename.value.split('.')[1];
+        if (filename.value.split('.')[1] == "jpg" || filename.value.split('.')[1] == "png") {
+            return true;
+        }
+        else {
+            alert('Please upload only .jpg and .png format');
+            return false;
+        }
+    }
+
+    $('#userfileupload').on('change', () =>{
+    if (filevalidation() == true) {
+    var file = $('#userfileupload').get(0).files;
+    var data = new FormData;
+    data.append("ImageFile", file[0]);
+    $.ajax({
+        url: "../ChangeReq/SetDp",
+        type: "post",
+        data: data,
+        processData:false,
+        contentType:false,
+        success: function (msg) {
+            PreviewDp();
+        },
+        error: function () { }
+    });
+    }
+    });
+    });
+
+
+    function PreviewDp11() {
+        $.ajax({
+            url: "../ChangeReq/ExitsDp",
+            type: "post",
+            data: { EmpCode: '@Session["EmpCode"]' },
+            success: function (check) {
+                if (check == true) {
+
+                    $('.userpic').each(function () {
+                        $(this).attr('src', '../ChangeReq/ShowDP?empcode=' + '@Session["EmpCode"]' + '');
+                        $(this).css({ "width": "40px", "height": "40px" });
+                    });
+                }
+                else {
+                    var defaultfile = "../New_images/icon/user_icon.png";
+                    $('.userpic').each(function () {
+                        $(this).attr('src', defaultfile);
+                        $(this).css({ "width": "40px", "height": "40px" });
+                    });
+                }
+            },
+            error: function () { }
+        });
+    }
+
+    function PreviewDp() {
+        $.ajax({
+            url: '../ChangeReq/ShowDP',
+            type: 'get',
+            data: { EmpCode: '@Session["EmpCode"]' },
+            success: function (data) {
+                if (data != "") {
+                    $('.userpic').each(function () {
+                        $(this).attr('src','data:image/jpg;base64,'+data);
+                        $(this).css({ "width": "40px", "height": "40px" });
+                    });
+                }
+                else {
+                    var defaultfile = "../New_images/icon/user_icon.png";
+                    $('.userpic').each(function () {
+                        $(this).attr('src', defaultfile);
+                        $(this).css({ "width": "40px", "height": "40px" });
+                    });
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function Menu() {
+            $.ajax({
+            url: '../ChangeReq/LoadMenu',
+            type:'get',
+            success: function (dt) {
+                console.log(dt);
+                var parent = dt.filter(menu=> { return menu.MenuType == "P" });
+                var child = dt.filter(menu=> { return menu.MenuType == "C" });
+                var regex = /\?/;
+                var header = "";
+                var submenu = "";
+
+                for (var i = 0; i < parent.length; i++)
+                {
+                    header = "<li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown'>" + parent[i].MenuName + "<b class='caret'></b></a>";
+                    if (submenu == "")
+                    {
+                        submenu = "<ul class='dropdown-menu'>";
+                    }
+                    for (var j = 0; j < child.length; j++) {
+                        if (parent[i].ParentId == child[j].ParentId)
+                        {
+                            // var menulink = child[j].MenuPath.indexOf('?') > -1 ? child[j].MenuPath + "dep=" + '@Session["DeptCR"]' + "&deg=" + '@Session["DesigIdM"]' : child[j].MenuPath;
+                            var menulink = regex.test(child[j].MenuPath)? child[j].MenuPath + "dep=" + '@Session["DeptIdCR"];' + "&deg=" + '@Session["Designation"]' : child[j].MenuPath;
+                            submenu += "<li><a href='" + menulink + "'>" + child[j].MenuName + "</a></li>";
+                        }
+                    }
+                    header += submenu + "</ul>" + "</li>";
+                    $('#menu_ul').append(header);
+                    header = "";
+                    submenu = "";
+                }
+            },
+            error: function () { }
+        });
+    }
+</script>

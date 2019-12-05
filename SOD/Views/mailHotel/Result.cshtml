@@ -1,0 +1,92 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <title>Hotel | Booking Response</title>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <style type="text/css">
+        .succesmsg {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('.loader').delay(3000).hide(0);
+        });
+    </script>
+
+</head>
+
+
+<body>
+    <div>
+        <div class="bookingheadr">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"><div class="logoheader"><img src="../img/logo_spicejet.png" /> </div></div>
+                    <div class="col-md-4"><div class="txtSODNSOD">HOTEL BOOKING SYSTEM</div></div>
+                    <div class="col-md-5"></div>
+                </div>
+            </div>
+        </div>
+        <!--------------------------------------------Content---------------->
+        <div class="container">
+            <div style="padding-top:10%">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12"><div class="succesmsg"> Thank You. </div></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="succesmsg" id="dvMsg">
+
+                                    Hotel Confirmation No. is @Session["confirmNo"].ToString()
+                                    <br />
+                                    Request been successfully sent to the Spicejet Travel Desk.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!------Div Loader------------------------------------------------------>
+            <div class="loader">
+                <center>
+                    <img class="loading-image" src="../images/loading.gif" alt="loading..">
+                </center>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="padding-top:100px; padding-bottom:20px; text-align:center">
+                        @*<input type="button" id="fltreplan" value="Re-Plan" style="width:150px; height:35px; background-color:#b33; border:0px;color:#fff; font-size:16px;" />*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------------------------------Footer---------------->
+        <div style="padding-top:70px;"></div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+        <!-- ------------------------------------------END Footer---------------->
+    </div>
+</body>
+</html>

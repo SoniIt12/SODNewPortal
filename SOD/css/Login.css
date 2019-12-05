@@ -1,0 +1,77 @@
+/*-----------------------LOGIN PAGE-----------*/
+
+.login2background {
+    background: url('../images/banner.png');
+    /*background-image: url(https://s13.postimg.org/8xs7irifb/education2.png);*/
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.loginbox {
+    background: white;
+    color: black;
+    margin-top: 5%;
+    left: 0;
+    padding: 20px;
+    box-shadow: 0 8px 50px -2px #000;
+    border-radius: 5px;
+}
+
+.logo {
+    width: 130px;
+    height: 55px;
+    margin-left: 10%;
+}
+.latest_logo_part {
+    width: 100%;
+}
+.welcm_portal_part {
+    padding-top: 20px;
+    color: #fff;
+    background: rgba(0,0,0,0.3);
+    padding: 10px;
+}
+.welcmtxt {
+    font-size: 28px;
+    color: #F89939;
+    line-height: 30px
+}
+
+@media (max-width:767px) {
+    .loginbox {
+        margin-top: 10%;
+    }
+    .latest_logo_part img{width:40%;}
+    .welcm_portal_part{margin-top:10px;}
+}
+
+.loginbox_content {
+    padding: 5% 11% 5% 11%;
+}
+
+.singtext {
+    font-family: "Open Sans",sans-serif;
+    font-size: 27px;
+    color: #82C226;
+    float: right;
+    padding-right: 25%;
+}
+
+.submit-btn {
+    float: right;
+    margin-right: 28%;
+}
+
+.forgotpassword {
+    padding-left: 10%;
+}
+
+@media (max-width:800px) {
+    .submit-btn {
+        margin-right: 23%;
+    }
+}
+
+
+/*-----------------------END LOGIN PAGE---------*/

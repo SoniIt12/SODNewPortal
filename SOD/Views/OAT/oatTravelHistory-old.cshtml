@@ -1,0 +1,635 @@
+﻿@{
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml"; ;
+    ViewBag.Title = "OAT|Booking";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Oat | View Oat History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    @*<link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../css/finalsodstyle.css" rel="stylesheet" />*@
+
+    @*<link href="../New_Calender/calender.css" rel="stylesheet" />*@
+
+    @*<script src="../asset/js/bootstrap.min.js"></script>
+        <script src="../js/angular/angular.min.js"></script>
+        <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>*@
+    @*<link href="../asset/css/bootstrap.min.css" rel="stylesheet" />*@
+    @*<link href="../css/finalsodstyle.css" rel="stylesheet" />*@
+    @*<link href="../css/radiobtn.css" rel="stylesheet" />*@
+
+
+
+
+    @*<link href="../css/MenuHeader.css" rel="stylesheet" />*@
+
+
+
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <script src="../Dropdownmenu/jquery-1.9.1.js"></script>
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <script src="../js/timerpickerJS.js"></script>
+    <link href="../css/timepicker.css" rel="stylesheet" />
+    <link href="../css/select2/selectize.default.css" rel="stylesheet" />
+    <script src="../js/select2/selectize.js"></script>
+    <script src="../js/select2/select2.min.js"></script>
+    <link href="../css/select2/select2.min.css" rel="stylesheet" />
+    <script src="../js/angular/OatTravelHistory.js"></script>
+
+    <style>
+        table {
+            border-collapse: separate;
+            border-spacing: 0 5px;
+            padding: 0px;
+        }
+
+        .levelOne {
+            background-color: #e4e4e4;
+            color: #000;
+            font-size: 13px;
+        }
+
+        .levelTwo {
+            background-color: #FF8C00;
+            color: black;
+        }
+
+
+        tr td:first-child,
+        tr th:first-child {
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+        }
+
+        tr td:last-child,
+        tr th:last-child {
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        .clickableRow {
+            cursor: pointer;
+        }
+
+        p, textarea {
+            font-variant: small-caps !important;
+            text-rendering: auto;
+        }
+
+        td, th {
+            font-size: 8pt;
+        }
+
+        table {
+            padding: 0px;
+        }
+
+        .content_search_structure_box-modal {
+            /*display: table;*/
+            box-shadow: 0 0px 2px 0 #c2c2c2;
+            width: 100%;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            padding: 15px;
+        }
+
+
+        @@media screen and (max-width: 480px) {
+            .VBlist {
+                overflow-x: auto;
+                overflow-y: no-display;
+                width: 309px;
+                height: auto;
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body ng-app="OatViewDetails" ng-controller="OatTravelDetails">
+    <div class="New_tmp_lyer">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <div class="bookingtype ">
+                        <div class="col-md-12 col-xs-12"><div class="bookingtypetxt boktyphotl">OAT Booking History</div> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------------------------------------------Content---------------->
+    <div class="container">
+        <div id="maindiv" class="mob_padding_allside">
+            <div class="row">
+                <div class="content_search_structure_box">
+                    <div class="col-md-6">
+                        <div class="pull-left">Search</div>
+                        <div><input type="text" placeholder="please type here for filter" id="searchjjm" ng-model="search" ng-change="filter()" class="form-control input-sm"></div>
+                    </div>
+                    <div class="col-md-5">
+                           <div class="txtfiltered">Filtered {{ filtered.length }} of {{ totalItems}} Total Records</div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="pull-left">Page Size</div>
+                        <div>
+                            <select class="form-control input-sm" ng-model="entryLimit">
+                                <option>3</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="content_search_structure_box">
+                <div class="mobpadding10">
+                    <!-- START TABLE -->
+                    <div class="content_inner_box_topborder Mob_grid_scrollWidth" style="width:100%;margin-top:50px" ng-show="filteredItems.length > 0">
+                        <div class="VBlist VBlistpadding">
+                            <table class="table table-hover  table-striped">
+                                <thead class="levelOne fonttext14 popheadcolor">
+                                    <tr>
+                                        <th></th>
+                                        <th>S.No @*&nbsp;<a ng-click="sort_by('S.No ');"><i class="glyphicon glyphicon-sort"></i></a>*@</th>
+                                        <th>Booking Id &nbsp;<a ng-click="sort_by('OATRequestCode');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Booking Date &nbsp;<a ng-click="sort_by('RequestDate');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Booking For &nbsp;<a ng-click="sort_by('BookingFor');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Booking Type &nbsp;<a ng-click="sort_by('BookingType');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                        <th>Purpose @*&nbsp;<a ng-click="sort_by('Purpose');"><i class="glyphicon glyphicon-sort"></i></a>*@</th>
+                                        <th>Status &nbsp;<a ng-click="sort_by('BookingStatus');"><i class="glyphicon glyphicon-sort"></i></a></th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="lst in filtered = (OatMasterList| filter:search | orderBy : predicate :reverse)| startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit " data-ng-switch on="dayDataCollapse[$index]">
+                                    <tr class="clickableRow" title="Click to toggle collapse/expand day summaries for this store." data-ng-click="selectTableRow($index, lst.OATRequestID,lst.TravelRequestId,lst.BookingFor)">
+                                        <td ng-if="!dayDataCollapse[$index]"><span style="padding-left:5px"><i class="glyphicon glyphicon-plus"></i></span></td>
+                                        <td ng-if="dayDataCollapse[$index]"><span style="padding-left:5px"><i class="glyphicon glyphicon-minus"></i></span></td>
+                                        <td>{{$index +1}}</td>
+                                        <td>{{lst.OATRequestCode}}</td>
+                                        <td>{{getangularDate(lst.RequestDate) | date : "dd/MM/yy"}}</td>
+                                        <td>{{lst.BookingFor}}</td>
+                                        <td>{{lst.BookingType}}</td>
+                                        <td>{{lst.ReasonForTravel}}</td>
+                                        <td>{{lst.BookingStatus == null ?"Pending":BookingStatus}}</td>
+                                        <td style="display:none">{{lst.TravelRequestId}}</td>
+                                    </tr>
+                                    <tr data-ng-switch-when="true">
+                                        <td colspan="9">
+                                            <div class="span9">
+                                                <div>
+                                                    <table class="table table-hover table-condensed table-striped ">
+                                                        <thead class="levelTwo">
+                                                            <tr>
+                                                                <th>S.no</th>
+                                                                <th>Emp Code</th>
+                                                                <th>EmpLoyee Name</th>
+                                                                <th>Sector</th>
+                                                                <th>Travel Date</th>
+                                                                <th>Departure Time</th>
+                                                                <th>Flight Type</th>
+                                                                <th>Hotel City</th>
+                                                                <th>Check-In Date</th>
+                                                                <th>Check-Out Date</th>
+                                                                @*<th>Check-In Time</th>*@
+                                                                @*<th>Check-Out Time</th>*@
+                                                                <th>Hotel Status</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr data-ng-repeat="Olist in selectedOatList">
+                                                                <td class="pullright">{{$index + 1}}</td>
+                                                                <td style="display:none">{{Olist.breqId}}</td>
+                                                                <td>{{Olist.EmployeeCode}}</td>
+                                                                <td>{{Olist.FirstName}} {{Olist.LastName}}</td>
+                                                                <td>{{Olist.OriginPlace}}-{{Olist.DestinationPlace}} </td>
+                                                                <td>{{getangularDate(Olist.DepartureDate) | date : "dd/MM/yy"}}</td>
+                                                                <td>{{Olist.DepartureTime}}</td>
+                                                                <td>{{Olist.FlightType}}</td>
+                                                                <td>{{Olist.City}}</td>
+                                                                <td>{{getangularDate(Olist.CheckInDate) | date : "dd/MM/yy" }}</td>
+                                                                <td>{{getangularDate(Olist.CheckOutDate) | date : "dd/MM/yy" }}</td>
+                                                                @*<td>{{Olist.CheckinTime}}</td>
+                                                                    <td>{{Olist.CheckoutTime}}</td>*@
+                                                                <td>{{Olist.IsAllocated == true ? "Allocated": "Pending"}}</td>
+                                                                <td>
+                                                                    <button ng-if="Olist.IsFlightRequired =='True'" class="editbtn_small" data-toggle="modal" href="#viewFlightdetailModal" ng-click="viewFlightDetails($index+1,Olist.OATTravelRequestId,Olist.ID)">Flight Details</button>
+                                                                    <button ng-if="Olist.IsFlightRequired !='True'" class="green_bookhotel_btn" data-toggle="modal" href="#BookFlightdetailModal" ng-click="OpenBookFlightDiv(Olist.PassengerID);">Book Flight</button>
+                                                                    <button ng-if="Olist.IsHotelRequired =='True'" class="editbtn_small" data-toggle="modal" href="#viewhoteldetailModal" ng-click="viewhoteldetail(Olist.breqId,lst.BookingFor)">Hotel Details</button>
+                                                                    <button ng-if="Olist.IsHotelRequired !='True'" class="green_bookhotel_btn" data-toggle="modal" href="#BookhoteldetailModal" ng-click="OpenBookHotelDiv(Olist.PassengerID);">Book Hotel</button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- END TABLE -->
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12" ng-if="filteredItems.length == 0">
+                        <div class="col-md-12">
+                            <div><span style="text-align:center; font-size:14px;margin-top:100px;color:#ff0000">Sorry ! No record found. </span></div>
+                        </div>
+                    </div>
+                    <!--Pagination-->
+                    <div class="col-md-12" ng-if="filteredItems.length > 0">
+                        <div pagination="" page="currentPage" on-select-page="setPage(page)" max-size="10" boundary-links="true" total-items="filteredItems.length" rotate="false" items-per-page="entryLimit" class="pagination-small" previous-text="Back" next-text="next"></div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!--------------------View Detail Model popup------------------------------------->
+    <div id="viewhoteldetailModal" class="modal modal-wide fade newmdpop">
+        <div class="modal-dialog newmodelpopwidth70" style="overflow-y: initial !important;">
+            <div class="modal-content">
+                <div id="dvHotelBookingDataShow">
+                    <div class="modal-header popupmodalheader_redcolor">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="edit=false">x</button>
+                        <h4 class="popuphdtxt mobtxtheading"><span class="viewlistcs headertxt_whitecolortxt"> OAT Booking Request ID (OAT - {{oatreqId}}) </span></h4>
+                    </div>
+                    <div class="modal-body" style="overflow-x:hidden;">
+                        <div ng-if="hotelData.length != 0">
+                            <h4 class="popuphdtxt" id="hotelH">Hotel(s) Information-(Hotel Req.ID: {{trn}})</h4>
+                            <table class="table table-striped table-bordered" style="width:100%">
+                                <tr class="popheadcolor" style="font-weight:bold">
+                                    <th>City</th>
+                                    <th>Check-In Date</th>
+                                    <th>Check-Out Date</th>
+                                    <th>Status</th>
+                                    <th>Hotel Details</th>
+                                    <th>Remark</th>
+                                </tr>
+                                <tbody ng-repeat="hdata in hotelData">
+                                    <tr>
+                                        <td>{{hdata.City}}</td>
+                                        <td ng-if="!edit">{{hdata.CheckInDate | date : "dd/MM/yy"}}</td>
+                                        <td ng-if="edit"><input value="{{hdata.CheckInDate | date : 'dd/MM/yy'}}" type="text" id="edtchindate" ng-model="hdata.CheckInDate" date='dd/MM/yyyy' formatted-date format="MM/dd/yyyy" class="inputremark form-control fh_inputtxt2" style="cursor: pointer;"></td>
+                                        <td ng-if="!edit">{{hdata.CheckOutDate | date : "dd/MM/yy"}}</td>
+                                        <td ng-if="edit"><input value="{{hdata.CheckOutDate| date : 'dd/MM/yy'}}" type="text" id="edtchOutdate" ng-model="hdata.CheckOutDate" date='dd/MM/yyyy' formatted-date format="MM/dd/yyyy" class="inputremark form-control" style="cursor: pointer;"></td>
+                                        <td>{{hdata.HotelStatus == null ? 'Pending':hdata.HotelStatus}}</td>
+                                        <td>
+                                            Hotel Confirmation No. :  {{hdata.HotelConfirmationNo}} <br />
+                                            Name:  {{hdata.HotelName}} <br />
+                                            Address: {{hdata.HotelAddress}}  <br />
+                                            Phone:   {{hdata.HotelPhoneNo}} <br />
+                                        </td>
+                                        <td>{{hdata.Remarks_Status}}</td>
+                                    </tr>
+                                    <tr ng-if="!edit">
+                                        <td colspan="3" ng-if="hdata.IsBookingcancelled != true">Hotel Cancellation: </td>
+                                        <td colspan="3" ng-if="hdata.IsBookingcancelled == true">Reason for hotel Cancellation : </td>
+                                        <td colspan="2" ng-if="hdata.IsBookingcancelled != true"><input id="txtCancel" type="text" placeholder="Reason for Cancellation" ng-model="hdata.reasonForCancellaton" class="form-control input-sm"></td>
+                                        <td colspan="3" ng-if="hdata.IsBookingcancelled == true">{{hdata.ReasonForCancellation}}</td>
+                                        <td ng-if="hdata.IsBookingcancelled != true && cancelledBooking != true"><button type="button" class="btn btn-warning btn-sm" ng-click="bookingCancel(hdata)">Cancel Hotel</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;" colspan="6">
+                                            <input type="button" value="Edit" class="btn btn-warning btn-sm" ng-disabled="hdata.IsBookingcancelled == true" ng-if="!edit" ng-click="editRow();" style="background-color: #EE1D23; border-color: #EE1D23; width:70px;">
+                                            <input type="button" value="Update" class="btn btn-warning btn-sm" ng-if="edit" ng-click="updateRow(hdata);" style="background-color: #EE1D23; border-color: #EE1D23;">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <span style="font-size:12px;font-weight:normal;padding-left:10px;color:red; float:left;">#Hotel can be pre-booked upto 24:00 hours prior to the flight departure.</span>
+                                <button type="button" class="btn btn-default pull-right" data-dismiss="modal" aria-hidden="true" ng-click="edit=false">close</button>
+                            </div>
+                        </div>
+                        <div ng-if="hotelData.length == 0">
+                            <div class="col-md-12"><div class="content_inner_box Mob_grid_scrollWidth" style="text-align:left; font-size:17px;color:red">Hotel is not allocated by Travel Desk.</div></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+    <div id="BookhoteldetailModal" class="modal modal-wide fade newmdpop">
+        <div class="modal-dialog newmodelpopwidth70" style="overflow-y: initial !important;">
+            <div class="modal-content">
+                <div id="dvHotelBookingDataShow">
+                    <div class="modal-header popupmodalheader_redcolor">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="edit=false">x</button>
+                        <h4 class="popuphdtxt mobtxtheading"><span class="viewlistcs headertxt_whitecolortxt"> OAT Hotel Booking Request ID ({{oatreqId}}) </span></h4>
+                    </div>
+                    <div class="modal-body" style="overflow-x:hidden;">
+
+                        <div class="content_search_structure_box-modal scroll">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group" ng-class="{'has-error' : !HotelDetail.city  && submithotelDetail}">
+                                            <div><span> City Code</span></div>
+                                            <select id='BookHotelCityCode' type='text' class='form-control input-sm bookhotelselect' " style="width:100%;"></select>
+                                            @*<input type="text"  class="input-sm form-control" placeholder="City Code" required />*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group" ng-class="{'has-error' : !HotelDetail.CheckInDate  && submithotelDetail}">
+                                            <div><span>Check-in Date</span></div>
+                                            <input type="text" id="bookchindate" placeholder="Check-in Date" autocomplete="off" class="form-control input-sm" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group" ng-class="{'has-error' : !HotelDetail.CheckOutDate  && submithotelDetail}">
+                                            <div><span>Check-out Date</span></div><input type="text" id="bookchOutdate" ng-model="HotelDetail.CheckOutDate" class="input-sm form-control" placeholder="City Code" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div><span>Check-In Time</span></div><input type="text" id="ch-InTimePicker" ng-model="HotelDetail.CheckInTime" class="input-sm form-control timepicker" placeholder="Check-In Time" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div><span>Check-out Time</span></div><input type="text" id="ch-OutTimePicker" ng-model="HotelDetail.CheckOutTime" class="input-sm form-control timepicker" placeholder="Check-Out Time" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div><span>Entitlement</span></div>
+                                            <select class="form-control  input-sm" id="BookHotelEntitlement" ng-model="HotelDetail.Entitelement" placeholder="Please select">
+                                                <option ng-selected="true">Single</option>
+                                                <option>Double</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div><span>AirportTransport Required </span></div>
+                                            <select class="form-control input-sm" id="bookHotelisTransportRequired" ng-model="HotelDetail.AirportTransport" placeholder="Please Select">
+                                                <option ng-selected="true">Yes</option>
+                                                <option>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-sm btn-danger" value="Submit Hotel Detail" ng-click="SubmitAllDetails(oatreqId, 'hotel');" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div>
+                            <span style="font-size:12px;font-weight:normal;padding-left:10px;color:red; float:left;">#Hotel can be pre-booked upto 24:00 hours prior to the flight departure.</span>
+                            <button type="button" class="btn btn-default pull-right" data-dismiss="modal" aria-hidden="true" ng-click="edit=false">close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+
+    <div id="viewFlightdetailModal" class="modal modal-wide fade newmdpop">
+        <div class="modal-dialog newmodelpopwidth70" style="overflow-y: initial !important;">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-header popupmodalheader_redcolor">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="edit=false">x</button>
+                        <h4 class="popuphdtxt mobtxtheading"><span class="viewlistcs headertxt_whitecolortxt"> OAT Booking Request ID (OAT - {{oatreqId}}) </span></h4>
+                    </div>
+                    <div class="modal-body" style="overflow-x:hidden;">
+                        <div ng-if="FlightDetail.length != 0">
+                            <h4 class="popuphdtxt" id="hotelH">Flight(s) Information</h4>
+                            <table class="table table-striped table-bordered" style="width:100%">
+                                <tr class="popheadcolor" style="font-weight:bold">
+                                    <th>Sector</th>
+                                    <th>Departure Date</th>
+                                    <th>Booking Status</th>
+                                    <th>Flight Detail</th>
+                                    <th>Remarks</th>
+
+                                </tr>
+                                <tbody ng-repeat="fdata in FlightDetail">
+                                    <tr>
+                                        <td id="passengerId" style="display:none;">{{fdata.PassengerID}}</td>
+                                        <td>{{fdata.OriginPlace}}-{{fdata.DestinationPlace}}</td>
+                                        <td ng-if="!edit">{{fdata.DepartureDate | date : "dd/MM/yy"}}</td>
+                                        <td ng-if="edit"><input value="{{fdata.DepartureDate | date : 'dd/MM/yy'}}" type="text" ng-model="fdata.DepartureDate" id="fDeptDate" date='dd/MM/yyyy' formatted-date format="MM/dd/yyyy" class="inputremark form-control" style="cursor: pointer;"></td>
+
+                                        <td>{{fdata.IsFlightCancel== 0? '':  fdata.FlightCancelBy}}</td>
+                                        <td>
+                                            {{fdata.FlightBookingStatus != 'Close' ? 'Pending':hdata.HotelStatus}}
+                                            <div ng-if="fdata.FlightBookingStatus == 'Close'">
+                                                Flight No. :  {{fdata.FlightNo}} <br />
+                                                Aircraft name:  {{hdata.HotelName}} <br />
+                                                Departure Time: {{hdata.HotelAddress}}  <br />
+                                            </div>
+                                        </td>
+                                        <td>{{fdata.Remarks_Status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;" colspan="6">
+                                            <input type="button" value="Edit" class="btn btn-warning btn-sm" ng-disabled="fdata.IsFlightCancel == true" ng-if="!edit" ng-click="editRow();" style="background-color: #EE1D23; border-color: #EE1D23; width:70px;">
+                                            <input type="button" value="Update" class="btn btn-warning btn-sm" ng-if="edit" ng-click="updateFlightDetail(fdata);" style="background-color: #EE1D23; border-color: #EE1D23;">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="display:none" @*ng-if="hotelData.length == 0"*@>
+                            <div class="col-md-12"><div class="content_inner_box Mob_grid_scrollWidth" style="text-align:left; font-size:17px;color:red">Hotel is not allocated by Travel Desk.</div></div>
+                        </div>
+
+                        <div>
+                            <table class="table-bordered table-striped flighdtl">
+                                <tr>
+                                    <td colspan="5" style="text-align:left">Status of Hod:</td>
+                                    <td colspan="5" style="text-align:left"> Pending</td>
+                                </tr>
+
+                                <tr ng-if="!FlightDetail[0].IsFlightCancel">
+
+                                    <td colspan="5" style="text-align:left">Permanently Cancel the request on behalf of User:</td>
+                                    <td colspan="5" style="text-align:left"> <button type="button" style="margin-right:10px;" class="btn btn-warning btn-sm" ng-click="hideShowCancelDocumentDiv('c')">Cancellation</button><button type="button" class="btn btn-warning btn-sm" ng-click="hideShowCancelDocumentDiv('frc');">Full Refund Cancellation</button></td>
+                                </tr>
+                                <tr ng-if="FlightDetail[0].IsFlightCancel">
+
+                                    <td colspan="5" style="text-align:left">Flight is cancelled due to</td>
+                                    <td colspan="5" style="text-align:left"> {{FlightDetail[0].CancellationReason}} </td>
+                                </tr>
+
+                                <tr ng-if="openCancelDocumentDiv == 'true'">
+                                    <td colspan="5" style="text-align:left">Please Upload Your Supportive Document:</td>
+                                    <td colspan="2" style="text-align:left"><input type="text" class="form-control input-sm" id="CancelReason" /></td>
+                                    <td colspan="2" style="text-align:left"><input type="file" id="cancellationSrc" /></td>
+                                    <td colspan="2" style="text-align:left"><button type="button" class="btn btn-danger btn-sm" ng-click="cancellationRequestToITh(FlightDetail[0].PassengerID,FlightDetail[0].OriginPlace,FlightDetail[0].DestinationPlace)">Send Submit Request</button></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="5" style="text-align:left">Send Hold Request to Service Providor:</td>
+                                    <td colspan="5" style="text-align:left"><button type="button" ng-disabled="FlightDetail[0].IsFlightCancel" class="btn btn-warning btn-sm" ng-click="sendHoldRequest()">Send Hold Request</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="button" class="btn btn-default pull-right" data-dismiss="modal" aria-hidden="true" ng-click="edit=false">close</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div><!-- /.modal-content -->
+    </div>
+
+    <div id="BookFlightdetailModal" class="modal modal-wide fade newmdpop">
+        <div class="modal-dialog newmodelpopwidth70" style="overflow-y: initial !important;">
+            <div class="modal-content">
+                <div id="dvHotelBookingDataShow">
+                    <div class="modal-header popupmodalheader_redcolor">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="edit=false">x</button>
+                        <h4 class="popuphdtxt mobtxtheading"><span class="viewlistcs headertxt_whitecolortxt"> OAT Hotel Booking Request Id ({{oatreqId}}) </span></h4>
+                    </div>
+                    <div class="modal-body" style="overflow-x:hidden;">
+                        <div class="content_search_structure_box-modal scroll">
+                            <form name="onlyFlightBookingForms" id="form_id">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-3">
+                                            <div class="form-group" ng-class="{'has-error' : !flightInfo.From  && submitflightDetail}">
+                                                <div><span> From </span></div>
+                                                <select id="BookFlightFrom" ng-cloak ng-model="flightInfo.From" placeholder="Destination Station"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+
+                                            <div class="form-group" ng-class="{'has-error' : !flightInfo.To  && submitflightDetail}">
+                                                <div><span>To</span></div>
+                                                <select id="BookFlightTo" ng-cloak ng-model="flightInfo.To" placeholder="Source Station"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group" ng-class="{'has-error' : !bookDepartureDate  && submitflightDetail}">
+                                                <div><span>Departure Date</span></div><input type="text" id="bookDepartureDate" name="DepartureDate" ng-model="bookDepartureDate" class="input-sm form-control" placeholder="departue Date" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group" ng-class="{'has-error' : !flightInfo.DepartureTime  && submitflightDetail}">
+                                                <div><span>Departure Time</span></div>
+                                                <select class="form-control input-sm" name="RoundDepartureTime" id="bookdeptTime" ng-model="flightInfo.DepartureTime" placeholder="Please Select Time">
+                                                    <option ng-selected="true" style="display:none;">Choose your suitable time</option>
+                                                    <option>12:00 AM - 03:00 AM</option>
+                                                    <option>03:00 AM - 06:00 AM</option>
+                                                    <option>06:00 AM - 09:00 AM</option>
+                                                    <option>09:00 AM - 12:00 PM</option>
+                                                    <option>12:00 PM - 03:00 PM</option>
+                                                    <option>03:00 PM - 06:00 PM</option>
+                                                    <option>06:00 PM - 09:00 PM</option>
+                                                    <option>09:00 PM - 12:00 AM</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-4">
+                                            <div class="form-group" ng-class="{'has-error' : !flightInfo.AircraftName  && submitflightDetail}">
+                                                <div><span>Aircraft Name</span></div><input type="text" name="AircraftName" id="BookAircraftName" ng-model="flightInfo.AircraftName" class="input-sm form-control" placeholder="Aircraft Name" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" ng-class="{'has-error' : !flightInfo.FlightNo  && submitflightDetail}">
+                                                <div><span>Flight No.</span></div><input type="text" name="FlightNo" id="bookFlightNo" ng-model="flightInfo.FlightNo" class="input-sm form-control" placeholder="Flight No." />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" ng-class="{'has-error' : !flightInfo.ReasonOfTravelling  && submitflightDetail}">
+                                                <div><span>Reason of Travelling</span></div><input type="text" id="bookReasonOfTrv" name="ReasonOfTravelling" ng-model="flightInfo.ReasonOfTravelling" class="input-sm form-control" placeholder="Reason of Travelling" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        @*<button type="submit" class="btn btn-danger btn-sm" ng-click="SubmitAllDetails(flightDetail,oatreqId,'','flight')">Flight Details</button>*@
+                                        <input type="submit" value=" Submit Flight Details" class="mob_Nstru_ContinueBtn btn btn-danger" ng-click="SubmitAllDetails(oatreqId,'flight')" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div>
+                            <span style="font-size:12px;font-weight:normal;padding-left:10px;color:red; float:left;">#Hotel can be pre-booked upto 24:00 hours prior to the flight departure.</span>
+                            <button type="button" class="btn btn-default pull-right" data-dismiss="modal" aria-hidden="true" ng-click="edit=false">close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+    <!-- --------------------Loader--------------------------------------------------->
+    <div class="loader">
+        <center>
+            <span class="loading-image" id="loaderMsg" style="font-weight:bold;font-size:22px;color:#ff0000;"></span>
+            <img class="loading-image" src="../images/loading.gif" alt="loading.."><br />
+        </center>
+    </div>
+    <!-- --------------------End of Loader----------------------------------------->
+
+</body>
+</html>
+
+
+
+
+
+
+

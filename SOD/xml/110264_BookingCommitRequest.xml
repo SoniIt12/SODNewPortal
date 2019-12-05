@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BookingCommitRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractVersion>0</ContractVersion>
+  <Signature>BZZVqsndscs=|jpa2AC9UiG5fEhPdauI2Fz3CFGOS8VlEzSGcMzSuT1XrQvgUeempTui1RUhw0/wLY6X2tOoJx7GcNUWoahjqb03wSGVkiyRakRzPMV6VL5veS8WKsYLDGgGIWKIbKAmU6KwEUSCNOgU=</Signature>
+  <BookingCommitRequestData>
+    <State>New</State>
+    <CurrencyCode>INR</CurrencyCode>
+    <PaxCount>1</PaxCount>
+    <BookingID>0</BookingID>
+    <BookingParentID>0</BookingParentID>
+    <SourcePOS>
+      <State>New</State>
+      <AgentCode>SDFINANCED</AgentCode>
+      <OrganizationCode>SDFINANCED</OrganizationCode>
+      <DomainCode>WWWW</DomainCode>
+      <LocationCode>WWW</LocationCode>
+    </SourcePOS>
+    <Passengers>
+      <Passenger>
+        <State>Modified</State>
+        <PassengerNumber>0</PassengerNumber>
+        <FamilyNumber>0</FamilyNumber>
+        <Names>
+          <BookingName>
+            <State>New</State>
+            <FirstName>PRADEEP</FirstName>
+            <LastName>SHAH</LastName>
+            <Title>Mr</Title>
+          </BookingName>
+        </Names>
+        <PassengerID>0</PassengerID>
+        <PassengerInfos>
+          <PassengerInfo>
+            <State>New</State>
+            <BalanceDue>0</BalanceDue>
+            <Gender>Male</Gender>
+            <TotalCost>0</TotalCost>
+            <WeightCategory>Male</WeightCategory>
+          </PassengerInfo>
+        </PassengerInfos>
+        <PseudoPassenger>false</PseudoPassenger>
+      </Passenger>
+    </Passengers>
+    <BookingComments>
+      <BookingComment>
+        <State>New</State>
+        <CommentType>Default</CommentType>
+        <CommentText>SOD-Standby| 00105189| PRADEEP SHAH| Senior General Manager - Reservations| Reservation| 9873004088| satyam.prajapati@spicejet.com</CommentText>
+        <CreatedDate>0001-01-01T00:00:00</CreatedDate>
+      </BookingComment>
+    </BookingComments>
+    <BookingContacts>
+      <BookingContact>
+        <State>New</State>
+        <TypeCode>P</TypeCode>
+        <Names>
+          <BookingName>
+            <State>New</State>
+            <FirstName>PRADEEP</FirstName>
+            <LastName>SHAH</LastName>
+            <Title>Mr</Title>
+          </BookingName>
+        </Names>
+        <EmailAddress>satyam.prajapati@spicejet.com</EmailAddress>
+        <HomePhone>9873004088</HomePhone>
+        <CompanyName>SpiceJet</CompanyName>
+        <AddressLine1>SpiceJet Ltd.| 319 | Udyog Vihar | Phase IV</AddressLine1>
+        <City>Gurgaon - 122016</City>
+        <ProvinceState>HR</ProvinceState>
+        <PostalCode />
+        <CountryCode>IN</CountryCode>
+        <DistributionOption>Email</DistributionOption>
+        <NotificationPreference>None</NotificationPreference>
+        <SourceOrganization>SDFINANCED</SourceOrganization>
+      </BookingContact>
+    </BookingContacts>
+    <RestrictionOverride>false</RestrictionOverride>
+    <ChangeHoldDateTime>false</ChangeHoldDateTime>
+    <WaiveNameChangeFee>false</WaiveNameChangeFee>
+    <WaivePenaltyFee>false</WaivePenaltyFee>
+    <WaiveSpoilageFee>false</WaiveSpoilageFee>
+    <DistributeToContacts>false</DistributeToContacts>
+  </BookingCommitRequestData>
+</BookingCommitRequest>

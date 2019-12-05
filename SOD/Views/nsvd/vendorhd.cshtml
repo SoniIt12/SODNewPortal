@@ -1,0 +1,250 @@
+﻿@{
+    ViewBag.Title = "SOD Vendor | Vendors";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<html>
+<head>
+    <title>Vendor Master</title>
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <script src="../New_Calender/src/calender_jquery.daterange.js"></script>
+    <link href="../New_Calender/calender.css" rel="stylesheet" />
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    <script src="../js/angular/angular.min.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="../js/angular/sanitize.js"></script>
+    <script src="../js/select2/select2.min.js"></script>
+    <link href="../css/select2/select2.min.css" rel="stylesheet" />
+    <script src="../js/angular/VendorJS.js"></script>
+
+    <style>
+        #vendor-mastre-details .vendor-header th {
+            font-size: 12px;
+            text-transform:capitalize;
+        }
+        #vendor-mastre-details  td {
+            padding: 2px !important;
+        }
+        .arrange-data{ width:100%; overflow:auto;}
+        .vendor-header i{ cursor:pointer;}
+      
+    </style>
+</head>
+<body>
+    <div class="content_header_txt">
+        <div>Vendor's Master </div>
+    </div>
+    <div ng-app="VendorApp" ng-controller="VendorCtrl" ng-init="paginit('')" ng-cloak>
+        <section class="content">
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content_search_structure_box" style="margin-top:-15px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="title-vendor-dtl"> Vendor's Details</div>
+                                    <input type="hidden" id="hdnId" value="0">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"><div class=" paddingtop05"> First Name</div></div>
+                                <div class="col-md-4">
+                                    <input type="text" id="firstName" placeholder="First Name" class="form-control input-sm">
+                                </div>
+                                <div class="col-md-2"><div class=" paddingtop05"> Last Name</div></div>
+                                <div class="col-md-4">
+                                    <input type="text" id="lastName" placeholder="Last Name" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="paddingtop05">
+                                    <div class="col-md-2"><div class=" paddingtop05"> Email ID</div></div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="email" placeholder="Email ID(For Ex: abc@gmail.com)" class="form-control input-sm">
+                                    </div>
+                                    <div class="col-md-2"><div class="paddingtop05"> Phone No.</div></div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="mobileNumber" ng-keypress="filterValue($event)" placeholder="Phone No(For Ex: 9876543210)" ng-pattern="ph_numbr" class="form-control input-sm " ng-required="true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="paddingtop05">
+                                    <div class="col-md-2"><div class=" paddingtop05">Gender</div></div>
+                                    <div class="col-md-4">
+                                        <select class="form-control input-sm" id="gender">
+                                            <option value="">--Select Gender--</option>
+                                            <option value="M">Male</option>
+                                            <option value="F">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="col-md-2"><div class="paddingtop05">Company Name</div></div>
+                                    <div class="col-md-4">
+                                        <select class="form-control input-sm" id="Code">
+                                            <option value="">--Select Company Name--</option>
+                                            <option value="ITC">ITC</option>
+                                            <option value="I12">I12 </option>
+                                            <option value="IBA">IBA </option>
+                                            <option value="XIBIA"> XIBIA </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="paddingtop05">
+                                    <div class="col-md-2"><div class=" paddingtop05">User(on behalf of)</div></div>
+                                    <div class="col-md-4">
+                                        <select id="UserEmpID" ng-model="userrole" class="form-control input-sm" ng-change="HODdetails(userrole)">
+                                            <option value="">--Select User--</option>
+                                            <option ng-repeat="user in userroledetail" value="{{user.Email}}">{{user.EmpName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="paddingtop05" ng-show="hODdetails.length > 0">
+                                    <div class="col-md-2"><div class=" paddingtop05">HODName</div></div>
+                                    <div class="col-md-4">
+                                        <select class="form-control input-sm">
+                                            <option ng-repeat="HOD in hODdetails" value="{{HOD.ApproverEmailID}}" id="HODEmailID">{{HOD.ApproverName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class=" vendor-submit-btn">
+                                        <input class="btn btn-danger btn-sm" type="button" ng-click="addupdatevendorhd();" value="Add" id="btnsubmit" />
+                                        <input class="btn btn-default btn-sm" type="button" ng-click="clearFields();" value="Clear" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div style="text-align:center;color:red; font-weight:bold;">
+                                        <div id="message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="content_inner_box_topborder">               
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <div class="mob-show-details-vendor ">
+                            <div>
+                                <table id="vendor-mastre-details" class="table table-striped table-bordered">
+                                    <tr>
+                                        <td colspan="10">
+                                            Search :<input class="vendor-search" type="text" ng-model="search" ng-change="filter();" placeholder="Filter" />
+                                        </td>
+                                        <td colspan="4" align="right" ng-hide="filtered.length==0">
+                                            <button class="btn btn-warning btn-sm" type="button" id="btnExport" style="background-color: #009700; border-color: #009700;">
+                                                <i><img src="../images/exp_excel.png" height="16" width="20" /></i> &nbsp;Download
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="vendor-header" ng-hide="filtered.length==0">
+                                        <th>
+                                            S.No.<a ng-click="sort_by('ID');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Vendor Code <a ng-click="sort_by('VendorCode');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Title <a ng-click="sort_by('Gender');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            First Name <a ng-click="sort_by('FirstName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Last Name <a ng-click="sort_by('LastName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Mobile No. <a ng-click="sort_by('MobileNo');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Email <a ng-click="sort_by('EmailId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Company Name <a ng-click="sort_by('Company Name');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Requested By <a ng-click="sort_by('AddVendorOnBehalfof');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Req. Date <a ng-click="sort_by('AddDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            On Behalf of <a ng-click="sort_by('ReqEmpName');"<i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            IsApproved <a ng-click="sort_by('IsApproved');"<i class="glyphicon glyphicon-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            Action
+                                        </th>
+                                        <th>
+                                            Select all <input type="checkbox" ng-model="selectedAll" ng-click="checkAll();" />
+                                        </th>
+                                    </tr>
+                                    <tr ng-repeat="list in filtered= (VendorList | filter: search| orderBy : predicate :reverse)| startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit ">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{list.VendorCode}}</td>
+                                        <td>{{list.Gender == 'M' ? 'Mr.' : 'Ms.'}}</td>
+                                        <td>{{list.FirstName}}</td>
+                                        <td>{{list.LastName}}</td>
+                                        <td>{{list.MobileNo}}</td>
+                                        <td>{{list.EmailId}}</td>
+                                        <td>{{list.CompanyName}}</td>
+                                        <td>{{list.AddVendorOnBehalfof}}</td>
+                                        <td>{{list.AddDate| date : 'medium'}}</td>
+                                        <td>{{list.ReqEmpName}}</td>
+                                        <td ng-if="list.IsApproved == 0"><span> Pending <img src="../img/pend.jpg" width="15px" height="15px" /></span></td>
+                                        <td ng-if="list.IsApproved == 1"><span> Approved <img src="~/img/right.jpg" width="15px" height="15px" /></span></td>
+                                        <td ng-if="list.IsApproved == 2"><span>Rejected <img src="~/img/rejected.png" width="15px" height="15px" /></span></td>
+                                        <td>
+                                            <div style="line-height:25px; margin:5px;" class="update-delete-btn" ng-if="list.IsApproved == 0">
+                                                <a href="#" class="csod update" ng-click="vendorupdate(list)" ng-disabled=false>Update</a>
+                                                <a href="#" class="csod delete" ng-click="vendordelete(list.ID)" ng-disabled=false>Delete</a>
+                                            </div>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <input type="checkbox" ng-model="list.Ischecked" ng-checked="selectedAll && list.IsApproved != 1"  ng-if="list.IsApproved != 1 && list.IsApproved != 2" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div ng-if="filtered.length == 0"><b>No Record Found!</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-if="hideButton && hidebuttons">
+                    <div class="col-md-12">
+                        <div class="send-approve-btn">
+                            <input class="btn btn-danger btn-sm" type="button" ng-click="sendpendinglist(VendorList)" value="Send Email for Approval" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div pagination total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container">            
+        </div>
+        <section class="container-fluid">            
+        </section>
+    </div>
+</body>
+</html>

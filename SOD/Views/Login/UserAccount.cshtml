@@ -1,0 +1,67 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+    <title>SpiceJet | Sod Login</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../3D_button/3dbtn.css" rel="stylesheet" />
+    <script>
+        function ValidateUsers() {
+        var jdata = { "username": $('#username').val(), "pwd": $('#password').val() };
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: '../Login/ValidateLogin',
+            data: JSON.stringify(jdata),
+            success: function (data) {
+            },
+            error: function () {
+            }
+        });
+    }
+    </script>
+</head>
+<body>
+    <div class="loginmnDv">
+        <div class="bannerimgg"><img src="../img/login_banner.jpg" style="width:100%;" /></div>
+
+    </div>
+    <div class="login_rgDv">
+
+        <div style="border:solid 1px #fff;  ">
+            <div class="login_right">
+                <div class="logoDV"><img src="../img/logo_spicejet_rr.png" /></div>
+                <div class="headingslogan">Welcome to Spicejet<br />SOD Portal</div>
+                <div class="login_txt_cont">You will need to provide your Login credentials to access the Employee Self Service (ESS) port</div>
+                <div class="login_txt_cont">The Employee Self Service portal helps you to connect to the online resources your organisation has made available to you. Using ESS, you can browse and search those resources, perform your day-to-day activities, and manage your account details.</div>
+                
+                <form id="login" action="../Login/ValidateLogin" method="post">
+                <div style="color:red; margin-left: 75px;margin-top:15px;font-size:14px;"> @ViewBag.LoginFailMessage</div>
+                <div class="login_form">
+                <div class="logintxtbx"><i class="username_icon"></i><input type="text" placeholder="User Name" name="username" id="username" maxlength="90" autofocus required /></div>
+                        <div class="logintxtbx"><i class="password_icon"></i><input type="password" placeholder="Password" name="password" id="password" maxlength="25" autofocus required /></div>
+                        <div style="padding-bottom:25px;">
+                            <div class="forgettxt"><span class="remember">Remember Me?</span>  <span class="forget">Forgot Password?</span></div>
+                        </div>
+                        <div class="three_D">
+                            <input type="submit" id="submit" value="LOGIN">
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            <div>
+           </div>
+        </div>
+    </div>
+</body>
+</html>
+

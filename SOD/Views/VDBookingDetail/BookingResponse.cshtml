@@ -1,0 +1,95 @@
+﻿@{
+   // Layout = null;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    @*<link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />*@
+    <title>Sod | Booking Response</title>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../3D_button/3dbtn.css" rel="stylesheet" />
+    <style type="text/css">
+        .succesmsg {
+            text-align: center;
+            font-size: 25px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+    //Replan
+    $(function() {
+        $('#fltreplan').click(function() {
+            var url = '@Url.Action("SearchFlight", "nsvdflightbooking")';
+            window.location.href = url;
+        });
+    });
+    function emailNotification()
+      {
+            $.ajax({
+                url: "../VDBookingDetail/sendEmailNotification",
+                success: function (result) {
+                }
+         });
+      }
+    </script>
+</head>
+<body onload="emailNotification();">
+    <div>
+        <div class="bookingheadr" style="display:none">
+            <div class="headerimg"><div class="container">
+                <div class="row">
+                    <div class="col-md-3"><div class="logoheader"><img src="../img/logo_spicejet.png" /></div> </div>
+                    <div class="col-md-9"></div>
+                </div>
+                </div> 
+            </div>
+        </div>
+       
+       
+       <!--------------------------------------------Content---------------->
+        <div class="container">
+            <div style="padding-top:10%">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12"><div class="succesmsg"> Thank You !</div></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"><div class="succesmsg" id="dvMsg">@TempData["jsonmsg"]</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="three_D2" style="padding-top:100px; padding-bottom:20px; text-align:center"><input type="button" id="fltreplan" value="Home" style="width:150px; height:35px; background-color:#b33; border:0px;color:#fff; margin-left:10px; font-size:16px;" /></div>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------------------------------Footer---------------->
+        <div style="padding-top:70px;"></div>
+        <footer class="essfooter">
+            <div class="container"></div>
+        </footer>
+        <!-- ------------------------------------------END Footer---------------->
+    </div>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+                document.getElementById("fltreplan").click(5000);
+            };
+        </script>
+    }  
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BookingCommitResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BookingUpdateResponseData>
+    <ExtensionData />
+    <Success>
+      <ExtensionData />
+      <RecordLocator>H88F2G</RecordLocator>
+      <PNRAmount>
+        <ExtensionData />
+        <BalanceDue>218.00000</BalanceDue>
+        <AuthorizedBalanceDue>218.00000</AuthorizedBalanceDue>
+        <SegmentCount>1</SegmentCount>
+        <PassiveSegmentCount>0</PassiveSegmentCount>
+        <TotalCost>218.00000</TotalCost>
+        <PointsBalanceDue>0</PointsBalanceDue>
+        <TotalPointCost>0</TotalPointCost>
+        <AlternateCurrencyCode />
+        <AlternateCurrencyBalanceDue>0</AlternateCurrencyBalanceDue>
+      </PNRAmount>
+    </Success>
+  </BookingUpdateResponseData>
+</BookingCommitResponse>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://121.242.92.173/SpicejetDynamicSectors/DynamicSectors.svc?xsd=xsd2" filename="DynamicSectors.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="http://121.242.92.173/SpicejetDynamicSectors/DynamicSectors.svc?disco" filename="DynamicSectors.disco" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://121.242.92.173/SpicejetDynamicSectors/DynamicSectors.svc?wsdl" filename="DynamicSectors.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://121.242.92.173/SpicejetDynamicSectors/DynamicSectors.svc?xsd=xsd0" filename="DynamicSectors0.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://121.242.92.173/SpicejetDynamicSectors/DynamicSectors.svc?xsd=xsd1" filename="DynamicSectors1.xsd" />
+  </Results>
+</DiscoveryClientResultsFile>

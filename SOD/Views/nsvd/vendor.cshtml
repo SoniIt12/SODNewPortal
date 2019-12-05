@@ -1,0 +1,312 @@
+﻿@{
+    ViewBag.Title = "SOD|Vendor Master";
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml";
+}
+<html>
+<head>
+    <title>Vendor Master</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../New_Calender/calender.css" rel="stylesheet" />
+    <link href="../Dropdownmenu/jquery-ui.css" rel="stylesheet" />
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../css/timepicker.css" rel="stylesheet" />
+    <link href="../css/select2/select2.min.css" rel="stylesheet" />
+    <style>
+        .highlight {
+            box-shadow: 0 0 5px red;
+            padding: 3px 0px 3px 3px;
+            margin: 5px 1px 3px 0px;
+            border: 1px solid red;
+        }
+
+        .highlight2 {
+            box-shadow: 0 0 5px #efefef;
+            padding: 3px 0px 3px 3px;
+            margin: 5px 1px 3px 0px;
+            border: 1px solid #efefef;
+        }
+
+        .ui-effects-placeholder {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content_header_txt">
+        <div>Vendor's Master </div>
+    </div>
+    <div ng-app="VendorApp" ng-controller="VendorCtrl" ng-init="paginit('')" ng-cloak>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="content_search_structure_box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="title-vendor-dtl"> Vendor's Details</div>
+                                <input type="hidden" id="hdnId" value="0">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"><div class=" paddingtop05"> First Name<span style="color:#ff0000">*</span></div></div>
+                            <div class="col-md-4">
+                                <input type="text" id="firstName" placeholder="First Name" class="form-control input-sm " onkeypress="return onlyAlphabets(event,this);">
+                            </div>
+                            <div class="col-md-2"><div class=" paddingtop05"> Last Name<span style="color:#ff0000">*</span></div></div>
+                            <div class="col-md-4">
+                                <input type="text" id="lastName" placeholder="Last Name" class="form-control input-sm" onkeypress="return onlyAlphabets(event,this);">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="paddingtop05">
+                                <div class="col-md-2"><div class=" paddingtop05"> Email ID<span style="color:#ff0000">*</span></div></div>
+                                <div class="col-md-4">
+                                    <input type="text" id="email" placeholder="Email ID(For Ex: abc@gmail.com)" class="form-control input-sm">
+                                </div>
+                                <div class="col-md-2"><div class="paddingtop05"> Phone No.<span style="color:#ff0000">*</span></div></div>
+                                <div class="col-md-4">
+                                    <input type="text" id="mobileNumber" ng-keypress="filterValue($event)" placeholder="Phone No(For Ex: 9876543210)" ng-pattern="ph_numbr" class="form-control input-sm " ng-required="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="paddingtop05">
+                                <div class="col-md-2"><div class=" paddingtop05">Gender<span style="color:#ff0000">*</span></div></div>
+                                <div class="col-md-4">
+                                    <select class="form-control input-sm" id="gender">
+                                        <option value="">--Select Gender--</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="col-md-2"><div class="paddingtop05">Company Name<span style="color:#ff0000">*</span></div></div>
+                                <div class="col-md-4">
+                                    <select class="form-control input-sm " id="Code">
+                                        <option value="">--Select Company Name--</option>
+                                        <option value="ITC">ITC</option>
+                                        <option value="I12">I12 </option>
+                                        <option value="IBA">IBA </option>
+                                        <option value="XIBIA"> XIBIA </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class=" vendor-submit-btn">
+                                    <input class="btn btn-danger btn-sm" type="button" ng-click="addupdatevendor();" value="Add" id="btnsubmit" />
+                                    <input class="btn btn-default btn-sm" type="button" ng-click="clearFields();" value="Clear" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="IsVisible">
+                            <div class="col-md-12">
+                                <div style="text-align:center;color:red; font-weight:bold;">
+                                    <div id="message"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="container-fluid">
+            <div class="content_inner_box_topborder" style="width:100%;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="title-vendor-dtl"> Vendor List</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <div class="mob-show-details-vendor">
+                            <table id="vendor-mastre-details" class="table table-striped table-bordered">
+                                <tr>
+                                    <td colspan="5">
+                                        Search :<input class="form-control" type="text" ng-model="search" ng-change="filter();" placeholder="Filter" />
+                                    </td>
+                                    <td colspan="3">
+                                        From Date(DD/MM/YY)<div class="paddingbottom05"><input id="txtfromdate" type="text" placeholder="From Date" class="form-control" onclick="document.getElementById('txtfromdate').focus();" required /></div>
+                                    </td>
+                                    <td colspan="3">
+                                        To Date(DD/MM/YY)<div class="paddingbottom05"><input id="txttodate" type="text" placeholder="To Date" class="form-control" onclick="document.getElementById('txttodate').focus();" required /></div>
+                                    </td>
+                                    <td colspan="1">
+                                        <div class="margintop20"><button type="button" id="btnSearch_blkList" class="submitbtn btn btn-danger" ng-click="getdatewiseList()">Search</button></div>
+                                    </td>
+                                    <td colspan="1" align="right" ng-hide="filtered.length==0">
+                                        <button class="btn btn-warning btn-sm" type="button" id="btnExport" style="background-color: #009700; border-color: #009700; margin-top:20px;">
+                                            <i><img src="../images/exp_excel.png" height="16" width="20" /></i> &nbsp;Download
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="vendor-header" ng-hide="filtered.length==0">
+                                    <th>
+                                        S.No. &nbsp;<a ng-click="sort_by('ID');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Vendor Code &nbsp;<a ng-click="sort_by('VendorCode');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Title &nbsp;<a ng-click="sort_by('Gender');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        First Name &nbsp;<a ng-click="sort_by('FirstName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Last Name &nbsp;<a ng-click="sort_by('LastName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Mobile No. &nbsp;<a ng-click="sort_by('MobileNo');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Email &nbsp;<a ng-click="sort_by('EmailId');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Company Name &nbsp;<a ng-click="sort_by('CompanyName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Requested By &nbsp;<a ng-click="sort_by('ReqEmpName');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Requested Date &nbsp;<a ng-click="sort_by('AddDate');"><i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        IsApproved &nbsp;<a ng-click="sort_by('IsApproved');"<i class="glyphicon glyphicon-sort"></i></a>
+                                    </th>
+                                    <th>
+                                        Action
+                                    </th>
+                                    <th>
+                                        Select all <input type="checkbox" ng-model="selectedAll" ng-click="checkAll();" id="hidecheckbox" />
+                                    </th>
+                                </tr>
+                                <tr ng-repeat="list in filtered= (VendorList | filter: search| orderBy : predicate :reverse)| startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{list.VendorCode}}</td>
+                                    <td>{{list.Gender == 'M' ? 'Mr.' : 'Ms.'}}</td>
+                                    <td>{{list.FirstName}}</td>
+                                    <td>{{list.LastName}}</td>
+                                    <td>{{list.MobileNo}}</td>
+                                    <td>{{list.EmailId}}</td>
+                                    <td>{{list.CompanyName}}</td>
+                                    <td>{{list.ReqEmpName}}</td>
+                                    <td>{{list.AddDate| date : 'medium'}}</td>
+                                    <td ng-if="list.IsApproved == 0"><span> Pending <img src="../img/pend.jpg" width="15px" height="15px" /></span></td>
+                                    <td ng-if="list.IsApproved == 1"><span> Approved <img src="~/img/right.jpg" width="15px" height="15px" /></span></td>
+                                    <td ng-if="list.IsApproved == 2"><span>Rejected <img src="~/img/rejected.png" width="15px" height="15px" /></span></td>
+                                    <td>
+                                        <span class="update-delete-btn" ng-if="list.IsApproved ==0">
+                                            <a href="#" class="csod update" ng-click="vendorupdate(list)" ng-disabled=false>Update</a>
+                                            <a style="line-height:25px;" href="#" class="csod delete" ng-click="vendordelete(list.ID)" ng-disabled=false>Delete</a>
+                                        </span>
+                                    </td>
+                                    <td ng-if="!list.Ischecked">
+                                        <input type="checkbox" ng-model="list.Ischecked " ng-checked="selectedAll && list.IsApproved != 1" ng-if="list.IsApproved != 1 && list.IsApproved != 2" />
+                                        <div ng-if="list.IsMailSent==1 && list.IsApproved==0">Mail Sent</div>
+                                    </td>
+                                    <td ng-if="list.Ischecked">
+                                        <img src="~/img/right.jpg" width="15px" height="15px" />
+                                        <div ng-if="list.IsMailSent==1">Mail Sent</div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <div class="col-md-12" ng-if="filtered.length == 0">
+                                <div class="col-md-12">
+                                    <div><span style="text-align:center; font-size:14px;margin-top:100px;color:#ff0000">Sorry ! No record found. </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-if="hideButton && hidebuttons">
+                    <div class="col-md-12">
+                        <div class="send-approve-btn">
+                            <input class="btn btn-danger btn-sm" type="button" ng-click="sendpendinglist(VendorList)" value="Send Email for Approval" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-hide="filtered.length==0">
+                    <div class="col-md-12">
+                        <div pagination total-items="filteredItems" page="currentPage" ng-model="entryLimit" max-size="10" on-select-page="setPage(page)" class="pagination-sm" boundary-link-numbers="true" rotate="false"></div>
+                    </div>
+                </div>
+                <!------Div Loader------------------------------------------------------>
+                <div class="loader">
+                    <center>
+                        <img class="loading-image" src="../images/loading.gif" alt="loading..">
+                    </center>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="../Dropdownmenu/jquery-ui.js"></script>
+    <script src="../New_Calender/src/calender_jquery.daterange.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <link href="../css/MenuHeader.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="../js/angular/sanitize.js"></script>
+    <script src="../js/timerpickerJS.js"></script>
+    <script src="../js/select2/select2.min.js"></script>
+
+    <script src="../js/angular/VendorJS.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.timepicker').wickedpicker({
+                twentyFour: false, title:
+                    'Select our Time', showSeconds: false
+            });
+            var d = new Date(),
+                datef = ((d.getDate() + '/' + (d.getMonth() - 0) + '/' + d.getFullYear())),
+                datet = ((d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear()));
+            $("#txtfromdate").val(datef);
+            $("#txttodate").val(datet);
+        });
+        $(function () {
+            $("#txtfromdate").datepicker({
+                numberOfMonths: 2,
+                defaultDate: new Date(),
+                maxDate: "+10M +00D",
+                dateFormat: "dd/mm/yy"
+            });
+        });
+        $(function () {
+            $("#txttodate").datepicker({
+                numberOfMonths: 2,
+                defaultDate: new Date(),
+                maxDate: "+10M +00D",
+                dateFormat: "dd/mm/yy"
+            });
+        });
+        function onlyAlphabets(e, t) {
+            try {
+                if (window.event) {
+                    var charCode = window.event.keyCode;
+                }
+                else if (e) {
+                    var charCode = e.which;
+                }
+                else { return true; }
+                if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+                    return true;
+                else
+                    return false;
+            }
+            catch (err) {
+                alert(err.Description);
+            }
+        }
+    </script>
+</body>
+</html>

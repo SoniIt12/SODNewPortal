@@ -1,0 +1,276 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_ApplicationLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ChangeRequestHistoryHR</title>
+    <link rel="shortcut icon" href="http://www.spicejet.com/images/favicon9.ico" />
+   
+
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/usertravelhistory.js"></script>
+    <link href="../asset/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../asset/js/bootstrap.min.js"></script>
+    <link href="../css/SODstyle.css" rel="stylesheet" />
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <script src="../js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <link href="../css/responsive.css" rel="stylesheet" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/angular/sanitize.js"></script>
+    <!--DataTable-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  
+
+ 
+    <!--Alert Box-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            getchangeRequestDataHR();
+
+
+            //$('#chkremarks').on("click", function () {
+
+            //    $('#remarksdiv').find('input[type="text"]').val('');
+            //    if (document.getElementById('chkremarks').checked == true)
+            //        $('#remarksdiv').css('display', 'block');
+            //    else {
+            //        $('#remarksdiv').css('display', 'none');
+
+            //    }
+            //});
+
+            //$('#confirmationHRRemarks').on('hidden.bs.modal', function (e) {
+            //    $(this)
+            //      .find("textarea")
+            //         .val('')
+            //         .end()
+            //      .find("input[type=checkbox]")
+            //         .prop("checked", "")
+            //         .end();
+            //    $('#remarksdiv').css('display', 'none');
+            //    getchangeRequestData();
+
+            //});
+
+        });
+            //$('#confirmationHRRemarks').on('hidden.bs.modal', function () {
+                 
+            //    (this).find("input").val('').end();
+            //    (this).find("input[type='checkbox']").prop("checked","").end();
+            //});
+
+       
+
+
+            function getchangeRequestDataHR() {
+                $.ajax({
+                    //url: '/ChangeReq/changeRequestHistory',
+                    url: '/ChangeReq/HRRightsData',
+                    type:'post',
+                    success: function (dt) {
+                        //console.log(dt);
+                        if (dt != null && dt.length > 0)
+                        {
+                            $('#tblchangeRequestHistoryHR').find('tr:gt(0)').remove();
+                            var ApproveStatus, RejectStatus;
+                            for (var i = 0; i < dt.length; i++) {
+                                dt[i].HRApprovalStatus == true ? (ApproveStatus = "", RejectStatus = "") : (ApproveStatus = "<a href='#' onclick='InformtoFinance(" + dt[i].ReqId + ",this)'>Approve</a>", RejectStatus = "<a href='#' onclick='InformtoFinance(" + dt[i].ReqId + ",this)'>Reject</a>");
+                                dt[i].RequestTypeId == 1 ? (dt[i].CR1Update = "-", dt[i].CR2Update = "-", dt[i].CR3Update = "-") : (dt[i].EmailID = "-", dt[i].Phone = "-");
+                                //var InformToUser = dt[i].HRApprovalStatus == true ? "-" :"<a href='#' onclick='InformtoUser(" + dt[i].ReqId + ")'>Ok</a>";
+                                //console.log(InformToUser);
+                                var HRApproval = dt[i].HRApprovalStatus == true ? "Closed <img src='../../Template/HR/closed.png' style='height:15px;width:15px' />" : "Pending <img src='../../Template/HR/pending.png'  style='height:15px;width:15px' />";
+                                $('#tblchangeRequestHistoryHR').append('<tr><td>' + dt[i].ReqId + '</td><td>' + dt[i].RequestDate + '</td><td>' + dt[i].DeptId + '</td><td>' + dt[i].RequestedEmpName + '</td><td>' + dt[i].RequestType + '</td><td>' + dt[i].EmailID + '</td><td>' + dt[i].Phone + '</td><td>' + dt[i].CR1Update + '</td><td>' + dt[i].CR2Update + '</td><td>' + dt[i].CR3Update + '</td><td>' + dt[i].UserRemarks + '</td><td><div><span>' + HRApproval + '</span></div></td><td><div><span>' + ApproveStatus + '</span><span>' + RejectStatus + '</span></div></td></tr>');
+                            }
+                        }
+                        $('#tblchangeRequestHistoryHR').DataTable();
+                    },
+                    error: function () { }
+                });
+            }
+
+
+
+            function InformtoFinance(ReqId, status)
+            {
+                $.confirm({
+                    title: 'Send Update Notifications To User',
+                    content: 'Do you want to continue',
+                    buttons: {
+                        OK: function () {
+                            //$.alert('ok');
+                            
+                            MailSendToFinance(ReqId, $(status).text());
+
+                            //$('#confirmationHRRemarks').modal('show');
+                            //$('#btnsave').click(function(){
+                            //    remarksBYHR(ReqId);
+                            //});
+                           
+      
+                        },
+                        Cancel: function () {
+                            $.alert('cancel');
+                        }
+                    }
+                });
+            }
+
+
+
+            function MailSendToFinance(ReqId,status){
+                $.ajax({
+                    url: '/ChangeReq/SendChangeRequestToFinance',
+                    type:'post',
+                    data: { ReqId:ReqId,status:status},
+                    success: function () {
+                        //alert('mail send to finance');
+                        getchangeRequestDataHR();
+                    },
+                    error: function () { }
+                });
+            }
+
+
+            function remarksBYHR(ReqId) 
+            {
+                $.ajax({
+                    url: '/ChangeReq/confirmationMailRemarks',
+                    type:'post',
+                    data: { HRApprovalRemarks: $('#hodremarks').val(),ReqId:ReqId },
+                    success: function (msg) {
+                        document.getElementById('remarksmsgdiv').style.display = "block";
+                        document.getElementById('remarksmsg').textContent = msg;
+                        setTimeout(function () {
+                            document.getElementById('remarksmsgdiv').style.display = "none";
+                            document.getElementById('remarksmsg').textContent = "";
+
+                        }, 5000);
+                    },
+                    error: function () { }
+                });
+            }
+      
+
+        //function expandform() {
+        //    var content = document.getElementById('btnexpand').nextElementSibling;
+        //    if (content.style.display === "block")
+        //        content.style.display = "none";
+        //    else
+        //        content.style.display = "block";
+        //}
+
+    </script>
+</head>
+<body>
+    
+    @*<button type="button" id="btnexpand" onclick="expandform()" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span></button>
+    <div class="divcontent">
+        <table id="tbl">
+            <thead>
+                <tr>
+                <th>NAme</th>
+                    <th>Emp</th>
+                </tr>
+            </thead>
+        </table>
+    </div>*@
+
+
+    <div class="container">
+        <div>Change Request History </div>
+        <div>
+            <table id="tblchangeRequestHistoryHR" class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>ReqID</th>
+                        <th>Date Request</th>
+                        <th>Dept ID</th>
+                        <th>Name</th>
+                        <th>Request Type</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Change Request1</th>
+                        <th>Change Request2</th>
+                        <th>Change Request3</th>
+                        <th>Remarks</th>
+                        <th>HR Approval</th>
+                        <th>Action</th>
+                        
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+   
+
+
+
+
+    <!--Modal For Confirmation HRRemarks-->
+
+    <div id="confirmationHRRemarks" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title Stru_pop_header_color">HR Remarks</h4>
+                </div>
+                <div class="modal-body">
+                    <div>Your Request has been send successfully to UserEmailID</div>
+                    @*<div class="Mob_Stru_content"> </div>*@
+                    <div style="text-align:center;font-size:20px;"><div><b> Do you have any remarks</b> <input type="checkbox" id="chkremarks"/></div>   <label>  <span style="line-height:20px;"> <b style="margin-bottom:-10px;"></b></span></label>  </div>
+                   
+                    <div style="padding-top:30px;display:none;" id="remarksmsgdiv">
+                        <div class="alert alert-danger" style="text-align:center;background-color:#f3aca3 !important;border:0px;">
+                            <span id="remarksmsg"></span>
+                        </div>
+                    </div>
+
+                    <div class="container" style="display:none;" id="remarksdiv">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <textarea rows="2" class="form-control" id="hodremarks" maxlength="300"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <div style="text-align:center; margin-top:15px;">
+                                        <input type="button" value="Submit" id="btnsave" class="form-group btn btn-danger"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>

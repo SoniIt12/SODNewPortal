@@ -1,0 +1,190 @@
+﻿@{
+    ViewBag.Title = "Sod | Download";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<html>
+<head>
+    <title></title>
+    <!--Calender JS css-->
+    <link href="../css/finalsodstyle.css" rel="stylesheet" />
+    <link href="../Calender/css/foundation-datepicker.css" rel="stylesheet" />
+    <link href="~/Assest/css/AdminNew.css" rel="stylesheet" />
+    <style>
+        .img_i {
+            background-image: url(../img/Departure_Date.png);
+            background-repeat: no-repeat;
+            height: 23px;
+            width: 22px;
+            position: absolute;
+            margin-top: 3px;
+            margin-left: 135px;
+            z-index: 9;
+        }
+
+        i {
+            font-size: 1.1em;
+        }
+
+        .fh_inputtxt2 {
+            width: 150px;
+            height: 30px;
+            padding-left: 5px;
+            text-indent: 5px;
+            color: #000000;
+            font-size: 12px;
+            font-weight: 400;
+            border: solid 1px #e4e4e4;
+            font-family: Arial;
+            border-radius: 3px;
+        }
+
+        .searchDiv {
+            float: left;
+        }
+
+            .searchDiv input {
+                border-radius: 3px;
+                margin-left: 10px;
+                height: 28px;
+                width: 150px;
+                border: solid 1px #c2c2c2;
+                padding-left: 10px;
+            }
+
+        .searchbtnexpor {
+            margin-top: 40px;
+        }
+
+            .searchbtnexpor button {
+                background-color: #EE1D23;
+                color: #fff;
+                border: 0px;
+                height: 30px;
+                border-radius: 3px;
+            }
+    </style>
+
+</head>
+<body>
+
+    <div>
+        <div class="admin_content_txtheading"> Download Travel History</div>
+    </div>
+
+    <section class="content">
+        <div class="Alladmin_content_box">
+            <div class="row">
+                <div class="col-md-3">
+                    <div>  From Date (dd/mm/yyyy)</div>
+                    <div class="export-box"><i onclick="document.getElementById('txtfdate').focus();"></i><input id="txtfdate" type="text" placeholder="dd/mm/yyyy" maxlength="10" onkeypress="return false;" class="form-control"><i id="imgcalender" class="fa fa-calendar"></i></div>
+                </div>
+
+                <div class="col-md-3">
+                    <div> To Date (dd/mm/yyyy)</div>
+                    <div class="export-box">
+                        <i onclick="document.getElementById('txttodate').focus();"></i>
+                        <input id="txttodate" type="text" placeholder="dd/mm/yyyy" maxlength="10" onkeypress="return false;" class="form-control"><i id="imgcalender" class="fa fa-calendar"></i>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div>Type </div>
+                    <div class="export-box">
+                        <select id="ddltype" class="form-control">
+                            <option value="0">-- All --</option>
+                            <option value="1"> SOD </option>
+                            <option value="2"> NON-SOD </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="radio-dwnlist" style="margin-top:20px;">
+                        <span>Booking Date    <input type="radio" id="rdobkd" checked="checked" name="rdo" value="1" /> </span> <span> | </span>
+                        <span>   Travel Date     <input type="radio" id="rdobtrd" name="rdo" value="2" style="margin-left:6px;" /></span>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div style="text-align:center; margin-top:10px;"><button id="btnExport" class="btn btn-danger"> Export to Excel >> </button></div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <script src="../Calender/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../Calender/js/foundation-datepicker.js" type="text/javascript"></script>
+
+    <script>
+        //Download file function
+        $(document).ready(function () {
+            $('#btnExport').click(function () {
+                if (validate()) {
+                    var prm = ConvertMMddyyyy($("#txtfdate").val()) + "," + ConvertMMddyyyy($("#txttodate").val()) + "," + $("#ddltype").val() + "," + $('input[name="rdo"]:checked').val();
+                    window.location = '../hd/ExportListFromTsv?strprm=' + prm;
+                }
+            });
+        });
+
+
+        //Calender Function
+        $('#demo-3').fdatepicker();
+        var nowTemp = new Date();
+        var now = new Date('04/01/2016');
+        var frmDate = $('#txtfdate').fdatepicker({
+            onRender: function (date) {
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            if (ev.date.valueOf() > toDate.date.valueOf()) {
+                var newDate = new Date(ev.date)
+                newDate.setDate(newDate.getDate());
+                toDate.update(newDate);
+            }
+            frmDate.hide();
+            $('#txttodate')[0].focus();
+        }).data('datepicker');
+        var toDate = $('#txttodate').fdatepicker({
+            onRender: function (date) {
+                return date.valueOf() < frmDate.date.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            toDate.hide();
+        }).data('datepicker');
+
+
+        //Validate Date function
+        function validate() {
+            if ($('#txtfdate').val() == "") {
+                alert('Please select from date.');
+                $('#txtfdate').focus();
+                return false;
+            }
+            else if ($("#txttodate").val() == "") {
+                alert('Please select to date.');
+                $('#txttodate').focus();
+                return false;
+            }
+            else
+                return true;
+        }
+
+        //convert MM/dd/yyyy
+        function ConvertMMddyyyy(dval) {
+            var mval = (dval.split('/')[1] + '/' + dval.split('/')[0] + '/' + dval.split('/')[2]);
+            return mval;
+        }
+    </script>
+
+</body>
+
+
+</html>
